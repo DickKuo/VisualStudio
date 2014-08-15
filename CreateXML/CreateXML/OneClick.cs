@@ -200,43 +200,49 @@ namespace CreateXML
         /// </summary>
         /// <param name="pString"></param>
         /// <param name="FileName"></param>
-        public void AddDisplayName(string pString,string FileName) {
+        public void AddDisplayName(string pString, string FileName)
+        {
             string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resources";
             string[] spl = pString.Split('\t');
-            if(spl.Length > 2) {
-            IResourceWriter writer = new ResourceWriter(SaveFile);
-            string value = string.Empty;
-                if(spl[1].Substring(0, 1) == "X") {
-                    value = spl[1].Remove(0, 1);
+            if (spl.Length > 2)
+            {
+                using (ResXResourceWriter resx = new ResXResourceWriter(SaveFile))
+                {
+
+                    string value = string.Empty;
+                    if (spl[1].Substring(0, 1) == "X")
+                    {
+                        value = spl[1].Remove(0, 1);
+                    }
+                    else
+                    {
+                        value = spl[1];
+                    }
+                    resx.AddResource(spl[0], value);
                 }
-                else {
-                    value = spl[1];
-                }
-                writer.AddResource(spl[0],value);
-                writer.Close();
+                //XmlDocument doc = Tools.XmlTool.LoadXml(SaveFile);
+                //XmlNode root =doc.SelectSingleNode("root");
+                //string[] spl = pString.Split('\t');
+                //if(spl.Length > 2) {
+                //    XmlElement element = doc.CreateElement("data");
+                //    element.SetAttribute("name", spl[0]);
+                //element.SetAttribute("xml:space","preserve");    
+
+                //    XmlElement value = doc.CreateElement("value");
+                //    if(spl[1].Substring(0, 1) == "X") {
+                //        value.InnerText = spl[1].Remove(0, 1);
+                //    }
+                //    else {
+                //        value.InnerText = spl[1];
+                //    }
+                //    element.AppendChild(value);
+                //    XmlElement comment = doc.CreateElement("comment");
+                //    comment.InnerText = spl[2];
+                //    element.AppendChild(comment);
+                //    root.AppendChild(element);
+                //    doc.Save(SaveFile);
+                //}
             }
-            //XmlDocument doc = Tools.XmlTool.LoadXml(SaveFile);
-            //XmlNode root =doc.SelectSingleNode("root");
-            //string[] spl = pString.Split('\t');
-            //if(spl.Length > 2) {
-            //    XmlElement element = doc.CreateElement("data");
-            //    element.SetAttribute("name", spl[0]);
-            //element.SetAttribute("xml:space","preserve");    
-           
-            //    XmlElement value = doc.CreateElement("value");
-            //    if(spl[1].Substring(0, 1) == "X") {
-            //        value.InnerText = spl[1].Remove(0, 1);
-            //    }
-            //    else {
-            //        value.InnerText = spl[1];
-            //    }
-            //    element.AppendChild(value);
-            //    XmlElement comment = doc.CreateElement("comment");
-            //    comment.InnerText = spl[2];
-            //    element.AppendChild(comment);
-            //    root.AppendChild(element);
-            //    doc.Save(SaveFile);
-            //}
         }
 
 
@@ -463,7 +469,6 @@ namespace CreateXML
             {
                 DataEntity.SetAttribute("TypeKey", pFileName);
                 DataEntity.SetAttribute("name", pFileName);
-
             }
             root.AppendChild(DataEntity);
             doc.Save(FullFileName);
