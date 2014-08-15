@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>C:\Users\Dick\Desktop\參數生成工具\</OutputPath>
+    <OutputPath>..\Export\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -94,6 +94,9 @@
     <Compile Include="QandA.Designer.cs">
       <DependentUpon>QandA.cs</DependentUpon>
     </Compile>
+    <Content Include="SampleFile\Sample.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="SQLFilter.cs">
       <SubType>Form</SubType>
     </Compile>

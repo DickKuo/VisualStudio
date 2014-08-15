@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE root[<!ELEMENT root ANY> <!ATTLIST root Path ID #REQUIRED>]>
+<root>
+  <Path Xpath="C:\Users\Dick\Desktop\38" Set="false" />
+  <Path Xpath="D:\HR\HRM雙檔作業V5\V5.0\V5.0_04422" Set="false" />
+  <Path Xpath="D:\SourceCenter\Product\V5.0\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\KunHui\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\Uniqlo\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\HanShe5-2\HanShe5\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\YaLan\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\KeZhiXinJiGu\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\YingWenDa5\YingWenDa\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\WeiFu\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\ZhouHeiYa\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\HanShe5-3" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\HanShe5-3\Export" Set="false" />
+  <Path Xpath="D:\HRSource\V5.1(Standard)\0000673957-慶豐 Ch\Export" Set="false" />
+  <Path Xpath="D:\HRSource\V5.1(Standard)\DSCPHS001-鼎新_PHS\Export" Set="false" />
+  <Path Xpath="D:\HRSource\V5.1(Ultimate)\100091663-福瑞卫浴\Export" Set="false" />
+  <Path Xpath="D:\SourceCenter\Project\HuaGuang\Export" Set="false" />
+  <Path Xpath="D:\HRSource\V5.1(Standard)\0000676077-台灣英科特\Export" Set="false" />
+  <Path Xpath="D:\HRSource\V5.1(Standard)\0000671219-國泰健康管\Export" Set="false" />
+  <Path Xpath="D:\HRSource\V5.1(Standard)\8101224567-世代流通資\Export" Set="false" />
+  <Path Xpath="D:\HRSource\V5.1(Ultimate)\C002090325-胜宏科技\Export" Set="false" />
+  <Path Xpath="D:\檔案整理\Study\0000130000-TEST\Export" Set="false" />
+  <Path Xpath="D:\檔案整理\Study\8101224567-TESGG\Export" Set="true" />
+</root>

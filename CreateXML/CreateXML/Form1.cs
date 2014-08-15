@@ -2325,15 +2325,25 @@ namespace CreateXML {
             OneClick oneclick = new OneClick(ParentPath, ProgamPath);
             CreateEntities();
             oneclick.CreateEntitesFile(tb_className.Text, this.richTextBox1.Text);
-            string InterFace = "I" + tb_className.Text.Substring(1, tb_className.TextLength - 1) + "X";
+            string InterFace = "I" + tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX";
             CreateInterFace();
             oneclick.CreateInterFaceFile(InterFace, this.richTextBox1.Text);
             CreateServer();
-            oneclick.CreateServiceFile(tb_className.Text.Substring(1, tb_className.TextLength - 1) + "X", this.richTextBox1.Text);
+            oneclick.CreateServiceFile(tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX", this.richTextBox1.Text);
             oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, this.dataGridView1);
             System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable ;
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
             oneclick.RegisterEntity(tb_className.Text);
+            oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text);
+            #region 加入多語系
+            //英文ToolStripMenuItem3.PerformClick();
+            //oneclick.AddDisplayName(richTextBox1.Text, "ResourcesForCase");
+            //繁忠ToolStripMenuItem1.PerformClick();
+            //oneclick.AddDisplayName(richTextBox1.Text, "ResourcesForCase.zh-CHT");
+            //簡中ToolStripMenuItem2.PerformClick();
+            //oneclick.AddDisplayName(richTextBox1.Text, "ResourcesForCase.zh-CHS");
+            #endregion
+
             MessageBox.Show("完成!!");
         }
 

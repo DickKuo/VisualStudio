@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE root[<!ELEMENT Class ANY> <!ATTLIST Class ClassName ID #REQUIRED>]>
+<root>
+ 
+  <Class ClassName="XEmpTempHour" Describle="臨時人員工時管理" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="False" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="XEmpTempHourId" Type="Guid" Describe="臨時人員工時管理Id" ReferenceProperty="" />
+    <Parameter Name="EmployeeId" Type="Guid" Describe="臨時人員" ReferenceProperty="Employee" />
+    <Parameter Name="DepartmentId" Type="Guid" Describe="廳別" ReferenceProperty="Department" />
+    <Parameter Name="Date" Type="DateTime" Describe="日期" ReferenceProperty="" />
+    <Parameter Name="Hours" Type="decimal" Describe="工時" ReferenceProperty="" />
+    <Parameter Name="Base" Type="decimal" Describe="倍率" ReferenceProperty="" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" />
+    <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" />
+    <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" />
+  </Class>
+  <Class ClassName="XDummyOrgFile" Describle="虛擬組織附件" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="False" IDataModifyObject="True" Collection="True" IsCase="False">
+    <Parameter Name="XDummyOrgFileId" Type="Guid" Describe="附件ID" ReferenceProperty="" />
+    <Parameter Name="DummyOrgId" Type="Guid" Describe="虛擬組織Id" ReferenceProperty="DummyOrg" />
+    <Parameter Name="XFileCreateDate" Type="DateTime" Describe="創建日期" ReferenceProperty="" />
+    <Parameter Name="XDescribe1" Type="string" Describe="議程1" ReferenceProperty="" />
+    <Parameter Name="XDescribe2" Type="string" Describe="議程2" ReferenceProperty="" />
+    <Parameter Name="XDescribe3" Type="string" Describe="議程3" ReferenceProperty="" />
+    <Parameter Name="XDescribe4" Type="string" Describe="議程4" ReferenceProperty="" />
+    <Parameter Name="XDescribe5" Type="string" Describe="議程5" ReferenceProperty="" />
+    <Parameter Name="XDescribe6" Type="string" Describe="議程6" ReferenceProperty="" />
+    <Parameter Name="XFileRemark" Type="Ntext" Describe="備註" ReferenceProperty="" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" />
+    <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" />
+    <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" />
+  </Class>
+  <Class ClassName="XDummyOrgFileDetail" Describle="虛擬組織附件明細" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="False" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="XDummyOrgFileDetailId" Type="Guid" Describe="附件明細ID" ReferenceProperty="" />
+    <Parameter Name="XDummyOrgFileId" Type="Guid" Describe="附件ID" ReferenceProperty="XDummyOrgFile" />
+    <Parameter Name="XFile" Type="string" Describe="附件" ReferenceProperty="" />
+    <Parameter Name="XFileName" Type="string" Describe="附件名稱" ReferenceProperty="" />
+    <Parameter Name="XFileType" Type="string" Describe="附件類型" ReferenceProperty="" />
+    <Parameter Name="XFileSize" Type="Int" Describe="附件大小" ReferenceProperty="" />
+    <Parameter Name="XFileRemark" Type="Ntext" Describe="附件備註" ReferenceProperty="" />
+    <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" />
+    <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" />
+  </Class>
+</root>

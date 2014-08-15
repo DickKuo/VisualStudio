@@ -7,6 +7,8 @@ using System.Xml;
 using System.Windows.Forms;
 using System.Data;
 using System.Xml.Serialization;
+using System.Xml.Linq;
+using System.Resources;
 
 namespace CreateXML
 {
@@ -120,6 +122,121 @@ namespace CreateXML
             TextTextQueryCollectQueryText.InnerXml = EntityName + "_Browse";
 
             doc.Save(FullFileName);
+        }
+
+        /// <summary>
+        /// 20140815 建立單檔UI
+        /// </summary>
+        /// <param name="pEntityName"></param>
+        public void CreateentityNoDetailBrowseEditViewV5(string pEntityName) {
+            string SourcePath = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "SampleFile\\Sample.txt";
+            StreamReader sr = new StreamReader(SourcePath);
+            string line = string.Empty;
+            StringBuilder sb = new StringBuilder();
+            //每行撈取分析
+            while( (line =sr.ReadLine()) !=null)
+            {
+                if(line.IndexOf("//<createDate>date</createDate>")!=-1) {
+                    line=line.Replace("date", DateTime.Now.ToString("yyyy/MM/dd"));
+                }
+                if(line.IndexOf("//<description>description</description>") != -1) {
+                    line=line.Replace("//<description>description</description>", "//<description>新增單檔作業</description>");
+                }
+                if(line.IndexOf(" public class EntityEditerView : HREditerView {") != -1) {
+                    line = line.Replace("Entity",pEntityName);
+                }
+                if(line.IndexOf("EntityEditerView()") != -1) {
+                    line = line.Replace("Entity",pEntityName);
+                }
+                if(line.IndexOf("this.entityBindingSource") != -1) {
+                    line = line.Replace("entity", pEntityName.ToLower());
+                }            
+                if(line.IndexOf("private BindingSource entityBindingSource;") != -1) {
+                    line = line.Replace("entity", pEntityName.ToLower());
+                }
+                if(line.IndexOf("Dcms.HR.DataEntities.Entity") != -1) {
+                    line = line.Replace("Entity", pEntityName);
+                }
+                if(line.IndexOf("return Factory.GetService<IEntityService>();") != -1) {
+                    line = line.Replace("IEntityService", "I"+pEntityName.Remove(0,1)+"ServiceX");
+                }
+                //if(line.IndexOf("return Entity.TYPE_KEY;") != -1) {
+                //    line = line.Replace("Entity", pEntityName);
+                //}
+                //if(line.IndexOf("return Resources.EntityDisplayName;") != -1) {
+                //    line = line.Replace("Entity", pEntityName);
+                //}
+                //if(line.IndexOf("public EntityDocument() {") != -1) {
+                //    line = line.Replace("Entity", pEntityName);
+                //}                
+                //if(line.IndexOf("public class EntityDocument : DcmsDocumentWindow") != -1) {
+                //    line = line.Replace("Entity", pEntityName);
+                //}
+                if(line.IndexOf("Resources.EntityDisplayName;") != -1) {
+                    line = line.Replace("Resources.Entity", "ResourcesForCase." + pEntityName);
+                }
+                if(line.IndexOf("entity") != -1) {
+                    line = line.Replace("entity", pEntityName.ToLower());
+                }
+                if(line.IndexOf("Entity") != -1) {
+                    line = line.Replace("Entity", pEntityName);
+                }
+
+                
+                
+                sb.Append(line+"\r\n");
+            }
+            sr.Close();
+
+            string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
+            StreamWriter sw = new StreamWriter(SaveFile);
+            sw.Write(sb.ToString());
+            sw.Close();
+          
+        }
+
+        /// <summary>
+        /// 20140815 add by Dick for DisPlayName 加入多語系
+        /// </summary>
+        /// <param name="pString"></param>
+        /// <param name="FileName"></param>
+        public void AddDisplayName(string pString,string FileName) {
+            string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resources";
+            string[] spl = pString.Split('\t');
+            if(spl.Length > 2) {
+            IResourceWriter writer = new ResourceWriter(SaveFile);
+            string value = string.Empty;
+                if(spl[1].Substring(0, 1) == "X") {
+                    value = spl[1].Remove(0, 1);
+                }
+                else {
+                    value = spl[1];
+                }
+                writer.AddResource(spl[0],value);
+                writer.Close();
+            }
+            //XmlDocument doc = Tools.XmlTool.LoadXml(SaveFile);
+            //XmlNode root =doc.SelectSingleNode("root");
+            //string[] spl = pString.Split('\t');
+            //if(spl.Length > 2) {
+            //    XmlElement element = doc.CreateElement("data");
+            //    element.SetAttribute("name", spl[0]);
+            //element.SetAttribute("xml:space","preserve");    
+           
+            //    XmlElement value = doc.CreateElement("value");
+            //    if(spl[1].Substring(0, 1) == "X") {
+            //        value.InnerText = spl[1].Remove(0, 1);
+            //    }
+            //    else {
+            //        value.InnerText = spl[1];
+            //    }
+            //    element.AppendChild(value);
+            //    XmlElement comment = doc.CreateElement("comment");
+            //    comment.InnerText = spl[2];
+            //    element.AppendChild(comment);
+            //    root.AppendChild(element);
+            //    doc.Save(SaveFile);
+            //}
         }
 
 

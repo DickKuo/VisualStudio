@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE root[<!ELEMENT root ANY> <!ATTLIST root File ID #REQUIRED>]>
+<root>
+ <Client>
+ <File Name="Dcms.HR.UI.CaseUI.dll"/>
+ <File Name="DigiWin.HR.CaseBusiness.dll"/>
+ <File Name="DigiWin.HR.CaseStandardClient.dll"/>
+ <File Name="DigiWin.HR.CaseVersion.dll"/>
+ </Client>
+ <Server>
+ <File Name="DigiWin.HR.CaseBusiness.dll"/>
+ <File Name="DigiWin.HR.CaseBusinessImplement.dll"/> 
+ <File Name="DigiWin.HR.CaseStandardServer.dll"/> 
+ <File Name="DigiWin.HR.CaseVersion.dll"/>
+ <File Name="EntityTypeRegisterForCase.config"/> 
+ <File Name="ServiceRegisterForCase.config"/>
+ </Server>
+</root>
