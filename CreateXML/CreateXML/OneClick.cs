@@ -111,6 +111,48 @@ namespace CreateXML {
             doc.Save(FullFileName);
         }
 
+
+        /// <summary>
+        /// 20140815 add by Dick for 加入掛節點
+        /// </summary>
+        /// <param name="pEntityName"></param>
+        public void RegisterEntity(string pEntityName) {
+             string FullFileName = Parent + Path.DirectorySeparatorChar+"DigiWin.HR.CustomServerApplication"+ Path.DirectorySeparatorChar+"EntityTypeRegisterForCase.config";
+            XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
+            XmlNode root =doc.SelectSingleNode("EntityTypeRegister/DataEntity");
+            if(root!=null)
+            {
+               string basestr="Dcms.HR.DataEntities."+pEntityName;
+               bool IsExist = false;
+               foreach(XmlNode node in root.ChildNodes)
+               {
+                   if(node.InnerText.Equals(basestr)) {
+                       IsExist = true;
+                   }
+               }
+               if(!IsExist) {
+                   XmlElement element = doc.CreateElement("TypeName");
+                   element.InnerText = basestr;
+                   root.AppendChild(element);
+                   doc.Save(FullFileName);
+               }
+            }
+            else
+            {
+                XmlNode Data =doc.SelectSingleNode("EntityTypeRegister");
+                if(Data != null) {
+                    string basestr = "Dcms.HR.DataEntities." + pEntityName;
+                    XmlElement DataEntity = doc.CreateElement("TypeName");
+                    DataEntity.SetAttribute("dllFile", "DigiWin.HR.CaseBusiness.dll");
+                    XmlElement element = doc.CreateElement("TypeName");
+                    element.InnerText = basestr;
+                    DataEntity.AppendChild(element);
+                    Data.AppendChild(DataEntity);
+                    doc.Save(FullFileName);
+                }
+            }            
+        }
+
         /// <summary>
         /// 建立QueryViewXmL結構
         /// </summary>

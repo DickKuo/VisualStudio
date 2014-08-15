@@ -2333,6 +2333,7 @@ namespace CreateXML {
             oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, this.dataGridView1);
             System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable ;
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
+            oneclick.RegisterEntity(tb_className.Text);
             MessageBox.Show("完成!!");
         }
 

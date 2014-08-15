@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\Desktop\參數生成工具\</OutputPath>
+    <OutputPath>C:\Users\Dick\Desktop\參數生成工具\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,20 +38,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Desktop\參數生成工具\CheckVersion.dll</HintPath>
     </Reference>
-    <Reference Include="FileTool, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Desktop\參數生成工具\FileTool.dll</HintPath>
+    <Reference Include="FileTool">
+      <HintPath>C:\Users\Dick\Desktop\參數生成工具\FileTool.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="MoveFile, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Desktop\參數生成工具\MoveFile.dll</HintPath>
+    <Reference Include="MoveFile">
+      <HintPath>C:\Users\Dick\Desktop\參數生成工具\MoveFile.dll</HintPath>
     </Reference>
     <Reference Include="SQL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Desktop\參數生成工具\SQL.dll</HintPath>
+      <HintPath>C:\Users\Dick\Desktop\參數生成工具\SQL.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
