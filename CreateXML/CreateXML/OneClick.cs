@@ -8,27 +8,32 @@ using System.Windows.Forms;
 using System.Data;
 using System.Xml.Serialization;
 
-namespace CreateXML {
-    class OneClick {       
+namespace CreateXML
+{
+    class OneClick
+    {
 
         public string Expory { get; set; }
 
         public string Parent { get; set; }
 
-        public OneClick(string parent,string export) {
+        public OneClick(string parent, string export)
+        {
             Expory = export;
             Parent = parent;
         }
 
-        public void CreateEntitesFile(string pFileName,string pContext) {
+        public void CreateEntitesFile(string pFileName, string pContext)
+        {
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusiness" + Path.DirectorySeparatorChar + "DataEntities";
-            string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".cs";           
+            string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".cs";
             StreamWriter Sw = new StreamWriter(FullFileName, false);
             Sw.Write(pContext);
             Sw.Close();
         }
 
-        public void CreateInterFaceFile(string pFileName, string pContext) {
+        public void CreateInterFaceFile(string pFileName, string pContext)
+        {
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusiness" + Path.DirectorySeparatorChar + "Services";
             string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".cs";
             StreamWriter Sw = new StreamWriter(FullFileName, false);
@@ -36,7 +41,8 @@ namespace CreateXML {
             Sw.Close();
         }
 
-        public void CreateServiceFile(string pFileName, string pContext) {
+        public void CreateServiceFile(string pFileName, string pContext)
+        {
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Services";
             string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".cs";
             StreamWriter Sw = new StreamWriter(FullFileName, false);
@@ -44,9 +50,10 @@ namespace CreateXML {
             Sw.Close();
         }
 
-        
-        public void CreateQueryView(string pFileName, string pContext,System.Windows.Forms.DataGridView GridView) {
-            string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration"+ Path.DirectorySeparatorChar +"Query"+Path.DirectorySeparatorChar+"Case";
+
+        public void CreateQueryView(string pFileName, string pContext, System.Windows.Forms.DataGridView GridView)
+        {
+            string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "Query" + Path.DirectorySeparatorChar + "Case";
             string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".xml";
             string EntityName = pFileName;
             pContext = NewQueryView();
@@ -66,23 +73,27 @@ namespace CreateXML {
             int count = 1;
             bool IsRemarkExit = false;
             //加入Id
-            QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, EntityName + "Id", 0, false));   
+            QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, EntityName + "Id", 0, false));
 
-            foreach(DataGridViewRow dr in GridView.Rows)
+            foreach (DataGridViewRow dr in GridView.Rows)
             {
-                if(dr.Cells["Order"].Value != null) {
-                    if(dr.Cells["Order"].Value.ToString() == "-1") {
-                        IsRemarkExit = true;                       
+                if (dr.Cells["Order"].Value != null)
+                {
+                    if (dr.Cells["Order"].Value.ToString() == "-1")
+                    {
+                        IsRemarkExit = true;
                     }
-                    else if(!dr.Cells["Order"].Value.ToString().Equals(string.Empty)) {
+                    else if (!dr.Cells["Order"].Value.ToString().Equals(string.Empty))
+                    {
                         QueryViewColumns.AppendChild(QueryViewColumn(dr, doc, EntityName));
                         count++;
                     }
                 }
             }
 
-            if(IsRemarkExit) {
-                QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName,"Remark",count,true));            
+            if (IsRemarkExit)
+            {
+                QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, "Remark", count, true));
             }
 
             XmlNode QueryProjectId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryProjectId");
@@ -116,31 +127,35 @@ namespace CreateXML {
         /// 20140815 add by Dick for 加入掛節點
         /// </summary>
         /// <param name="pEntityName"></param>
-        public void RegisterEntity(string pEntityName) {
-             string FullFileName = Parent + Path.DirectorySeparatorChar+"DigiWin.HR.CustomServerApplication"+ Path.DirectorySeparatorChar+"EntityTypeRegisterForCase.config";
+        public void RegisterEntity(string pEntityName)
+        {
+            string FullFileName = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomServerApplication" + Path.DirectorySeparatorChar + "EntityTypeRegisterForCase.config";
             XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
-            XmlNode root =doc.SelectSingleNode("EntityTypeRegister/DataEntity");
-            if(root!=null)
+            XmlNode root = doc.SelectSingleNode("EntityTypeRegister/DataEntity");
+            if (root != null)
             {
-               string basestr="Dcms.HR.DataEntities."+pEntityName;
-               bool IsExist = false;
-               foreach(XmlNode node in root.ChildNodes)
-               {
-                   if(node.InnerText.Equals(basestr)) {
-                       IsExist = true;
-                   }
-               }
-               if(!IsExist) {
-                   XmlElement element = doc.CreateElement("TypeName");
-                   element.InnerText = basestr;
-                   root.AppendChild(element);
-                   doc.Save(FullFileName);
-               }
+                string basestr = "Dcms.HR.DataEntities." + pEntityName;
+                bool IsExist = false;
+                foreach (XmlNode node in root.ChildNodes)
+                {
+                    if (node.InnerText.Equals(basestr))
+                    {
+                        IsExist = true;
+                    }
+                }
+                if (!IsExist)
+                {
+                    XmlElement element = doc.CreateElement("TypeName");
+                    element.InnerText = basestr;
+                    root.AppendChild(element);
+                    doc.Save(FullFileName);
+                }
             }
             else
             {
-                XmlNode Data =doc.SelectSingleNode("EntityTypeRegister");
-                if(Data != null) {
+                XmlNode Data = doc.SelectSingleNode("EntityTypeRegister");
+                if (Data != null)
+                {
                     string basestr = "Dcms.HR.DataEntities." + pEntityName;
                     XmlElement DataEntity = doc.CreateElement("TypeName");
                     DataEntity.SetAttribute("dllFile", "DigiWin.HR.CaseBusiness.dll");
@@ -150,14 +165,15 @@ namespace CreateXML {
                     Data.AppendChild(DataEntity);
                     doc.Save(FullFileName);
                 }
-            }            
+            }
         }
 
         /// <summary>
         /// 建立QueryViewXmL結構
         /// </summary>
         /// <returns></returns>
-        private string NewQueryView() {
+        private string NewQueryView()
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             sb.Append("<QueryConfiguration  Version=\"5.1.3.1\" IsCase=\"1\">");
@@ -170,8 +186,6 @@ namespace CreateXML {
             sb.Append("      <QueryViewColumns></QueryViewColumns>");
             sb.Append("   </QueryView>");
             sb.Append(" </QueryViewXML>");
-
-
             sb.Append(" <QueryProjectXML>");
             sb.Append("   <QueryProject>");
             sb.Append("   <Text>Browse</Text>");
@@ -183,28 +197,24 @@ namespace CreateXML {
             sb.Append("   <IsSystem>true</IsSystem>");
             sb.Append("   </QueryProject>");
             sb.Append(" </QueryProjectXML>");
-
-             sb.Append(" <QueryCollectXML>");
-    sb.Append(" <QueryCollect>");
-      sb.Append(" <QueryCollectId></QueryCollectId>");
-      sb.Append(" <Name>Browse</Name>");
-      sb.Append(" <RefToTypeKey></RefToTypeKey>");
-      sb.Append(" <IsSystem>true</IsSystem>");
-      sb.Append(" <QueryCollectItems>");
-        sb.Append(" <QueryCollectItem>");
-          sb.Append(" <QueryCollectItemId> </QueryCollectItemId>");
-          sb.Append(" <QueryProjectId> </QueryProjectId>");
-          sb.Append(" <QueryName>Browse</QueryName>");
-          sb.Append(" <Text>Browse</Text>");
-          sb.Append(" <RefToTypeKey> </RefToTypeKey>");
-          sb.Append(" <OrderNumber>0</OrderNumber>");
-        sb.Append(" </QueryCollectItem>");
-      sb.Append(" </QueryCollectItems>");
-    sb.Append(" </QueryCollect>");
-  sb.Append(" </QueryCollectXML>");
-
-
-
+            sb.Append(" <QueryCollectXML>");
+            sb.Append(" <QueryCollect>");
+            sb.Append(" <QueryCollectId></QueryCollectId>");
+            sb.Append(" <Name>Browse</Name>");
+            sb.Append(" <RefToTypeKey></RefToTypeKey>");
+            sb.Append(" <IsSystem>true</IsSystem>");
+            sb.Append(" <QueryCollectItems>");
+            sb.Append(" <QueryCollectItem>");
+            sb.Append(" <QueryCollectItemId> </QueryCollectItemId>");
+            sb.Append(" <QueryProjectId> </QueryProjectId>");
+            sb.Append(" <QueryName>Browse</QueryName>");
+            sb.Append(" <Text>Browse</Text>");
+            sb.Append(" <RefToTypeKey> </RefToTypeKey>");
+            sb.Append(" <OrderNumber>0</OrderNumber>");
+            sb.Append(" </QueryCollectItem>");
+            sb.Append(" </QueryCollectItems>");
+            sb.Append(" </QueryCollect>");
+            sb.Append(" </QueryCollectXML>");
             sb.Append("</QueryConfiguration>");
             return sb.ToString();
         }
@@ -212,68 +222,72 @@ namespace CreateXML {
 
         private XmlNode QueryViewColumn(DataGridViewRow dr, XmlDocument doc, string Entity)
         {
-             XmlElement element =doc.CreateElement("QueryViewColumn");
-               XmlElement OrderNumber = doc.CreateElement("OrderNumber");
-                 if(dr.Cells["Order"].Value != null) {
-                     OrderNumber.InnerXml = dr.Cells["Order"].Value.ToString();
-                }
-                 element.AppendChild(OrderNumber);
-           
-
-                XmlElement Name = doc.CreateElement("Name");
-                if(dr.Cells["Parameter"].Value != null) {
-                    if(dr.Cells["ReferenceProperty"].Value!=null)                     
+            XmlElement element = doc.CreateElement("QueryViewColumn");
+            XmlElement OrderNumber = doc.CreateElement("OrderNumber");
+            if (dr.Cells["Order"].Value != null)
+            {
+                OrderNumber.InnerXml = dr.Cells["Order"].Value.ToString();
+            }
+            element.AppendChild(OrderNumber);
+            XmlElement Name = doc.CreateElement("Name");
+            if (dr.Cells["Parameter"].Value != null)
+            {
+                if (dr.Cells["ReferenceProperty"].Value != null)
+                {
+                    if (dr.Cells["ReferenceProperty"].Value.ToString().Equals("CodeInfo"))
                     {
-                        if(dr.Cells["ReferenceProperty"].Value.ToString().Equals("CodeInfo")) {
-                            Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".ScName";
-                        }
-                        else if(!dr.Cells["ReferenceProperty"].Value.ToString().Equals(string.Empty)) {
-                            {
-                                Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".Name";
-                            }
-                        }
-                        else {
-                            Name.InnerXml = dr.Cells["Parameter"].Value.ToString();
+                        Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".ScName";
+                    }
+                    else if (!dr.Cells["ReferenceProperty"].Value.ToString().Equals(string.Empty))
+                    {
+                        {
+                            Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".Name";
                         }
                     }
-                    else {
+                    else
+                    {
                         Name.InnerXml = dr.Cells["Parameter"].Value.ToString();
                     }
                 }
-                element.AppendChild(Name);
-
-                XmlElement DisplayName = doc.CreateElement("DisplayName");
-                if(dr.Cells["Parameter"].Value != null) {
-                    DisplayName.InnerXml = Entity + "_" + dr.Cells["Parameter"].Value.ToString();
+                else
+                {
+                    Name.InnerXml = dr.Cells["Parameter"].Value.ToString();
                 }
-                element.AppendChild(DisplayName);
+            }
+            element.AppendChild(Name);
 
-                XmlElement visible = doc.CreateElement("Visible");
-                visible.InnerXml = "true";
-                element.AppendChild(visible);
+            XmlElement DisplayName = doc.CreateElement("DisplayName");
+            if (dr.Cells["Parameter"].Value != null)
+            {
+                DisplayName.InnerXml = Entity + "_" + dr.Cells["Parameter"].Value.ToString();
+            }
+            element.AppendChild(DisplayName);
 
-                  XmlElement Width = doc.CreateElement("Width");
-                  Width.InnerXml = "75";
-                  element.AppendChild(Width);
-         
-                    XmlElement IsBrowable = doc.CreateElement("IsBrowable");
-                    IsBrowable.InnerXml = "true";
-                  element.AppendChild(IsBrowable);
-          
-                    XmlElement Description = doc.CreateElement("Description");
-                    Description.InnerXml = dr.Cells["Describe"].Value.ToString();
-                  element.AppendChild(Description);
-          
+            XmlElement visible = doc.CreateElement("Visible");
+            visible.InnerXml = "true";
+            element.AppendChild(visible);
 
-           
-             return element;
+            XmlElement Width = doc.CreateElement("Width");
+            Width.InnerXml = "75";
+            element.AppendChild(Width);
+
+            XmlElement IsBrowable = doc.CreateElement("IsBrowable");
+            IsBrowable.InnerXml = "true";
+            element.AppendChild(IsBrowable);
+
+            XmlElement Description = doc.CreateElement("Description");
+            Description.InnerXml = dr.Cells["Describe"].Value.ToString();
+            element.AppendChild(Description);
+
+            return element;
         }
 
 
-        private XmlNode QueryViewColumnSpecil( XmlDocument doc, string Entity,string pName,int count,bool Visible) {
+        private XmlNode QueryViewColumnSpecil(XmlDocument doc, string Entity, string pName, int count, bool Visible)
+        {
             XmlElement element = doc.CreateElement("QueryViewColumn");
             XmlElement OrderNumber = doc.CreateElement("OrderNumber");
-            OrderNumber.InnerXml = count.ToString();           
+            OrderNumber.InnerXml = count.ToString();
             element.AppendChild(OrderNumber);
 
             XmlElement Name = doc.CreateElement("Name");
@@ -282,7 +296,7 @@ namespace CreateXML {
 
             XmlElement DisplayName = doc.CreateElement("DisplayName");
             DisplayName.InnerXml = Entity + "_" + pName;
-            
+
             element.AppendChild(DisplayName);
 
             XmlElement visible = doc.CreateElement("Visible");
@@ -294,41 +308,47 @@ namespace CreateXML {
             element.AppendChild(Width);
 
             XmlElement IsBrowable = doc.CreateElement("IsBrowable");
-            IsBrowable.InnerXml =  Visible.ToString().ToLower();
+            IsBrowable.InnerXml = Visible.ToString().ToLower();
             element.AppendChild(IsBrowable);
 
             XmlElement Description = doc.CreateElement("Description");
             Description.InnerXml = pName;
             element.AppendChild(Description);
 
-
-
             return element;
         }
 
 
-
-        public void AppendDataEntityDisplayInfo(DataTable GridTable, string pFileName) {
+        /// <summary>
+        /// 20140828  add by Dick for 加入自定義欄位多語系
+        /// </summary>
+        /// <param name="GridTable"></param>
+        /// <param name="pFileName"></param>
+        public void AppendDataEntityDisplayInfo(DataTable GridTable, string pFileName)
+        {
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "DataEntityDisplay";
             string FullFileName = pPath + Path.DirectorySeparatorChar + "DataEntityDisplayInfoForCase.xml";
             XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("Root");
             bool IsExistNode = false;
             XmlElement DataEntity = doc.CreateElement("DataEntity");
-            foreach(XmlNode node in root.ChildNodes)
+            foreach (XmlNode node in root.ChildNodes)
             {
-                if(node.Attributes != null) {
-                    if(node.Attributes["TypeKey"].Value.ToString().Equals("pFileName")) {
+                if (node.Attributes != null)
+                {
+                    if (node.Attributes["TypeKey"].Value.ToString().Equals("pFileName"))
+                    {
                         IsExistNode = true;
                     }
                 }
             }
-            if(!IsExistNode) {
+            if (!IsExistNode)
+            {
                 DataEntity.SetAttribute("TypeKey", pFileName);
-                DataEntity.SetAttribute("name",pFileName);
+                DataEntity.SetAttribute("name", pFileName);
 
             }
-            root.AppendChild(DataEntity);          
+            root.AppendChild(DataEntity);
             doc.Save(FullFileName);
         }
 
