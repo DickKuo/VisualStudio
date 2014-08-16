@@ -2335,14 +2335,36 @@ namespace CreateXML {
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
             oneclick.RegisterEntity(tb_className.Text);
             oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text);
-            #region 加入多語系
-            //英文ToolStripMenuItem3.PerformClick();
-            //oneclick.AddDisplayName(richTextBox1.Text, "ResourcesForCase");
-            //繁忠ToolStripMenuItem1.PerformClick();
-            //oneclick.AddDisplayName(richTextBox1.Text, "ResourcesForCase.zh-CHT");
-            //簡中ToolStripMenuItem2.PerformClick();
-            //oneclick.AddDisplayName(richTextBox1.Text, "ResourcesForCase.zh-CHS");
+            #region 加入標題多語系
+
+            英文ToolStripMenuItem3.PerformClick();
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase", true);
+            繁忠ToolStripMenuItem1.PerformClick();
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHT", false);
+            簡中ToolStripMenuItem2.PerformClick();
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHS", false);
             #endregion
+
+
+            #region QueryView 多語系
+            英文ToolStripMenuItem1.PerformClick();
+            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase", true);
+            繁中ToolStripMenuItem1.PerformClick();
+            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase.zh-CHT", false);
+            簡中ToolStripMenuItem1.PerformClick();
+            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase.zh-CHS", false);
+            #endregion
+
+            #region 樹節點多語系
+            英文ToolStripMenuItem4.PerformClick();
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase", true);
+            繁中ToolStripMenuItem2.PerformClick();
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHT", false);
+            簡中ToolStripMenuItem3.PerformClick();
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHS", false);
+            #endregion
+
+
 
             MessageBox.Show("完成!!");
         }

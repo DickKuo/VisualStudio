@@ -136,6 +136,12 @@ namespace CreateXML
             //每行撈取分析
             while( (line =sr.ReadLine()) !=null)
             {
+                if(line.IndexOf("this.entityEditerView1 = new Dcms.HR.UI.EntityEditerView();") != -1) {
+                    sb.Append("\r\n");
+                    string temp = "((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text = ((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text  + \"*\";";
+                    sb.Append(temp);
+                    sb.Append("\r\n");
+                }  
                 if(line.IndexOf("//<createDate>date</createDate>")!=-1) {
                     line=line.Replace("date", DateTime.Now.ToString("yyyy/MM/dd"));
                 }
@@ -166,12 +172,11 @@ namespace CreateXML
                 //if(line.IndexOf("return Resources.EntityDisplayName;") != -1) {
                 //    line = line.Replace("Entity", pEntityName);
                 //}
-                //if(line.IndexOf("public EntityDocument() {") != -1) {
-                //    line = line.Replace("Entity", pEntityName);
-                //}                
-                //if(line.IndexOf("public class EntityDocument : DcmsDocumentWindow") != -1) {
-                //    line = line.Replace("Entity", pEntityName);
-                //}
+                              
+                if(line.IndexOf("browseWindow.Name = GetBrowseWindowName();") != -1) {
+                    sb.Append("\r\n");
+                    sb.Append("browseWindow.UsingExtraText = true;\r\n");
+                }
                 if(line.IndexOf("Resources.EntityDisplayName;") != -1) {
                     line = line.Replace("Resources.Entity", "ResourcesForCase." + pEntityName);
                 }
@@ -200,49 +205,121 @@ namespace CreateXML
         /// </summary>
         /// <param name="pString"></param>
         /// <param name="FileName"></param>
-        public void AddDisplayName(string pString, string FileName)
+        public void AddResourceRow(string pDirectory, string pString, string FileName, bool IsAppend)
         {
-            string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resources";
+            string SaveFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resx";
             string[] spl = pString.Split('\t');
             if (spl.Length > 2)
             {
-                using (ResXResourceWriter resx = new ResXResourceWriter(SaveFile))
-                {
+                AddResource(SaveFile, spl);
+                    if(IsAppend) {
+                        string DesignerFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".Designer.cs";
+                        StringBuilder sb = new StringBuilder();
+                        using(StreamReader reader = new StreamReader(DesignerFile)) {
+                            string line = string.Empty;
+                            while((line = reader.ReadLine()) != null) {
+                                sb.Append(line);
+                                sb.Append("\r\n");
+                                if(line.IndexOf("resourceCulture = value;") != -1) {
+                                    sb.Append(reader.ReadLine());
+                                    sb.Append("\r\n");
+                                    sb.Append(reader.ReadLine());
+                                    sb.Append("\r\n");
+                                    sb.Append(" ");
+                                    sb.Append("\r\n");
 
-                    string value = string.Empty;
-                    if (spl[1].Substring(0, 1) == "X")
-                    {
-                        value = spl[1].Remove(0, 1);
-                    }
-                    else
-                    {
-                        value = spl[1];
-                    }
-                    resx.AddResource(spl[0], value);
-                }
-                //XmlDocument doc = Tools.XmlTool.LoadXml(SaveFile);
-                //XmlNode root =doc.SelectSingleNode("root");
-                //string[] spl = pString.Split('\t');
-                //if(spl.Length > 2) {
-                //    XmlElement element = doc.CreateElement("data");
-                //    element.SetAttribute("name", spl[0]);
-                //element.SetAttribute("xml:space","preserve");    
+                                    sb.Append("        /// <summary>\r\n");
+                                    sb.Append(string.Format("        ///   查詢類似 {0} 的當地語系化字串。\r\n", spl[2]));
+                                    sb.Append("        /// <summary>\r\n");
+                                    sb.Append(string.Format("        public static string {0} ", spl[0]));
+                                    sb.Append("{\r\n");
+                                    sb.Append("            get {\r\n");
+                                    sb.Append(string.Format("                return ResourceManager.GetString(\"{0}\", resourceCulture);\r\n", spl[0]));
+                                    sb.Append("            }\r\n");
+                                    sb.Append("        }\r\n");
 
-                //    XmlElement value = doc.CreateElement("value");
-                //    if(spl[1].Substring(0, 1) == "X") {
-                //        value.InnerText = spl[1].Remove(0, 1);
-                //    }
-                //    else {
-                //        value.InnerText = spl[1];
-                //    }
-                //    element.AppendChild(value);
-                //    XmlElement comment = doc.CreateElement("comment");
-                //    comment.InnerText = spl[2];
-                //    element.AppendChild(comment);
-                //    root.AppendChild(element);
-                //    doc.Save(SaveFile);
-                //}
+                                    sb.Append(" ");
+                                    sb.Append("\r\n");
+                                }
+                            }                           
+                        }
+                            //存檔
+                            if(sb.Length > 0) {
+                                using(StreamWriter sw = new StreamWriter(DesignerFile)) {
+                                    sw.Write(sb.ToString());
+                                }
+                            }
+                        
+                    }
+                   
             }
+        }
+
+        /// <summary>
+        /// 20140816 add by Dick for 加入resx
+        /// </summary>
+        /// <param name="SaveFile"></param>
+        /// <param name="spl"></param>
+        private static void AddResource(string SaveFile, string[] spl) {
+            XmlDocument doc = Tools.XmlTool.LoadXml(SaveFile);
+            XmlNode root = doc.SelectSingleNode("root");
+            XmlElement element = doc.CreateElement("data");
+            element.SetAttribute("name", spl[0]);
+            element.SetAttribute("xml:space", "preserve");
+
+            XmlElement value = doc.CreateElement("value");
+            if(spl[1].Substring(0, 1) == "X") {
+                value.InnerText = spl[1].Remove(0, 1);
+            }
+            else {
+                value.InnerText = spl[1];
+            }
+            element.AppendChild(value);
+            XmlElement comment = doc.CreateElement("comment");
+            comment.InnerText = spl[2];
+            element.AppendChild(comment);
+            root.AppendChild(element);
+            doc.Save(SaveFile);
+        }
+
+        /// <summary>
+        /// 20140816 add by Dick for 宣告多語系
+        /// </summary>
+        /// <param name="spl"></param>
+        /// <param name="DesignerFile"></param>
+        /// <param name="sb"></param>
+        private static void AppendResource(string[] spl, string DesignerFile, StringBuilder sb) {
+         
+        }
+
+
+        /// <summary>
+        /// QueryView 的多語系
+        /// </summary>
+        public void AddQueryView(DataTable dt, string pDirectory, string[] pContext, string FileName, bool IsAppend) {
+            string SaveFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resx";            
+            List<string> QueryList = new List<string>();
+            foreach(DataRow dr in dt.Rows)
+            {
+                if(!string.IsNullOrEmpty(dr["Order"].ToString())) {
+                    QueryList.Add(dr["Parameter"].ToString());
+                }
+            }
+            foreach(string line in pContext)
+              {
+                foreach(string str in QueryList)
+                {
+                    if(line.IndexOf(str) != -1) {
+                        AddResourceRow(pDirectory, line, FileName, IsAppend);
+                    }
+                }
+              }
+            
+
+            //string[] spl = pString.Split('\t');
+            //if(spl.Length > 2) { 
+
+            //}
         }
 
 
@@ -360,7 +437,7 @@ namespace CreateXML
                     if (dr.Cells["ReferenceProperty"].Value.ToString().Equals("CodeInfo"))
                     {
                         Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".ScName";
-                    }
+                    }                    
                     else if (!dr.Cells["ReferenceProperty"].Value.ToString().Equals(string.Empty))
                     {
                         {
