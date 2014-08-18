@@ -65,19 +65,19 @@ namespace CreateXML {
         private void CreateNameSpace() {
             _nameSpace.Append("namespace Dcms.HR.DataEntities \r\n" +
             "{\r\n" +
-            "/// <summary>\r\n" +
-            "///" + tb_scrib.Text + "\r\n" +
-            "/// </summary>\r\n" +
-            "[DataEntity(PrimaryKey = \"" + tb_className.Text + "Id\")]\r\n" +
-            "[Serializable()]\r\n" +
-            "[Description(\"" + tb_scrib.Text + "\")]\r\n");
+            "    /// <summary>\r\n" +
+            "    ///" + tb_scrib.Text + "\r\n" +
+            "    /// </summary>\r\n" +
+            "    [DataEntity(PrimaryKey = \"" + tb_className.Text + "Id\")]\r\n" +
+            "    [Serializable()]\r\n" +
+            "    [Description(\"" + tb_scrib.Text + "\")]\r\n");
         }
 
         /// <summary>
         /// 建立Class 開頭
         /// </summary>
         private void CreateClass() {
-            _class.Append("public class ");
+            _class.Append("    public class ");
             _class.Append(tb_className.Text);
             _class.Append(" : ");
             if(cb_DataEntity.Checked) {
@@ -112,7 +112,7 @@ namespace CreateXML {
             _class.Clear();
             _class.Append(temp);
             _class.Append("{\r\n");
-            _class.Append("public const string TYPE_KEY = \"" + tb_className.Text + "\";\r\n");
+            _class.Append("        public const string TYPE_KEY = \"" + tb_className.Text + "\";\r\n");
         }
 
         private void EndClass() {
@@ -125,7 +125,7 @@ namespace CreateXML {
         private void AddPrivateParameter() {
             foreach(DataGridViewRow dr in dataGridView1.Rows) {
                 if(dr.Cells["Parameter"].Value != null) {
-                    _privateparameter.Append("private ");
+                    _privateparameter.Append("        private ");
                     _privateparameter.Append(" System." + TypeSwap(dr.Cells["Type"].Value.ToString()));
                     _privateparameter.Append(" _");
                     string temp = dr.Cells["Parameter"].Value.ToString();
@@ -144,12 +144,12 @@ namespace CreateXML {
         /// <param name="Type"></param>
         /// <param name="SampleOrReference"></param>
         private void AddParameter(string Parameter, string Type, string Reference, string Describe) {
-            _parameter.Append("/// <summary>\r\n");
-            _parameter.Append("///");
+            _parameter.Append("        /// <summary>\r\n");
+            _parameter.Append("        ///");
             _parameter.Append(Describe);
             _parameter.Append("\r\n");
-            _parameter.Append("/// </summary>\r\n");
-            _parameter.Append("[");
+            _parameter.Append("        /// </summary>\r\n");
+            _parameter.Append("        [");
             if(!string.IsNullOrEmpty(Reference) & Reference != "False") {
                 _parameter.Append("ReferenceProperty(\"" + Reference + "\",");
             }
@@ -159,19 +159,19 @@ namespace CreateXML {
             _parameter.Append("DbType = GeneralDbType.");
             _parameter.Append(Type);
             _parameter.Append(")]\r\n");
-            _parameter.Append("[Description(\"");
+            _parameter.Append("        [Description(\"");
             _parameter.Append(Describe + "\")]\r\n");
-            _parameter.Append("public System." + Type + " " + Parameter + "{\r\n");
-            _parameter.Append(" get { \r\n");
+            _parameter.Append("        public System." + Type + " " + Parameter + "{\r\n");
+            _parameter.Append("            get { \r\n");
             string temp = "_" + Parameter.Substring(0, 1).ToLower() + Parameter.Substring(1, Parameter.Length - 1);
-            _parameter.Append("  return this." + temp + ";}\r\n");
-            _parameter.Append("set{ \r\n");
-            _parameter.Append("if ((" + temp + " != value))  {\r\n");
-            _parameter.Append("this." + temp + " = value;\r\n");
-            _parameter.Append("this.OnPropertyChanged(\"" + Parameter.Substring(0, 1).ToUpper() + Parameter.Substring(1, Parameter.Length - 1) + "\");\r\n");
-            _parameter.Append("}\r\n");
-            _parameter.Append("  }\r\n");
-            _parameter.Append(" }\r\n");
+            _parameter.Append("                return this." + temp + ";}\r\n");
+            _parameter.Append("            set{ \r\n");
+            _parameter.Append("                if ((" + temp + " != value))  {\r\n");
+            _parameter.Append("                    this." + temp + " = value;\r\n");
+            _parameter.Append("                    this.OnPropertyChanged(\"" + Parameter.Substring(0, 1).ToUpper() + Parameter.Substring(1, Parameter.Length - 1) + "\");\r\n");
+            _parameter.Append("                }\r\n");
+            _parameter.Append("            }\r\n");
+            _parameter.Append("        }\r\n");
         }
 
 
@@ -796,6 +796,8 @@ namespace CreateXML {
             dt.Columns.Add("ReferenceProperty");
             dt.Columns.Add("Necessary", typeof(bool));
             dt.Columns.Add("Order");
+            //20140818 add by Dick
+            dt.Columns.Add("UIOrder");
 
             RefereceTable.Columns.Add("Entity");
 
@@ -1021,7 +1023,8 @@ namespace CreateXML {
             dt.Columns.Add("ReferenceProperty");
             dt.Columns.Add("Necessary", typeof(bool));
             dt.Columns.Add("Order");
-
+            //20140818 add by Dick 
+            dt.Columns.Add("UIOrder");
 
             XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
             XmlNode root = doc.GetElementById(item.Text);
@@ -1605,22 +1608,20 @@ namespace CreateXML {
             else {
                 X = "I" + tb_className.Text + "Service";
             }
-
-            richTextBox1.AppendText(@"namespace Dcms.HR.Services { 
-                                     using System;
-                                     using System.ComponentModel;
-                                     using Dcms.Common;
-                                     using Dcms.Common.Torridity;
-                                     using Dcms.Common.Torridity.Metadata;
-                                     using Dcms.HR.DataEntities;
-                                     using System.Data;
-                                     using Dcms.Common.Torridity.Query;
-                                     using System.Collections.Generic;
-
-                                     public interface " + X + @": IHRDocumentService<" + tb_className.Text + @">, IHRDocumentService {
-
-                                      }
-                                     }");
+            richTextBox1.AppendText("namespace Dcms.HR.Services {\r\n");
+            richTextBox1.AppendText("    using System;\r\n");
+            richTextBox1.AppendText("    using System.ComponentModel;\r\n");
+            richTextBox1.AppendText("    using Dcms.Common;\r\n");
+            richTextBox1.AppendText("    using Dcms.Common.Torridity;\r\n");
+            richTextBox1.AppendText("    using Dcms.Common.Torridity.Metadata;\r\n");
+            richTextBox1.AppendText("    using Dcms.HR.DataEntities;\r\n");
+            richTextBox1.AppendText("    using System.Data;\r\n");
+            richTextBox1.AppendText("    using Dcms.Common.Torridity.Query;\r\n");
+            richTextBox1.AppendText("    using System.Collections.Generic;\r\n");
+            richTextBox1.AppendText("    public interface " + X + @": IHRDocumentService<" + tb_className.Text + @">, IHRDocumentService {");
+            richTextBox1.AppendText("\r\n");
+            richTextBox1.AppendText("    }\r\n");
+            richTextBox1.AppendText("}");
         }
 
         private void 生成ToolStripMenuItem1_Click(object sender, EventArgs e) {
@@ -1645,17 +1646,17 @@ namespace CreateXML {
                         string Parameter = dr.Cells["Parameter"].Value.ToString();
                         switch(dr.Cells["Type"].Value.ToString().ToLower()) {
                             case "decmail":
-                                str.Append("vh.GreaterThan<decimal>(e.DataEntity,\"" + Parameter + "\" , 0, true);\r\n");
+                                str.Append("            vh.GreaterThan<decimal>(e.DataEntity,\"" + Parameter + "\" , 0, true);\r\n");
                                 break;
                             case "int32":
-                                str.Append("vh.GreaterThan<int>(e.DataEntity,\"" + Parameter + "\" , 0, true);\r\n");
+                                str.Append("            vh.GreaterThan<int>(e.DataEntity,\"" + Parameter + "\" , 0, true);\r\n");
                                 break;
                             case "datetime":
-                                str.Append("vh.DateTimeNotIsEmpty(e.DataEntity, \"" + Parameter + "\" );\r\n");
+                                str.Append("            vh.DateTimeNotIsEmpty(e.DataEntity, \"" + Parameter + "\" );\r\n");
                                 break;
                             case "string":
                             case "guid":
-                                str.Append("vh.StringNotNullOrEmpty(e.DataEntity, \"" + Parameter + "\" );\r\n");
+                                str.Append("            vh.StringNotNullOrEmpty(e.DataEntity, \"" + Parameter + "\" );\r\n");
                                 break;
                         }
                     }
@@ -1666,12 +1667,11 @@ namespace CreateXML {
 
 
             richTextBox1.AppendText(@"  namespace Dcms.HR.Services {
-                                        using System;
-                                        using System.ComponentModel;
-                                        using System.Collections.Generic;
-                                        using System.Collections.Specialized;
-                                        using System.Data;
-
+    using System;
+    using System.ComponentModel;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Data;
     using Dcms.Common;
     using Dcms.Common.Torridity;
     using Dcms.Common.Torridity.Metadata;
@@ -1685,8 +1685,7 @@ namespace CreateXML {
 
     [ServiceClass(typeof(" + X + @"), ServiceCreateType.Callback)]
     public class " + X.Substring(1, X.Length - 1) + @" : HRBusinessServiceEx<" + tb_className.Text + @">, " + X + @" {
-       " + pType + @"
-      
+       " + pType + @"      
         protected override void OnSaveBefore(BusinessServiceBase<" + tb_className.Text + @">.SaveBeforeArgs e) {
 
             #region 数据检验
@@ -1696,12 +1695,9 @@ namespace CreateXML {
             #endregion
             base.OnSaveBefore(e);
         }
+    }
 
-
-
-       }
-
-          }");
+}");
         }
 
 
@@ -2334,7 +2330,7 @@ namespace CreateXML {
             System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable ;
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
             oneclick.RegisterEntity(tb_className.Text);
-            oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text);
+            oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1);
             #region 加入標題多語系
 
             英文ToolStripMenuItem3.PerformClick();

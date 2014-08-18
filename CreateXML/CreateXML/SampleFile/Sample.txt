@@ -22,284 +22,329 @@ using Dcms.HR.UI.Properties;
 
 namespace Dcms.HR.UI {
 
-    /// <summary>
-    /// Entity实体编辑界面
-    /// </summary>
-    public class EntityEditerView : HREditerView {
+	/// <summary>
+	/// Entity实体编辑界面
+	/// </summary>
+	public class EntityEditerView : HREditerView {
 
-        /// <summary>
-        /// 初始化EntityEditerView
-        /// </summary>
-        public EntityEditerView() {
-            InitializeComponent();
-        }
+		/// <summary>
+		/// 初始化EntityEditerView
+		/// </summary>
+		public EntityEditerView() {
+			InitializeComponent();
+		}
 
-        #region Windows 窗体设计器生成的代码
+		#region Windows 窗体设计器生成的代码
 
-        private BindingSource entityBindingSource;
-        private ErrorProvider errorProvider;
+		private BindingSource entityBindingSource;
+		private ErrorProvider errorProvider;
+		private GroupBox groupBox1;
+	     
+		//ParameterExtend
 
-        /// <summary>
-        /// 必需的设计器变量。
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+		/// <summary>
+		/// 必需的设计器变量。
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// 清理所有正在使用的资源。
-        /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
-        protected override void Dispose(bool disposing) {
-            if(disposing && (components != null)) {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// 清理所有正在使用的资源。
+		/// </summary>
+		/// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+		protected override void Dispose(bool disposing) {
+			if(disposing && (components != null)) {
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        /// <summary>
-        /// 设计器支持所需的方法 - 不要
-        /// 使用代码编辑器修改此方法的内容。
-        /// </summary>
-        private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
-            this.entityBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.MainTabControl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.entityBindingSource)).BeginInit();
-            this.SuspendLayout();
+		/// <summary>
+		/// 设计器支持所需的方法 - 不要
+		/// 使用代码编辑器修改此方法的内容。
+		/// </summary>
+		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
+			//ResourceExtend
+			this.entityBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			//NewControlExtend
+			this.MainTabControl.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.entityBindingSource)).BeginInit();
+			this.groupBox1.SuspendLayout();
+
+			//LayoutExtend
+
+
+			this.SuspendLayout();
+			// 
+            // splitContainer
             // 
-            // errorProvider
+            this.splitContainer.Panel2Collapsed = true;
+			// 
+            // MainTabControl
             // 
-            this.errorProvider.ContainerControl = this;
-            this.errorProvider.DataSource = this.entityBindingSource;
-
+            this.MainTabControl.SelectedTabPage = this.GeneralTabPage;
+            this.MainTabControl.Size = new System.Drawing.Size(825, 522);
+			// 
+            // GeneralTabPage
             // 
-            // entityBindingSource
+            this.GeneralTabPage.Controls.Add(this.groupBox1);
+            this.GeneralTabPage.Size = new System.Drawing.Size(819, 493);
+
+			//ContextExtend
+
+			// 
+            // groupBox1
             // 
-            this.entityBindingSource.DataSource = typeof(Dcms.HR.DataEntities.Entity);
-            // 
-            // entityEditerView
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.DetailTabControlCollapsed = true;
-            this.Name = "EntityEditerView";
-            this.MainTabControl.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.entityBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-            this.ResumeLayout(false);
+           this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(807, 305);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+			//groupBoxExtend
+			
 
-        }
+			// 
+			// errorProvider
+			// 
+			this.errorProvider.ContainerControl = this;
+			this.errorProvider.DataSource = this.entityBindingSource;
 
-        #endregion
-
-        #region Override
-        /// <summary>
-        /// 触发DataSourceSourceChanged事件
-        /// </summary>
-        /// <param name="e">事件需要的参数</param>
-        protected override void OnDataSourceChanged(EventArgs e) {
-            this.entityBindingSource.DataSource = this.DataSource;
-            base.OnDataSourceChanged(e);
-        }
-
-        /// <summary>
-        /// 读时设置控件UnEnable
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnReadonlyChanged(EventArgs e) {
-            base.OnReadonlyChanged(e);
-            if(this.Readonly) {
-
-                //如：this.txtDept.Enabled = false;
-            }
-
-        }
-
-        /// <summary>
-        /// 结束编辑
-        /// </summary>
-        public override void EndEdit() {
-            base.EndEdit();
-            this.entityBindingSource.EndEdit();
-        }
-        #endregion
-
-    }
+			// 
+			// entityBindingSource
+			// 
+			this.entityBindingSource.DataSource = typeof(Dcms.HR.DataEntities.Entity);
+			// 
+			// entityEditerView
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.DetailTabControlCollapsed = true;
+			this.Name = "EntityEditerView";
+			this.MainTabControl.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.entityBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			this.ResumeLayout(false);
 
 
-    /// <summary>
-    /// Entity文档窗口的访问服务类
-    /// </summary>
-    public class EntityDocumentProvider : HRDocumentServiceProvider, IDocumentInfoProvider {
 
-        #region Override
+		}
 
-        /// <summary>
-        /// 所属模块
-        /// </summary>
-        public override string ModuleName {
-            get {
-                return ModuleName.TYPE_KEY;
-            }
-        }
+		#endregion
 
-        /// <summary>
-        /// 创建浏览窗口
-        /// </summary>
-        /// <returns>新的浏览窗口对象</returns>
-        protected override IWindow CreateBrowseWindow() {
-            EntityBrowseWindow browseWindow = new EntityBrowseWindow();
-            browseWindow.Name = GetBrowseWindowName();
-            return browseWindow;
-        }
+		#region Override
+		/// <summary>
+		/// 触发DataSourceSourceChanged事件
+		/// </summary>
+		/// <param name="e">事件需要的参数</param>
+		protected override void OnDataSourceChanged(EventArgs e) {
+			this.entityBindingSource.DataSource = this.DataSource;
+			base.OnDataSourceChanged(e);
+		}
 
-        /// <summary>
-        /// 创建DocumentWindow对象 
-        /// </summary>
-        /// <returns>新的DocumentWindow对象</returns>
-        protected override DocumentWindow CreateDocumentWindow() {
-            return new EntityDocument();
-        }
+		/// <summary>
+		/// 读时设置控件UnEnable
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnReadonlyChanged(EventArgs e) {
+			base.OnReadonlyChanged(e);
+			if(this.Readonly) {
 
-        /// <summary>
-        /// 获得Entity的商业服务类
-        /// </summary>
-        /// <param name="pCustom"></param>
-        /// <returns></returns>
-        public override object GetBusinessService(object pCustom) {
-            return Factory.GetService<IEntityService>();
-        }
+				//如：this.txtDept.Enabled = false;
+			}
 
-        /// <summary>
-        /// 返回Entity文档类型的关键字
-        /// </summary>
-        public override string TypeKey {
-            get { return Entity.TYPE_KEY; }
-        }
+		}
 
-        #endregion
+		/// <summary>
+		/// 结束编辑
+		/// </summary>
+		public override void EndEdit() {
+			base.EndEdit();
+			this.entityBindingSource.EndEdit();
+		}
+		#endregion
 
-        #region IDocumentInfoProvider Members
-        /// <summary>
-        /// 返回Entity文档类型的本地化名称
-        /// </summary>
-        public string DisplayName {
-            get { return Resources.EntityDisplayName; }
-        }
-
-        /// <summary>
-        /// 返回描述Entity文档的大图形
-        /// </summary>
-        public System.Drawing.Image LargeImage {
-            get { return Resources.AnnualLeavePlan_32; }
-        }
-
-        /// <summary>
-        /// 返回描述Entity文档的小图形
-        /// </summary>
-        public System.Drawing.Image SmallImage {
-            get { return Resources.AnnualLeavePlan_16; }
-        }
-
-        #endregion
-    }
+	}
 
 
-    /// <summary>
-    /// Entity文档的窗口对象
-    /// </summary>
-    public class EntityDocument : DcmsDocumentWindow {
+	/// <summary>
+	/// Entity文档窗口的访问服务类
+	/// </summary>
+	public class EntityDocumentProvider : HRDocumentServiceProvider, IDocumentInfoProvider {
 
-        /// <summary>
-        /// 返回Entity窗口的文档关键字
-        /// </summary>
-        public override string TypeKey {
-            get {
-                return Entity.TYPE_KEY;
-            }
-        }
+		#region Override
 
-        public override string HelpKey {
-            get { return Entity.TYPE_KEY; }
-        }
+		/// <summary>
+		/// 所属模块
+		/// </summary>
+		public override string ModuleName {
+			get {
+				return HumantrackManagerProvider.TYPE_KEY;
+			}
+		}
 
-        /// <summary>
-        /// 初始化EntityDocument
-        /// </summary>
-        public EntityDocument() {
-            InitializeComponent();
-        }
+		/// <summary>	
+		/// 创建浏览窗口
+		/// </summary>
+		/// <returns>新的浏览窗口对象</returns>
+		protected override IWindow CreateBrowseWindow() {
+			EntityBrowseWindow browseWindow = new EntityBrowseWindow();
+			browseWindow.Name = GetBrowseWindowName();
+			return browseWindow;
+		}
 
-        #region Windows 窗体设计器生成的代码
+		/// <summary>
+		/// 创建DocumentWindow对象 
+		/// </summary>
+		/// <returns>新的DocumentWindow对象</returns>
+		protected override DocumentWindow CreateDocumentWindow() {
+			return new EntityDocument();
+		}
 
-        private EntityEditerView entityEditerView1;
+		/// <summary>
+		/// 获得Entity的商业服务类
+		/// </summary>
+		/// <param name="pCustom"></param>
+		/// <returns></returns>
+		public override object GetBusinessService(object pCustom) {
+			return Factory.GetService<IEntityService>();
+		}
 
-        /// <summary>
-        /// 设计器支持所需的方法 - 不要
-        /// 使用代码编辑器修改此方法的内容。
-        /// </summary>
-        private void InitializeComponent() {
-            this.entityEditerView1 = new Dcms.HR.UI.EntityEditerView();
-            this.SuspendLayout();
-            // 
-            // entityEditerView1
-            // 
-            this.entityEditerView1.DataSource = null;
-            this.entityEditerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.entityEditerView1.Name = "EntityEditerView1";
-            this.entityEditerView1.Readonly = false;
-            this.entityEditerView1.TabIndex = 0;
-            // 
-            // EntityDocument
-            // 
-            this.Controls.Add(this.entityEditerView1);
-            this.EditerView = this.entityEditerView1;
-            this.Name = "EntityDocument";
-            this.Controls.SetChildIndex(this.entityEditerView1, 0);
-            this.entityEditerView1.ResumeLayout(false);
-            this.Size = new System.Drawing.Size(442, 422);
-            this.ResumeLayout(false);
-        }
+		/// <summary>
+		/// 返回Entity文档类型的关键字
+		/// </summary>
+		public override string TypeKey {
+			get { return Entity.TYPE_KEY; }
+		}
 
-        /// <summary>
-        /// 清理所有正在使用的资源。
-        /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
-        protected override void Dispose(bool disposing) {
-            base.Dispose(disposing);
-        }
+		#endregion
 
-        #endregion
+		#region IDocumentInfoProvider Members
+		/// <summary>
+		/// 返回Entity文档类型的本地化名称
+		/// </summary>
+		public string DisplayName {
+			get { return Resources.EntityDisplayName; }
+		}
 
-    }
+		/// <summary>
+		/// 返回描述Entity文档的大图形
+		/// </summary>
+		public System.Drawing.Image LargeImage {
+			get { return Resources.AnnualLeavePlan_32; }
+		}
 
-    /// <summary>
-    /// Entity实体的浏览窗口
-    /// </summary>
-    public class EntityBrowseWindow : HRBrowseViewWindow {
+		/// <summary>
+		/// 返回描述Entity文档的小图形
+		/// </summary>
+		public System.Drawing.Image SmallImage {
+			get { return Resources.AnnualLeavePlan_16; }
+		}
 
-        /// <summary>
-        /// 初始化EntityBrowseWindow
-        /// </summary>
-        public EntityBrowseWindow() {
-            this.TabControl.TypeKey = "Entity";
-            this.TabControl.CollectName = "Browse";
+		#endregion
+	}
 
-            TabControl.DataBind();
-        }
 
-        /// <summary>
-        /// Entity类型的TypeKey
-        /// </summary>
-        public override string TypeKey {
-            get { return Entity.TYPE_KEY; }
-        }
+	/// <summary>
+	/// Entity文档的窗口对象
+	/// </summary>
+	public class EntityDocument : DcmsDocumentWindow {
 
-        public override string ProgramName {
-            get {
-                return "EntityBrowse";
-            }
-        }
-    }
+		/// <summary>
+		/// 返回Entity窗口的文档关键字
+		/// </summary>
+		public override string TypeKey {
+			get {
+				return Entity.TYPE_KEY;
+			}
+		}
+
+		public override string HelpKey {
+			get { return Entity.TYPE_KEY; }
+		}
+
+		/// <summary>
+		/// 初始化EntityDocument
+		/// </summary>
+		public EntityDocument() {
+			InitializeComponent();
+		}
+
+		#region Windows 窗体设计器生成的代码
+
+		private EntityEditerView entityEditerView1;
+
+		/// <summary>
+		/// 设计器支持所需的方法 - 不要
+		/// 使用代码编辑器修改此方法的内容。
+		/// </summary>
+		private void InitializeComponent() {
+			this.entityEditerView1 = new Dcms.HR.UI.EntityEditerView();
+			this.SuspendLayout();
+			// 
+			// entityEditerView1
+			// 
+			this.entityEditerView1.DataSource = null;
+			this.entityEditerView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.entityEditerView1.Name = "EntityEditerView1";
+			this.entityEditerView1.Readonly = false;
+			this.entityEditerView1.TabIndex = 0;
+			// 
+			// EntityDocument
+			// 
+			this.Controls.Add(this.entityEditerView1);
+			this.EditerView = this.entityEditerView1;
+			this.Name = "EntityDocument";
+			this.Controls.SetChildIndex(this.entityEditerView1, 0);
+			this.entityEditerView1.ResumeLayout(false);
+			this.Size = new System.Drawing.Size(442, 422);
+			this.ResumeLayout(false);
+		}
+
+		/// <summary>
+		/// 清理所有正在使用的资源。
+		/// </summary>
+		/// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+		protected override void Dispose(bool disposing) {
+			base.Dispose(disposing);
+		}
+
+		#endregion
+
+	}
+
+	/// <summary>
+	/// Entity实体的浏览窗口
+	/// </summary>
+	public class EntityBrowseWindow : HRBrowseViewWindow {
+
+		/// <summary>
+		/// 初始化EntityBrowseWindow
+		/// </summary>
+		public EntityBrowseWindow() {
+			this.TabControl.TypeKey = "Entity";
+			this.TabControl.CollectName = "Browse";
+
+			TabControl.DataBind();
+		}
+
+		/// <summary>
+		/// Entity类型的TypeKey
+		/// </summary>
+		public override string TypeKey {
+			get { return Entity.TYPE_KEY; }
+		}
+
+		public override string ProgramName {
+			get {
+				return "EntityBrowse";
+			}
+		}
+	}
 }

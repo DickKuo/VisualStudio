@@ -128,17 +128,45 @@ namespace CreateXML
         /// 20140815 建立單檔UI
         /// </summary>
         /// <param name="pEntityName"></param>
-        public void CreateentityNoDetailBrowseEditViewV5(string pEntityName) {
+        public void CreateentityNoDetailBrowseEditViewV5(string pEntityName, DataGridView dt) {
             string SourcePath = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "SampleFile\\Sample.txt";
             StreamReader sr = new StreamReader(SourcePath);
             string line = string.Empty;
+            #region 加入控件插入
+
+            
+            List<SubUIControl> li = AddControlerInit(dt, pEntityName);
+            StringBuilder SBParameter = new StringBuilder();
+            StringBuilder SBNewControl = new StringBuilder();
+            StringBuilder SBLayout = new StringBuilder();
+            StringBuilder SBContext = new StringBuilder();
+            StringBuilder SBAdd = new StringBuilder();
+
+            //起始座標
+            int x = 50;
+            int y = 50;
+            foreach(SubUIControl control in li.OrderBy(x => x.Order)) {
+                SBParameter.Append(control.Declare );
+                SBParameter.Append("\r\n");
+                SBNewControl.Append(control.NewControl);
+                SBNewControl.Append("\r\n");
+                SBLayout.Append(control.Layout);
+                SBLayout.Append("\r\n");
+                SBContext.Append(control.Context);
+                SBContext.Append("\r\n");
+                SBAdd.Append(control.GroupAdd);
+                SBAdd.Append("\r\n");
+            }
+
+            #endregion
             StringBuilder sb = new StringBuilder();
-            //每行撈取分析
+            #region 每行撈取分析
+
             while( (line =sr.ReadLine()) !=null)
             {
                 if(line.IndexOf("this.entityEditerView1 = new Dcms.HR.UI.EntityEditerView();") != -1) {
                     sb.Append("\r\n");
-                    string temp = "((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text = ((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text  + \"*\";";
+                    string temp = "            ((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text = ((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text  + \"*\";";
                     sb.Append(temp);
                     sb.Append("\r\n");
                 }  
@@ -165,17 +193,10 @@ namespace CreateXML
                 }
                 if(line.IndexOf("return Factory.GetService<IEntityService>();") != -1) {
                     line = line.Replace("IEntityService", "I"+pEntityName.Remove(0,1)+"ServiceX");
-                }
-                //if(line.IndexOf("return Entity.TYPE_KEY;") != -1) {
-                //    line = line.Replace("Entity", pEntityName);
-                //}
-                //if(line.IndexOf("return Resources.EntityDisplayName;") != -1) {
-                //    line = line.Replace("Entity", pEntityName);
-                //}
-                              
+                }       
                 if(line.IndexOf("browseWindow.Name = GetBrowseWindowName();") != -1) {
                     sb.Append("\r\n");
-                    sb.Append("browseWindow.UsingExtraText = true;\r\n");
+                    sb.Append("            browseWindow.UsingExtraText = true;\r\n");
                 }
                 if(line.IndexOf("Resources.EntityDisplayName;") != -1) {
                     line = line.Replace("Resources.Entity", "ResourcesForCase." + pEntityName);
@@ -187,10 +208,47 @@ namespace CreateXML
                     line = line.Replace("Entity", pEntityName);
                 }
 
+                if(line.IndexOf("//ResourceExtend") != -1) {
+                    line = line.Replace("//ResourceExtend", "System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof("+pEntityName+"EditerView));");
+                }
                 
+
+                if(SBParameter.Length > 0) {
+                    if(line.IndexOf("//ParameterExtend") != -1) {
+                        line = line.Replace("//ParameterExtend", "");
+                        sb.Append(SBParameter);
+                    }
+                }
+                if(SBNewControl.Length > 0) {
+                    if(line.IndexOf("//NewControlExtend") != -1) {
+                        line = line.Replace("//NewControlExtend", "");
+                        sb.Append(SBNewControl);
+                    }
+                }
+                if(SBLayout.Length > 0) {
+                    if(line.IndexOf("//LayoutExtend") != -1) {
+                        line = line.Replace("//LayoutExtend", "");
+                        sb.Append(SBLayout);
+                    }
+                }
+
+                if(SBContext.Length > 0) {
+                    if(line.IndexOf("//ContextExtend") != -1) {
+                        line = line.Replace("//ContextExtend","");
+                        sb.Append(SBContext);
+                    }
+                }
+                if(SBAdd.Length > 0) {
+                    if(line.IndexOf("//groupBoxExtend") != -1) {
+                        line = line.Replace("//groupBoxExtend", "");
+                        sb.Append(SBAdd);
+                    }
+                }
                 
+
                 sb.Append(line+"\r\n");
             }
+            #endregion
             sr.Close();
 
             string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
@@ -199,6 +257,74 @@ namespace CreateXML
             sw.Close();
           
         }
+
+        /// <summary>
+        /// 20140818 add by Dick 加入控件
+        /// </summary>
+        /// <param name="dt"></param>
+        public List<SubUIControl> AddControlerInit(System.Windows.Forms.DataGridView dv,string EntityName) {
+           List<SubUIControl> li = new List<SubUIControl>();
+           foreach(DataGridViewRow dr in dv.Rows)
+           {
+               if(dr.Cells["UIOrder"] != null) {
+                   if(!string.IsNullOrEmpty(dr.Cells["UIOrder"].ToString())) {
+                       if(dr.Cells["UIOrder"].Value != null && dr.Cells["UIOrder"].Value.ToString()!=string.Empty) {
+                           if(!string.IsNullOrEmpty(dr.Cells["Type"].Value.ToString())) {
+                               SubUIControl control =null;
+                               switch(dr.Cells["Type"].Value.ToString()) {                                   
+                                   case "Int":
+                                       break;
+                                   case "Decmail":
+                                       break;
+                                   case "Guid":
+                                       break;
+                                   case "String":
+                                       control = new SubUIControl();
+                                       control.Order = dr.Cells["UIOrder"].Value.ToString();
+                                       control.Declare = "        private DcmsTextEdit " + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit;";
+                                       control.NewControl = "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit = new Dcms.Common.UI.DcmsTextEdit();";
+                                       control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Properties)).EndInit();";
+                                       control.GroupAdd = "            this.groupBox1.Controls.Add(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit);";
+                                       control.Context = "             //";
+                                       control.Context += "            // dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString();
+                                       control.Context += "            //";
+                                       control.Context += "            resources.ApplyResources(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit, \"" + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit\");";
+                                       control.Context += "            this."+dr.Cells["Parameter"].Value.ToString()+"DcmsTextEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this."+EntityName.ToLower()+"BindingSource, \""+dr.Cells["Parameter"].Value.ToString()+"\", true));";
+                                       control.Context += "            this."+dr.Cells["Parameter"].Value.ToString()+"DcmsTextEdit.Name = \""+dr.Cells["Parameter"].Value.ToString()+"DcmsTextEdit\";";
+                                       control.Context += "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Properties.MaxLength = 200;";
+                                       break;
+                                   case "DateTime":
+                                       control = new SubUIControl();
+                                       control.Order = dr.Cells["UIOrder"].Value.ToString();
+                                       control.Declare = "        private DcmsDateEdit dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ";";
+                                       control.NewControl = "            this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + " = new Dcms.Common.UI.DcmsDateEdit();";
+                                       control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Properties.VistaTimeProperties)).BeginInit();\r\n";
+                                       control.Layout += "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Properties)).BeginInit();";
+                                       control.GroupAdd = "\r\n            this.groupBox1.Controls.Add(this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ");";
+                                       control.Context = "             //\r\n";
+                                       control.Context += "            // dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + "\r\n";
+                                       control.Context += "            //\r\n";
+                                       control.Context += "            resources.ApplyResources(this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ", \"dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + "\");\r\n";
+                                       control.Context += "            this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".DataBindings.Add(new System.Windows.Forms.Binding(\"EditValue\", this." + EntityName.ToLower() + "BindingSource, \"" + dr.Cells["Parameter"].Value.ToString() + "\", true));\r\n";
+                                       control.Context += "            this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Name = \"dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + "\";\r\n";
+                                       control.Context += "            this.dcmsDateEdit"+ dr.Cells["Parameter"].Value.ToString()+".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                       control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Properties.Buttons\"))))});\r\n";
+                                       control.Context += "            this.dcmsDateEdit"+dr.Cells["Parameter"].Value.ToString()+".Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                       control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});\r\n";
+                                       control.Context += "            this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Size = new System.Drawing.Size(130, 26);\r\n";
+                                       break;
+                               }
+                               if(control != null) {
+                                   li.Add(control);
+                               }
+                           }
+                       }
+                   }
+               }
+           }
+           return li;
+        }
+
 
         /// <summary>
         /// 20140815 add by Dick for DisPlayName 加入多語系
@@ -551,5 +677,14 @@ namespace CreateXML
             doc.Save(FullFileName);
         }
 
+    }
+
+    public class SubUIControl {
+        public string Declare { set; get; }
+        public string Order { set; get; }
+        public string NewControl { set; get; }
+        public string Context { set; get; }
+        public string Layout { set; get; }
+        public string GroupAdd { set; get; }
     }
 }
