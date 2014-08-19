@@ -115,13 +115,15 @@ namespace CreateXML {
             //起始座標
             int x = 50;
             int y = 50;
-            foreach(SubUIControl control in li.OrderBy(o => o.Order)) {
+
+            ///排列邏輯還在想
+            foreach(SubUIControl control in li.OrderBy(o => o.Order)) {                
                 SBParameter.Append(control.Declare);
                 SBParameter.Append("\r\n");
                 SBNewControl.Append(control.NewControl);
                 SBNewControl.Append("\r\n");
                 SBLayout.Append(control.Layout);
-                SBLayout.Append("\r\n");
+                SBLayout.Append("\r\n");                
                 SBContext.Append(control.Context);
                 SBContext.Append("\r\n");
                 SBAdd.Append(control.GroupAdd);
@@ -256,6 +258,7 @@ namespace CreateXML {
                                     case "DateTime":
                                         control = new SubUIControl();
                                         control.Name = dr.Cells["Parameter"].Value.ToString();
+                                        control.ControlFullName = " this.dcmsDateEdit" + control.Name;
                                         control.Order = dr.Cells["UIOrder"].Value.ToString();
                                         control.Declare = "        private DcmsDateEdit dcmsDateEdit" + control.Name + ";";
                                         control.NewControl = "            this.dcmsDateEdit" + control.Name + " = new Dcms.Common.UI.DcmsDateEdit();";
@@ -276,6 +279,19 @@ namespace CreateXML {
                                         break;
                                 }
                                 if(control != null) {
+                                    //加入Label
+                                    control.LabelDeclare+="            System.Windows.Forms.Label  "+control.Name+"Label;";  
+                                    control.LabelNewControl +="            "+control.Name+"Label = new System.Windows.Forms.Label();";
+                                    control.LabelAdd="            this.groupBox1.Controls.Add("+control.Name+"Label);";
+                                    control.LabelContext += "            //";
+                                    control.LabelContext += "            // "+control.LabelName;
+                                    control.LabelContext += "            // ";
+                                    control.LabelContext += "            " + control.LabelName + "Label1.AutoSize = true;";
+                                    control.LabelContext += "            " + control.LabelName + "Label1.Name = " + control.LabelName + ";";
+                                    control.LabelContext += "            " + control.LabelName + "Label1.Size = new System.Drawing.Size(29, 12);";
+                                    control.LabelContext += "            " + control.LabelName + "Label1.TabIndex = 2;";
+                                    control.LabelContext += "            " +control.LabelName  +"Label1.Text = "+control.Name+";
+                                    control.LabelContext += "            " +control.LabelName  +"Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;";
                                     li.Add(control);
                                 }
                             }
@@ -612,32 +628,36 @@ namespace CreateXML {
         //    Point3y = 45
         //    Point3x = 470,
         //    Point3y = 45
-        //}
-         
-
+        //}         
+        /// <summary>
+        /// Label
+        /// </summary>
         public string LabelName { set; get; }
         public string LabelContext { set; get; }
-       
-
-
-      
+        public string LabelDeclare { set; get; }
+        public string LabelAdd { set; get; }
+        public string LabelNewControl { set; get; }
+        /// <summary>
+        ///  控件
+        /// </summary>
         public string Name { set; get; }
+        public string ControlFullName { set; get; }
         public string Declare { set; get; }
         public string Order { set; get; }
         public string NewControl { set; get; }
         public string Context { set; get; }
         public string Layout { set; get; }
         public string GroupAdd { set; get; }
-        public string X { set; get; }
-        public string Y { set; get; }
-
+        //public string X { set; get; }
+        //public string Y { set; get; }
         /// <summary>
         /// 20140819 設定Label及Control的位置
         /// </summary>
         /// <param name="X"></param>
         /// <param name="Y"></param>
-        public void SetLocation(int X,int Y) { 
-        
+        public void SetLocation(int X,int Y) {            
+            LabelContext += "            " + LabelName + "Label1.Location = new System.Drawing.Point(" + X + ", " + Y + ");";
+            Context += "\r\n            " + this.ControlFullName + ".Location =new System.Drawing.Point(" +( X +13)+ ", " + Y + ");";
         }
     }
 }

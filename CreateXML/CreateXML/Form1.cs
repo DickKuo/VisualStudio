@@ -1427,10 +1427,8 @@ namespace CreateXML {
             foreach(DataGridViewRow dr in dataGridView1.Rows) {
                 if(dr.Cells["Parameter"].Value != null) {
                     ProductMutiLanuageSubMethod(type, front, ref sb, dr.Cells["Parameter"].Value.ToString(), dr.Cells["Describe"].Value.ToString(), IsSave);
-
                 }
             }
-
             if(dataGridView1.Rows.Count > 1) {
                 PublicItem(type, front, ref sb, dataGridView1.Rows[0].Cells[2].Value.ToString());
             }
