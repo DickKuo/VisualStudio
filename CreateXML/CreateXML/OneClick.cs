@@ -10,51 +10,40 @@ using System.Xml.Serialization;
 using System.Xml.Linq;
 using System.Resources;
 
-namespace CreateXML
-{
-    class OneClick
-    {
+namespace CreateXML {
+    class OneClick {
 
         public string Expory { get; set; }
 
         public string Parent { get; set; }
 
-        public OneClick(string parent, string export)
-        {
+        public OneClick(string parent, string export) {
             Expory = export;
             Parent = parent;
         }
 
-        public void CreateEntitesFile(string pFileName, string pContext)
-        {
-            string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusiness" + Path.DirectorySeparatorChar + "DataEntities";
+        /// <summary>
+        /// 20140819 add by Dick 儲存CS檔
+        /// </summary>
+        /// <param name="pDirectory"></param>
+        /// <param name="pSunDirectory"></param>
+        /// <param name="pFileName"></param>
+        /// <param name="pContext"></param>
+        public void CSFileSave(string pDirectory, string pSubDirectory, string pFileName, string pContext) {
+            string pPath = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + pSubDirectory;
             string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".cs";
-            StreamWriter Sw = new StreamWriter(FullFileName, false);
-            Sw.Write(pContext);
-            Sw.Close();
+            using(StreamWriter Sw = new StreamWriter(FullFileName, false)) {
+                Sw.Write(pContext);
+            }
         }
 
-        public void CreateInterFaceFile(string pFileName, string pContext)
-        {
-            string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusiness" + Path.DirectorySeparatorChar + "Services";
-            string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".cs";
-            StreamWriter Sw = new StreamWriter(FullFileName, false);
-            Sw.Write(pContext);
-            Sw.Close();
-        }
-
-        public void CreateServiceFile(string pFileName, string pContext)
-        {
-            string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Services";
-            string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".cs";
-            StreamWriter Sw = new StreamWriter(FullFileName, false);
-            Sw.Write(pContext);
-            Sw.Close();
-        }
-
-
-        public void CreateQueryView(string pFileName, string pContext, System.Windows.Forms.DataGridView GridView)
-        {
+        /// <summary>
+        /// 產生QueryView
+        /// </summary>
+        /// <param name="pFileName"></param>
+        /// <param name="pContext"></param>
+        /// <param name="GridView"></param>
+        public void CreateQueryView(string pFileName, string pContext, System.Windows.Forms.DataGridView GridView) {
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "Query" + Path.DirectorySeparatorChar + "Case";
             string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".xml";
             string EntityName = pFileName;
@@ -64,49 +53,35 @@ namespace CreateXML
             Sw.Close();
             XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("QueryConfiguration");
-
-
             XmlNode QueryViewXML = root.SelectSingleNode("QueryViewXML/QueryView/QueryViewId");
             QueryViewXML.InnerXml = EntityName + "_Browse";
             XmlNode RefToTypeKey = root.SelectSingleNode("QueryViewXML/QueryView/RefToTypeKey");
             RefToTypeKey.InnerXml = EntityName;
-
             XmlNode QueryViewColumns = root.SelectSingleNode("QueryViewXML/QueryView/QueryViewColumns");
             int count = 1;
             bool IsRemarkExit = false;
             //加入Id
             QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, EntityName + "Id", 0, false));
-
-            foreach (DataGridViewRow dr in GridView.Rows)
-            {
-                if (dr.Cells["Order"].Value != null)
-                {
-                    if (dr.Cells["Order"].Value.ToString() == "-1")
-                    {
+            foreach(DataGridViewRow dr in GridView.Rows) {
+                if(dr.Cells["Order"].Value != null) {
+                    if(dr.Cells["Order"].Value.ToString() == "-1") {
                         IsRemarkExit = true;
                     }
-                    else if (!dr.Cells["Order"].Value.ToString().Equals(string.Empty))
-                    {
+                    else if(!dr.Cells["Order"].Value.ToString().Equals(string.Empty)) {
                         QueryViewColumns.AppendChild(QueryViewColumn(dr, doc, EntityName));
                         count++;
                     }
                 }
             }
-
-            if (IsRemarkExit)
-            {
+            if(IsRemarkExit) {
                 QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, "Remark", count, true));
             }
-
             XmlNode QueryProjectId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryProjectId");
             QueryProjectId.InnerXml = EntityName + "_Browse";
             XmlNode QueryProjectViewId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryViewId");
             QueryProjectViewId.InnerXml = EntityName + "_Browse";
             XmlNode QueryProjectRefToTypeKey = root.SelectSingleNode("QueryProjectXML/QueryProject/RefToTypeKey");
             QueryProjectRefToTypeKey.InnerXml = EntityName;
-
-
-
             XmlNode QueryCollectId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectId");
             QueryCollectId.InnerXml = EntityName + "_Browse";
             XmlNode QueryCollectRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/RefToTypeKey");
@@ -117,10 +92,8 @@ namespace CreateXML
             QueryCollectQueryProjectId.InnerXml = EntityName + "_Browse";
             XmlNode QueryCollectQueryRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/RefToTypeKey");
             QueryCollectQueryRefToTypeKey.InnerXml = EntityName;
-
             XmlNode TextTextQueryCollectQueryText = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/Text");
             TextTextQueryCollectQueryText.InnerXml = EntityName + "_Browse";
-
             doc.Save(FullFileName);
         }
 
@@ -133,20 +106,17 @@ namespace CreateXML
             StreamReader sr = new StreamReader(SourcePath);
             string line = string.Empty;
             #region 加入控件插入
-
-            
             List<SubUIControl> li = AddControlerInit(dt, pEntityName);
             StringBuilder SBParameter = new StringBuilder();
             StringBuilder SBNewControl = new StringBuilder();
             StringBuilder SBLayout = new StringBuilder();
             StringBuilder SBContext = new StringBuilder();
             StringBuilder SBAdd = new StringBuilder();
-
             //起始座標
             int x = 50;
             int y = 50;
-            foreach(SubUIControl control in li.OrderBy(x => x.Order)) {
-                SBParameter.Append(control.Declare );
+            foreach(SubUIControl control in li.OrderBy(o => o.Order)) {
+                SBParameter.Append(control.Declare);
                 SBParameter.Append("\r\n");
                 SBNewControl.Append(control.NewControl);
                 SBNewControl.Append("\r\n");
@@ -161,30 +131,28 @@ namespace CreateXML
             #endregion
             StringBuilder sb = new StringBuilder();
             #region 每行撈取分析
-
-            while( (line =sr.ReadLine()) !=null)
-            {
+            while((line = sr.ReadLine()) != null) {
                 if(line.IndexOf("this.entityEditerView1 = new Dcms.HR.UI.EntityEditerView();") != -1) {
                     sb.Append("\r\n");
                     string temp = "            ((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text = ((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text  + \"*\";";
                     sb.Append(temp);
                     sb.Append("\r\n");
-                }  
-                if(line.IndexOf("//<createDate>date</createDate>")!=-1) {
-                    line=line.Replace("date", DateTime.Now.ToString("yyyy/MM/dd"));
+                }
+                if(line.IndexOf("//<createDate>date</createDate>") != -1) {
+                    line = line.Replace("date", DateTime.Now.ToString("yyyy/MM/dd"));
                 }
                 if(line.IndexOf("//<description>description</description>") != -1) {
-                    line=line.Replace("//<description>description</description>", "//<description>新增單檔作業</description>");
+                    line = line.Replace("//<description>description</description>", "//<description>新增單檔作業</description>");
                 }
                 if(line.IndexOf(" public class EntityEditerView : HREditerView {") != -1) {
-                    line = line.Replace("Entity",pEntityName);
+                    line = line.Replace("Entity", pEntityName);
                 }
                 if(line.IndexOf("EntityEditerView()") != -1) {
-                    line = line.Replace("Entity",pEntityName);
+                    line = line.Replace("Entity", pEntityName);
                 }
                 if(line.IndexOf("this.entityBindingSource") != -1) {
                     line = line.Replace("entity", pEntityName.ToLower());
-                }            
+                }
                 if(line.IndexOf("private BindingSource entityBindingSource;") != -1) {
                     line = line.Replace("entity", pEntityName.ToLower());
                 }
@@ -192,8 +160,8 @@ namespace CreateXML
                     line = line.Replace("Entity", pEntityName);
                 }
                 if(line.IndexOf("return Factory.GetService<IEntityService>();") != -1) {
-                    line = line.Replace("IEntityService", "I"+pEntityName.Remove(0,1)+"ServiceX");
-                }       
+                    line = line.Replace("IEntityService", "I" + pEntityName.Remove(0, 1) + "ServiceX");
+                }
                 if(line.IndexOf("browseWindow.Name = GetBrowseWindowName();") != -1) {
                     sb.Append("\r\n");
                     sb.Append("            browseWindow.UsingExtraText = true;\r\n");
@@ -207,12 +175,9 @@ namespace CreateXML
                 if(line.IndexOf("Entity") != -1) {
                     line = line.Replace("Entity", pEntityName);
                 }
-
                 if(line.IndexOf("//ResourceExtend") != -1) {
-                    line = line.Replace("//ResourceExtend", "System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof("+pEntityName+"EditerView));");
+                    line = line.Replace("//ResourceExtend", "System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(" + pEntityName + "EditerView));");
                 }
-                
-
                 if(SBParameter.Length > 0) {
                     if(line.IndexOf("//ParameterExtend") != -1) {
                         line = line.Replace("//ParameterExtend", "");
@@ -231,10 +196,9 @@ namespace CreateXML
                         sb.Append(SBLayout);
                     }
                 }
-
                 if(SBContext.Length > 0) {
                     if(line.IndexOf("//ContextExtend") != -1) {
-                        line = line.Replace("//ContextExtend","");
+                        line = line.Replace("//ContextExtend", "");
                         sb.Append(SBContext);
                     }
                 }
@@ -244,87 +208,81 @@ namespace CreateXML
                         sb.Append(SBAdd);
                     }
                 }
-                
-
-                sb.Append(line+"\r\n");
+                sb.Append(line + "\r\n");
             }
             #endregion
             sr.Close();
-
             string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
             StreamWriter sw = new StreamWriter(SaveFile);
             sw.Write(sb.ToString());
             sw.Close();
-          
         }
-        
-        //20140819
 
         /// <summary>
         /// 20140818 add by Dick 加入控件
         /// </summary>
         /// <param name="dt"></param>
-        public List<SubUIControl> AddControlerInit(System.Windows.Forms.DataGridView dv,string EntityName) {
-           List<SubUIControl> li = new List<SubUIControl>();
-           foreach(DataGridViewRow dr in dv.Rows)
-           {
-               if(dr.Cells["UIOrder"] != null) {
-                   if(!string.IsNullOrEmpty(dr.Cells["UIOrder"].ToString())) {
-                       if(dr.Cells["UIOrder"].Value != null && dr.Cells["UIOrder"].Value.ToString()!=string.Empty) {
-                           if(!string.IsNullOrEmpty(dr.Cells["Type"].Value.ToString())) {
-                               SubUIControl control =null;
-                               switch(dr.Cells["Type"].Value.ToString()) {                                   
-                                   case "Int":
-                                       break;
-                                   case "Decmail":
-                                       break;
-                                   case "Guid":
-                                       break;
-                                   case "String":
-                                       control = new SubUIControl();
-                                       control.Order = dr.Cells["UIOrder"].Value.ToString();
-                                       control.Declare = "        private DcmsTextEdit " + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit;";
-                                       control.NewControl = "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit = new Dcms.Common.UI.DcmsTextEdit();";
-                                       control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Properties)).EndInit();";
-                                       control.GroupAdd = "            this.groupBox1.Controls.Add(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit);";
-                                       control.Context = "             //";
-                                       control.Context += "            // dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString();
-                                       control.Context += "            //";
-                                       control.Context += "            resources.ApplyResources(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit, \"" + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit\");";
-                                       control.Context += "            this."+dr.Cells["Parameter"].Value.ToString()+"DcmsTextEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this."+EntityName.ToLower()+"BindingSource, \""+dr.Cells["Parameter"].Value.ToString()+"\", true));";
-                                       control.Context += "            this."+dr.Cells["Parameter"].Value.ToString()+"DcmsTextEdit.Name = \""+dr.Cells["Parameter"].Value.ToString()+"DcmsTextEdit\";";
-                                       control.Context += "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Properties.MaxLength = 200;";
-                                       break;
-                                   case "DateTime":
-                                       control = new SubUIControl();
-                                       control.Order = dr.Cells["UIOrder"].Value.ToString();
-                                       control.Declare = "        private DcmsDateEdit dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ";";
-                                       control.NewControl = "            this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + " = new Dcms.Common.UI.DcmsDateEdit();";
-                                       control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Properties.VistaTimeProperties)).BeginInit();\r\n";
-                                       control.Layout += "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Properties)).BeginInit();";
-                                       control.GroupAdd = "\r\n            this.groupBox1.Controls.Add(this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ");";
-                                       control.Context = "             //\r\n";
-                                       control.Context += "            // dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + "\r\n";
-                                       control.Context += "            //\r\n";
-                                       control.Context += "            resources.ApplyResources(this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ", \"dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + "\");\r\n";
-                                       control.Context += "            this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".DataBindings.Add(new System.Windows.Forms.Binding(\"EditValue\", this." + EntityName.ToLower() + "BindingSource, \"" + dr.Cells["Parameter"].Value.ToString() + "\", true));\r\n";
-                                       control.Context += "            this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Name = \"dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + "\";\r\n";
-                                       control.Context += "            this.dcmsDateEdit"+ dr.Cells["Parameter"].Value.ToString()+".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                       control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Properties.Buttons\"))))});\r\n";
-                                       control.Context += "            this.dcmsDateEdit"+dr.Cells["Parameter"].Value.ToString()+".Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                       control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});\r\n";
-                                       control.Context += "            this.dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString() + ".Size = new System.Drawing.Size(130, 26);\r\n";
-                                       break;
-                               }
-                               if(control != null) {
-                                   li.Add(control);
-                               }
-                           }
-                       }
-                   }
-               }
-           }
-           return li;
+        public List<SubUIControl> AddControlerInit(System.Windows.Forms.DataGridView dv, string EntityName) {
+            List<SubUIControl> li = new List<SubUIControl>();
+            foreach(DataGridViewRow dr in dv.Rows) {
+                if(dr.Cells["UIOrder"] != null) {
+                    if(!string.IsNullOrEmpty(dr.Cells["UIOrder"].ToString())) {
+                        if(dr.Cells["UIOrder"].Value != null && dr.Cells["UIOrder"].Value.ToString() != string.Empty) {
+                            if(!string.IsNullOrEmpty(dr.Cells["Type"].Value.ToString())) {
+                                SubUIControl control = null;
+                                switch(dr.Cells["Type"].Value.ToString()) {
+                                    case "Int":
+                                        break;
+                                    case "Decmail":
+                                        break;
+                                    case "Guid":
+                                        break;
+                                    case "String":
+                                        control = new SubUIControl();
+                                        control.Order = dr.Cells["UIOrder"].Value.ToString();
+                                        control.Declare = "        private DcmsTextEdit " + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit;";
+                                        control.NewControl = "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit = new Dcms.Common.UI.DcmsTextEdit();";
+                                        control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Properties)).EndInit();";
+                                        control.GroupAdd = "            this.groupBox1.Controls.Add(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit);";
+                                        control.Context = "             //";
+                                        control.Context += "            // dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString();
+                                        control.Context += "            //";
+                                        control.Context += "            resources.ApplyResources(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit, \"" + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit\");";
+                                        control.Context += "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this." + EntityName.ToLower() + "BindingSource, \"" + dr.Cells["Parameter"].Value.ToString() + "\", true));";
+                                        control.Context += "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Name = \"" + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit\";";
+                                        control.Context += "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Properties.MaxLength = 200;";
+                                        break;
+                                    case "DateTime":
+                                        control = new SubUIControl();
+                                        control.Name = dr.Cells["Parameter"].Value.ToString();
+                                        control.Order = dr.Cells["UIOrder"].Value.ToString();
+                                        control.Declare = "        private DcmsDateEdit dcmsDateEdit" + control.Name + ";";
+                                        control.NewControl = "            this.dcmsDateEdit" + control.Name + " = new Dcms.Common.UI.DcmsDateEdit();";
+                                        control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties)).BeginInit();\r\n";
+                                        control.Layout += "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + control.Name + ".Properties)).BeginInit();";
+                                        control.GroupAdd = "\r\n            this.groupBox1.Controls.Add(this.dcmsDateEdit" + control.Name + ");";
+                                        control.Context = "             //\r\n";
+                                        control.Context += "            // dcmsDateEdit" + control.Name + "\r\n";
+                                        control.Context += "            //\r\n";
+                                        control.Context += "            resources.ApplyResources(this.dcmsDateEdit" + control.Name + ", \"dcmsDateEdit" + control.Name + "\");\r\n";
+                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".DataBindings.Add(new System.Windows.Forms.Binding(\"EditValue\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));\r\n";
+                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Name = \"dcmsDateEdit" + control.Name + "\";\r\n";
+                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                        control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"dcmsDateEdit" + control.Name + ".Properties.Buttons\"))))});\r\n";
+                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                        control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});\r\n";
+                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Size = new System.Drawing.Size(130, 26);\r\n";
+                                        break;
+                                }
+                                if(control != null) {
+                                    li.Add(control);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return li;
         }
 
 
@@ -333,53 +291,47 @@ namespace CreateXML
         /// </summary>
         /// <param name="pString"></param>
         /// <param name="FileName"></param>
-        public void AddResourceRow(string pDirectory, string pString, string FileName, bool IsAppend)
-        {
+        public void AddResourceRow(string pDirectory, string pString, string FileName, bool IsAppend) {
             string SaveFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resx";
             string[] spl = pString.Split('\t');
-            if (spl.Length > 2)
-            {
+            if(spl.Length > 2) {
                 AddResource(SaveFile, spl);
-                    if(IsAppend) {
-                        string DesignerFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".Designer.cs";
-                        StringBuilder sb = new StringBuilder();
-                        using(StreamReader reader = new StreamReader(DesignerFile)) {
-                            string line = string.Empty;
-                            while((line = reader.ReadLine()) != null) {
-                                sb.Append(line);
+                if(IsAppend) {
+                    string DesignerFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".Designer.cs";
+                    StringBuilder sb = new StringBuilder();
+                    using(StreamReader reader = new StreamReader(DesignerFile)) {
+                        string line = string.Empty;
+                        while((line = reader.ReadLine()) != null) {
+                            sb.Append(line);
+                            sb.Append("\r\n");
+                            if(line.IndexOf("resourceCulture = value;") != -1) {
+                                sb.Append(reader.ReadLine());
                                 sb.Append("\r\n");
-                                if(line.IndexOf("resourceCulture = value;") != -1) {
-                                    sb.Append(reader.ReadLine());
-                                    sb.Append("\r\n");
-                                    sb.Append(reader.ReadLine());
-                                    sb.Append("\r\n");
-                                    sb.Append(" ");
-                                    sb.Append("\r\n");
-
-                                    sb.Append("        /// <summary>\r\n");
-                                    sb.Append(string.Format("        ///   查詢類似 {0} 的當地語系化字串。\r\n", spl[2]));
-                                    sb.Append("        /// <summary>\r\n");
-                                    sb.Append(string.Format("        public static string {0} ", spl[0]));
-                                    sb.Append("{\r\n");
-                                    sb.Append("            get {\r\n");
-                                    sb.Append(string.Format("                return ResourceManager.GetString(\"{0}\", resourceCulture);\r\n", spl[0]));
-                                    sb.Append("            }\r\n");
-                                    sb.Append("        }\r\n");
-
-                                    sb.Append(" ");
-                                    sb.Append("\r\n");
-                                }
-                            }                           
-                        }
-                            //存檔
-                            if(sb.Length > 0) {
-                                using(StreamWriter sw = new StreamWriter(DesignerFile)) {
-                                    sw.Write(sb.ToString());
-                                }
+                                sb.Append(reader.ReadLine());
+                                sb.Append("\r\n");
+                                sb.Append(" ");
+                                sb.Append("\r\n");
+                                sb.Append("        /// <summary>\r\n");
+                                sb.Append(string.Format("        ///   查詢類似 {0} 的當地語系化字串。\r\n", spl[2]));
+                                sb.Append("        /// <summary>\r\n");
+                                sb.Append(string.Format("        public static string {0} ", spl[0]));
+                                sb.Append("{\r\n");
+                                sb.Append("            get {\r\n");
+                                sb.Append(string.Format("                return ResourceManager.GetString(\"{0}\", resourceCulture);\r\n", spl[0]));
+                                sb.Append("            }\r\n");
+                                sb.Append("        }\r\n");
+                                sb.Append(" ");
+                                sb.Append("\r\n");
                             }
-                        
+                        }
                     }
-                   
+                    //存檔
+                    if(sb.Length > 0) {
+                        using(StreamWriter sw = new StreamWriter(DesignerFile)) {
+                            sw.Write(sb.ToString());
+                        }
+                    }
+                }
             }
         }
 
@@ -394,7 +346,6 @@ namespace CreateXML
             XmlElement element = doc.CreateElement("data");
             element.SetAttribute("name", spl[0]);
             element.SetAttribute("xml:space", "preserve");
-
             XmlElement value = doc.CreateElement("value");
             if(spl[1].Substring(0, 1) == "X") {
                 value.InnerText = spl[1].Remove(0, 1);
@@ -411,43 +362,23 @@ namespace CreateXML
         }
 
         /// <summary>
-        /// 20140816 add by Dick for 宣告多語系
-        /// </summary>
-        /// <param name="spl"></param>
-        /// <param name="DesignerFile"></param>
-        /// <param name="sb"></param>
-        private static void AppendResource(string[] spl, string DesignerFile, StringBuilder sb) {
-         
-        }
-
-
-        /// <summary>
         /// QueryView 的多語系
         /// </summary>
         public void AddQueryView(DataTable dt, string pDirectory, string[] pContext, string FileName, bool IsAppend) {
-            string SaveFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resx";            
+            string SaveFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resx";
             List<string> QueryList = new List<string>();
-            foreach(DataRow dr in dt.Rows)
-            {
+            foreach(DataRow dr in dt.Rows) {
                 if(!string.IsNullOrEmpty(dr["Order"].ToString())) {
                     QueryList.Add(dr["Parameter"].ToString());
                 }
             }
-            foreach(string line in pContext)
-              {
-                foreach(string str in QueryList)
-                {
+            foreach(string line in pContext) {
+                foreach(string str in QueryList) {
                     if(line.IndexOf(str) != -1) {
                         AddResourceRow(pDirectory, line, FileName, IsAppend);
                     }
                 }
-              }
-            
-
-            //string[] spl = pString.Split('\t');
-            //if(spl.Length > 2) { 
-
-            //}
+            }
         }
 
 
@@ -455,35 +386,28 @@ namespace CreateXML
         /// 20140815 add by Dick for 加入掛節點
         /// </summary>
         /// <param name="pEntityName"></param>
-        public void RegisterEntity(string pEntityName)
-        {
+        public void RegisterEntity(string pEntityName) {
             string FullFileName = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomServerApplication" + Path.DirectorySeparatorChar + "EntityTypeRegisterForCase.config";
             XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("EntityTypeRegister/DataEntity");
-            if (root != null)
-            {
+            if(root != null) {
                 string basestr = "Dcms.HR.DataEntities." + pEntityName;
                 bool IsExist = false;
-                foreach (XmlNode node in root.ChildNodes)
-                {
-                    if (node.InnerText.Equals(basestr))
-                    {
+                foreach(XmlNode node in root.ChildNodes) {
+                    if(node.InnerText.Equals(basestr)) {
                         IsExist = true;
                     }
                 }
-                if (!IsExist)
-                {
+                if(!IsExist) {
                     XmlElement element = doc.CreateElement("TypeName");
                     element.InnerText = basestr;
                     root.AppendChild(element);
                     doc.Save(FullFileName);
                 }
             }
-            else
-            {
+            else {
                 XmlNode Data = doc.SelectSingleNode("EntityTypeRegister");
-                if (Data != null)
-                {
+                if(Data != null) {
                     string basestr = "Dcms.HR.DataEntities." + pEntityName;
                     XmlElement DataEntity = doc.CreateElement("TypeName");
                     DataEntity.SetAttribute("dllFile", "DigiWin.HR.CaseBusiness.dll");
@@ -500,8 +424,7 @@ namespace CreateXML
         /// 建立QueryViewXmL結構
         /// </summary>
         /// <returns></returns>
-        private string NewQueryView()
-        {
+        private string NewQueryView() {
             StringBuilder sb = new StringBuilder();
             sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             sb.Append("<QueryConfiguration  Version=\"5.1.3.1\" IsCase=\"1\">");
@@ -548,101 +471,77 @@ namespace CreateXML
         }
 
 
-        private XmlNode QueryViewColumn(DataGridViewRow dr, XmlDocument doc, string Entity)
-        {
+        private XmlNode QueryViewColumn(DataGridViewRow dr, XmlDocument doc, string Entity) {
             XmlElement element = doc.CreateElement("QueryViewColumn");
             XmlElement OrderNumber = doc.CreateElement("OrderNumber");
-            if (dr.Cells["Order"].Value != null)
-            {
+            if(dr.Cells["Order"].Value != null) {
                 OrderNumber.InnerXml = dr.Cells["Order"].Value.ToString();
             }
             element.AppendChild(OrderNumber);
             XmlElement Name = doc.CreateElement("Name");
-            if (dr.Cells["Parameter"].Value != null)
-            {
-                if (dr.Cells["ReferenceProperty"].Value != null)
-                {
-                    if (dr.Cells["ReferenceProperty"].Value.ToString().Equals("CodeInfo"))
-                    {
+            if(dr.Cells["Parameter"].Value != null) {
+                if(dr.Cells["ReferenceProperty"].Value != null) {
+                    if(dr.Cells["ReferenceProperty"].Value.ToString().Equals("CodeInfo")) {
                         Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".ScName";
-                    }                    
-                    else if (!dr.Cells["ReferenceProperty"].Value.ToString().Equals(string.Empty))
-                    {
+                    }
+                    else if(!dr.Cells["ReferenceProperty"].Value.ToString().Equals(string.Empty)) {
                         {
                             Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".Name";
                         }
                     }
-                    else
-                    {
+                    else {
                         Name.InnerXml = dr.Cells["Parameter"].Value.ToString();
                     }
                 }
-                else
-                {
+                else {
                     Name.InnerXml = dr.Cells["Parameter"].Value.ToString();
                 }
             }
             element.AppendChild(Name);
-
             XmlElement DisplayName = doc.CreateElement("DisplayName");
-            if (dr.Cells["Parameter"].Value != null)
-            {
+            if(dr.Cells["Parameter"].Value != null) {
                 DisplayName.InnerXml = Entity + "_" + dr.Cells["Parameter"].Value.ToString();
             }
             element.AppendChild(DisplayName);
-
             XmlElement visible = doc.CreateElement("Visible");
             visible.InnerXml = "true";
             element.AppendChild(visible);
-
             XmlElement Width = doc.CreateElement("Width");
             Width.InnerXml = "75";
             element.AppendChild(Width);
-
             XmlElement IsBrowable = doc.CreateElement("IsBrowable");
             IsBrowable.InnerXml = "true";
             element.AppendChild(IsBrowable);
-
             XmlElement Description = doc.CreateElement("Description");
             Description.InnerXml = dr.Cells["Describe"].Value.ToString();
             element.AppendChild(Description);
-
             return element;
         }
 
 
-        private XmlNode QueryViewColumnSpecil(XmlDocument doc, string Entity, string pName, int count, bool Visible)
-        {
+        private XmlNode QueryViewColumnSpecil(XmlDocument doc, string Entity, string pName, int count, bool Visible) {
             XmlElement element = doc.CreateElement("QueryViewColumn");
             XmlElement OrderNumber = doc.CreateElement("OrderNumber");
             OrderNumber.InnerXml = count.ToString();
             element.AppendChild(OrderNumber);
-
             XmlElement Name = doc.CreateElement("Name");
             Name.InnerXml = pName;
             element.AppendChild(Name);
-
             XmlElement DisplayName = doc.CreateElement("DisplayName");
             DisplayName.InnerXml = Entity + "_" + pName;
-
             element.AppendChild(DisplayName);
-
             XmlElement visible = doc.CreateElement("Visible");
             visible.InnerXml = Visible.ToString().ToLower();
             element.AppendChild(visible);
-
             XmlElement Width = doc.CreateElement("Width");
             Width.InnerXml = "75";
             element.AppendChild(Width);
-
             XmlElement IsBrowable = doc.CreateElement("IsBrowable");
             IsBrowable.InnerXml = Visible.ToString().ToLower();
             element.AppendChild(IsBrowable);
-
             XmlElement Description = doc.CreateElement("Description");
             Description.InnerXml = pName;
             element.AppendChild(Description);
-
             return element;
         }
 
@@ -652,26 +551,21 @@ namespace CreateXML
         /// </summary>
         /// <param name="GridTable"></param>
         /// <param name="pFileName"></param>
-        public void AppendDataEntityDisplayInfo(DataTable GridTable, string pFileName)
-        {
+        public void AppendDataEntityDisplayInfo(DataTable GridTable, string pFileName) {
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "DataEntityDisplay";
             string FullFileName = pPath + Path.DirectorySeparatorChar + "DataEntityDisplayInfoForCase.xml";
             XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("Root");
             bool IsExistNode = false;
             XmlElement DataEntity = doc.CreateElement("DataEntity");
-            foreach (XmlNode node in root.ChildNodes)
-            {
-                if (node.Attributes != null)
-                {
-                    if (node.Attributes["TypeKey"].Value.ToString().Equals("pFileName"))
-                    {
+            foreach(XmlNode node in root.ChildNodes) {
+                if(node.Attributes != null) {
+                    if(node.Attributes["TypeKey"].Value.ToString().Equals("pFileName")) {
                         IsExistNode = true;
                     }
                 }
             }
-            if (!IsExistNode)
-            {
+            if(!IsExistNode) {
                 DataEntity.SetAttribute("TypeKey", pFileName);
                 DataEntity.SetAttribute("name", pFileName);
             }
@@ -681,12 +575,23 @@ namespace CreateXML
 
     }
 
+    /// <summary>
+    /// 20140819 add by Dick for  控件輔助類
+    /// </summary>
     public class SubUIControl {
+
+        public string LabeContext { set; get; }
+        public string LabelPointX { set; get; }
+        public string LabelPointY { set; get; }
+
+        public string Name { set; get; }
         public string Declare { set; get; }
         public string Order { set; get; }
         public string NewControl { set; get; }
         public string Context { set; get; }
         public string Layout { set; get; }
         public string GroupAdd { set; get; }
+        public string X { set; get; }
+        public string Y { set; get; }
     }
 }

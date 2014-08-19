@@ -2164,8 +2164,6 @@ namespace CreateXML {
             }
         }
 
-
-
         private void 英文ToolStripMenuItem4_Click(object sender, EventArgs e) {
             richTextBox1.Clear();
             richTextBox1.AppendText("Prog_");
@@ -2320,12 +2318,12 @@ namespace CreateXML {
             string ParentPath = Directory.GetParent(ProgamPath).FullName;
             OneClick oneclick = new OneClick(ParentPath, ProgamPath);
             CreateEntities();
-            oneclick.CreateEntitesFile(tb_className.Text, this.richTextBox1.Text);
+            oneclick.CSFileSave("DigiWin.HR.CustomBusiness","DataEntities",tb_className.Text, this.richTextBox1.Text);                
             string InterFace = "I" + tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX";
             CreateInterFace();
-            oneclick.CreateInterFaceFile(InterFace, this.richTextBox1.Text);
+            oneclick.CSFileSave("DigiWin.HR.CustomBusiness","Services",InterFace, this.richTextBox1.Text);                
             CreateServer();
-            oneclick.CreateServiceFile(tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX", this.richTextBox1.Text);
+            oneclick.CSFileSave("DigiWin.HR.CustomBusinessImplement", "Services", tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX", this.richTextBox1.Text);
             oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, this.dataGridView1);
             System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable ;
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
@@ -2372,7 +2370,7 @@ namespace CreateXML {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e) {
-            if(dataGridView1.Rows[0].Cells[e.ColumnIndex].OwningColumn.Name.Equals("ReferenceProperty"))
+            if(dataGridView1.Rows[0].Cells[e.ColumnIndex].OwningColumn.Name.Equals("ReferenceProperty")) {
                 if(e.RowIndex > 0) {
                     if(!string.IsNullOrEmpty(dataGridView1.Rows[e.RowIndex - 1].Cells[e.ColumnIndex].Value.ToString())) {
                         DataRow[] dr = RefereceTable.Select(string.Format(@"Entity like '{0}%'", dataGridView1.Rows[e.RowIndex - 1].Cells[e.ColumnIndex].FormattedValue));
@@ -2381,6 +2379,7 @@ namespace CreateXML {
                         }
                     }
                 }
+            }
         }
 
         private void 開啟新檔ToolStripMenuItem_Click(object sender, EventArgs e) {
