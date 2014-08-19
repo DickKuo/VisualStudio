@@ -238,19 +238,20 @@ namespace CreateXML {
                                     case "Guid":
                                         break;
                                     case "String":
-                                        control = new SubUIControl();
-                                        control.Order = dr.Cells["UIOrder"].Value.ToString();
-                                        control.Declare = "        private DcmsTextEdit " + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit;";
-                                        control.NewControl = "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit = new Dcms.Common.UI.DcmsTextEdit();";
-                                        control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Properties)).EndInit();";
-                                        control.GroupAdd = "            this.groupBox1.Controls.Add(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit);";
-                                        control.Context = "             //";
-                                        control.Context += "            // dcmsDateEdit" + dr.Cells["Parameter"].Value.ToString();
-                                        control.Context += "            //";
-                                        control.Context += "            resources.ApplyResources(this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit, \"" + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit\");";
-                                        control.Context += "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this." + EntityName.ToLower() + "BindingSource, \"" + dr.Cells["Parameter"].Value.ToString() + "\", true));";
-                                        control.Context += "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Name = \"" + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit\";";
-                                        control.Context += "            this." + dr.Cells["Parameter"].Value.ToString() + "DcmsTextEdit.Properties.MaxLength = 200;";
+                                        //control = new SubUIControl();
+                                        //control.Name = dr.Cells["Parameter"].Value.ToString();
+                                        //control.Order = dr.Cells["UIOrder"].Value.ToString();
+                                        //control.Declare = "        private DcmsTextEdit " + control.Name + "DcmsTextEdit;";
+                                        //control.NewControl = "            this." + control.Name + "DcmsTextEdit = new Dcms.Common.UI.DcmsTextEdit();";
+                                        //control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this." + control.Name + "DcmsTextEdit.Properties)).EndInit();";
+                                        //control.GroupAdd = "            this.groupBox1.Controls.Add(this." + control.Name + "DcmsTextEdit);";
+                                        //control.Context = "             //";
+                                        //control.Context += "            // dcmstextEdit" + control.Name;
+                                        //control.Context += "            //";
+                                        //control.Context += "            resources.ApplyResources(this." + control.Name + "DcmsTextEdit, \"" + control.Name + "DcmsTextEdit\");";
+                                        //control.Context += "            this." + control.Name + "DcmsTextEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));";
+                                        //control.Context += "            this." + control.Name + "DcmsTextEdit.Name = \"" + control.Name + "DcmsTextEdit\";";
+                                        //control.Context += "            this." + control.Name + "DcmsTextEdit.Properties.MaxLength = 200;";
                                         break;
                                     case "DateTime":
                                         control = new SubUIControl();
@@ -579,11 +580,47 @@ namespace CreateXML {
     /// 20140819 add by Dick for  控件輔助類
     /// </summary>
     public class SubUIControl {
+        /// <summary>
+        /// 控件排列模式  一行2個
+        /// </summary>
+        public enum Mode2 {
+            Point1x = 170,
+            Point1y = 45,
+            Point2x = 490,
+            Point2y = 45
+        }
+        /// <summary>
+        /// 控件排列模式  一行3個
+        /// </summary>
+        public enum Mode3{
+            Point1x=25,
+            Point1y=45,
+            Point2x=300,
+            Point2y =45,
+            Point3x=470,
+            Point3y =45
+        }
+        ///// <summary>
+        ///// 控件排列模式  一行3個
+        ///// </summary>
+        //public enum Mode4 {
+        //    Point1x = 25,
+        //    Point1y = 45,
+        //    Point2x = 300,
+        //    Point2y = 45,
+        //    Point3x = 470,
+        //    Point3y = 45
+        //    Point3x = 470,
+        //    Point3y = 45
+        //}
+         
 
-        public string LabeContext { set; get; }
-        public string LabelPointX { set; get; }
-        public string LabelPointY { set; get; }
+        public string LabelName { set; get; }
+        public string LabelContext { set; get; }
+       
 
+
+      
         public string Name { set; get; }
         public string Declare { set; get; }
         public string Order { set; get; }
@@ -593,5 +630,14 @@ namespace CreateXML {
         public string GroupAdd { set; get; }
         public string X { set; get; }
         public string Y { set; get; }
+
+        /// <summary>
+        /// 20140819 設定Label及Control的位置
+        /// </summary>
+        /// <param name="X"></param>
+        /// <param name="Y"></param>
+        public void SetLocation(int X,int Y) { 
+        
+        }
     }
 }

@@ -1263,40 +1263,7 @@ namespace CreateXML {
         }
 
 
-        /// <summary>
-        /// 測試按鈕
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button4_Click(object sender, EventArgs e) {
-
-            //Resources.resx";
-            //SaveResource(ProjectPath+"Resources.resx");
-            //           <data name="Msg_Err_NoSalaryCount" xml:space="preserve">
-            //  <value>No salary statistics</value>
-            //  
-            //</data>
-
-            var b = 1;
-
-            StringReader str = new StringReader(richTextBox1.Text);
-            StringBuilder STB = new StringBuilder();
-
-            while(str.Peek() != -1) {
-                STB.Append(tb_className.Text + "richTextBox1.AppendText(\"");
-                STB.Append(str.ReadLine() + "\\r\\n\"); \r\n");
-                //STB.Append(" Phone = '" + str.ReadLine() + "' OR");
-            }
-            //Random rd = new Random();
-            //STB.Append("Select * from PhoneNumber_ where ");
-            //for(int i = 0; i < 51431; i++) {
-            //    STB.Append(" Phone='09" + rd.Next(11111111, 16111111) + "' OR ");
-            //}
-
-
-            richTextBox1.Clear();
-            richTextBox1.Text = STB.ToString();
-        }
+       
 
         /// <summary>
         /// 多語系製作

@@ -41,7 +41,6 @@
             this.cb_INamedObject = new System.Windows.Forms.CheckBox();
             this.cb_IDataModifyObject = new System.Windows.Forms.CheckBox();
             this.cb_IFlagObject = new System.Windows.Forms.CheckBox();
-            this.button4 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.檔案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.開啟新檔ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,14 +88,24 @@
             this.一鍵生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cb_Collection = new System.Windows.Forms.CheckBox();
             this.MainGroup = new System.Windows.Forms.GroupBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.cb_ForCase = new System.Windows.Forms.CheckBox();
             this.cb_OnlyParameter = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.MainGroup.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -125,7 +134,7 @@
             // cb_IAuditObject
             // 
             this.cb_IAuditObject.AutoSize = true;
-            this.cb_IAuditObject.Location = new System.Drawing.Point(478, 24);
+            this.cb_IAuditObject.Location = new System.Drawing.Point(482, 14);
             this.cb_IAuditObject.Name = "cb_IAuditObject";
             this.cb_IAuditObject.Size = new System.Drawing.Size(84, 16);
             this.cb_IAuditObject.TabIndex = 4;
@@ -136,7 +145,7 @@
             // cb_IOwnerObject
             // 
             this.cb_IOwnerObject.AutoSize = true;
-            this.cb_IOwnerObject.Location = new System.Drawing.Point(478, 49);
+            this.cb_IOwnerObject.Location = new System.Drawing.Point(482, 39);
             this.cb_IOwnerObject.Name = "cb_IOwnerObject";
             this.cb_IOwnerObject.Size = new System.Drawing.Size(89, 16);
             this.cb_IOwnerObject.TabIndex = 5;
@@ -181,7 +190,7 @@
             this.cb_DataEntity.AutoSize = true;
             this.cb_DataEntity.Checked = true;
             this.cb_DataEntity.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_DataEntity.Location = new System.Drawing.Point(581, 24);
+            this.cb_DataEntity.Location = new System.Drawing.Point(585, 14);
             this.cb_DataEntity.Name = "cb_DataEntity";
             this.cb_DataEntity.Size = new System.Drawing.Size(73, 16);
             this.cb_DataEntity.TabIndex = 10;
@@ -191,7 +200,7 @@
             // cb_ICodeObject
             // 
             this.cb_ICodeObject.AutoSize = true;
-            this.cb_ICodeObject.Location = new System.Drawing.Point(581, 49);
+            this.cb_ICodeObject.Location = new System.Drawing.Point(585, 39);
             this.cb_ICodeObject.Name = "cb_ICodeObject";
             this.cb_ICodeObject.Size = new System.Drawing.Size(83, 16);
             this.cb_ICodeObject.TabIndex = 11;
@@ -202,7 +211,7 @@
             // cb_INamedObject
             // 
             this.cb_INamedObject.AutoSize = true;
-            this.cb_INamedObject.Location = new System.Drawing.Point(677, 24);
+            this.cb_INamedObject.Location = new System.Drawing.Point(681, 14);
             this.cb_INamedObject.Name = "cb_INamedObject";
             this.cb_INamedObject.Size = new System.Drawing.Size(91, 16);
             this.cb_INamedObject.TabIndex = 12;
@@ -213,7 +222,7 @@
             // cb_IDataModifyObject
             // 
             this.cb_IDataModifyObject.AutoSize = true;
-            this.cb_IDataModifyObject.Location = new System.Drawing.Point(677, 47);
+            this.cb_IDataModifyObject.Location = new System.Drawing.Point(681, 37);
             this.cb_IDataModifyObject.Name = "cb_IDataModifyObject";
             this.cb_IDataModifyObject.Size = new System.Drawing.Size(114, 16);
             this.cb_IDataModifyObject.TabIndex = 13;
@@ -224,24 +233,13 @@
             // cb_IFlagObject
             // 
             this.cb_IFlagObject.AutoSize = true;
-            this.cb_IFlagObject.Location = new System.Drawing.Point(798, 24);
+            this.cb_IFlagObject.Location = new System.Drawing.Point(802, 14);
             this.cb_IFlagObject.Name = "cb_IFlagObject";
             this.cb_IFlagObject.Size = new System.Drawing.Size(78, 16);
             this.cb_IFlagObject.TabIndex = 14;
             this.cb_IFlagObject.Text = "IFlagObject";
             this.cb_IFlagObject.UseVisualStyleBackColor = true;
             this.cb_IFlagObject.CheckedChanged += new System.EventHandler(this.cb_IFlagObject_CheckedChanged);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(921, 1);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 16;
-            this.button4.Text = "測試按鈕";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Visible = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // menuStrip1
             // 
@@ -607,7 +605,7 @@
             // cb_Collection
             // 
             this.cb_Collection.AutoSize = true;
-            this.cb_Collection.Location = new System.Drawing.Point(798, 49);
+            this.cb_Collection.Location = new System.Drawing.Point(802, 39);
             this.cb_Collection.Name = "cb_Collection";
             this.cb_Collection.Size = new System.Drawing.Size(72, 16);
             this.cb_Collection.TabIndex = 18;
@@ -616,9 +614,11 @@
             // 
             // MainGroup
             // 
-            this.MainGroup.Controls.Add(this.radioButton3);
-            this.MainGroup.Controls.Add(this.radioButton2);
-            this.MainGroup.Controls.Add(this.radioButton1);
+            this.MainGroup.Controls.Add(this.button1);
+            this.MainGroup.Controls.Add(this.label3);
+            this.MainGroup.Controls.Add(this.comboBox1);
+            this.MainGroup.Controls.Add(this.groupBox2);
+            this.MainGroup.Controls.Add(this.groupBox1);
             this.MainGroup.Controls.Add(this.cb_ForCase);
             this.MainGroup.Controls.Add(this.cb_OnlyParameter);
             this.MainGroup.Controls.Add(this.cb_IOwnerObject);
@@ -640,31 +640,48 @@
             this.MainGroup.TabStop = false;
             this.MainGroup.Text = "主控";
             // 
-            // radioButton3
+            // button1
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(677, 81);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(80, 16);
-            this.radioButton3.TabIndex = 21;
-            this.radioButton3.Text = "Corporation";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(250, 22);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(38, 23);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "載入";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // label3
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(583, 81);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(70, 16);
-            this.radioButton2.TabIndex = 21;
-            this.radioButton2.Text = "Employee";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(25, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 12);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "舊檔:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(66, 22);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(166, 20);
+            this.comboBox1.TabIndex = 25;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.radioButton1);
+            this.groupBox2.Controls.Add(this.radioButton2);
+            this.groupBox2.Controls.Add(this.radioButton3);
+            this.groupBox2.Location = new System.Drawing.Point(479, 56);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(293, 39);
+            this.groupBox2.TabIndex = 24;
+            this.groupBox2.TabStop = false;
             // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(492, 81);
+            this.radioButton1.Location = new System.Drawing.Point(13, 14);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(64, 16);
             this.radioButton1.TabIndex = 21;
@@ -672,10 +689,75 @@
             this.radioButton1.Text = "Function";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(104, 14);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(70, 16);
+            this.radioButton2.TabIndex = 21;
+            this.radioButton2.Text = "Employee";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(198, 14);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(80, 16);
+            this.radioButton3.TabIndex = 21;
+            this.radioButton3.Text = "Corporation";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioButton4);
+            this.groupBox1.Controls.Add(this.radioButton6);
+            this.groupBox1.Controls.Add(this.radioButton5);
+            this.groupBox1.Location = new System.Drawing.Point(478, 94);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(294, 33);
+            this.groupBox1.TabIndex = 23;
+            this.groupBox1.TabStop = false;
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Checked = true;
+            this.radioButton4.Location = new System.Drawing.Point(14, 11);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(56, 16);
+            this.radioButton4.TabIndex = 22;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "Mode2";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Location = new System.Drawing.Point(199, 11);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(56, 16);
+            this.radioButton6.TabIndex = 22;
+            this.radioButton6.TabStop = true;
+            this.radioButton6.Text = "Mode4";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            // 
+            // radioButton5
+            // 
+            this.radioButton5.AutoSize = true;
+            this.radioButton5.Location = new System.Drawing.Point(105, 12);
+            this.radioButton5.Name = "radioButton5";
+            this.radioButton5.Size = new System.Drawing.Size(56, 16);
+            this.radioButton5.TabIndex = 22;
+            this.radioButton5.TabStop = true;
+            this.radioButton5.Text = "Mode3";
+            this.radioButton5.UseVisualStyleBackColor = true;
+            // 
             // cb_ForCase
             // 
             this.cb_ForCase.AutoSize = true;
-            this.cb_ForCase.Location = new System.Drawing.Point(887, 22);
+            this.cb_ForCase.Location = new System.Drawing.Point(891, 12);
             this.cb_ForCase.Name = "cb_ForCase";
             this.cb_ForCase.Size = new System.Drawing.Size(54, 16);
             this.cb_ForCase.TabIndex = 20;
@@ -686,7 +768,7 @@
             // cb_OnlyParameter
             // 
             this.cb_OnlyParameter.AutoSize = true;
-            this.cb_OnlyParameter.Location = new System.Drawing.Point(887, 49);
+            this.cb_OnlyParameter.Location = new System.Drawing.Point(891, 39);
             this.cb_OnlyParameter.Name = "cb_OnlyParameter";
             this.cb_OnlyParameter.Size = new System.Drawing.Size(96, 16);
             this.cb_OnlyParameter.TabIndex = 19;
@@ -700,7 +782,6 @@
             this.ClientSize = new System.Drawing.Size(1008, 694);
             this.Controls.Add(this.MainGroup);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -712,6 +793,10 @@
             this.menuStrip1.PerformLayout();
             this.MainGroup.ResumeLayout(false);
             this.MainGroup.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -732,7 +817,6 @@
         private System.Windows.Forms.CheckBox cb_INamedObject;
         private System.Windows.Forms.CheckBox cb_IDataModifyObject;
         private System.Windows.Forms.CheckBox cb_IFlagObject;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 檔案ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 生成ToolStripMenuItem;
@@ -785,6 +869,14 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.ToolStripMenuItem 一鍵生成ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 開啟新檔ToolStripMenuItem;
+        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 
