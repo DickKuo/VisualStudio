@@ -257,6 +257,8 @@ namespace CreateXML
             sw.Close();
           
         }
+        
+        //20140819
 
         /// <summary>
         /// 20140818 add by Dick 加入控件
