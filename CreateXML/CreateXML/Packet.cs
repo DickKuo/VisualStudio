@@ -49,7 +49,8 @@ namespace CreateXML {
             move.MoveEachFile(cb_Path.SelectedItem.ToString(), tb_Number.Text+@"\Client", ClientList,"client");
             move.MoveEachFile(cb_Path.SelectedItem.ToString(), tb_Number.Text + @"\Server", ServerList,"server");                      
             move.RecurrceMove(cb_Path.SelectedItem.ToString() + @"\Configuration",@"C:\Share\"+ tb_Number.Text + @"\Server", true);
-            MoveFileFileNameStart(cb_Path.SelectedItem.ToString() + @"\Configuration\Query", @"C:\Share\" + tb_Number.Text + @"\Server\Configuration\Query","X", true);
+            //MoveFileFileNameStart(cb_Path.SelectedItem.ToString() + @"\Configuration\Query", @"C:\Share\" + tb_Number.Text + @"\Server\Configuration\Query","", true);
+            MoveFileFileName(cb_Path.SelectedItem.ToString() + @"\Configuration\Query", @"C:\Share\" + tb_Number.Text + @"\Server\Configuration\Query\Case", true);
             MoveFileFileName(cb_Path.SelectedItem.ToString() + @"\HRShellXml", @"C:\Share\" + tb_Number.Text + @"\Server\HRShellXml",true);
 
             MessageBox.Show("建置完成");

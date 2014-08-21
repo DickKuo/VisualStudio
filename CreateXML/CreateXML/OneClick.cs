@@ -290,7 +290,7 @@ namespace CreateXML {
                                     control.LabelContext += "            " + control.LabelName + "Label1.Name = " + control.LabelName + ";";
                                     control.LabelContext += "            " + control.LabelName + "Label1.Size = new System.Drawing.Size(29, 12);";
                                     control.LabelContext += "            " + control.LabelName + "Label1.TabIndex = 2;";
-                                    control.LabelContext += "            " +control.LabelName  +"Label1.Text = "+control.Name+";
+                                    control.LabelContext += "            " +control.LabelName  +"Label1.Text = "+control.Name;
                                     control.LabelContext += "            " +control.LabelName  +"Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;";
                                     li.Add(control);
                                 }
