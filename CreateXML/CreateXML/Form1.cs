@@ -2294,38 +2294,52 @@ namespace CreateXML {
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
             oneclick.RegisterEntity(tb_className.Text);
             oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1);
+            Task[] tasks = new Task[3];
+            
             #region 加入標題多語系
 
-            英文ToolStripMenuItem3.PerformClick();
-            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase", true);
-            繁忠ToolStripMenuItem1.PerformClick();
-            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHT", false);
-            簡中ToolStripMenuItem2.PerformClick();
-            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHS", false);
+            TitleResource(oneclick);
             #endregion
 
 
             #region QueryView 多語系
-            英文ToolStripMenuItem1.PerformClick();
-            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase", true);
-            繁中ToolStripMenuItem1.PerformClick();
-            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase.zh-CHT", false);
-            簡中ToolStripMenuItem1.PerformClick();
-            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase.zh-CHS", false);
+            QueryResource(oneclick, dt);
             #endregion
 
             #region 樹節點多語系
+            TreeResource(oneclick);
+            #endregion
+
+
+
+            MessageBox.Show("完成!!");
+        }
+
+        private void TreeResource(OneClick oneclick) {
             英文ToolStripMenuItem4.PerformClick();
             oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase", true);
             繁中ToolStripMenuItem2.PerformClick();
             oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHT", false);
             簡中ToolStripMenuItem3.PerformClick();
             oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHS", false);
-            #endregion
+        }
 
+        private void QueryResource(OneClick oneclick, System.Data.DataTable dt) {
+            英文ToolStripMenuItem1.PerformClick();
+            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase", true);
+            繁中ToolStripMenuItem1.PerformClick();
+            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase.zh-CHT", false);
+            簡中ToolStripMenuItem1.PerformClick();
+            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase.zh-CHS", false);
+        }
 
-
-            MessageBox.Show("完成!!");
+        private void TitleResource(OneClick oneclick) {
+            英文ToolStripMenuItem3.PerformClick();
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase", true);
+            繁忠ToolStripMenuItem1.PerformClick();
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHT", false);
+            簡中ToolStripMenuItem2.PerformClick();
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHS", false);
         }
 
 
