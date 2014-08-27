@@ -90,7 +90,7 @@
             this.MainGroup = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.EnitiesComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -271,7 +271,7 @@
             // 開啟新檔ToolStripMenuItem
             // 
             this.開啟新檔ToolStripMenuItem.Name = "開啟新檔ToolStripMenuItem";
-            this.開啟新檔ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.開啟新檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.開啟新檔ToolStripMenuItem.Text = "開啟新檔";
             this.開啟新檔ToolStripMenuItem.Click += new System.EventHandler(this.開啟新檔ToolStripMenuItem_Click);
             // 
@@ -286,7 +286,7 @@
             this.生成VirtualServiceToolStripMenuItem,
             this.生成VirtualUIToolStripMenuItem});
             this.生成ToolStripMenuItem.Name = "生成ToolStripMenuItem";
-            this.生成ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.生成ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.生成ToolStripMenuItem.Text = "生成";
             // 
             // 生成生成EntitiesToolStripMenuItem
@@ -347,7 +347,7 @@
             this.desplayNameToolStripMenuItem,
             this.progNameToolStripMenuItem});
             this.多語系ToolStripMenuItem.Name = "多語系ToolStripMenuItem";
-            this.多語系ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.多語系ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.多語系ToolStripMenuItem.Text = "多語系";
             // 
             // browseProjectToolStripMenuItem
@@ -524,22 +524,23 @@
             // 存檔ToolStripMenuItem
             // 
             this.存檔ToolStripMenuItem.Name = "存檔ToolStripMenuItem";
-            this.存檔ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.存檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.存檔ToolStripMenuItem.Text = "存檔";
             this.存檔ToolStripMenuItem.Click += new System.EventHandler(this.存檔ToolStripMenuItem_Click);
             // 
             // 載入上次作業ToolStripMenuItem
             // 
             this.載入上次作業ToolStripMenuItem.Name = "載入上次作業ToolStripMenuItem";
-            this.載入上次作業ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.載入上次作業ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.載入上次作業ToolStripMenuItem.Text = "載入上次作業";
+            this.載入上次作業ToolStripMenuItem.Visible = false;
             // 
             // 導入ToolStripMenuItem
             // 
             this.導入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.導入必填欄位ToolStripMenuItem});
             this.導入ToolStripMenuItem.Name = "導入ToolStripMenuItem";
-            this.導入ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.導入ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.導入ToolStripMenuItem.Text = "導入";
             // 
             // 導入必填欄位ToolStripMenuItem
@@ -552,7 +553,7 @@
             // 結束ToolStripMenuItem
             // 
             this.結束ToolStripMenuItem.Name = "結束ToolStripMenuItem";
-            this.結束ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.結束ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.結束ToolStripMenuItem.Text = "結束";
             this.結束ToolStripMenuItem.Click += new System.EventHandler(this.結束ToolStripMenuItem_Click);
             // 
@@ -616,7 +617,7 @@
             // 
             this.MainGroup.Controls.Add(this.button1);
             this.MainGroup.Controls.Add(this.label3);
-            this.MainGroup.Controls.Add(this.comboBox1);
+            this.MainGroup.Controls.Add(this.EnitiesComboBox);
             this.MainGroup.Controls.Add(this.groupBox2);
             this.MainGroup.Controls.Add(this.groupBox1);
             this.MainGroup.Controls.Add(this.cb_ForCase);
@@ -648,6 +649,7 @@
             this.button1.TabIndex = 27;
             this.button1.Text = "載入";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.item_Click);
             // 
             // label3
             // 
@@ -658,13 +660,13 @@
             this.label3.TabIndex = 26;
             this.label3.Text = "舊檔:";
             // 
-            // comboBox1
+            // EnitiesComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(66, 22);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(166, 20);
-            this.comboBox1.TabIndex = 25;
+            this.EnitiesComboBox.FormattingEnabled = true;
+            this.EnitiesComboBox.Location = new System.Drawing.Point(66, 22);
+            this.EnitiesComboBox.Name = "EnitiesComboBox";
+            this.EnitiesComboBox.Size = new System.Drawing.Size(166, 20);
+            this.EnitiesComboBox.TabIndex = 25;
             // 
             // groupBox2
             // 
@@ -876,7 +878,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox EnitiesComboBox;
     }
 }
 

@@ -824,10 +824,11 @@ namespace CreateXML {
             XmlNode root = doc.SelectSingleNode("root");
             foreach(XmlNode node in root.ChildNodes) {
                 string ClassName = node.Attributes["ClassName"].Value.ToString();
-
-                ToolStripMenuItem item = new ToolStripMenuItem(ClassName);
-                item.Click += new EventHandler(item_Click);
-                載入上次作業ToolStripMenuItem.DropDownItems.Add(item);
+                EnitiesComboBox.Items.Add(ClassName);
+                //ToolStripMenuItem item = new ToolStripMenuItem(ClassName);
+                //item.Click += new EventHandler(item_Click);
+                ///20140827 modified by Dick for 修改成ComboBox
+                //載入上次作業ToolStripMenuItem.DropDownItems.Add(item);
                 foreach(XmlNode child in node.ChildNodes) {
                     string temp = child.Attributes["ReferenceProperty"].Value;
                     if(!string.IsNullOrEmpty(temp)) {
@@ -1016,7 +1017,11 @@ namespace CreateXML {
 
         private void item_Click(object sender, EventArgs e) {
             //throw new NotImplementedException();
-            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            //20140827 modified by Dick 修改成ComboBox
+            //ToolStripMenuItem item = sender as ToolStripMenuItem;
+            string text = EnitiesComboBox.SelectedItem.ToString();
+
+
             System.Data.DataTable dt = new System.Data.DataTable();
             dt.Columns.Add("Parameter");
             //   dt.Columns.Add("Type", typeof(DataGridViewComboBoxColumn));
@@ -1028,7 +1033,8 @@ namespace CreateXML {
             dt.Columns.Add("UIOrder");
 
             XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
-            XmlNode root = doc.GetElementById(item.Text);
+            XmlNode root = doc.GetElementById(text);
+            //XmlNode root = doc.GetElementById(item.Text);
             this.tb_className.Text = root.Attributes["ClassName"].Value.ToString();
             this.tb_scrib.Text = root.Attributes["Describle"].Value.ToString();
             cb_IAuditObject.Checked = Convert.ToBoolean(root.Attributes["IAuditObject"].Value.ToString());
