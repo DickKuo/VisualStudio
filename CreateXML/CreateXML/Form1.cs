@@ -824,11 +824,12 @@ namespace CreateXML {
             XmlNode root = doc.SelectSingleNode("root");
             foreach(XmlNode node in root.ChildNodes) {
                 string ClassName = node.Attributes["ClassName"].Value.ToString();
-                EnitiesComboBox.Items.Add(ClassName);
+                #region 20140827 modified by Dick for 修改成ComboBox
+                EnitiesComboBox.Items.Add(ClassName);              
                 //ToolStripMenuItem item = new ToolStripMenuItem(ClassName);
-                //item.Click += new EventHandler(item_Click);
-                ///20140827 modified by Dick for 修改成ComboBox
+                //item.Click += new EventHandler(item_Click);               
                 //載入上次作業ToolStripMenuItem.DropDownItems.Add(item);
+                #endregion
                 foreach(XmlNode child in node.ChildNodes) {
                     string temp = child.Attributes["ReferenceProperty"].Value;
                     if(!string.IsNullOrEmpty(temp)) {
@@ -1029,7 +1030,7 @@ namespace CreateXML {
             dt.Columns.Add("ReferenceProperty");
             dt.Columns.Add("Necessary", typeof(bool));
             dt.Columns.Add("Order");
-            //20140818 add by Dick 
+            //20140818 add by Dick 加入UI排位子順序
             dt.Columns.Add("UIOrder");
 
             XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
