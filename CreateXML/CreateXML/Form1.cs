@@ -24,6 +24,7 @@ namespace CreateXML {
         private StringBuilder _privateparameter = new StringBuilder();
         private StringBuilder _parameter = new StringBuilder();
         private string _xmlpath;
+        private StringBuilder _stringBuilder = new StringBuilder();  //多語系儲存
 
         public string Xmlpath {
             get { return _xmlpath; }
@@ -2129,15 +2130,25 @@ namespace CreateXML {
             }
         }
 
+        
+
         private void 英文ToolStripMenuItem4_Click(object sender, EventArgs e) {
             richTextBox1.Clear();
+            _stringBuilder.Clear();
             richTextBox1.AppendText("Prog_");
+            _stringBuilder.Append("Prog_");
             richTextBox1.AppendText(tb_className.Text);
+            _stringBuilder.Append(tb_className.Text);
             richTextBox1.AppendText("Browse");
+            _stringBuilder.Append("Browse");
             richTextBox1.AppendText("\t");
+            _stringBuilder.Append("\t");
             richTextBox1.AppendText(tb_className.Text);
+            _stringBuilder.Append(tb_className.Text);
             richTextBox1.AppendText("\t");
+            _stringBuilder.Append("\t");
             richTextBox1.AppendText(tb_scrib.Text);
+            _stringBuilder.Append(tb_scrib.Text);
         }
 
         private void 繁中ToolStripMenuItem2_Click(object sender, EventArgs e) {
@@ -2308,16 +2319,14 @@ namespace CreateXML {
 
             #region 樹節點多語系
             TreeResource(oneclick);
-            #endregion
-
-
-
+            #endregion            
             MessageBox.Show("完成!!");
         }
 
         private void TreeResource(OneClick oneclick) {
             英文ToolStripMenuItem4.PerformClick();
-            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase", true);
+            //oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase", true);
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", _stringBuilder.ToString(), "ResourcesForCase", true);            
             繁中ToolStripMenuItem2.PerformClick();
             oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHT", false);
             簡中ToolStripMenuItem3.PerformClick();
