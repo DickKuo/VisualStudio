@@ -2137,27 +2137,77 @@ namespace CreateXML {
             }
         }
 
-        
 
-        private void 英文ToolStripMenuItem4_Click(object sender, EventArgs e) {
-            richTextBox1.Clear();
-            _stringBuilder.Clear();
-            richTextBox1.AppendText("Prog_");
-            _stringBuilder.Append("Prog_");
-            richTextBox1.AppendText(tb_className.Text);
-            _stringBuilder.Append(tb_className.Text);
-            richTextBox1.AppendText("Browse");
-            _stringBuilder.Append("Browse");
-            richTextBox1.AppendText("\t");
-            _stringBuilder.Append("\t");
-            richTextBox1.AppendText(tb_className.Text);
-            _stringBuilder.Append(tb_className.Text);
-            richTextBox1.AppendText("\t");
-            _stringBuilder.Append("\t");
-            richTextBox1.AppendText(tb_scrib.Text);
-            _stringBuilder.Append(tb_scrib.Text);
+        /// <summary>
+        /// 20140827 節點多語系英文
+        /// </summary>
+        /// <returns></returns>
+        private StringBuilder Pro_English() {
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
+            sb.Append("Prog_");
+            sb.Append(tb_className.Text);
+            sb.Append("Browse");
+            sb.Append("\t");
+            sb.Append(tb_className.Text);
+            sb.Append("\t");
+            sb.Append(tb_scrib.Text);
+            return sb;
         }
 
+        /// <summary>
+        /// 20140827 節點多語系繁體中文
+        /// </summary>
+        /// <returns></returns>
+        private StringBuilder Pro_ChineseTraditional() {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Prog_");
+            sb.Append(tb_className.Text);
+            sb.Append("Browse");
+            sb.Append("\t");
+            sb.Append(tb_scrib.Text);
+            sb.Append("\t");
+            sb.Append(tb_scrib.Text);
+            return sb;
+        }
+
+        /// <summary>
+        /// 20140827 節點多語系簡體中文
+        /// </summary>
+        /// <returns></returns>
+        private StringBuilder Pro_ChineseSimplified() {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Prog_");
+            sb.Append(tb_className.Text);
+            sb.Append("Browse");
+            sb.Append("\t");
+            sb.Append(translateEncodingByWord(tb_scrib.Text, true).Trim());
+            sb.Append("\t");
+            sb.Append(translateEncodingByWord(tb_scrib.Text, true).Trim());
+            return sb;
+        }
+
+        /// <summary>
+        /// 20140827 節點多語系英文按鈕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 英文ToolStripMenuItem4_Click(object sender, EventArgs e) {
+            richTextBox1.Clear();
+            richTextBox1.AppendText("Prog_");       
+            richTextBox1.AppendText(tb_className.Text);          
+            richTextBox1.AppendText("Browse");          
+            richTextBox1.AppendText("\t");            
+            richTextBox1.AppendText(tb_className.Text);           
+            richTextBox1.AppendText("\t");           
+            richTextBox1.AppendText(tb_scrib.Text);            
+        }
+
+        /// <summary>
+        /// 20140827 節點多語系 繁中按鈕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void 繁中ToolStripMenuItem2_Click(object sender, EventArgs e) {
             richTextBox1.Clear();
             richTextBox1.AppendText("Prog_");
@@ -2169,6 +2219,11 @@ namespace CreateXML {
             richTextBox1.AppendText(tb_scrib.Text);
         }
 
+        /// <summary>
+        /// 20140827 節點多語系 簡中按鈕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void 簡中ToolStripMenuItem3_Click(object sender, EventArgs e) {
 
             richTextBox1.Clear();
@@ -2182,6 +2237,12 @@ namespace CreateXML {
 
         }
 
+
+        /// <summary>
+        /// 20140827 Title 多語系 英文按鈕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void 英文ToolStripMenuItem3_Click(object sender, EventArgs e) {
             richTextBox1.Clear();
             richTextBox1.AppendText(tb_className.Text);
@@ -2192,6 +2253,11 @@ namespace CreateXML {
             richTextBox1.AppendText(tb_scrib.Text);
         }
 
+        /// <summary>
+        /// 20140827 Title 多語系 繁中按鈕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void 繁忠ToolStripMenuItem1_Click(object sender, EventArgs e) {
             richTextBox1.Clear();
             richTextBox1.AppendText(tb_className.Text);
@@ -2202,6 +2268,11 @@ namespace CreateXML {
             richTextBox1.AppendText(tb_scrib.Text);
         }
 
+        /// <summary>
+        /// 20140827 Title 多語系 簡中按鈕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void 簡中ToolStripMenuItem2_Click(object sender, EventArgs e) {
             richTextBox1.Clear();
             richTextBox1.AppendText(tb_className.Text);
@@ -2312,32 +2383,33 @@ namespace CreateXML {
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
             oneclick.RegisterEntity(tb_className.Text);
             oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1);
-            Task[] tasks = new Task[3];
             
+            ///20140827 多執行緒
+            System.Threading.Tasks.Task[] tasks = new System.Threading.Tasks.Task[1];
+
+            #region 樹節點多語系          
+            tasks[0]= System.Threading.Tasks.Task.Factory.StartNew(() => TreeResource(oneclick));           
+            
+            #endregion  
+
+
             #region 加入標題多語系
 
             TitleResource(oneclick);
             #endregion
 
-
             #region QueryView 多語系
             QueryResource(oneclick, dt);
             #endregion
 
-            #region 樹節點多語系
-            TreeResource(oneclick);
-            #endregion            
+            System.Threading.Tasks.Task.WaitAll(tasks);
             MessageBox.Show("完成!!");
         }
 
-        private void TreeResource(OneClick oneclick) {
-            英文ToolStripMenuItem4.PerformClick();
-            //oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase", true);
-            oneclick.AddResourceRow("DigiWin.HR.CustomUI", _stringBuilder.ToString(), "ResourcesForCase", true);            
-            繁中ToolStripMenuItem2.PerformClick();
-            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHT", false);
-            簡中ToolStripMenuItem3.PerformClick();
-            oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHS", false);
+        private void TreeResource(OneClick oneclick) {           
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", Pro_English().ToString(), "ResourcesForCase", true);      
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", Pro_ChineseTraditional().ToString(), "ResourcesForCase.zh-CHT", false);
+            oneclick.AddResourceRow("DigiWin.HR.CustomUI", Pro_ChineseSimplified().ToString(), "ResourcesForCase.zh-CHS", false);
         }
 
         private void QueryResource(OneClick oneclick, System.Data.DataTable dt) {
