@@ -25,7 +25,7 @@ namespace WindowsService1 {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Dick\\Desktop\\22")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Log")]
         public string LogPath {
             get {
                 return ((string)(this["LogPath"]));
@@ -121,7 +121,7 @@ namespace WindowsService1 {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Dick\\Desktop\\22")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Log")]
         public string RecordPath {
             get {
                 return ((string)(this["RecordPath"]));

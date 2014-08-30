@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="LogPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Dick\Desktop\22</Value>
+      <Value Profile="(Default)">D:\Log</Value>
     </Setting>
     <Setting Name="PostAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://dickguo.net63.net/chat/getInfo/</Value>
@@ -27,7 +27,7 @@
       <Value Profile="(Default)">180000</Value>
     </Setting>
     <Setting Name="RecordPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Dick\Desktop\22</Value>
+      <Value Profile="(Default)">D:\Log</Value>
     </Setting>
   </Settings>
 </SettingsFile>

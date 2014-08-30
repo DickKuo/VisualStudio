@@ -27,15 +27,7 @@ namespace GetSite
             Month.Add("Oct",10);
             Month.Add("Nov",11);
             Month.Add("Dec",12);
-            log = new FileTool.ToolLog(LogPath);
-            //Start();
-        }
-
-        /// <summary>
-        /// 開始爬資料
-        /// </summary>
-        protected void Start() { 
-        
+            log = new FileTool.ToolLog(LogPath);          
         }
 
         /// <summary>
@@ -56,7 +48,6 @@ namespace GetSite
             }
             catch (Exception ex) {
                 log.Log(FileTool.LogType.Error, ex.Message);
-                //Console.WriteLine(ex.ToString());
             }
             return reader;
         }
@@ -111,20 +102,16 @@ namespace GetSite
                 MatchCollection matches = Regex.Matches(temp, "<title>[^\"]+</title>", RegexOptions.IgnoreCase);
                 foreach (Match match in matches)
                 {
-                    Info.Title = match.Value.Replace("\"", "'").Replace("</title>", "").Replace("<title>", "").Replace("--","") ;
-                    //.Replace("<title>", "").Replace("</title>", "");
+                    Info.Title = match.Value.Replace("\"", "'").Replace("</title>", "").Replace("<title>", "").Replace("--","") ;                   
                 }
                 matches = Regex.Matches(temp, "</span></div>[^\"]+<span class=\"f2\">", RegexOptions.IgnoreCase);
-                //matches = Regex.Matches(temp, "<span class=\"article-meta-value\">[^\"]+<span class=\"f2\">", RegexOptions.IgnoreCase);
                 foreach (Match match in matches)
                 {
-                    Info.Context = match.Value.Replace("\"", "'").Replace("</span></div>", "").Replace("<span class=\"f2\">", "").Replace("--", "");
-                    //  .Replace("</span></div>", "").Replace("<span class=\"f2\">", ""); ;                
+                    Info.Context = match.Value.Replace("\"", "'").Replace("</span></div>", "").Replace("<span class=\"f2\">", "").Replace("--", "");    
                 }
                 if(Info.Context==null) {
                     MemoryStream memory = new MemoryStream(Encoding.UTF8.GetBytes(temp));
-                    StreamReader secoend = new StreamReader(memory);                 
-                    
+                    StreamReader secoend = new StreamReader(memory);  
                     StringBuilder sb =new StringBuilder();
                     string line = string.Empty;
                     while( (line =secoend.ReadLine())!=null)
@@ -141,7 +128,6 @@ namespace GetSite
                     }
                     Info.Context = sb.ToString().Replace("\"", "'");
                 }
-
                 matches = Regex.Matches(temp, "時間</span><span class=\"article-meta-value\">[^\"]+</span></div>", RegexOptions.IgnoreCase);
                 foreach (Match match in matches)
                 {
@@ -150,9 +136,7 @@ namespace GetSite
                     string[] spl = s.Split(' ');
                     if (spl.Length > 4)
                     {
-                        string stemp = spl[4] + spl[1] + spl[2] + spl[3];
-                        //DateTime time=new DateTime();
-                        //DateTime.TryParse(stemp, out time);                    
+                        string stemp = spl[4] + spl[1] + spl[2] + spl[3];                                        
                         IFormatProvider ifp = new CultureInfo("en-US").DateTimeFormat;
                         int month = Month[spl[1]];
                         string[] sptime = spl[3].Split(':');
@@ -167,22 +151,15 @@ namespace GetSite
                             {
                                 Info.PostDate = new DateTime(Convert.ToInt32(spl[5]), month, Convert.ToInt32(spl[3]), Convert.ToInt32(sptime[0]), Convert.ToInt32(sptime[1]), Convert.ToInt32(sptime[2]));                      
                             }
-                        }
-                        //DateTime time = DateTime.TryParseExact(s," yyyy/MM/dd", ifp);
-                        
-                    }
-                    //  ; ;                
+                        }                       
+                    }              
                 }
-
                 matches = Regex.Matches(temp, "作者</span><span class=\"article-meta-value\">[^\"]+</span></div>", RegexOptions.IgnoreCase);
-
                 foreach(Match match in matches) {
                     Info.Author = match.Value.Replace("\"", "'").Replace("作者</span><span class=\"article-meta-value\">", "").Replace("</span></div>", "").Replace("--", ""); 
-                        //.Replace("作者</span><span class=\"article-meta-value\">", "").Replace("</span></div>", "");
                 }
 
                 matches = Regex.Matches(temp, "<span class=\"hl push-tag\">[^\"]+</span>", RegexOptions.IgnoreCase);
-
                 MatchCollection matchesId = Regex.Matches(temp, "<span class=\"f3 hl push-userid\">[^\"]+</span>", RegexOptions.IgnoreCase);
                 MatchCollection matchescontent = Regex.Matches(temp, "<span class=\"f3 push-content\">[^\"]+</span>", RegexOptions.IgnoreCase);
                 int count = 0;
@@ -190,28 +167,11 @@ namespace GetSite
                 {
                     if (matches.Count > count && matchesId.Count > count && matchescontent.Count > count)
                     {
-                        string matchstr = match.Value + matchesId[count] + matchescontent[count];
-                        //Info.PushList.Add(matchstr);
+                        string matchstr = match.Value + matchesId[count] + matchescontent[count];                     
                         Info.PushList.Add(matchstr.Replace("\"", "'"));
                     }
-                    count++;
-                    //.Replace("作者</span><span class=\"article-meta-value\">", "").Replace("</span></div>", "");
+                    count++;                  
                 }    
-
-
-                //while ((str = reader.ReadLine()) != null)
-                //{
-                //    if (str.IndexOf("<title>") != -1)
-                //    {
-                //        Info.Title = str.Replace("<title>", "").Replace("</title>","");
-
-                //MatchCollection matches = Regex.Matches(str, "<title>[^\"]+</title>", RegexOptions.IgnoreCase);
-                //foreach (Match match in matches)
-                //{
-                //    Info.Title = match.Value;
-                //}
-                //    }
-                //}
             }
             return Info;
         }

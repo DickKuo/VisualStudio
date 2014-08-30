@@ -169,8 +169,7 @@ namespace WindowsService1
                 if (info.Title != null)
                 {
                     if (info.Title.IndexOf(pCondition) != -1 && info.PushList.Count > PushCount)
-                    {
-                        Thread.Sleep(1000);
+                    {                      
                         info.PushList.Clear();
                         if (info.Title.IndexOf("Re: ") == -1)
                         {
@@ -178,6 +177,7 @@ namespace WindowsService1
                             if (!listold.Contains(info.Title))
                             {
                                 long length = POST(Address, li);
+                                Thread.Sleep(1000);
                                 RecordTime = info.PostDate;
                                 listold.Add(info.Title);                             
                                 Log(string.Format("寫入紀錄 {0} ", info.Title));
@@ -208,7 +208,7 @@ namespace WindowsService1
 
         protected override void OnStop()
         {
-            Log("服務停止" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+            Log( string.Format("服務停止 {0}" , DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")));
         }
     }
 }
