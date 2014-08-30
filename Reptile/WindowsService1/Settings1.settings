@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WindowsService1" GeneratedClassName="Settings1">
+  <Profiles />
+  <Settings>
+    <Setting Name="LogPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Dick\Desktop\22</Value>
+    </Setting>
+    <Setting Name="PostAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://dickguo.net63.net/chat/getInfo/</Value>
+    </Setting>
+    <Setting Name="Condition" Type="System.String" Scope="User">
+      <Value Profile="(Default)">[正妹]</Value>
+    </Setting>
+    <Setting Name="Site" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Beauty</Value>
+    </Setting>
+    <Setting Name="Start" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1150</Value>
+    </Setting>
+    <Setting Name="PushCount" Type="System.String" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="ReCordTime" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2014/04/08 14:15:54</Value>
+    </Setting>
+    <Setting Name="Interval" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">180000</Value>
+    </Setting>
+    <Setting Name="RecordPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Dick\Desktop\22</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

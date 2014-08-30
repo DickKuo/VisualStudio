@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE root[<!ELEMENT root ANY> <!ATTLIST root File ID #REQUIRED>]>
+<root>
+  <!--<PostAddress>http://dickguo.net63.net/chat/getInfo/onekey</PostAddress>-->
+  <PostAddress>http://dickguo.net63.net/chat/getInfo/</PostAddress>
+  <Condition>[正妹]</Condition>
+  <Site>Beauty</Site>
+  <Start>1150</Start>
+  <PushCount>30</PushCount>
+  <ReCordTime>2014/04/09 03:39:28</ReCordTime>
+  <LogPath>C:\Users\Dick\Desktop\22</LogPath>  
+</root>
