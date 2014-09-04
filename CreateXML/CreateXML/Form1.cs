@@ -2396,7 +2396,17 @@ namespace CreateXML {
             System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable ;
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
             oneclick.RegisterEntity(tb_className.Text);
-            oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1);
+
+            int mode = 0;
+            foreach(Control co in groupBoxMode.Controls) { 
+               System.Windows.Forms.CheckBox cb =co as System.Windows.Forms.CheckBox ;
+                if(cb.Checked)
+                {
+                  mode = Convert.ToInt32( cb.Text.Replace("Mode","") );
+                }
+            }
+
+            oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1, mode);
             
             ///20140827 多執行緒
             //System.Threading.Tasks.Task[] tasks = new System.Threading.Tasks.Task[1];

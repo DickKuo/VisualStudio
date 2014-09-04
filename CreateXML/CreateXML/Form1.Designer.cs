@@ -95,7 +95,7 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxMode = new System.Windows.Forms.GroupBox();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
@@ -105,7 +105,7 @@
             this.menuStrip1.SuspendLayout();
             this.MainGroup.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxMode.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -403,28 +403,28 @@
             // 英文ToolStripMenuItem1
             // 
             this.英文ToolStripMenuItem1.Name = "英文ToolStripMenuItem1";
-            this.英文ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.英文ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.英文ToolStripMenuItem1.Text = "英文";
             this.英文ToolStripMenuItem1.Click += new System.EventHandler(this.英文ToolStripMenuItem1_Click);
             // 
             // 繁中ToolStripMenuItem1
             // 
             this.繁中ToolStripMenuItem1.Name = "繁中ToolStripMenuItem1";
-            this.繁中ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.繁中ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.繁中ToolStripMenuItem1.Text = "繁中";
             this.繁中ToolStripMenuItem1.Click += new System.EventHandler(this.繁中ToolStripMenuItem1_Click);
             // 
             // 簡中ToolStripMenuItem1
             // 
             this.簡中ToolStripMenuItem1.Name = "簡中ToolStripMenuItem1";
-            this.簡中ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.簡中ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.簡中ToolStripMenuItem1.Text = "簡中";
             this.簡中ToolStripMenuItem1.Click += new System.EventHandler(this.簡中ToolStripMenuItem1_Click);
             // 
             // 一併修改ToolStripMenuItem1
             // 
             this.一併修改ToolStripMenuItem1.Name = "一併修改ToolStripMenuItem1";
-            this.一併修改ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.一併修改ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.一併修改ToolStripMenuItem1.Text = "一併修改";
             this.一併修改ToolStripMenuItem1.Click += new System.EventHandler(this.一併修改ToolStripMenuItem1_Click);
             // 
@@ -619,7 +619,7 @@
             this.MainGroup.Controls.Add(this.label3);
             this.MainGroup.Controls.Add(this.EnitiesComboBox);
             this.MainGroup.Controls.Add(this.groupBox2);
-            this.MainGroup.Controls.Add(this.groupBox1);
+            this.MainGroup.Controls.Add(this.groupBoxMode);
             this.MainGroup.Controls.Add(this.cb_ForCase);
             this.MainGroup.Controls.Add(this.cb_OnlyParameter);
             this.MainGroup.Controls.Add(this.cb_IOwnerObject);
@@ -711,16 +711,16 @@
             this.radioButton3.Text = "Corporation";
             this.radioButton3.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // groupBoxMode
             // 
-            this.groupBox1.Controls.Add(this.radioButton4);
-            this.groupBox1.Controls.Add(this.radioButton6);
-            this.groupBox1.Controls.Add(this.radioButton5);
-            this.groupBox1.Location = new System.Drawing.Point(478, 94);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(294, 33);
-            this.groupBox1.TabIndex = 23;
-            this.groupBox1.TabStop = false;
+            this.groupBoxMode.Controls.Add(this.radioButton4);
+            this.groupBoxMode.Controls.Add(this.radioButton6);
+            this.groupBoxMode.Controls.Add(this.radioButton5);
+            this.groupBoxMode.Location = new System.Drawing.Point(478, 94);
+            this.groupBoxMode.Name = "groupBoxMode";
+            this.groupBoxMode.Size = new System.Drawing.Size(294, 33);
+            this.groupBoxMode.TabIndex = 23;
+            this.groupBoxMode.TabStop = false;
             // 
             // radioButton4
             // 
@@ -797,8 +797,8 @@
             this.MainGroup.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxMode.ResumeLayout(false);
+            this.groupBoxMode.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -874,7 +874,7 @@
         private System.Windows.Forms.RadioButton radioButton6;
         private System.Windows.Forms.RadioButton radioButton5;
         private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxMode;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label3;

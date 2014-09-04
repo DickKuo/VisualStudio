@@ -101,7 +101,7 @@ namespace CreateXML {
         /// 20140815 建立單檔UI
         /// </summary>
         /// <param name="pEntityName"></param>
-        public void CreateentityNoDetailBrowseEditViewV5(string pEntityName, DataGridView dt) {
+        public void CreateentityNoDetailBrowseEditViewV5(string pEntityName, DataGridView dt,int Mode) {
             string SourcePath = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "SampleFile\\Sample.txt";
             StreamReader sr = new StreamReader(SourcePath);
             string line = string.Empty;
@@ -117,17 +117,34 @@ namespace CreateXML {
             int y = 50;
 
             ///排列邏輯還在想
-            foreach(SubUIControl control in li.OrderBy(o => o.Order)) {                
-                SBParameter.Append(control.Declare);
-                SBParameter.Append("\r\n");
-                SBNewControl.Append(control.NewControl);
-                SBNewControl.Append("\r\n");
-                SBLayout.Append(control.Layout);
-                SBLayout.Append("\r\n");                
-                SBContext.Append(control.Context);
-                SBContext.Append("\r\n");
-                SBAdd.Append(control.GroupAdd);
-                SBAdd.Append("\r\n");
+            int count = 0;
+            foreach(SubUIControl control in li.OrderBy(o => o.Order)) {
+                if(count % Mode != 0) {
+                    x = 50;
+                    y += 50;
+                }
+
+                    SBParameter.Append(control.Declare);
+                    SBParameter.Append("\r\n");
+                    SBParameter.Append(control.LabelDeclare);
+                    SBParameter.Append("\r\n");
+                    SBNewControl.Append(control.NewControl);
+                    SBNewControl.Append("\r\n");
+                    SBNewControl.Append(control.LabelNewControl);
+                    SBNewControl.Append("\r\n");
+                    SBLayout.Append(control.Layout);
+                    SBLayout.Append("\r\n");
+                    SBContext.Append(control.LabelContext.Replace("$X", x.ToString()).Replace("$Y", y.ToString()));
+                    SBContext.Append("\r\n");
+                    x += 40;
+                    SBContext.Append(control.Context.Replace("$X", (x + 30).ToString()).Replace("$Y", y.ToString()));
+                    SBContext.Append("\r\n");
+                    SBAdd.Append(control.LabelAdd);
+                    SBAdd.Append("\r\n");
+                    SBAdd.Append(control.GroupAdd);
+                    SBAdd.Append("\r\n");
+                    x += 150;
+                count++;
             }
 
             #endregion
@@ -221,7 +238,7 @@ namespace CreateXML {
         }
 
         /// <summary>
-        /// 20140818 add by Dick 加入控件
+        /// 20140818 add by Dick 加入控件List
         /// </summary>
         /// <param name="dt"></param>
         public List<SubUIControl> AddControlerInit(System.Windows.Forms.DataGridView dv, string EntityName) {
@@ -276,22 +293,26 @@ namespace CreateXML {
                                         control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
                                         control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});\r\n";
                                         control.Context += "            this.dcmsDateEdit" + control.Name + ".Size = new System.Drawing.Size(130, 26);\r\n";
+                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Location = new System.Drawing.Point( $X, $Y);\r\n ";
                                         break;
                                 }
                                 if(control != null) {
                                     //加入Label
-                                    control.LabelDeclare+="            System.Windows.Forms.Label  "+control.Name+"Label;";  
-                                    control.LabelNewControl +="            "+control.Name+"Label = new System.Windows.Forms.Label();";
-                                    control.LabelAdd="            this.groupBox1.Controls.Add("+control.Name+"Label);";
-                                    control.LabelContext += "            //";
-                                    control.LabelContext += "            // "+control.LabelName;
-                                    control.LabelContext += "            // ";
-                                    control.LabelContext += "            " + control.LabelName + "Label1.AutoSize = true;";
-                                    control.LabelContext += "            " + control.LabelName + "Label1.Name = " + control.LabelName + ";";
-                                    control.LabelContext += "            " + control.LabelName + "Label1.Size = new System.Drawing.Size(29, 12);";
-                                    control.LabelContext += "            " + control.LabelName + "Label1.TabIndex = 2;";
-                                    control.LabelContext += "            " +control.LabelName  +"Label1.Text = "+control.Name;
-                                    control.LabelContext += "            " +control.LabelName  +"Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;";
+                                    control.LabelName = control.Name + "Label1";
+                                    control.LabelDeclare += "\r\n            System.Windows.Forms.Label  " + control.Name + "Label1;";
+                                    control.LabelNewControl += "\r\n            " + control.Name + "Label1 = new System.Windows.Forms.Label();";
+                                    control.LabelAdd = "\r\n            this.groupBox1.Controls.Add(" + control.Name + "Label1);";
+                                    control.LabelContext += "\r\n            //";
+                                    control.LabelContext += "\r\n            // " + control.LabelName;
+                                    control.LabelContext += "\r\n            // ";
+                                    control.LabelContext += "\r\n            " + control.LabelName + ".AutoSize = true;";
+                                    control.LabelContext += "\r\n            " + control.LabelName + ".Name = \"" + control.LabelName + "\";";
+                                    control.LabelContext += "\r\n            " + control.LabelName + ".Size = new System.Drawing.Size(29, 12);";
+                                    control.LabelContext += "\r\n            " + control.LabelName + ".TabIndex = 2;";
+                                    control.LabelContext += "\r\n            " + control.LabelName + ".Text = \"" + control.Name+":\";";
+                                    control.LabelContext += "\r\n            " + control.LabelName + ".TextAlign = System.Drawing.ContentAlignment.MiddleRight;\r\n";
+                                    control.LabelContext += "\r\n            " + control.LabelName + ".Location = new System.Drawing.Point($X, $Y);";
+
                                     li.Add(control);
                                 }
                             }
@@ -503,7 +524,13 @@ namespace CreateXML {
                     }
                     else if(!dr.Cells["ReferenceProperty"].Value.ToString().Equals(string.Empty)) {
                         {
-                            Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".Name";
+                            if(dr.Cells["Parameter"].Value.ToString().Equals("EmployeeId")) {
+                                ///員工Id修改成CnName
+                                Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".CnName";
+                            }
+                            else {
+                                Name.InnerXml = dr.Cells["Parameter"].Value.ToString() + ".Name";
+                            }
                         }
                     }
                     else {
