@@ -1060,6 +1060,12 @@ namespace CreateXML {
                 //dr[1] = node.Attributes["Type"].Value.ToString();
                 dr[1] = node.Attributes["Describe"].Value.ToString();
                 dr[2] = node.Attributes["ReferenceProperty"].Value;
+
+                //20140904 加入Order 及 UIOrder 及 Necessary
+                dr["Order"] = node.Attributes["Order"] !=null? node.Attributes["Order"].Value.ToString():null ;
+                dr["UIOrder"] = node.Attributes["UIOrder"] != null ? node.Attributes["UIOrder"].Value.ToString() : null;
+                dr["Necessary"] = node.Attributes["Necessary"] != null ? Convert.ToBoolean( node.Attributes["Necessary"].Value) : false;
+                
                 dt.Rows.Add(dr);
 
             }
@@ -1398,6 +1404,10 @@ namespace CreateXML {
                         element.SetAttribute("Describe", dr.Cells["Describe"].Value.ToString());
 
                         element.SetAttribute("ReferenceProperty", dr.Cells["ReferenceProperty"].Value.ToString());
+                        // 20140904加入order 及  UIorder Nessery
+                        element.SetAttribute("Order", dr.Cells["Order"].Value.ToString());
+                        element.SetAttribute("UIOrder", dr.Cells["UIOrder"].Value.ToString());
+                        element.SetAttribute("Necessary", dr.Cells["Necessary"].Value.ToString());
 
                         ThisClass.AppendChild(element);
                     }
@@ -2398,8 +2408,8 @@ namespace CreateXML {
             oneclick.RegisterEntity(tb_className.Text);
 
             int mode = 0;
-            foreach(Control co in groupBoxMode.Controls) { 
-               System.Windows.Forms.CheckBox cb =co as System.Windows.Forms.CheckBox ;
+            foreach(Control co in groupBoxMode.Controls) {
+                RadioButton cb = co as RadioButton;
                 if(cb.Checked)
                 {
                   mode = Convert.ToInt32( cb.Text.Replace("Mode","") );

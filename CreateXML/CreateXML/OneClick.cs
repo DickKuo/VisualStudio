@@ -253,47 +253,46 @@ namespace CreateXML {
                                     case "Int":
                                         break;
                                     case "Decmail":
+                                        control = ControlsSetting(EntityName, dr, control, "DcmsCalcEdit");
+                                        control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.ImeMode = System.Windows.Forms.ImeMode.Off;";
+                                        control.Context+="\r\n            this."+control.Name+"DcmsCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                        control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});";
+                                        control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Mask.UseMaskAsDisplayFormat = true;";
+                                        control.Layout = "             ((System.ComponentModel.ISupportInitialize)(this." + control.Name + "DcmsCalcEdit.Properties)).EndInit();\r\n";
                                         break;
                                     case "Guid":
+                                        if(!string.IsNullOrEmpty(dr.Cells["ReferenceProperty"].Value.ToString())) {
+                                            control = ControlsSetting(EntityName, dr, control, "HRSelectControl");
+                                            control.Context += "            this.hRSelectControlDepartmentId.TypeKey =\"" + dr.Cells["ReferenceProperty"].Value.ToString()+"\";";
+                                        }
                                         break;
                                     case "String":
-                                        //control = new SubUIControl();
-                                        //control.Name = dr.Cells["Parameter"].Value.ToString();
-                                        //control.Order = dr.Cells["UIOrder"].Value.ToString();
-                                        //control.Declare = "        private DcmsTextEdit " + control.Name + "DcmsTextEdit;";
-                                        //control.NewControl = "            this." + control.Name + "DcmsTextEdit = new Dcms.Common.UI.DcmsTextEdit();";
-                                        //control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this." + control.Name + "DcmsTextEdit.Properties)).EndInit();";
-                                        //control.GroupAdd = "            this.groupBox1.Controls.Add(this." + control.Name + "DcmsTextEdit);";
-                                        //control.Context = "             //";
-                                        //control.Context += "            // dcmstextEdit" + control.Name;
-                                        //control.Context += "            //";
-                                        //control.Context += "            resources.ApplyResources(this." + control.Name + "DcmsTextEdit, \"" + control.Name + "DcmsTextEdit\");";
-                                        //control.Context += "            this." + control.Name + "DcmsTextEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));";
-                                        //control.Context += "            this." + control.Name + "DcmsTextEdit.Name = \"" + control.Name + "DcmsTextEdit\";";
-                                        //control.Context += "            this." + control.Name + "DcmsTextEdit.Properties.MaxLength = 200;";
+                                        if(!string.IsNullOrEmpty(dr.Cells["ReferenceProperty"].Value.ToString())) {
+                                            if(dr.Cells["ReferenceProperty"].Value.ToString().ToLower().Equals("codeinfo")) {
+                                                control = ControlsSetting(EntityName, dr, control, "HRPickList");
+                                                control.Context += "\r\n            this." + control.Name + "HRPickList.AutoDisplayText = true;";
+                                                control.Context += "             this." + control.Name + "HRPickList.BackColor = System.Drawing.SystemColors.Control;\r\n";
+                                                control.Context += "            this." + control.Name + "HRPickList.ControlDataSource = null;";
+                                            }
+                                            else {
+                                                control = ControlsSetting(EntityName, dr, control, "HRSelectControl");
+                                                control.Context += "            this.hRSelectControl" + control.Name + ".TypeKey =\"" + dr.Cells["ReferenceProperty"].Value.ToString() + "\";";
+                                             }
+                                        }
+                                        else {
+                                            control = ControlsSetting(EntityName, dr, control, "DcmsTextEdit");
+                                            control.Context += "            this.dcmsTextEdit" + control.Name + " .DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));";
+                                            control.Context += "            this.dcmsTextEdit" + control.Name + ".Properties.MaxLength = 200;";
+                                        }                                        
                                         break;
                                     case "DateTime":
-                                        control = new SubUIControl();
-                                        control.Name = dr.Cells["Parameter"].Value.ToString();
-                                        control.ControlFullName = " this.dcmsDateEdit" + control.Name;
-                                        control.Order = dr.Cells["UIOrder"].Value.ToString();
-                                        control.Declare = "        private DcmsDateEdit dcmsDateEdit" + control.Name + ";";
-                                        control.NewControl = "            this.dcmsDateEdit" + control.Name + " = new Dcms.Common.UI.DcmsDateEdit();";
+                                        control = ControlsSetting(EntityName, dr, control, "DcmsDateEdit");
                                         control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties)).BeginInit();\r\n";
-                                        control.Layout += "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + control.Name + ".Properties)).BeginInit();";
-                                        control.GroupAdd = "\r\n            this.groupBox1.Controls.Add(this.dcmsDateEdit" + control.Name + ");";
-                                        control.Context = "             //\r\n";
-                                        control.Context += "            // dcmsDateEdit" + control.Name + "\r\n";
-                                        control.Context += "            //\r\n";
-                                        control.Context += "            resources.ApplyResources(this.dcmsDateEdit" + control.Name + ", \"dcmsDateEdit" + control.Name + "\");\r\n";
                                         control.Context += "            this.dcmsDateEdit" + control.Name + ".DataBindings.Add(new System.Windows.Forms.Binding(\"EditValue\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));\r\n";
-                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Name = \"dcmsDateEdit" + control.Name + "\";\r\n";
-                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                        control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"dcmsDateEdit" + control.Name + ".Properties.Buttons\"))))});\r\n";
-                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                        control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});\r\n";
-                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Size = new System.Drawing.Size(130, 26);\r\n";
-                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".Location = new System.Drawing.Point( $X, $Y);\r\n ";
+                                         control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                         control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"dcmsDateEdit" + control.Name + ".Properties.Buttons\"))))});\r\n";
+                                         control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                         control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});\r\n";
                                         break;
                                 }
                                 if(control != null) {
@@ -321,6 +320,39 @@ namespace CreateXML {
                 }
             }
             return li;
+        }
+
+
+        /// <summary>
+        /// 20140904 動態件利控件
+        /// </summary>
+        /// <param name="EntityName"></param>
+        /// <param name="dr"></param>
+        /// <param name="control"></param>
+        /// <returns></returns>
+        private static SubUIControl ControlsSetting(string EntityName, DataGridViewRow dr, SubUIControl control,string ControlType) {
+            string temp = ControlType.Substring(0, 1).ToLower() + ControlType.Substring(1, ControlType.Length - 1);
+            control = new SubUIControl();
+            control.Name = dr.Cells["Parameter"].Value.ToString();
+            control.ControlFullName = " this." + temp + control.Name;
+            control.Order = dr.Cells["UIOrder"].Value.ToString();
+            control.Declare = "        private " + ControlType + " "+temp + control.Name + ";";
+            if(ControlType.Equals("HRSelectControl")) { ///SelectControl 命名空間不一樣
+                control.NewControl = "            this." + temp + control.Name + " = new " + ControlType + "();\r\n";
+            } 
+            else {
+                control.NewControl = "            this." + temp + control.Name + " = new Dcms.Common.UI." + ControlType + "();\r\n";
+                control.Layout += "            ((System.ComponentModel.ISupportInitialize)(this." + temp + control.Name + ".Properties)).BeginInit();";            
+            }         
+            control.GroupAdd = "\r\n            this.groupBox1.Controls.Add(this."+temp + control.Name + ");";
+            control.Context = "             //\r\n";
+            control.Context += "            // "+temp + control.Name + "\r\n";
+            control.Context += "            //\r\n";
+            control.Context += "            resources.ApplyResources(this."+temp + control.Name + ", \""+temp+"" + control.Name + "\");\r\n";
+            control.Context += "            this."+temp + control.Name + ".Name = \""+temp + control.Name + "\";\r\n";
+            control.Context += "            this."+temp + control.Name + ".Size = new System.Drawing.Size(130, 26);\r\n";
+            control.Context += "            this."+temp + control.Name + ".Location = new System.Drawing.Point( $X, $Y);\r\n ";
+            return control;
         }
 
 
