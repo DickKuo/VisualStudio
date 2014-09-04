@@ -1432,6 +1432,20 @@ namespace CreateXML {
         private void ProductMutiLaguage(string type, string front, bool IsSave) {
             StringBuilder sb = new StringBuilder();
             richTextBox1.Clear();
+            sb = ResourceQueryView(type, front, IsSave, sb);
+            richTextBox1.AppendText(sb.ToString());
+        }
+
+
+        /// <summary>
+        /// QueryView 多語系
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="front"></param>
+        /// <param name="IsSave"></param>
+        /// <param name="sb"></param>
+        /// <returns></returns>
+        private StringBuilder ResourceQueryView(string type, string front, bool IsSave, StringBuilder sb) {
             foreach(DataGridViewRow dr in dataGridView1.Rows) {
                 if(dr.Cells["Parameter"].Value != null) {
                     ProductMutiLanuageSubMethod(type, front, ref sb, dr.Cells["Parameter"].Value.ToString(), dr.Cells["Describe"].Value.ToString(), IsSave);
@@ -1443,7 +1457,7 @@ namespace CreateXML {
             else {
                 PublicItem(type, front, ref sb, "");
             }
-            richTextBox1.AppendText(sb.ToString());
+            return sb;
         }
 
 
@@ -2385,11 +2399,11 @@ namespace CreateXML {
             oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1);
             
             ///20140827 多執行緒
-            System.Threading.Tasks.Task[] tasks = new System.Threading.Tasks.Task[1];
+            //System.Threading.Tasks.Task[] tasks = new System.Threading.Tasks.Task[1];
 
             #region 樹節點多語系          
-            tasks[0]= System.Threading.Tasks.Task.Factory.StartNew(() => TreeResource(oneclick));           
-            
+            //tasks[0]= System.Threading.Tasks.Task.Factory.StartNew(() => TreeResource(oneclick));           
+            TreeResource(oneclick);
             #endregion  
 
 
@@ -2402,7 +2416,7 @@ namespace CreateXML {
             QueryResource(oneclick, dt);
             #endregion
 
-            System.Threading.Tasks.Task.WaitAll(tasks);
+            //System.Threading.Tasks.Task.WaitAll(tasks);
             MessageBox.Show("完成!!");
         }
 
@@ -2413,12 +2427,18 @@ namespace CreateXML {
         }
 
         private void QueryResource(OneClick oneclick, System.Data.DataTable dt) {
-            英文ToolStripMenuItem1.PerformClick();
-            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase", true);
-            繁中ToolStripMenuItem1.PerformClick();
-            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase.zh-CHT", false);
-            簡中ToolStripMenuItem1.PerformClick();
-            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", richTextBox1.Lines, "QueryResourcesForCase.zh-CHS", false);
+            StringBuilder English = new StringBuilder();
+            English = ResourceQueryView("EN", "Browse_QueryView", false, English);
+            string[] Enstr = English.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", Enstr, "QueryResourcesForCase", true);
+            StringBuilder CHT = new StringBuilder();
+            CHT = ResourceQueryView("CHT", "Browse_QueryView", false, CHT);
+            string[] CHTstr = CHT.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);            
+            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", CHTstr, "QueryResourcesForCase.zh-CHT", false);  
+            StringBuilder CHS = new StringBuilder();
+            CHS = ResourceQueryView("CHS", "Browse_QueryView", false, CHS);
+            string[] CHSstr = CHS.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            oneclick.AddQueryView(dt, "DigiWin.HR.CustomBusinessImplement", CHSstr, "QueryResourcesForCase.zh-CHS", false);
         }
 
         private void TitleResource(OneClick oneclick) {
