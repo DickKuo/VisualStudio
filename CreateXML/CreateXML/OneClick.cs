@@ -354,9 +354,9 @@ namespace CreateXML {
                                                 if(Convert.ToBoolean(dr.Cells["Necessary"].Value)) {
                                                     control.LabelContext += "\r\n            " + control.LabelName + ".ForeColor = System.Drawing.Color.Red;";
                                                 }
-                                            }
-                                            li.Add(control);
+                                            }                                           
                                         }
+                                        li.Add(control);
                                     }
                                 }
                             }
