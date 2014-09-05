@@ -2179,6 +2179,59 @@ namespace CreateXML {
             return sb;
         }
 
+
+        /// <summary>
+        /// 20140827 頁籤多語系英文
+        /// </summary>
+        /// <returns></returns>
+        private StringBuilder Browse_English() {
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
+            sb.Append("Browse_QueryProject_");
+            sb.Append(tb_className.Text);
+            sb.Append("_Browse");
+            sb.Append("\t");
+            sb.Append("Browse");
+            sb.Append("\t");
+            sb.Append("瀏覽");
+            return sb;
+        }
+
+        /// <summary>
+        /// 20140827 頁籤多語系繁中
+        /// </summary>
+        /// <returns></returns>
+        private StringBuilder Browse_CHT() {
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
+            sb.Append("Browse_QueryProject_");
+            sb.Append(tb_className.Text);
+            sb.Append("_Browse");
+            sb.Append("\t");
+            sb.Append("瀏覽");
+            sb.Append("\t");
+            sb.Append("瀏覽");
+            return sb;
+        }
+
+        /// <summary>
+        /// 20140827 頁籤多語系簡中
+        /// </summary>
+        /// <returns></returns>
+        private StringBuilder Browse_CHS() {
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
+            sb.Append("Browse_QueryProject_");
+            sb.Append(tb_className.Text);
+            sb.Append("_Browse");
+            sb.Append("\t");
+            sb.Append("浏览");
+            sb.Append("\t");
+            sb.Append("浏览");
+            return sb;
+        }
+
+
         /// <summary>
         /// 20140827 節點多語系繁體中文
         /// </summary>
@@ -2416,6 +2469,7 @@ namespace CreateXML {
                 }
             }
 
+            ///20140905 建立檔單UI           
             oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1, mode);
             
             ///20140827 多執行緒
@@ -2435,6 +2489,13 @@ namespace CreateXML {
             #region QueryView 多語系
             QueryResource(oneclick, dt);
             #endregion
+
+            #region 20140905 add by Dick  加入瀏覽頁籤多語系 
+            oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_English().ToString(), "QueryResourcesForCase", true);
+            oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHT().ToString(), "QueryResourcesForCase.zh-CHT", false);
+            oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHS().ToString(), "QueryResourcesForCase.zh-CHS", false);
+            #endregion
+
 
             //System.Threading.Tasks.Task.WaitAll(tasks);
             MessageBox.Show("完成!!");

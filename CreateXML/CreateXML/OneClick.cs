@@ -114,17 +114,33 @@ namespace CreateXML {
             StringBuilder SBAdd = new StringBuilder();
             //起始座標
             int x = 50;
-            int y = 50;
+            int y = 0;
 
             ///排列邏輯還在想
             int count = 0;
             foreach(SubUIControl control in li.OrderBy(o => o.Order)) {
-                if(count % Mode != 0) {
-                    x = 50;
-                    y += 50;
+                #region  20140905 add by Dick 針對被註另外處理
+                if(control.Order == "-1") {
+                  //toDo...
+                    continue;
                 }
+                #endregion
 
-                    SBParameter.Append(control.Declare);
+                #region 20140905 add by Dick 對控件座標進行做調整
+                if(count % Mode == 0) {
+                    x = 50;
+                    if(Mode == 2) {
+                        y += 30;
+                    }
+                    if(Mode == 3) {
+                        y += 60;
+                    }
+                }
+                #endregion
+
+
+                #region  20140904 add by Dick 加入控件
+                SBParameter.Append(control.Declare);
                     SBParameter.Append("\r\n");
                     SBParameter.Append(control.LabelDeclare);
                     SBParameter.Append("\r\n");
@@ -134,17 +150,26 @@ namespace CreateXML {
                     SBNewControl.Append("\r\n");
                     SBLayout.Append(control.Layout);
                     SBLayout.Append("\r\n");
-                    SBContext.Append(control.LabelContext.Replace("$X", x.ToString()).Replace("$Y", y.ToString()));
+                    if(!string.IsNullOrEmpty(control.LabelContext)) {
+                        SBContext.Append(control.LabelContext.Replace("$X", x.ToString()).Replace("$Y", y.ToString()));
+                        SBContext.Append("\r\n");
+                    }
+                    SBContext.Append(control.Context.Replace("$X", (x + 85).ToString()).Replace("$Y", y.ToString()));
                     SBContext.Append("\r\n");
-                    x += 40;
-                    SBContext.Append(control.Context.Replace("$X", (x + 30).ToString()).Replace("$Y", y.ToString()));
-                    SBContext.Append("\r\n");
+                    //x += 600 / Mode;
+                    if(Mode == 2) {
+                        x += 350;
+                    }
+                    if(Mode==3) {
+                        x += 100;
+                    }
                     SBAdd.Append(control.LabelAdd);
                     SBAdd.Append("\r\n");
                     SBAdd.Append(control.GroupAdd);
                     SBAdd.Append("\r\n");
-                    x += 150;
-                count++;
+                    x += 130;
+                #endregion
+                    count++;
             }
 
             #endregion
@@ -238,7 +263,7 @@ namespace CreateXML {
         }
 
         /// <summary>
-        /// 20140818 add by Dick 加入控件List
+        /// 20140818 add by Dick 生出控件出來，讓後面可以加入控件
         /// </summary>
         /// <param name="dt"></param>
         public List<SubUIControl> AddControlerInit(System.Windows.Forms.DataGridView dv, string EntityName) {
@@ -246,73 +271,93 @@ namespace CreateXML {
             foreach(DataGridViewRow dr in dv.Rows) {
                 if(dr.Cells["UIOrder"] != null) {
                     if(!string.IsNullOrEmpty(dr.Cells["UIOrder"].ToString())) {
-                        if(dr.Cells["UIOrder"].Value != null && dr.Cells["UIOrder"].Value.ToString() != string.Empty) {
-                            if(!string.IsNullOrEmpty(dr.Cells["Type"].Value.ToString())) {
-                                SubUIControl control = null;
-                                switch(dr.Cells["Type"].Value.ToString()) {
-                                    case "Int":
-                                        break;
-                                    case "Decmail":
-                                        control = ControlsSetting(EntityName, dr, control, "DcmsCalcEdit");
-                                        control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.ImeMode = System.Windows.Forms.ImeMode.Off;";
-                                        control.Context+="\r\n            this."+control.Name+"DcmsCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                        control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});";
-                                        control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Mask.UseMaskAsDisplayFormat = true;";
-                                        control.Layout = "             ((System.ComponentModel.ISupportInitialize)(this." + control.Name + "DcmsCalcEdit.Properties)).EndInit();\r\n";
-                                        break;
-                                    case "Guid":
-                                        if(!string.IsNullOrEmpty(dr.Cells["ReferenceProperty"].Value.ToString())) {
-                                            control = ControlsSetting(EntityName, dr, control, "HRSelectControl");
-                                            control.Context += "            this.hRSelectControlDepartmentId.TypeKey =\"" + dr.Cells["ReferenceProperty"].Value.ToString()+"\";";
-                                        }
-                                        break;
-                                    case "String":
-                                        if(!string.IsNullOrEmpty(dr.Cells["ReferenceProperty"].Value.ToString())) {
-                                            if(dr.Cells["ReferenceProperty"].Value.ToString().ToLower().Equals("codeinfo")) {
-                                                control = ControlsSetting(EntityName, dr, control, "HRPickList");
-                                                control.Context += "\r\n            this." + control.Name + "HRPickList.AutoDisplayText = true;";
-                                                control.Context += "             this." + control.Name + "HRPickList.BackColor = System.Drawing.SystemColors.Control;\r\n";
-                                                control.Context += "            this." + control.Name + "HRPickList.ControlDataSource = null;";
+                        if(dr.Cells["UIOrder"].Value != null) {
+                            int order =0;
+                            if(int.TryParse(dr.Cells["UIOrder"].Value.ToString(), out order)) {
+                                if(!string.IsNullOrEmpty(dr.Cells["Type"].Value.ToString())) {
+                                    SubUIControl control = null;
+                                    switch(dr.Cells["Type"].Value.ToString().ToLower()) {
+                                        case"ntext":
+                                            if(order == -1) {
+                                                //private GroupBox groupBox2;
+                                                //private DcmsMemoEdit xRemarkDcmsMemoEdit;
+                                            }
+                                            break;
+                                        case "int":
+                                            break;
+                                        case"bool":
+                                            control = ControlsSetting(EntityName, dr, control, "DcmsCheckEdit");
+                                            control.Context += "\r\n             this.DcmsCheckEdit" + control.Name + ".Properties.Caption =\"" + control.Name + "\";";
+                                            control.Layout = "\r\n            ((System.ComponentModel.ISupportInitialize)(this.DcmsCheckEdit" + control.Name + ".Properties)).EndInit();\r\n";
+                                            break;
+                                        case "decmail":
+                                            control = ControlsSetting(EntityName, dr, control, "DcmsCalcEdit");
+                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.ImeMode = System.Windows.Forms.ImeMode.Off;";
+                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                            control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});";
+                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Mask.UseMaskAsDisplayFormat = true;";
+                                            control.Layout = "             ((System.ComponentModel.ISupportInitialize)(this." + control.Name + "DcmsCalcEdit.Properties)).EndInit();\r\n";
+                                            break;
+                                        case "guid":
+                                            if(!string.IsNullOrEmpty(dr.Cells["ReferenceProperty"].Value.ToString())) {
+                                                control = ControlsSetting(EntityName, dr, control, "HRSelectControl");
+                                                control.Context += "            this.hRSelectControlDepartmentId.TypeKey =\"" + dr.Cells["ReferenceProperty"].Value.ToString() + "\";";
+                                            }
+                                            break;
+                                        case "string":
+                                            if(!string.IsNullOrEmpty(dr.Cells["ReferenceProperty"].Value.ToString())) {
+                                                if(dr.Cells["ReferenceProperty"].Value.ToString().ToLower().Equals("codeinfo")) {
+                                                    control = ControlsSetting(EntityName, dr, control, "HRPickList");
+                                                    control.Context += "\r\n            this." + control.Name + "HRPickList.AutoDisplayText = true;";
+                                                    control.Context += "             this." + control.Name + "HRPickList.BackColor = System.Drawing.SystemColors.Control;\r\n";
+                                                    control.Context += "            this." + control.Name + "HRPickList.ControlDataSource = null;";
+                                                }
+                                                else {
+                                                    control = ControlsSetting(EntityName, dr, control, "HRSelectControl");
+                                                    control.Context += "            this.hRSelectControl" + control.Name + ".TypeKey =\"" + dr.Cells["ReferenceProperty"].Value.ToString() + "\";";
+                                                }
                                             }
                                             else {
-                                                control = ControlsSetting(EntityName, dr, control, "HRSelectControl");
-                                                control.Context += "            this.hRSelectControl" + control.Name + ".TypeKey =\"" + dr.Cells["ReferenceProperty"].Value.ToString() + "\";";
-                                             }
+                                                control = ControlsSetting(EntityName, dr, control, "DcmsTextEdit");
+                                                control.Context += "            this.dcmsTextEdit" + control.Name + " .DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));";
+                                                control.Context += "            this.dcmsTextEdit" + control.Name + ".Properties.MaxLength = 200;";
+                                            }
+                                            break;
+                                        case "datetime":
+                                            control = ControlsSetting(EntityName, dr, control, "DcmsDateEdit");
+                                            control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties)).BeginInit();\r\n";
+                                            control.Context += "            this.dcmsDateEdit" + control.Name + ".DataBindings.Add(new System.Windows.Forms.Binding(\"EditValue\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));\r\n";
+                                            control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                            control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"dcmsDateEdit" + control.Name + ".Properties.Buttons\"))))});\r\n";
+                                            control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                            control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});\r\n";
+                                            break;
+                                    }
+                                    if(control != null) {
+                                        if(dr.Cells["Type"].Value.ToString().ToLower() != "bool") {
+                                            //加入Label
+                                            control.LabelName = control.Name + "Label1";
+                                            control.LabelDeclare += "\r\n            System.Windows.Forms.Label  " + control.Name + "Label1;";
+                                            control.LabelNewControl += "\r\n            " + control.Name + "Label1 = new System.Windows.Forms.Label();";
+                                            control.LabelAdd = "\r\n            this.groupBox1.Controls.Add(" + control.Name + "Label1);";
+                                            control.LabelContext += "\r\n            //";
+                                            control.LabelContext += "\r\n            // " + control.LabelName;
+                                            control.LabelContext += "\r\n            // ";
+                                            control.LabelContext += "\r\n            " + control.LabelName + ".AutoSize = true;";
+                                            control.LabelContext += "\r\n            " + control.LabelName + ".Name = \"" + control.LabelName + "\";";
+                                            control.LabelContext += "\r\n            " + control.LabelName + ".Size = new System.Drawing.Size(29, 12);";
+                                            control.LabelContext += "\r\n            " + control.LabelName + ".TabIndex = 2;";
+                                            control.LabelContext += "\r\n            " + control.LabelName + ".Text = \"" + control.Name + ":\";";
+                                            control.LabelContext += "\r\n            " + control.LabelName + ".TextAlign = System.Drawing.ContentAlignment.MiddleRight;\r\n";
+                                            control.LabelContext += "\r\n            " + control.LabelName + ".Location = new System.Drawing.Point($X, $Y);";
+                                            if(dr.Cells["Necessary"].Value != null) {
+                                                if(Convert.ToBoolean(dr.Cells["Necessary"].Value)) {
+                                                    control.LabelContext += "\r\n            " + control.LabelName + ".ForeColor = System.Drawing.Color.Red;";
+                                                }
+                                            }
+                                            li.Add(control);
                                         }
-                                        else {
-                                            control = ControlsSetting(EntityName, dr, control, "DcmsTextEdit");
-                                            control.Context += "            this.dcmsTextEdit" + control.Name + " .DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));";
-                                            control.Context += "            this.dcmsTextEdit" + control.Name + ".Properties.MaxLength = 200;";
-                                        }                                        
-                                        break;
-                                    case "DateTime":
-                                        control = ControlsSetting(EntityName, dr, control, "DcmsDateEdit");
-                                        control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties)).BeginInit();\r\n";
-                                        control.Context += "            this.dcmsDateEdit" + control.Name + ".DataBindings.Add(new System.Windows.Forms.Binding(\"EditValue\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));\r\n";
-                                         control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                         control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"dcmsDateEdit" + control.Name + ".Properties.Buttons\"))))});\r\n";
-                                         control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                         control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});\r\n";
-                                        break;
-                                }
-                                if(control != null) {
-                                    //加入Label
-                                    control.LabelName = control.Name + "Label1";
-                                    control.LabelDeclare += "\r\n            System.Windows.Forms.Label  " + control.Name + "Label1;";
-                                    control.LabelNewControl += "\r\n            " + control.Name + "Label1 = new System.Windows.Forms.Label();";
-                                    control.LabelAdd = "\r\n            this.groupBox1.Controls.Add(" + control.Name + "Label1);";
-                                    control.LabelContext += "\r\n            //";
-                                    control.LabelContext += "\r\n            // " + control.LabelName;
-                                    control.LabelContext += "\r\n            // ";
-                                    control.LabelContext += "\r\n            " + control.LabelName + ".AutoSize = true;";
-                                    control.LabelContext += "\r\n            " + control.LabelName + ".Name = \"" + control.LabelName + "\";";
-                                    control.LabelContext += "\r\n            " + control.LabelName + ".Size = new System.Drawing.Size(29, 12);";
-                                    control.LabelContext += "\r\n            " + control.LabelName + ".TabIndex = 2;";
-                                    control.LabelContext += "\r\n            " + control.LabelName + ".Text = \"" + control.Name+":\";";
-                                    control.LabelContext += "\r\n            " + control.LabelName + ".TextAlign = System.Drawing.ContentAlignment.MiddleRight;\r\n";
-                                    control.LabelContext += "\r\n            " + control.LabelName + ".Location = new System.Drawing.Point($X, $Y);";
-
-                                    li.Add(control);
+                                    }
                                 }
                             }
                         }

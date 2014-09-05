@@ -39,6 +39,7 @@ namespace Dcms.HR.UI {
 		private BindingSource entityBindingSource;
 		private ErrorProvider errorProvider;
 		private GroupBox groupBox1;
+		
 	     
 		//ParameterExtend
 
@@ -68,6 +69,7 @@ namespace Dcms.HR.UI {
 			this.entityBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			//NewControlExtend
 			this.MainTabControl.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -103,12 +105,13 @@ namespace Dcms.HR.UI {
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(807, 305);
+            this.groupBox1.Size = new System.Drawing.Size(807, 231);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
 			//groupBoxExtend
 			
+
 
 			// 
 			// errorProvider

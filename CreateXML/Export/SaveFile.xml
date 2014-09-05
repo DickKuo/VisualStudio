@@ -53,21 +53,21 @@
     <Parameter Name="TempLate" Type="string" Describe="測試1" ReferenceProperty="" />
   </Class>
   <Class ClassName="XSISetting" Describle="系統整合設定" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="False" IDataModifyObject="True" Collection="False" IsCase="False">
-    <Parameter Name="XSISettingID" Type="Guid" Describe="SI設定ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
-    <Parameter Name="XSystemName" Type="string" Describe="整合系統" ReferenceProperty="" Order="1" UIOrder="" Necessary="False" />
-    <Parameter Name="XFileCode" Type="string" Describe="資料編號" ReferenceProperty="" Order="2" UIOrder="" Necessary="True" />
-    <Parameter Name="XFileName" Type="string" Describe="資料名稱" ReferenceProperty="" Order="3" UIOrder="" Necessary="True" />
-    <Parameter Name="XFileType" Type="string" Describe="資料格式" ReferenceProperty="" Order="4" UIOrder="" Necessary="True" />
-    <Parameter Name="XConnectType" Type="string" Describe="連結方式" ReferenceProperty="" Order="5" UIOrder="" Necessary="False" />
-    <Parameter Name="XConnectRoute" Type="string" Describe="連線路徑" ReferenceProperty="" Order="6" UIOrder="" Necessary="False" />
-    <Parameter Name="XPort" Type="string" Describe="Port" ReferenceProperty="" Order="7" UIOrder="" Necessary="False" />
-    <Parameter Name="XDocName" Type="string" Describe="資料夾名稱" ReferenceProperty="" Order="8" UIOrder="" Necessary="False" />
-    <Parameter Name="XUserID" Type="string" Describe="登入帳號" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
-    <Parameter Name="XPassword" Type="string" Describe="登入密碼" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
-    <Parameter Name="XTriggerStart" Type="string" Describe="觸發時間" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
-    <Parameter Name="XLoopHours" Type="string" Describe="循環時數" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
-    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
-    <Parameter Name="IsActive" Type="Bool" Describe="是否啟用" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XSISettingId" Type="Guid" Describe="SI設定ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XSystemName" Type="string" Describe="整合系統" ReferenceProperty="" Order="1" UIOrder="1" Necessary="False" />
+    <Parameter Name="XFileCode" Type="string" Describe="資料編號" ReferenceProperty="" Order="2" UIOrder="3" Necessary="False" />
+    <Parameter Name="XFileName" Type="string" Describe="資料名稱" ReferenceProperty="" Order="3" UIOrder="4" Necessary="False" />
+    <Parameter Name="XFileType" Type="string" Describe="資料格式" ReferenceProperty="" Order="4" UIOrder="5" Necessary="False" />
+    <Parameter Name="XConnectType" Type="string" Describe="連結方式" ReferenceProperty="" Order="5" UIOrder="6" Necessary="True" />
+    <Parameter Name="XConnectRoute" Type="string" Describe="連線路徑" ReferenceProperty="" Order="6" UIOrder="7" Necessary="True" />
+    <Parameter Name="XPort" Type="string" Describe="Port" ReferenceProperty="" Order="7" UIOrder="8" Necessary="True" />
+    <Parameter Name="XDocName" Type="string" Describe="資料夾名稱" ReferenceProperty="" Order="8" UIOrder="9" Necessary="True" />
+    <Parameter Name="XUserID" Type="string" Describe="登入帳號" ReferenceProperty="" Order="9" UIOrder="10" Necessary="True" />
+    <Parameter Name="XPassword" Type="string" Describe="登入密碼" ReferenceProperty="" Order="10" UIOrder="11" Necessary="True" />
+    <Parameter Name="XTriggerStart" Type="string" Describe="觸發時間" ReferenceProperty="" Order="11" UIOrder="12" Necessary="True" />
+    <Parameter Name="XLoopHours" Type="string" Describe="循環時數" ReferenceProperty="" Order="12" UIOrder="13" Necessary="True" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="13" UIOrder="" Necessary="False" />
+    <Parameter Name="IsActive" Type="Bool" Describe="是否啟用" ReferenceProperty="" Order="" UIOrder="2" Necessary="False" />
     <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
