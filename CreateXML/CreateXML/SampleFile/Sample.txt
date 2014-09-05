@@ -320,6 +320,33 @@ namespace Dcms.HR.UI {
 
 		#endregion
 
+		#region 作業頁籤去掉GUID
+		public override string Text {
+            get {
+                return this.ResetCaption(base.Text);
+            }
+            set {
+                base.Text = value;
+            }
+
+        }
+
+        private string ResetCaption(string pText) {
+            if((this.Controller.EditerView != null) && (this.Controller.EditState == EditState.Edit) && (this.Controller.DataObserver != null)) {
+                if(pText.IndexOf("-") > 0) {
+                    pText = pText.Substring(pText.IndexOf(" - ") + 3) + string.Format(" ({0}) ", Resources.MainMenu_Edit);
+                }
+            }
+            else if((this.Controller.EditerView != null) && (this.Controller.EditState == EditState.Create) && (this.Controller.DataObserver != null)) {
+                if(pText.IndexOf("-") > 0) {
+                    pText = pText.Substring(pText.IndexOf(" - ") + 3) + string.Format(" ({0}) ", "未命名");
+                }
+            }
+            return pText;
+        }
+		#endregion
+
+
 	}
 
 	/// <summary>
