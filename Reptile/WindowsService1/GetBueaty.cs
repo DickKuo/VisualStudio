@@ -174,14 +174,14 @@ namespace WindowsService1
                         if (info.Title.IndexOf("Re: ") == -1)
                         {
                             li.Add(info);
-                            if (!listold.Contains(info.Title))
+                            if (!listold.Contains(info.Title.Trim()))
                             {
                                 long length = POST(Address, li);
                                 Thread.Sleep(1000);
                                 RecordTime = info.PostDate;
-                                listold.Add(info.Title);                             
+                                listold.Add(info.Title.Trim());                             
                                 Log(string.Format("寫入紀錄 {0} ", info.Title));
-                                Record(doc, info.Title);
+                                Record(doc, info.Title.Trim());
                                 Log("記錄結束");
                             }
                             li.Clear();

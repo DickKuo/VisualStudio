@@ -122,9 +122,13 @@ namespace GetSite
                                     break;
                                 }
                                 //20140908 修改網址，轉換成圖片連結
-                                if (line.IndexOf("http://ppt.cc/xyz")!=-1)
+                                if (line.IndexOf("http://ppt.cc/")!=-1)
                                 {
-                                    line = line.Replace("http://ppt.cc/xyz", "http://ppt.cc/xyz@.jpg");
+                                    matches = Regex.Matches(line, "\">[^\"]+</a>", RegexOptions.IgnoreCase);
+                                    foreach (Match match in matches)
+                                    {
+                                        line = match.Value.Replace("\">", "<br/><img  src=\"").Replace("</a>", "@.jpg\" /><br/><br/>");
+                                    }  
                                 }
                                 sb.Append(line).Replace("--", "");
                             }
