@@ -112,6 +112,8 @@ namespace CreateXML {
             StringBuilder SBLayout = new StringBuilder();
             StringBuilder SBContext = new StringBuilder();
             StringBuilder SBAdd = new StringBuilder();
+            bool HasRemark = false;
+            string AddGroupBox = string.Empty;
             //起始座標
             int x = 30;
             int y = 0;
@@ -119,9 +121,18 @@ namespace CreateXML {
             ///排列邏輯還在想
             int count = 0;
             foreach(SubUIControl control in li.OrderBy(o => o.Order)) {
-                #region  20140905 add by Dick 針對被註另外處理
+
+                #region  20140905 add by Dick 針對備註另外處理
                 if(control.Order == -1) {
-                    AddRemark(control);
+                    HasRemark = true;
+                    SBParameter.Append(control.Declare);
+                    SBParameter.Append("\r\n");
+                    SBNewControl.Append(control.NewControl);
+                    SBNewControl.Append("\r\n");
+                    SBLayout.Append(control.Layout);
+                    SBLayout.Append("\r\n");
+                    SBContext.Append(control.Context);
+                    SBContext.Append("\r\n");
                     continue;
                 }
                 #endregion
@@ -141,10 +152,9 @@ namespace CreateXML {
                 }
                 #endregion
 
-
                 #region  20140904 add by Dick 加入控件
                 SBParameter.Append(control.Declare);
-                    SBParameter.Append("\r\n");
+                SBParameter.Append("\r\n");
                     SBParameter.Append(control.LabelDeclare);
                     SBParameter.Append("\r\n");
                     SBNewControl.Append(control.NewControl);
@@ -158,8 +168,7 @@ namespace CreateXML {
                         SBContext.Append("\r\n");
                     }
                     SBContext.Append(control.Context.Replace("$X", (x + 85).ToString()).Replace("$Y", y.ToString()));
-                    SBContext.Append("\r\n");
-                    //x += 600 / Mode;
+                    SBContext.Append("\r\n");               
                     if(Mode == 2) {
                         x += 350;
                     }
@@ -255,6 +264,14 @@ namespace CreateXML {
                         sb.Append(SBAdd);
                     }
                 }
+                if(HasRemark) {
+                    if(line.IndexOf("this.GeneralTabPage.Controls.Add(this.groupBox1);") != -1) {
+
+                        AddGroupBox = "\r\n            this.GeneralTabPage.Controls.Add(this.groupBox2);";
+                        AddGroupBox += "\r\n" + line;
+                        line = AddGroupBox;
+                    }
+                }
                 sb.Append(line + "\r\n");
             }
             #endregion
@@ -265,10 +282,7 @@ namespace CreateXML {
             sw.Close();
         }
 
-        public void AddRemark(SubUIControl control)
-         {
-         
-         }
+        
 
         /// <summary>
         /// 20140818 add by Dick 生出控件出來，讓後面可以加入控件
@@ -287,12 +301,47 @@ namespace CreateXML {
                                     switch(dr.Cells["Type"].Value.ToString().ToLower()) {
                                         case"ntext":
                                             if(order == -1) {
-                                                control = ControlsSetting(EntityName, dr, control, "DcmsMemoEdit");
-                                                control.Layout = "\r\n            ((System.ComponentModel.ISupportInitialize)(this."+control.Name +".Properties)).BeginInit();";
-                                                control.Context += "\r\n             this."+control.Name+".Properties.AccessibleDescription = resources.GetString(\""+control.Name+".Properties.AccessibleDescription\");";
-                                                control.Context += "\r\n             this."+control.Name+".Properties.AccessibleName = resources.GetString(\""+control.Name+".Properties.AccessibleName\");";
-                                                control.Context += "\r\n             this."+control.Name+".Properties.NullValuePrompt = resources.GetString(\""+control.Name+".Properties.NullValuePrompt\");";
-                                                control.Context += "\r\n             this."+control.Name+".Properties.NullValuePromptShowForEmptyValue = ((bool)(resources.GetObject(\""+control.Name+".Properties.NullValuePromptShowForEmptyValue\")));";
+                                                control = new SubUIControl();
+                                                control.Order = -1;
+                                                control.Name = dr.Cells["Parameter"].Value.ToString();                                               
+                                                control.Declare = "\r\n            private GroupBox groupBox2;";                                                
+                                                control.NewControl = "\r\n            this.groupBox2 = new System.Windows.Forms.GroupBox();";
+                                                control.NewControl += "\r\n            this." + control.Name + "DcmsMemoEdit = new Dcms.Common.UI.DcmsMemoEdit();";
+                                                control.Context += "            //";
+                                                control.Context += "\r\n            // groupBox2";
+                                                control.Context += "\r\n            // ";
+
+                                                control.Context += "\r\n            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)";
+                                                control.Context += "\r\n            | System.Windows.Forms.AnchorStyles.Left)";
+                                                control.Context += "\r\n            | System.Windows.Forms.AnchorStyles.Right)));";
+
+                                                control.Context += "\r\n            resources.ApplyResources(this.groupBox2, \"groupBox2\");";
+                                                control.Context += "\r\n            this.groupBox2.Controls.Add(this." + control.Name + "DcmsMemoEdit);";
+                                                control.Context += "\r\n            this.errorProvider.SetError(this.groupBox2, resources.GetString(\"groupBox2.Error\"));";
+                                                control.Context += "\r\n            this.errorProvider.SetIconAlignment(this.groupBox2, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject(\"groupBox2.IconAlignment\"))));";
+                                                control.Context += "\r\n            this.errorProvider.SetIconPadding(this.groupBox2, ((int)(resources.GetObject(\"groupBox2.IconPadding\"))));";
+                                                control.Context += "\r\n            this.groupBox2.Name = \"groupBox2\";";
+                                                control.Context += "\r\n            this.groupBox2.Location = new System.Drawing.Point(10, 261);";
+                                                control.Context += "\r\n            this.groupBox2.Size = new System.Drawing.Size(803, 226);";
+                                                control.Context += "\r\n            this.groupBox2.TabStop = false;";
+                                                control.Context += "\r\n            this.groupBox2.Text = \"Remark\";";                                                
+                                                //control = ControlsSetting(EntityName, dr, control, "DcmsMemoEdit");
+                                                control.Declare += "\r\n            private DcmsMemoEdit " + control.Name + "DcmsMemoEdit;";
+                                                control.Layout = "\r\n            this.groupBox2.SuspendLayout();";
+                                                control.Layout = "\r\n            ((System.ComponentModel.ISupportInitialize)(this." + control.Name + "DcmsMemoEdit.Properties)).BeginInit();";
+                                                control.Context += "\r\n            //";
+                                                control.Context += "\r\n            // " + control.Name + "DcmsMemoEdit";
+                                                control.Context += "\r\n            // ";
+                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)";
+                                                control.Context += "\r\n            | System.Windows.Forms.AnchorStyles.Left)";
+                                                control.Context += "\r\n            | System.Windows.Forms.AnchorStyles.Right)));";
+                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this."+EntityName.ToLower()+"BindingSource, \"" + control.Name + "\", true));";
+                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Location = new System.Drawing.Point(6, 21);";
+                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Size = new System.Drawing.Size(791, 199);";
+                                                control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.AccessibleDescription = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.AccessibleDescription\");";
+                                                control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.AccessibleName = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.AccessibleName\");";
+                                                control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.NullValuePrompt = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.NullValuePrompt\");";
+                                                control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.NullValuePromptShowForEmptyValue = ((bool)(resources.GetObject(\"" + control.Name + "DcmsMemoEdit.Properties.NullValuePromptShowForEmptyValue\")));";
                                             }
                                             break;
                                         case "int":                                            
@@ -346,7 +395,7 @@ namespace CreateXML {
                                             break;
                                     }
                                     if(control != null) {
-                                        if(dr.Cells["Type"].Value.ToString().ToLower() != "bool") {
+                                        if(dr.Cells["Type"].Value.ToString().ToLower() != "bool" & control.Order!=-1) {
                                             //加入Label
                                             control.LabelName = control.Name + "Label1";
                                             control.LabelDeclare += "\r\n            System.Windows.Forms.Label  " + control.Name + "Label1;";

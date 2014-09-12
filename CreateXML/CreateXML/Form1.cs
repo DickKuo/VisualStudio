@@ -2556,5 +2556,11 @@ namespace CreateXML {
             System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable;
             dt.Clear();
         }
+
+        private void 英文ToolStripMenuItem5_Click(object sender, EventArgs e) {
+            ProductMutiLaguage("EN", "", false);
+        }
+
+
     }
 }

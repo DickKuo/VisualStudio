@@ -104,6 +104,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.uIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.英文ToolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.MainGroup.SuspendLayout();
@@ -276,7 +278,7 @@
             // 開啟新檔ToolStripMenuItem
             // 
             this.開啟新檔ToolStripMenuItem.Name = "開啟新檔ToolStripMenuItem";
-            this.開啟新檔ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.開啟新檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.開啟新檔ToolStripMenuItem.Text = "開啟新檔";
             this.開啟新檔ToolStripMenuItem.Click += new System.EventHandler(this.開啟新檔ToolStripMenuItem_Click);
             // 
@@ -291,7 +293,7 @@
             this.生成VirtualServiceToolStripMenuItem,
             this.生成VirtualUIToolStripMenuItem});
             this.生成ToolStripMenuItem.Name = "生成ToolStripMenuItem";
-            this.生成ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.生成ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.生成ToolStripMenuItem.Text = "生成";
             // 
             // 生成生成EntitiesToolStripMenuItem
@@ -350,9 +352,10 @@
             this.browseViewToolStripMenuItem,
             this.dataEnitiyDisplayNameToolStripMenuItem,
             this.desplayNameToolStripMenuItem,
-            this.progNameToolStripMenuItem});
+            this.progNameToolStripMenuItem,
+            this.uIToolStripMenuItem});
             this.多語系ToolStripMenuItem.Name = "多語系ToolStripMenuItem";
-            this.多語系ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.多語系ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.多語系ToolStripMenuItem.Text = "多語系";
             // 
             // browseProjectToolStripMenuItem
@@ -508,35 +511,35 @@
             // 英文ToolStripMenuItem4
             // 
             this.英文ToolStripMenuItem4.Name = "英文ToolStripMenuItem4";
-            this.英文ToolStripMenuItem4.Size = new System.Drawing.Size(100, 22);
+            this.英文ToolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
             this.英文ToolStripMenuItem4.Text = "英文";
             this.英文ToolStripMenuItem4.Click += new System.EventHandler(this.英文ToolStripMenuItem4_Click);
             // 
             // 繁中ToolStripMenuItem2
             // 
             this.繁中ToolStripMenuItem2.Name = "繁中ToolStripMenuItem2";
-            this.繁中ToolStripMenuItem2.Size = new System.Drawing.Size(100, 22);
+            this.繁中ToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.繁中ToolStripMenuItem2.Text = "繁中";
             this.繁中ToolStripMenuItem2.Click += new System.EventHandler(this.繁中ToolStripMenuItem2_Click);
             // 
             // 簡中ToolStripMenuItem3
             // 
             this.簡中ToolStripMenuItem3.Name = "簡中ToolStripMenuItem3";
-            this.簡中ToolStripMenuItem3.Size = new System.Drawing.Size(100, 22);
+            this.簡中ToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
             this.簡中ToolStripMenuItem3.Text = "簡中";
             this.簡中ToolStripMenuItem3.Click += new System.EventHandler(this.簡中ToolStripMenuItem3_Click);
             // 
             // 存檔ToolStripMenuItem
             // 
             this.存檔ToolStripMenuItem.Name = "存檔ToolStripMenuItem";
-            this.存檔ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.存檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.存檔ToolStripMenuItem.Text = "存檔";
             this.存檔ToolStripMenuItem.Click += new System.EventHandler(this.存檔ToolStripMenuItem_Click);
             // 
             // 載入上次作業ToolStripMenuItem
             // 
             this.載入上次作業ToolStripMenuItem.Name = "載入上次作業ToolStripMenuItem";
-            this.載入上次作業ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.載入上次作業ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.載入上次作業ToolStripMenuItem.Text = "載入上次作業";
             this.載入上次作業ToolStripMenuItem.Visible = false;
             // 
@@ -545,7 +548,7 @@
             this.導入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.導入必填欄位ToolStripMenuItem});
             this.導入ToolStripMenuItem.Name = "導入ToolStripMenuItem";
-            this.導入ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.導入ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.導入ToolStripMenuItem.Text = "導入";
             // 
             // 導入必填欄位ToolStripMenuItem
@@ -558,7 +561,7 @@
             // 結束ToolStripMenuItem
             // 
             this.結束ToolStripMenuItem.Name = "結束ToolStripMenuItem";
-            this.結束ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.結束ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.結束ToolStripMenuItem.Text = "結束";
             this.結束ToolStripMenuItem.Click += new System.EventHandler(this.結束ToolStripMenuItem_Click);
             // 
@@ -814,6 +817,21 @@
             this.tabPage2.Text = "+";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // uIToolStripMenuItem
+            // 
+            this.uIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.英文ToolStripMenuItem5});
+            this.uIToolStripMenuItem.Name = "uIToolStripMenuItem";
+            this.uIToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.uIToolStripMenuItem.Text = "UI";
+            // 
+            // 英文ToolStripMenuItem5
+            // 
+            this.英文ToolStripMenuItem5.Name = "英文ToolStripMenuItem5";
+            this.英文ToolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
+            this.英文ToolStripMenuItem5.Text = "英文";
+            this.英文ToolStripMenuItem5.Click += new System.EventHandler(this.英文ToolStripMenuItem5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -921,6 +939,8 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ToolStripMenuItem uIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 英文ToolStripMenuItem5;
     }
 }
 
