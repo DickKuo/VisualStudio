@@ -2558,7 +2558,62 @@ namespace CreateXML {
         }
 
         private void 英文ToolStripMenuItem5_Click(object sender, EventArgs e) {
-            ProductMutiLaguage("EN", "", false);
+            foreach(DataGridViewRow dr in dataGridView1.Rows) {
+                if(dr.Cells["UIOrder"] != null) {
+                    if(!string.IsNullOrEmpty(dr.Cells["UIOrder"].ToString())) {
+                        if(dr.Cells["UIOrder"].Value != null) { 
+                        
+                        }
+                    }
+                }
+            }
+        }
+       
+
+        private void 繁中ToolStripMenuItem3_Click(object sender, EventArgs e) {
+            richTextBox1.Clear();
+            foreach(DataGridViewRow dr in dataGridView1.Rows) {
+                if(dr.Cells["UIOrder"] != null) {
+                    if(!string.IsNullOrEmpty(dr.Cells["UIOrder"].ToString())) {
+                        if(dr.Cells["UIOrder"].Value != null) {
+                            int order =0;
+                            if(int.TryParse(dr.Cells["UIOrder"].Value.ToString(),out order))
+                            {                                
+                                if(order != 0) {
+                                    richTextBox1.AppendText(string.Format("{0}Label1.Text\t{1}:\t{2} \r\n", dr.Cells["Parameter"].Value.ToString(), dr.Cells["Describe"].Value.ToString(), dr.Cells["Describe"].Value.ToString()));
+                                }
+                                if(order == -1) {
+                                    richTextBox1.AppendText(string.Format("groupBox2.Text\t{0}:\t{1} \r\n", "備註", "備註"));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void 簡中ToolStripMenuItem4_Click(object sender, EventArgs e) {
+            richTextBox1.Clear();
+            foreach(DataGridViewRow dr in dataGridView1.Rows) {
+                if(dr.Cells["UIOrder"] != null) {
+                    if(!string.IsNullOrEmpty(dr.Cells["UIOrder"].ToString())) {
+                        if(dr.Cells["UIOrder"].Value != null) {
+                            int order = 0;
+                            if(int.TryParse(dr.Cells["UIOrder"].Value.ToString(), out order)) {
+                                if(order != 0) {
+                                    string temp = translateEncodingByWord(dr.Cells["Describe"].Value.ToString(), true).Trim();
+
+                                    richTextBox1.AppendText(string.Format("{0}Label1.Text\t{1}:\t{2} \r\n", dr.Cells["Parameter"].Value.ToString(), temp, temp));
+                                }
+                                if(order == -1) {
+                                    string temp = translateEncodingByWord("備註", true).Trim();
+                                    richTextBox1.AppendText(string.Format("groupBox2.Text\t{0}:\t{1} \r\n", temp, temp));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 

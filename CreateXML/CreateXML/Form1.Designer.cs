@@ -75,6 +75,10 @@
             this.英文ToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.繁中ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.簡中ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.uIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.英文ToolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.繁中ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.簡中ToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.存檔ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.載入上次作業ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.導入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,8 +108,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.uIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.英文ToolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.MainGroup.SuspendLayout();
@@ -511,23 +513,54 @@
             // 英文ToolStripMenuItem4
             // 
             this.英文ToolStripMenuItem4.Name = "英文ToolStripMenuItem4";
-            this.英文ToolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+            this.英文ToolStripMenuItem4.Size = new System.Drawing.Size(100, 22);
             this.英文ToolStripMenuItem4.Text = "英文";
             this.英文ToolStripMenuItem4.Click += new System.EventHandler(this.英文ToolStripMenuItem4_Click);
             // 
             // 繁中ToolStripMenuItem2
             // 
             this.繁中ToolStripMenuItem2.Name = "繁中ToolStripMenuItem2";
-            this.繁中ToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.繁中ToolStripMenuItem2.Size = new System.Drawing.Size(100, 22);
             this.繁中ToolStripMenuItem2.Text = "繁中";
             this.繁中ToolStripMenuItem2.Click += new System.EventHandler(this.繁中ToolStripMenuItem2_Click);
             // 
             // 簡中ToolStripMenuItem3
             // 
             this.簡中ToolStripMenuItem3.Name = "簡中ToolStripMenuItem3";
-            this.簡中ToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.簡中ToolStripMenuItem3.Size = new System.Drawing.Size(100, 22);
             this.簡中ToolStripMenuItem3.Text = "簡中";
             this.簡中ToolStripMenuItem3.Click += new System.EventHandler(this.簡中ToolStripMenuItem3_Click);
+            // 
+            // uIToolStripMenuItem
+            // 
+            this.uIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.英文ToolStripMenuItem5,
+            this.繁中ToolStripMenuItem3,
+            this.簡中ToolStripMenuItem4});
+            this.uIToolStripMenuItem.Name = "uIToolStripMenuItem";
+            this.uIToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.uIToolStripMenuItem.Text = "UI";
+            // 
+            // 英文ToolStripMenuItem5
+            // 
+            this.英文ToolStripMenuItem5.Name = "英文ToolStripMenuItem5";
+            this.英文ToolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
+            this.英文ToolStripMenuItem5.Text = "英文";
+            this.英文ToolStripMenuItem5.Click += new System.EventHandler(this.英文ToolStripMenuItem5_Click);
+            // 
+            // 繁中ToolStripMenuItem3
+            // 
+            this.繁中ToolStripMenuItem3.Name = "繁中ToolStripMenuItem3";
+            this.繁中ToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.繁中ToolStripMenuItem3.Text = "繁中";
+            this.繁中ToolStripMenuItem3.Click += new System.EventHandler(this.繁中ToolStripMenuItem3_Click);
+            // 
+            // 簡中ToolStripMenuItem4
+            // 
+            this.簡中ToolStripMenuItem4.Name = "簡中ToolStripMenuItem4";
+            this.簡中ToolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+            this.簡中ToolStripMenuItem4.Text = "簡中";
+            this.簡中ToolStripMenuItem4.Click += new System.EventHandler(this.簡中ToolStripMenuItem4_Click);
             // 
             // 存檔ToolStripMenuItem
             // 
@@ -817,21 +850,6 @@
             this.tabPage2.Text = "+";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // uIToolStripMenuItem
-            // 
-            this.uIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.英文ToolStripMenuItem5});
-            this.uIToolStripMenuItem.Name = "uIToolStripMenuItem";
-            this.uIToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.uIToolStripMenuItem.Text = "UI";
-            // 
-            // 英文ToolStripMenuItem5
-            // 
-            this.英文ToolStripMenuItem5.Name = "英文ToolStripMenuItem5";
-            this.英文ToolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
-            this.英文ToolStripMenuItem5.Text = "英文";
-            this.英文ToolStripMenuItem5.Click += new System.EventHandler(this.英文ToolStripMenuItem5_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -941,6 +959,8 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStripMenuItem uIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 英文ToolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem 繁中ToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem 簡中ToolStripMenuItem4;
     }
 }
 

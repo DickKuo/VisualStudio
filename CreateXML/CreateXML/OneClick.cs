@@ -337,7 +337,7 @@ namespace CreateXML {
                                                 control.Context += "\r\n            | System.Windows.Forms.AnchorStyles.Right)));";
                                                 control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this."+EntityName.ToLower()+"BindingSource, \"" + control.Name + "\", true));";
                                                 control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Location = new System.Drawing.Point(6, 21);";
-                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Size = new System.Drawing.Size(791, 199);";
+                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Size = new System.Drawing.Size(773, 189);";
                                                 control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.AccessibleDescription = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.AccessibleDescription\");";
                                                 control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.AccessibleName = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.AccessibleName\");";
                                                 control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.NullValuePrompt = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.NullValuePrompt\");";
