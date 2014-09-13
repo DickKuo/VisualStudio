@@ -69,7 +69,7 @@ namespace Dcms.HR.UI {
 			this.entityBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			
 			//NewControlExtend
 			this.MainTabControl.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();

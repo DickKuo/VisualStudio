@@ -113,27 +113,30 @@ namespace CreateXML {
             StringBuilder SBContext = new StringBuilder();
             StringBuilder SBAdd = new StringBuilder();
             //起始座標
-            int x = 50;
+            int x = 30;
             int y = 0;
 
             ///排列邏輯還在想
             int count = 0;
             foreach(SubUIControl control in li.OrderBy(o => o.Order)) {
                 #region  20140905 add by Dick 針對被註另外處理
-                if(control.Order == "-1") {
-                  //toDo...
+                if(control.Order == -1) {
+                    AddRemark(control);
                     continue;
                 }
                 #endregion
 
                 #region 20140905 add by Dick 對控件座標進行做調整
                 if(count % Mode == 0) {
-                    x = 50;
+                    x = 30;
                     if(Mode == 2) {
                         y += 30;
                     }
                     if(Mode == 3) {
                         y += 60;
+                    }
+                    if(Mode == 4) {
+                        y += 80;
                     }
                 }
                 #endregion
@@ -262,6 +265,11 @@ namespace CreateXML {
             sw.Close();
         }
 
+        public void AddRemark(SubUIControl control)
+         {
+         
+         }
+
         /// <summary>
         /// 20140818 add by Dick 生出控件出來，讓後面可以加入控件
         /// </summary>
@@ -279,16 +287,20 @@ namespace CreateXML {
                                     switch(dr.Cells["Type"].Value.ToString().ToLower()) {
                                         case"ntext":
                                             if(order == -1) {
-                                                //private GroupBox groupBox2;
-                                                //private DcmsMemoEdit xRemarkDcmsMemoEdit;
+                                                control = ControlsSetting(EntityName, dr, control, "DcmsMemoEdit");
+                                                control.Layout = "\r\n            ((System.ComponentModel.ISupportInitialize)(this."+control.Name +".Properties)).BeginInit();";
+                                                control.Context += "\r\n             this."+control.Name+".Properties.AccessibleDescription = resources.GetString(\""+control.Name+".Properties.AccessibleDescription\");";
+                                                control.Context += "\r\n             this."+control.Name+".Properties.AccessibleName = resources.GetString(\""+control.Name+".Properties.AccessibleName\");";
+                                                control.Context += "\r\n             this."+control.Name+".Properties.NullValuePrompt = resources.GetString(\""+control.Name+".Properties.NullValuePrompt\");";
+                                                control.Context += "\r\n             this."+control.Name+".Properties.NullValuePromptShowForEmptyValue = ((bool)(resources.GetObject(\""+control.Name+".Properties.NullValuePromptShowForEmptyValue\")));";
                                             }
                                             break;
-                                        case "int":
+                                        case "int":                                            
                                             break;
                                         case"bool":
                                             control = ControlsSetting(EntityName, dr, control, "DcmsCheckEdit");
-                                            control.Context += "\r\n             this.DcmsCheckEdit" + control.Name + ".Properties.Caption =\"" + control.Name + "\";";
-                                            control.Layout = "\r\n            ((System.ComponentModel.ISupportInitialize)(this.DcmsCheckEdit" + control.Name + ".Properties)).EndInit();\r\n";
+                                            control.Context += "\r\n             this.dcmsCheckEdit" + control.Name + ".Properties.Caption =\"" + control.Name + "\";";
+                                            control.Layout = "\r\n            ((System.ComponentModel.ISupportInitialize)(this.dcmsCheckEdit" + control.Name + ".Properties)).EndInit();\r\n";
                                             break;
                                         case "decmail":
                                             control = ControlsSetting(EntityName, dr, control, "DcmsCalcEdit");
@@ -368,6 +380,8 @@ namespace CreateXML {
         }
 
 
+
+
         /// <summary>
         /// 20140904 動態件利控件
         /// </summary>
@@ -380,7 +394,7 @@ namespace CreateXML {
             control = new SubUIControl();
             control.Name = dr.Cells["Parameter"].Value.ToString();
             control.ControlFullName = " this." + temp + control.Name;
-            control.Order = dr.Cells["UIOrder"].Value.ToString();
+            control.Order = Convert.ToInt32(dr.Cells["UIOrder"].Value);
             control.Declare = "        private " + ControlType + " "+temp + control.Name + ";";
             if(ControlType.Equals("HRSelectControl")) { ///SelectControl 命名空間不一樣
                 control.NewControl = "            this." + temp + control.Name + " = new " + ControlType + "();\r\n";
@@ -747,7 +761,7 @@ namespace CreateXML {
         public string Name { set; get; }
         public string ControlFullName { set; get; }
         public string Declare { set; get; }
-        public string Order { set; get; }
+        public int Order { set; get; }
         public string NewControl { set; get; }
         public string Context { set; get; }
         public string Layout { set; get; }

@@ -101,11 +101,16 @@
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.cb_ForCase = new System.Windows.Forms.CheckBox();
             this.cb_OnlyParameter = new System.Windows.Forms.CheckBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.MainGroup.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBoxMode.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -124,10 +129,10 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(1, 166);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 6);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1005, 267);
+            this.dataGridView1.Size = new System.Drawing.Size(974, 234);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             // 
@@ -271,7 +276,7 @@
             // 開啟新檔ToolStripMenuItem
             // 
             this.開啟新檔ToolStripMenuItem.Name = "開啟新檔ToolStripMenuItem";
-            this.開啟新檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.開啟新檔ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.開啟新檔ToolStripMenuItem.Text = "開啟新檔";
             this.開啟新檔ToolStripMenuItem.Click += new System.EventHandler(this.開啟新檔ToolStripMenuItem_Click);
             // 
@@ -286,7 +291,7 @@
             this.生成VirtualServiceToolStripMenuItem,
             this.生成VirtualUIToolStripMenuItem});
             this.生成ToolStripMenuItem.Name = "生成ToolStripMenuItem";
-            this.生成ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.生成ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.生成ToolStripMenuItem.Text = "生成";
             // 
             // 生成生成EntitiesToolStripMenuItem
@@ -347,7 +352,7 @@
             this.desplayNameToolStripMenuItem,
             this.progNameToolStripMenuItem});
             this.多語系ToolStripMenuItem.Name = "多語系ToolStripMenuItem";
-            this.多語系ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.多語系ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.多語系ToolStripMenuItem.Text = "多語系";
             // 
             // browseProjectToolStripMenuItem
@@ -403,28 +408,28 @@
             // 英文ToolStripMenuItem1
             // 
             this.英文ToolStripMenuItem1.Name = "英文ToolStripMenuItem1";
-            this.英文ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.英文ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.英文ToolStripMenuItem1.Text = "英文";
             this.英文ToolStripMenuItem1.Click += new System.EventHandler(this.英文ToolStripMenuItem1_Click);
             // 
             // 繁中ToolStripMenuItem1
             // 
             this.繁中ToolStripMenuItem1.Name = "繁中ToolStripMenuItem1";
-            this.繁中ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.繁中ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.繁中ToolStripMenuItem1.Text = "繁中";
             this.繁中ToolStripMenuItem1.Click += new System.EventHandler(this.繁中ToolStripMenuItem1_Click);
             // 
             // 簡中ToolStripMenuItem1
             // 
             this.簡中ToolStripMenuItem1.Name = "簡中ToolStripMenuItem1";
-            this.簡中ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.簡中ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.簡中ToolStripMenuItem1.Text = "簡中";
             this.簡中ToolStripMenuItem1.Click += new System.EventHandler(this.簡中ToolStripMenuItem1_Click);
             // 
             // 一併修改ToolStripMenuItem1
             // 
             this.一併修改ToolStripMenuItem1.Name = "一併修改ToolStripMenuItem1";
-            this.一併修改ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.一併修改ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.一併修改ToolStripMenuItem1.Text = "一併修改";
             this.一併修改ToolStripMenuItem1.Click += new System.EventHandler(this.一併修改ToolStripMenuItem1_Click);
             // 
@@ -524,14 +529,14 @@
             // 存檔ToolStripMenuItem
             // 
             this.存檔ToolStripMenuItem.Name = "存檔ToolStripMenuItem";
-            this.存檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.存檔ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.存檔ToolStripMenuItem.Text = "存檔";
             this.存檔ToolStripMenuItem.Click += new System.EventHandler(this.存檔ToolStripMenuItem_Click);
             // 
             // 載入上次作業ToolStripMenuItem
             // 
             this.載入上次作業ToolStripMenuItem.Name = "載入上次作業ToolStripMenuItem";
-            this.載入上次作業ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.載入上次作業ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.載入上次作業ToolStripMenuItem.Text = "載入上次作業";
             this.載入上次作業ToolStripMenuItem.Visible = false;
             // 
@@ -540,7 +545,7 @@
             this.導入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.導入必填欄位ToolStripMenuItem});
             this.導入ToolStripMenuItem.Name = "導入ToolStripMenuItem";
-            this.導入ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.導入ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.導入ToolStripMenuItem.Text = "導入";
             // 
             // 導入必填欄位ToolStripMenuItem
@@ -553,7 +558,7 @@
             // 結束ToolStripMenuItem
             // 
             this.結束ToolStripMenuItem.Name = "結束ToolStripMenuItem";
-            this.結束ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.結束ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.結束ToolStripMenuItem.Text = "結束";
             this.結束ToolStripMenuItem.Click += new System.EventHandler(this.結束ToolStripMenuItem_Click);
             // 
@@ -744,6 +749,7 @@
             this.radioButton6.TabStop = true;
             this.radioButton6.Text = "Mode4";
             this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.Visible = false;
             // 
             // radioButton5
             // 
@@ -777,13 +783,44 @@
             this.cb_OnlyParameter.Text = "Only Parameter";
             this.cb_OnlyParameter.UseVisualStyleBackColor = true;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(4, 166);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1001, 272);
+            this.tabControl1.TabIndex = 20;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(993, 246);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Browse";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(993, 246);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "+";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 694);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.MainGroup);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -799,6 +836,8 @@
             this.groupBox2.PerformLayout();
             this.groupBoxMode.ResumeLayout(false);
             this.groupBoxMode.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -879,6 +918,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox EnitiesComboBox;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 
