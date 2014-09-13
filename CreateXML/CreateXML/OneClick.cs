@@ -518,7 +518,7 @@ namespace CreateXML {
         /// </summary>
         /// <param name="SaveFile"></param>
         /// <param name="spl"></param>
-        private static void AddResource(string SaveFile, string[] spl) {
+        public static void AddResource(string SaveFile, string[] spl) {
             XmlDocument doc = Tools.XmlTool.LoadXml(SaveFile);
             XmlNode root = doc.SelectSingleNode("root");
             XmlElement element = doc.CreateElement("data");

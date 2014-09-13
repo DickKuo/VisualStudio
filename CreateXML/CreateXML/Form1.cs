@@ -2497,6 +2497,19 @@ namespace CreateXML {
             #endregion
 
 
+            #region  UI多語系
+            string SourcePath= AppDomain.CurrentDomain.BaseDirectory +@"\SampleFile\Resource.zh-CHT.resx";
+            string DestinationPath = ParentPath + "\\" + "DigiWin.HR.CustomUI"  + Path.DirectorySeparatorChar + tb_className.Text + ".zh-CHT.resx";
+            File.Copy(SourcePath, DestinationPath,true);
+            SourcePath = AppDomain.CurrentDomain.BaseDirectory + @"\SampleFile\Resource.zh-CHS.resx";
+            DestinationPath = ParentPath + "\\" + "DigiWin.HR.CustomUI"  + Path.DirectorySeparatorChar + tb_className.Text + ".zh-CHS.resx";
+            File.Copy(SourcePath, DestinationPath,true);
+            UIResource(oneclick, tb_className.Text, ParentPath + "\\" + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar);
+
+
+            #endregion
+
+
             //System.Threading.Tasks.Task.WaitAll(tasks);
             MessageBox.Show("完成!!");
         }
@@ -2530,6 +2543,36 @@ namespace CreateXML {
             簡中ToolStripMenuItem2.PerformClick();
             oneclick.AddResourceRow("DigiWin.HR.CustomUI", richTextBox1.Text, "ResourcesForCase.zh-CHS", false);
         }
+
+        /// <summary>
+        /// 20140913 UI多語系
+        /// </summary>
+        /// <param name="oneclick"></param>
+        /// <param name="FileName"></param>
+        private void UIResource(OneClick oneclick,string EntityName,string FilePath) {
+            繁中ToolStripMenuItem3.PerformClick();
+            SubUIResource(EntityName, FilePath, ".zh-CHT.resx");        
+            簡中ToolStripMenuItem4.PerformClick();
+            SubUIResource(EntityName, FilePath, ".zh-CHS.resx");
+        }
+
+        /// <summary>
+        /// 20140913 加入多語系
+        /// </summary>
+        /// <param name="EntityName"></param>
+        /// <param name="FilePath"></param>
+        /// <param name="Extend"></param>
+        private void SubUIResource(string EntityName, string FilePath,string Extend) {
+            string[]arry = richTextBox1.Text.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            if(arry.Length > 0) {
+                FilePath += EntityName + Extend;
+                foreach(string str in arry) {
+                    string[] spl = str.Split('\t');
+                    OneClick.AddResource(FilePath, spl);
+                }
+            }
+        }
+
 
 
         /// <summary>
@@ -2580,7 +2623,12 @@ namespace CreateXML {
                             if(int.TryParse(dr.Cells["UIOrder"].Value.ToString(),out order))
                             {                                
                                 if(order != 0) {
-                                    richTextBox1.AppendText(string.Format("{0}Label1.Text\t{1}:\t{2} \r\n", dr.Cells["Parameter"].Value.ToString(), dr.Cells["Describe"].Value.ToString(), dr.Cells["Describe"].Value.ToString()));
+                                    if(dr.Cells["Type"].Value.ToString().ToLower() != "bool") {
+                                        richTextBox1.AppendText(string.Format("{0}Label1.Text\t{1}:\t{2} \r\n", dr.Cells["Parameter"].Value.ToString(), dr.Cells["Describe"].Value.ToString(), dr.Cells["Describe"].Value.ToString()));
+                                    }
+                                    else {
+                                     //   richTextBox1.AppendText(string.Format("dcmsCheckEdit{0}.Text\t{1}:\t{2} \r\n", dr.Cells["Parameter"].Value.ToString(), dr.Cells["Describe"].Value.ToString(), dr.Cells["Describe"].Value.ToString()));
+                                    }
                                 }
                                 if(order == -1) {
                                     richTextBox1.AppendText(string.Format("groupBox2.Text\t{0}:\t{1} \r\n", "備註", "備註"));
@@ -2602,8 +2650,12 @@ namespace CreateXML {
                             if(int.TryParse(dr.Cells["UIOrder"].Value.ToString(), out order)) {
                                 if(order != 0) {
                                     string temp = translateEncodingByWord(dr.Cells["Describe"].Value.ToString(), true).Trim();
-
-                                    richTextBox1.AppendText(string.Format("{0}Label1.Text\t{1}:\t{2} \r\n", dr.Cells["Parameter"].Value.ToString(), temp, temp));
+                                    if(dr.Cells["Type"].Value.ToString().ToLower() != "bool") {
+                                        richTextBox1.AppendText(string.Format("{0}Label1.Text\t{1}:\t{2} \r\n", dr.Cells["Parameter"].Value.ToString(), temp, temp));
+                                    }
+                                    else {
+                                      //  richTextBox1.AppendText(string.Format("dcmsCheckEdit{0}.Text\t{1}:\t{2} \r\n", dr.Cells["Parameter"].Value.ToString(), temp, temp));
+                                    }
                                 }
                                 if(order == -1) {
                                     string temp = translateEncodingByWord("備註", true).Trim();

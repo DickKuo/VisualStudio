@@ -124,6 +124,12 @@
     <EmbeddedResource Include="QandA.resx">
       <DependentUpon>QandA.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SampleFile\Resource.zh-CHS.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SampleFile\Resource.zh-CHT.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="SQLFilter.resx">
       <DependentUpon>SQLFilter.cs</DependentUpon>
     </EmbeddedResource>
