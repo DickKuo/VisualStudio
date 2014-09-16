@@ -1064,10 +1064,10 @@ namespace CreateXML {
                 //20140904 加入Order 及 UIOrder 及 Necessary
                 dr["Order"] = node.Attributes["Order"] !=null? node.Attributes["Order"].Value.ToString():null ;
                 dr["UIOrder"] = node.Attributes["UIOrder"] != null ? node.Attributes["UIOrder"].Value.ToString() : null;
-                dr["Necessary"] = node.Attributes["Necessary"] != null ? Convert.ToBoolean( node.Attributes["Necessary"].Value) : false;
-                
+                bool IsNecessary = false;
+                bool.TryParse(node.Attributes["Necessary"].Value, out IsNecessary);
+                dr["Necessary"] = IsNecessary;
                 dt.Rows.Add(dr);
-
             }
             dataGridView1.DataSource = dt;
 
@@ -2665,6 +2665,15 @@ namespace CreateXML {
                         }
                     }
                 }
+            }
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e) {
+            TabControl tab = (TabControl)sender;
+            if(tab.SelectedTab.Text =="+") {
+                //加入Browse還有條件
+                tab.TabPages.Insert(tab.SelectedIndex ,"new");
+                tab.SelectedIndex = tab.SelectedIndex - 1;
             }
         }
 

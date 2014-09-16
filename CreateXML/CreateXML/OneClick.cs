@@ -351,12 +351,13 @@ namespace CreateXML {
                                             control.Context += "\r\n             this.dcmsCheckEdit" + control.Name + ".Properties.Caption =\"" + control.Name + "\";";
                                             control.Layout = "\r\n            ((System.ComponentModel.ISupportInitialize)(this.dcmsCheckEdit" + control.Name + ".Properties)).EndInit();\r\n";
                                             break;
-                                        case "decmail":
+                                        case "decimal":
                                             control = ControlsSetting(EntityName, dr, control, "DcmsCalcEdit");
-                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.ImeMode = System.Windows.Forms.ImeMode.Off;";
-                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                            control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});";
-                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Mask.UseMaskAsDisplayFormat = true;";
+                                            control.Context += "\r\n            this." + control.Name + "DcmsSpinEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Value\", this.xmachinetypeBindingSource, \"" + control.Name + "\", true));";
+                                            control.Context += "\r\n            resources.ApplyResources(this.xATTCardIDDcmsSpinEdit, \"" + control.Name + "DcmsSpinEdit\");";
+                                            control.Context += "\r\n            this." + control.Name + "DcmsSpinEdit.Name = \"" + control.Name + "DcmsSpinEdit\";";
+                                            control.Context += "\r\n            this." + control.Name + "DcmsSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                            control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});";
                                             control.Layout = "             ((System.ComponentModel.ISupportInitialize)(this." + control.Name + "DcmsCalcEdit.Properties)).EndInit();\r\n";
                                             break;
                                         case "guid":
@@ -397,6 +398,7 @@ namespace CreateXML {
                                     if(control != null) {
                                         if(dr.Cells["Type"].Value.ToString().ToLower() != "bool" & control.Order!=-1) {
                                             //加入Label
+                                            string temp = control.Name.ToLower().IndexOf("x") != -1 ? control.Name.Substring(1, control.Name.Length-1) : control.Name;
                                             control.LabelName = control.Name + "Label1";
                                             control.LabelDeclare += "\r\n            System.Windows.Forms.Label  " + control.Name + "Label1;";
                                             control.LabelNewControl += "\r\n            " + control.Name + "Label1 = new System.Windows.Forms.Label();";
