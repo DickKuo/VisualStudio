@@ -121,15 +121,35 @@ namespace GetSite
                                 if(line.IndexOf("<span class=\"f2\">") != -1) {
                                     break;
                                 }
-                                //20140908 修改網址，轉換成圖片連結
+
+                                #region 20140908 修改網址，轉換成圖片連結
                                 if (line.IndexOf("http://ppt.cc/")!=-1)
                                 {
                                     matches = Regex.Matches(line, "\">[^\"]+</a>", RegexOptions.IgnoreCase);
                                     foreach (Match match in matches)
                                     {
                                         line = match.Value.Replace("\">", "<br/><img  src=\"").Replace("</a>", "@.jpg\" /><br/><br/>");
-                                    }  
+                                    }
                                 }
+                                #endregion
+
+                                #region 轉youtube 網址
+                                if(line.ToLower().Replace(".", "").Trim().IndexOf("youtube") != -1) {
+                                    matches = Regex.Matches(line, "https://www.youtube.com[^\"]+", RegexOptions.IgnoreCase);
+                                    if(matches.Count > 0) {
+                                        foreach(Match match in matches) {
+                                            line = "<a href =\"" + match.Value + "\">影片連結</a>";
+                                        }
+                                    }
+                                    else {
+                                        matches = Regex.Matches(line, "http://youtu.be[^\"]+", RegexOptions.IgnoreCase);
+                                        foreach(Match match in matches) {
+                                            line = "<a href =\"" + match.Value + "\">影片連結</a>";
+                                        }
+                                    }
+                                }  
+                                #endregion     
+                           
                                 sb.Append(line).Replace("--", "");
                             }
                             break;
