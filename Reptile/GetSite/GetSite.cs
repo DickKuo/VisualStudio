@@ -127,8 +127,8 @@ namespace GetSite
                                 {
                                     matches = Regex.Matches(line, "\">[^\"]+</a>", RegexOptions.IgnoreCase);
                                     foreach (Match match in matches)
-                                    {
-                                        line = match.Value.Replace("\">", "<br/><img  src=\"").Replace("</a>", "@.jpg\" /><br/><br/>");
+                                    {                                     
+                                        line = match.Value.Replace("\">", "<br/><img  src=\"").Replace("</a>", "@.jpg\"  /><br/><br/>");
                                     }
                                 }
                                 #endregion
@@ -150,6 +150,15 @@ namespace GetSite
                                 }  
                                 #endregion     
                            
+                                #region 加入data-original
+                                matches = Regex.Matches(line, "[^\"]+.jpg</a>", RegexOptions.IgnoreCase);
+                                foreach(Match match in matches) {
+                                    string href = match.Value.Replace(">", "").Replace("</a", "");
+                                    line = line.Replace(".jpg\"", " .jpg\" data-original=\"" + href + "\"");
+                                }
+                                #endregion
+                                
+
                                 sb.Append(line).Replace("--", "");
                             }
                             break;
