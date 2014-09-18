@@ -109,7 +109,7 @@ namespace WindowsService1 {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("180000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
         public double Interval {
             get {
                 return ((double)(this["Interval"]));

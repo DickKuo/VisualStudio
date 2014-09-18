@@ -24,7 +24,7 @@
       <Value Profile="(Default)">2014/04/08 14:15:54</Value>
     </Setting>
     <Setting Name="Interval" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">180000</Value>
+      <Value Profile="(Default)">60</Value>
     </Setting>
     <Setting Name="RecordPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\Log</Value>

@@ -139,7 +139,7 @@ namespace Reptile
                     if (st.IndexOf("Dis") != -1)
                     {
                         DateTime date = DateTime.Now;
-                        StreamWriter sw = new StreamWriter(@"C:\Users\Dick\Desktop\22\" + date.ToString("yyyymmddHHmmss") + ".txt");
+                        StreamWriter sw = new StreamWriter(@"C:\Users\Dick\Desktop\Json\" + date.ToString("yyyymmddHHmmss") + ".txt");
                         sw.Write(strJson);
                         sw.Close();
                     }

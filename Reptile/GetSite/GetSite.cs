@@ -151,11 +151,11 @@ namespace GetSite
                                 #endregion     
                            
                                 #region 加入data-original
-                                matches = Regex.Matches(line, "[^\"]+.jpg</a>", RegexOptions.IgnoreCase);
+                                matches = Regex.Matches(line, "src=\"[^\"]+", RegexOptions.IgnoreCase);
                                 foreach(Match match in matches) {
-                                    string href = match.Value.Replace(">", "").Replace("</a", "");
-                                    line = line.Replace(".jpg\"", " .jpg\" data-original=\"" + href + "\"");
-                                }
+                                    string href = match.Value.Replace("src=\"", "");
+                                    line = line.Replace(".jpg\"", ".jpg\" data-original='" + href + "\" class='lazy'");
+                                }                                
                                 #endregion
                                 
 

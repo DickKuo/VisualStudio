@@ -39,10 +39,10 @@ namespace WindowsService1
             Log("服務啟動" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             System.Timers.Timer time = new System.Timers.Timer();
             time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
-            time.Interval = Settings1.Default.Interval;
+            time.Interval = Settings1.Default.Interval*1000*60;
             time.Start();
             Init();
-            //Start();
+            Start();
         }
 
         /// <summary>
