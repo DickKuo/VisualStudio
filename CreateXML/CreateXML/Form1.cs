@@ -12,6 +12,7 @@ using System.Net;
 using Microsoft.Office.Interop.Word;
 using System.Reflection;
 using System.Web;
+using System.Diagnostics;
 
 namespace CreateXML {
     public partial class Form1 : Form {
@@ -2677,6 +2678,13 @@ namespace CreateXML {
             }
         }
 
-
+        private void queryView排序ToolStripMenuItem_Click(object sender, EventArgs e) {
+            string ThisPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"XmlOrder.exe");
+            if(!File.Exists(ThisPath)) {
+                MessageBox.Show("找不到檔案XmlOrder.exe");
+                return;
+            }
+            Process.Start(ThisPath);
+        }
     }
 }
