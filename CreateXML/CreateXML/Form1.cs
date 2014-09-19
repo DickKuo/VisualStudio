@@ -13,6 +13,7 @@ using Microsoft.Office.Interop.Word;
 using System.Reflection;
 using System.Web;
 using System.Diagnostics;
+using System.Threading;
 
 namespace CreateXML {
     public partial class Form1 : Form {
@@ -2680,11 +2681,34 @@ namespace CreateXML {
 
         private void queryView排序ToolStripMenuItem_Click(object sender, EventArgs e) {
             string ThisPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"XmlOrder.exe");
+            string XMLPath =Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"New.xml");
             if(!File.Exists(ThisPath)) {
                 MessageBox.Show("找不到檔案XmlOrder.exe");
                 return;
             }
             Process.Start(ThisPath);
+            Thread.Sleep(1000);
+            if(File.Exists(XMLPath)) {
+                using(StreamReader sw = new StreamReader(XMLPath)) {
+                    StringBuilder sb = new StringBuilder();
+                    string line = string.Empty;
+                    while((line=sw.ReadLine())!=null)
+                    {
+                        if(line == "<?xml version=\"1.0\" encoding=\"utf-8\"?>") {
+                            continue;
+                        }
+                        if(line == "<root>") {
+                            continue;
+                        }
+                        if(line == "</root>") {
+                            continue;
+                        }
+                        sb.Append(string.Format("{0}\r\n", line));
+                    }
+                    ShowMessage show = new ShowMessage(sb.ToString());
+                    show.ShowDialog();
+                }
+            }
         }
     }
 }

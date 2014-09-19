@@ -97,6 +97,12 @@
     <Content Include="SampleFile\Sample.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="ShowMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowMessage.Designer.cs">
+      <DependentUpon>ShowMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="SQLFilter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SampleFile\Resource.zh-CHT.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowMessage.resx">
+      <DependentUpon>ShowMessage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SQLFilter.resx">
       <DependentUpon>SQLFilter.cs</DependentUpon>
