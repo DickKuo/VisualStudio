@@ -89,7 +89,10 @@ this.路徑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.打包ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.個案打包ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.sQL過濾ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+this.queryView排序ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.一鍵生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+this.單檔ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+this.說明ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.cb_Collection = new System.Windows.Forms.CheckBox();
 this.MainGroup = new System.Windows.Forms.GroupBox();
 this.button1 = new System.Windows.Forms.Button();
@@ -109,7 +112,7 @@ this.tabControl1 = new System.Windows.Forms.TabControl();
 this.tabPage1 = new System.Windows.Forms.TabPage();
 this.tabPage2 = new System.Windows.Forms.TabPage();
 this.label4 = new System.Windows.Forms.Label();
-this.queryView排序ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+this.雙檔ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 this.menuStrip1.SuspendLayout();
 this.MainGroup.SuspendLayout();
@@ -128,7 +131,7 @@ this.richTextBox1.Location = new System.Drawing.Point(1, 444);
 this.richTextBox1.Name = "richTextBox1";
 this.richTextBox1.Size = new System.Drawing.Size(1004, 228);
 this.richTextBox1.TabIndex = 1;
-//this.richTextBox1.Text = global::CreateXML.SampleFile.Resource_zh_CHS.resx;
+//this.richTextBox1.Text = global::CreateXML.SampleFile.Resource_zh_CHS.;
 // 
 // dataGridView1
 // 
@@ -258,7 +261,8 @@ this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.檔案ToolStripMenuItem,
             this.設定ToolStripMenuItem,
             this.打包ToolStripMenuItem,
-            this.一鍵生成ToolStripMenuItem});
+            this.一鍵生成ToolStripMenuItem,
+            this.說明ToolStripMenuItem});
 this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 this.menuStrip1.Name = "menuStrip1";
 this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
@@ -640,12 +644,36 @@ this.sQL過濾ToolStripMenuItem.Text = "SQL過濾";
 this.sQL過濾ToolStripMenuItem.Visible = false;
 this.sQL過濾ToolStripMenuItem.Click += new System.EventHandler(this.sQL過濾ToolStripMenuItem_Click);
 // 
+// queryView排序ToolStripMenuItem
+// 
+this.queryView排序ToolStripMenuItem.Name = "queryView排序ToolStripMenuItem";
+this.queryView排序ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+this.queryView排序ToolStripMenuItem.Text = "QueryView排序";
+this.queryView排序ToolStripMenuItem.Click += new System.EventHandler(this.queryView排序ToolStripMenuItem_Click);
+// 
 // 一鍵生成ToolStripMenuItem
 // 
+this.一鍵生成ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.單檔ToolStripMenuItem,
+            this.雙檔ToolStripMenuItem});
 this.一鍵生成ToolStripMenuItem.Name = "一鍵生成ToolStripMenuItem";
 this.一鍵生成ToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
 this.一鍵生成ToolStripMenuItem.Text = "一鍵生成";
 this.一鍵生成ToolStripMenuItem.Click += new System.EventHandler(this.一鍵生成ToolStripMenuItem_Click);
+// 
+// 單檔ToolStripMenuItem
+// 
+this.單檔ToolStripMenuItem.Name = "單檔ToolStripMenuItem";
+this.單檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.單檔ToolStripMenuItem.Text = "單檔";
+this.單檔ToolStripMenuItem.Click += new System.EventHandler(this.單檔ToolStripMenuItem_Click);
+// 
+// 說明ToolStripMenuItem
+// 
+this.說明ToolStripMenuItem.Name = "說明ToolStripMenuItem";
+this.說明ToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+this.說明ToolStripMenuItem.Text = "說明";
+this.說明ToolStripMenuItem.Click += new System.EventHandler(this.說明ToolStripMenuItem_Click);
 // 
 // cb_Collection
 // 
@@ -864,12 +892,12 @@ this.label4.Size = new System.Drawing.Size(77, 12);
 this.label4.TabIndex = 21;
 this.label4.Text = "Design by Dick";
 // 
-// queryView排序ToolStripMenuItem
+// 雙檔ToolStripMenuItem
 // 
-this.queryView排序ToolStripMenuItem.Name = "queryView排序ToolStripMenuItem";
-this.queryView排序ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-this.queryView排序ToolStripMenuItem.Text = "QueryView排序";
-this.queryView排序ToolStripMenuItem.Click += new System.EventHandler(this.queryView排序ToolStripMenuItem_Click);
+this.雙檔ToolStripMenuItem.Name = "雙檔ToolStripMenuItem";
+this.雙檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.雙檔ToolStripMenuItem.Text = "雙檔";
+this.雙檔ToolStripMenuItem.Click += new System.EventHandler(this.雙檔ToolStripMenuItem_Click);
 // 
 // Form1
 // 
@@ -985,6 +1013,9 @@ this.PerformLayout();
         private System.Windows.Forms.ToolStripMenuItem 簡中ToolStripMenuItem4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripMenuItem queryView排序ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 說明ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 單檔ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 雙檔ToolStripMenuItem;
     }
 }
 

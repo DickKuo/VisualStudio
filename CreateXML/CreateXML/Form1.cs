@@ -2440,6 +2440,14 @@ namespace CreateXML {
         }
 
         private void 一鍵生成ToolStripMenuItem_Click(object sender, EventArgs e) {
+            
+        }
+
+        /// <summary>
+        /// 20140919 modified by Dick 
+        /// 切開單檔一鍵生成
+        /// </summary>
+        private void SingleFile() {
             XmlDocument doc = Tools.XmlTool.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
             XmlNode root = doc.SelectSingleNode("root");
             string ProgamPath = string.Empty;
@@ -2451,36 +2459,35 @@ namespace CreateXML {
             string ParentPath = Directory.GetParent(ProgamPath).FullName;
             OneClick oneclick = new OneClick(ParentPath, ProgamPath);
             CreateEntities();
-            oneclick.CSFileSave("DigiWin.HR.CustomBusiness","DataEntities",tb_className.Text, this.richTextBox1.Text);                
+            oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "DataEntities", tb_className.Text, this.richTextBox1.Text);
             string InterFace = "I" + tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX";
             CreateInterFace();
-            oneclick.CSFileSave("DigiWin.HR.CustomBusiness","Services",InterFace, this.richTextBox1.Text);                
+            oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "Services", InterFace, this.richTextBox1.Text);
             CreateServer();
             oneclick.CSFileSave("DigiWin.HR.CustomBusinessImplement", "Services", tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX", this.richTextBox1.Text);
             oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, this.dataGridView1);
-            System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable ;
+            System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable;
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
             oneclick.RegisterEntity(tb_className.Text);
 
             int mode = 0;
             foreach(Control co in groupBoxMode.Controls) {
                 RadioButton cb = co as RadioButton;
-                if(cb.Checked)
-                {
-                  mode = Convert.ToInt32( cb.Text.Replace("Mode","") );
+                if(cb.Checked) {
+                    mode = Convert.ToInt32(cb.Text.Replace("Mode", ""));
                 }
             }
 
             ///20140905 建立檔單UI           
             oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1, mode);
-            
+
             ///20140827 多執行緒
             //System.Threading.Tasks.Task[] tasks = new System.Threading.Tasks.Task[1];
 
-            #region 樹節點多語系          
+            #region 樹節點多語系
             //tasks[0]= System.Threading.Tasks.Task.Factory.StartNew(() => TreeResource(oneclick));           
             TreeResource(oneclick);
-            #endregion  
+            #endregion
 
 
             #region 加入標題多語系
@@ -2492,7 +2499,7 @@ namespace CreateXML {
             QueryResource(oneclick, dt);
             #endregion
 
-            #region 20140905 add by Dick  加入瀏覽頁籤多語系 
+            #region 20140905 add by Dick  加入瀏覽頁籤多語系
             oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_English().ToString(), "QueryResourcesForCase", true);
             oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHT().ToString(), "QueryResourcesForCase.zh-CHT", false);
             oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHS().ToString(), "QueryResourcesForCase.zh-CHS", false);
@@ -2500,12 +2507,12 @@ namespace CreateXML {
 
 
             #region  UI多語系
-            string SourcePath= AppDomain.CurrentDomain.BaseDirectory +@"\SampleFile\Resource.zh-CHT.resx";
-            string DestinationPath = ParentPath + "\\" + "DigiWin.HR.CustomUI"  + Path.DirectorySeparatorChar + tb_className.Text + ".zh-CHT.resx";
-            File.Copy(SourcePath, DestinationPath,true);
+            string SourcePath = AppDomain.CurrentDomain.BaseDirectory + @"\SampleFile\Resource.zh-CHT.resx";
+            string DestinationPath = ParentPath + "\\" + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + tb_className.Text + ".zh-CHT.resx";
+            File.Copy(SourcePath, DestinationPath, true);
             SourcePath = AppDomain.CurrentDomain.BaseDirectory + @"\SampleFile\Resource.zh-CHS.resx";
-            DestinationPath = ParentPath + "\\" + "DigiWin.HR.CustomUI"  + Path.DirectorySeparatorChar + tb_className.Text + ".zh-CHS.resx";
-            File.Copy(SourcePath, DestinationPath,true);
+            DestinationPath = ParentPath + "\\" + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + tb_className.Text + ".zh-CHS.resx";
+            File.Copy(SourcePath, DestinationPath, true);
             UIResource(oneclick, tb_className.Text, ParentPath + "\\" + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar);
 
 
@@ -2670,6 +2677,13 @@ namespace CreateXML {
             }
         }
 
+
+        /// <summary>
+        /// 20140917 add by Dick 
+        /// 加入QueryView頁籤
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tabControl1_Click(object sender, EventArgs e) {
             TabControl tab = (TabControl)sender;
             if(tab.SelectedTab.Text =="+") {
@@ -2709,6 +2723,27 @@ namespace CreateXML {
                     show.ShowDialog();
                 }
             }
+        }
+
+
+        /// <summary>
+        /// 20140919 add by Dick 
+        /// 加入說明功能
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 說明ToolStripMenuItem_Click(object sender, EventArgs e) {           
+            Description descrip = new Description(this.ProductVersion.ToString());                 
+            descrip.ShowDialog();
+         }
+
+        private void 單檔ToolStripMenuItem_Click(object sender, EventArgs e) {
+            
+            SingleFile();
+        }
+
+        private void 雙檔ToolStripMenuItem_Click(object sender, EventArgs e) {
+
         }
     }
 }
