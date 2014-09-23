@@ -65,6 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConditionView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConditionView.Designer.cs">
+      <DependentUpon>ConditionView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Description.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,9 @@
     <Compile Include="SQLFilter.Designer.cs">
       <DependentUpon>SQLFilter.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ConditionView.resx">
+      <DependentUpon>ConditionView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Description.resx">
       <DependentUpon>Description.cs</DependentUpon>
     </EmbeddedResource>

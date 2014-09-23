@@ -92,6 +92,7 @@ this.sQL過濾ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.queryView排序ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.一鍵生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.單檔ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+this.雙檔ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.說明ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.cb_Collection = new System.Windows.Forms.CheckBox();
 this.MainGroup = new System.Windows.Forms.GroupBox();
@@ -111,8 +112,8 @@ this.cb_OnlyParameter = new System.Windows.Forms.CheckBox();
 this.tabControl1 = new System.Windows.Forms.TabControl();
 this.tabPage1 = new System.Windows.Forms.TabPage();
 this.tabPage2 = new System.Windows.Forms.TabPage();
+this.tabPage3 = new System.Windows.Forms.TabPage();
 this.label4 = new System.Windows.Forms.Label();
-this.雙檔ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 this.menuStrip1.SuspendLayout();
 this.MainGroup.SuspendLayout();
@@ -131,7 +132,7 @@ this.richTextBox1.Location = new System.Drawing.Point(1, 444);
 this.richTextBox1.Name = "richTextBox1";
 this.richTextBox1.Size = new System.Drawing.Size(1004, 228);
 this.richTextBox1.TabIndex = 1;
-//this.richTextBox1.Text = global::CreateXML.SampleFile.Resource_zh_CHS.;
+//this.richTextBox1.Text = global::CreateXML.SampleFile.Resource_zh_CHS;
 // 
 // dataGridView1
 // 
@@ -665,8 +666,15 @@ this.一鍵生成ToolStripMenuItem.Click += new System.EventHandler(this.一鍵�
 // 
 this.單檔ToolStripMenuItem.Name = "單檔ToolStripMenuItem";
 this.單檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-this.單檔ToolStripMenuItem.Text = "單檔";
+this.單檔ToolStripMenuItem.Text = "F11  單檔";
 this.單檔ToolStripMenuItem.Click += new System.EventHandler(this.單檔ToolStripMenuItem_Click);
+// 
+// 雙檔ToolStripMenuItem
+// 
+this.雙檔ToolStripMenuItem.Name = "雙檔ToolStripMenuItem";
+this.雙檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.雙檔ToolStripMenuItem.Text = "F12   雙檔";
+this.雙檔ToolStripMenuItem.Click += new System.EventHandler(this.雙檔ToolStripMenuItem_Click);
 // 
 // 說明ToolStripMenuItem
 // 
@@ -854,11 +862,13 @@ this.cb_OnlyParameter.UseVisualStyleBackColor = true;
 // 
 this.tabControl1.Controls.Add(this.tabPage1);
 this.tabControl1.Controls.Add(this.tabPage2);
+this.tabControl1.Controls.Add(this.tabPage3);
 this.tabControl1.Location = new System.Drawing.Point(4, 166);
 this.tabControl1.Name = "tabControl1";
 this.tabControl1.SelectedIndex = 0;
 this.tabControl1.Size = new System.Drawing.Size(1001, 272);
 this.tabControl1.TabIndex = 20;
+this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
 this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
 // 
 // tabPage1
@@ -882,6 +892,15 @@ this.tabPage2.TabIndex = 1;
 this.tabPage2.Text = "+";
 this.tabPage2.UseVisualStyleBackColor = true;
 // 
+// tabPage3
+// 
+this.tabPage3.Location = new System.Drawing.Point(4, 22);
+this.tabPage3.Name = "tabPage3";
+this.tabPage3.Size = new System.Drawing.Size(993, 246);
+this.tabPage3.TabIndex = 2;
+this.tabPage3.Text = "-";
+this.tabPage3.UseVisualStyleBackColor = true;
+// 
 // label4
 // 
 this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -891,13 +910,6 @@ this.label4.Name = "label4";
 this.label4.Size = new System.Drawing.Size(77, 12);
 this.label4.TabIndex = 21;
 this.label4.Text = "Design by Dick";
-// 
-// 雙檔ToolStripMenuItem
-// 
-this.雙檔ToolStripMenuItem.Name = "雙檔ToolStripMenuItem";
-this.雙檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-this.雙檔ToolStripMenuItem.Text = "雙檔";
-this.雙檔ToolStripMenuItem.Click += new System.EventHandler(this.雙檔ToolStripMenuItem_Click);
 // 
 // Form1
 // 
@@ -909,10 +921,12 @@ this.Controls.Add(this.tabControl1);
 this.Controls.Add(this.MainGroup);
 this.Controls.Add(this.richTextBox1);
 this.Controls.Add(this.menuStrip1);
+this.KeyPreview = true;
 this.MainMenuStrip = this.menuStrip1;
 this.Name = "Form1";
 this.Text = "懶人製造機";
 this.Load += new System.EventHandler(this.Form1_Load);
+this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
 ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 this.menuStrip1.ResumeLayout(false);
 this.menuStrip1.PerformLayout();
@@ -1016,6 +1030,7 @@ this.PerformLayout();
         private System.Windows.Forms.ToolStripMenuItem 說明ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 單檔ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 雙檔ToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage3;
     }
 }
 

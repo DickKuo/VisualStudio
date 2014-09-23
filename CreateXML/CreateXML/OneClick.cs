@@ -335,7 +335,7 @@ namespace CreateXML {
                                                 control.Context += "\r\n            | System.Windows.Forms.AnchorStyles.Right)));";
                                                 control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this."+EntityName.ToLower()+"BindingSource, \"" + control.Name + "\", true));";
                                                 control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Location = new System.Drawing.Point(6, 21);";
-                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Size = new System.Drawing.Size(500, 89);";
+                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Size = new System.Drawing.Size(180, 70);";
                                                 control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.AccessibleDescription = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.AccessibleDescription\");";
                                                 control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.AccessibleName = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.AccessibleName\");";
                                                 control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.NullValuePrompt = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.NullValuePrompt\");";
@@ -825,5 +825,25 @@ namespace CreateXML {
             LabelContext += "            " + LabelName + "Label1.Location = new System.Drawing.Point(" + X + ", " + Y + ");";
             Context += "\r\n            " + this.ControlFullName + ".Location =new System.Drawing.Point(" +( X +13)+ ", " + Y + ");";
         }
+    }
+
+
+    /// <summary>
+    /// 20140923 add by Dick 
+    /// 多個頁簽 QueryProject
+    /// </summary>
+    public class QueryViewCondition {
+        public string BrowseName { set; get; } //瀏覽頁簽名稱
+        public string Type { set; get; }       //型態 1.Select   2.Browse
+        public List<Condition> ConditionList = new List<Condition>();                
+    }
+
+    /// <summary>
+    /// 20140923 add by Dick 
+    /// QueryView條件
+    /// </summary>
+    public class Condition {
+        public string Field { set; get; }      //條件欄位位名稱
+        public string Conditon { set; get; }   //條件
     }
 }

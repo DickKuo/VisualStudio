@@ -45,6 +45,8 @@ namespace CreateXML {
         private System.Data.DataTable RefereceTable = new System.Data.DataTable();
         private Dictionary<string, string> RefereceDic = new Dictionary<string, string>();
 
+
+        private Dictionary<string, QueryViewCondition> DicQueryView = new Dictionary<string, QueryViewCondition>(); //QueryView的字典
         #endregion
 
 
@@ -861,6 +863,11 @@ namespace CreateXML {
             InitCode();
             InitModify();
             InitName();
+
+            ///加入條件視窗
+            dataGridView1.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            var item = dataGridView1.ContextMenuStrip.Items.Add("加入條件");
+            item.Click += new EventHandler(item_Click1);    
         }
 
         private void InitType(ref System.Data.DataTable dtt) {
@@ -2692,8 +2699,50 @@ namespace CreateXML {
                 //加入Browse還有條件
                 tab.TabPages.Insert(tab.SelectedIndex ,"new");
                 tab.SelectedIndex = tab.SelectedIndex - 1;
+                TabPage page =tab.SelectedTab;
+                TabAddGridView(tab.SelectedIndex - 1,page);
+            }
+            if(tab.SelectedTab.Text == "-") {
+                int index = TabSelectedBefore;
+                tab.SelectedIndex = TabSelectedBefore - 1;
+                tab.TabPages.RemoveAt(index);
             }
         }
+
+        private int TabSelectedIndexNow;
+        private int TabSelectedBefore;
+        /// <summary>
+        /// 20140923 add by Dick 產生新的dataGridView
+        /// </summary>
+        private void TabAddGridView(int Index, TabPage pPage) {
+            System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable;
+            DataGridView NewView = new DataGridView();
+            NewView.Name = "NewView" + Index.ToString();
+            NewView.DataSource = dt;
+            NewView.Width = 974;
+            NewView.Height = 234;
+            NewView.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            var item = NewView.ContextMenuStrip.Items.Add("加入條件");
+            item.Click += new EventHandler(item_Click1);                    
+            pPage.Controls.Add(NewView);
+        }
+
+        /// <summary>
+        /// 20140923 add by Dick for
+        /// 加入右鍵條件功能
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void item_Click1(object sender, EventArgs e) {
+            //throw new NotImplementedException();
+            ConditionView View = new ConditionView();
+            if(View.ShowDialog() == DialogResult.OK) { 
+               
+            }
+        }
+
+
+      
 
         private void queryView排序ToolStripMenuItem_Click(object sender, EventArgs e) {
             string ThisPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"XmlOrder.exe");
@@ -2747,5 +2796,22 @@ namespace CreateXML {
         private void 雙檔ToolStripMenuItem_Click(object sender, EventArgs e) {
 
         }
-    }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
+            TabSelectedBefore = TabSelectedIndexNow;
+            TabSelectedIndexNow = tabControl1.SelectedIndex;
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e) {
+            if(e.KeyCode == Keys.F11) {
+                單檔ToolStripMenuItem.PerformClick();
+            }
+            if(e.KeyCode == Keys.F12)
+            {
+                雙檔ToolStripMenuItem.PerformClick();
+            }
+        }
+
+       
+    }    
 }

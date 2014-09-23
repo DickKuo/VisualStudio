@@ -66,7 +66,7 @@
     <Parameter Name="XPassword" Type="string" Describe="登入密碼" ReferenceProperty="" Order="10" UIOrder="11" Necessary="True" />
     <Parameter Name="XTriggerStart" Type="string" Describe="觸發時間" ReferenceProperty="" Order="11" UIOrder="12" Necessary="True" />
     <Parameter Name="XLoopHours" Type="string" Describe="循環時數" ReferenceProperty="" Order="12" UIOrder="13" Necessary="True" />
-    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="13" UIOrder="" Necessary="False" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="13" UIOrder="-1" Necessary="False" />
     <Parameter Name="IsActive" Type="Bool" Describe="是否啟用" ReferenceProperty="" Order="" UIOrder="2" Necessary="False" />
     <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
