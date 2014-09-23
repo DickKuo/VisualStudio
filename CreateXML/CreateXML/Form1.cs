@@ -1067,7 +1067,9 @@ namespace CreateXML {
                 dr["Order"] = node.Attributes["Order"] !=null? node.Attributes["Order"].Value.ToString():null ;
                 dr["UIOrder"] = node.Attributes["UIOrder"] != null ? node.Attributes["UIOrder"].Value.ToString() : null;
                 bool IsNecessary = false;
-                bool.TryParse(node.Attributes["Necessary"].Value, out IsNecessary);
+                if(node.Attributes["Necessary"] != null) {
+                    bool.TryParse(node.Attributes["Necessary"].Value, out IsNecessary);
+                }
                 dr["Necessary"] = IsNecessary;
                 dt.Rows.Add(dr);
             }

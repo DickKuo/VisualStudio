@@ -24,5 +24,6 @@
   <Path Xpath="D:\HRSource\V5.1(Ultimate)\C002090325-胜宏科技\Export" Set="false" />
   <Path Xpath="D:\檔案整理\Study\0000130000-TEST\Export" Set="false" />
   <Path Xpath="D:\檔案整理\Study\8101224567-TESGG\Export" Set="false" />
-  <Path Xpath="D:\檔案整理\Study\8101224567-世代流通資\Export" Set="true" />
+  <Path Xpath="D:\檔案整理\Study\8101224567-世代流通資\Export" Set="false" />
+  <Path Xpath="D:\檔案整理\Study\0000673957-慶豐 Ch\Export" Set="true" />
 </root>

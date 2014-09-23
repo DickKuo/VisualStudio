@@ -310,11 +310,9 @@ namespace CreateXML {
                                                 control.Context += "            //";
                                                 control.Context += "\r\n            // groupBox2";
                                                 control.Context += "\r\n            // ";
-
                                                 control.Context += "\r\n            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)";
                                                 control.Context += "\r\n            | System.Windows.Forms.AnchorStyles.Left)";
                                                 control.Context += "\r\n            | System.Windows.Forms.AnchorStyles.Right)));";
-
                                                 control.Context += "\r\n            resources.ApplyResources(this.groupBox2, \"groupBox2\");";
                                                 control.Context += "\r\n            this.groupBox2.Controls.Add(this." + control.Name + "DcmsMemoEdit);";
                                                 control.Context += "\r\n            this.errorProvider.SetError(this.groupBox2, resources.GetString(\"groupBox2.Error\"));";
@@ -337,7 +335,7 @@ namespace CreateXML {
                                                 control.Context += "\r\n            | System.Windows.Forms.AnchorStyles.Right)));";
                                                 control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Text\", this."+EntityName.ToLower()+"BindingSource, \"" + control.Name + "\", true));";
                                                 control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Location = new System.Drawing.Point(6, 21);";
-                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Size = new System.Drawing.Size(773, 189);";
+                                                control.Context += "\r\n            this." + control.Name + "DcmsMemoEdit.Size = new System.Drawing.Size(500, 89);";
                                                 control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.AccessibleDescription = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.AccessibleDescription\");";
                                                 control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.AccessibleName = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.AccessibleName\");";
                                                 control.Context += "\r\n             this." + control.Name + "DcmsMemoEdit.Properties.NullValuePrompt = resources.GetString(\"" + control.Name + "DcmsMemoEdit.Properties.NullValuePrompt\");";
@@ -353,11 +351,10 @@ namespace CreateXML {
                                             break;
                                         case "decimal":
                                             control = ControlsSetting(EntityName, dr, control, "DcmsCalcEdit");
-                                            control.Context += "\r\n            this." + control.Name + "DcmsSpinEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Value\", this.xmachinetypeBindingSource, \"" + control.Name + "\", true));";
-                                            control.Context += "\r\n            resources.ApplyResources(this.xATTCardIDDcmsSpinEdit, \"" + control.Name + "DcmsSpinEdit\");";
-                                            control.Context += "\r\n            this." + control.Name + "DcmsSpinEdit.Name = \"" + control.Name + "DcmsSpinEdit\";";
-                                            control.Context += "\r\n            this." + control.Name + "DcmsSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                            control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton()});";
+                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Value\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));";
+                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                            control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"" + control.Name + "DcmsCalcEdit.Properties.Buttons\"))))});";
+                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Mask.UseMaskAsDisplayFormat = ((bool)(resources.GetObject(\"" + control.Name + "DcmsCalcEdit.Properties.Mask.UseMaskAsDisplayFormat\")));";			
                                             control.Layout = "             ((System.ComponentModel.ISupportInitialize)(this." + control.Name + "DcmsCalcEdit.Properties)).EndInit();\r\n";
                                             break;
                                         case "guid":
