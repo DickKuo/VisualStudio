@@ -2811,7 +2811,5 @@ namespace CreateXML {
                 雙檔ToolStripMenuItem.PerformClick();
             }
         }
-
-       
     }    
 }

@@ -833,8 +833,9 @@ namespace CreateXML {
     /// 多個頁簽 QueryProject
     /// </summary>
     public class QueryViewCondition {
-        public string BrowseName { set; get; } //瀏覽頁簽名稱
-        public string Type { set; get; }       //型態 1.Select   2.Browse
+        public string BrowseName { set; get; }  //瀏覽頁簽名稱
+        public string Description { set; get; } //中文描述
+        public string Type { set; get; }        //型態 1.Select   2.Browse
         public List<Condition> ConditionList = new List<Condition>();                
     }
 
@@ -845,5 +846,6 @@ namespace CreateXML {
     public class Condition {
         public string Field { set; get; }      //條件欄位位名稱
         public string Conditon { set; get; }   //條件
+        public string sybel { set; get; }      //And OR 等等
     }
 }

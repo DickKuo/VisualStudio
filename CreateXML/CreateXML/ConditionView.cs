@@ -11,6 +11,29 @@ namespace CreateXML {
     public partial class ConditionView : Form {
         public ConditionView() {
             InitializeComponent();
+
+
         }
+
+
+        public QueryViewCondition Result { set; get; }
+
+        private void button1_Click(object sender, EventArgs e) {
+            Result = new QueryViewCondition();
+            Result.BrowseName = textBox1.Text;
+            Result.Description = textBox2.Text;
+
+
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+
     }
 }
