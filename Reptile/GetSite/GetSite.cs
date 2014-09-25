@@ -47,7 +47,7 @@ namespace GetSite
                 reader = new StreamReader(DataStream, Encoding.UTF8);
             }
             catch (Exception ex) {
-                log.Log(FileTool.LogType.Error, ex.Message);
+                log.Log(FileTool.LogType.Error, "抓取文章" + ex.Message);
             }
             return reader;
         }

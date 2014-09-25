@@ -120,6 +120,8 @@ namespace WindowsService1
         /// <returns></returns>
         private long POST(string Address, List<SiteInfo> SiteInfoList)
         {
+            SiteInfo info =SiteInfoList[0];
+            Log("Post 開始" + info.Title);
             string strJson = "SiteInfoList=" + JsonConvert.SerializeObject(SiteInfoList, Newtonsoft.Json.Formatting.Indented);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Address);
             request.ContentType = "application/x-www-form-urlencoded";
@@ -148,8 +150,9 @@ namespace WindowsService1
             }
             catch (WebException ex)
             {
-                Log(ex.Message + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                Log("POST失敗："+ex.Message + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             }
+            Log("Post 結束" + info.Title);
             return length;
         }
 
