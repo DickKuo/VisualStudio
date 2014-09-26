@@ -131,7 +131,15 @@ namespace CreateXML {
             foreach(DataGridViewRow dr in dataGridView1.Rows) {
                 if(dr.Cells["Parameter"].Value != null) {
                     _privateparameter.Append("        private ");
-                    _privateparameter.Append(" System." + TypeSwap(dr.Cells["Type"].Value.ToString()));
+                    string type =TypeSwap(dr.Cells["Type"].Value.ToString());
+                    #region 20140925 add by Dick 加入Image型態
+                    if(type != "Image") {
+                        _privateparameter.Append(" System." + type);
+                    }
+                    else {
+                        _privateparameter.Append(" byte[]");
+                    }
+                    #endregion                  
                     _privateparameter.Append(" _");
                     string temp = dr.Cells["Parameter"].Value.ToString();
                     _privateparameter.Append(temp.Substring(0, 1).ToLower());
@@ -166,7 +174,14 @@ namespace CreateXML {
             _parameter.Append(")]\r\n");
             _parameter.Append("        [Description(\"");
             _parameter.Append(Describe + "\")]\r\n");
-            _parameter.Append("        public System." + Type + " " + Parameter + "{\r\n");
+            #region 20140925 add by Dick 加入Image型態
+            if(Type.Equals("Image")) {
+                _parameter.Append("        public byte[] " + Parameter + "{\r\n");
+            }
+            else {
+                _parameter.Append("        public System." + Type + " " + Parameter + "{\r\n");
+            }
+            #endregion            
             _parameter.Append("            get { \r\n");
             string temp = "_" + Parameter.Substring(0, 1).ToLower() + Parameter.Substring(1, Parameter.Length - 1);
             _parameter.Append("                return this." + temp + ";}\r\n");
@@ -803,6 +818,8 @@ namespace CreateXML {
             dt.Columns.Add("Order");
             //20140818 add by Dick
             dt.Columns.Add("UIOrder");
+           
+           
 
             RefereceTable.Columns.Add("Entity");
 
@@ -909,6 +926,11 @@ namespace CreateXML {
             DataRow drr8 = dtt.NewRow();
             drr8[0] = "8";
             drr8[1] = "Int64";
+
+            DataRow drr9 = dtt.NewRow();
+            drr8[0] = "9";
+            drr8[1] = "Image";
+
             dtt.Rows.Add(drr8);
         }
 
@@ -1224,12 +1246,12 @@ namespace CreateXML {
             richTextBox1.AppendText(_strUsing.ToString());
             richTextBox1.AppendText(_nameSpace.ToString());
             richTextBox1.AppendText(_class.ToString());
-            richTextBox1.AppendText("#region Private Member \r\n");
+            richTextBox1.AppendText("        #region Private Member \r\n");
             richTextBox1.AppendText(_privateparameter.ToString());
-            richTextBox1.AppendText("#endregion \r\n");
-            richTextBox1.AppendText("#region Parameter \r\n");
+            richTextBox1.AppendText("        #endregion \r\n");
+            richTextBox1.AppendText("        #region Parameter \r\n");
             richTextBox1.AppendText(_parameter.ToString());
-            richTextBox1.AppendText("#endregion \r\n");
+            richTextBox1.AppendText("        #endregion \r\n");
             richTextBox1.AppendText(_classEnd.ToString());
             richTextBox1.AppendText("\r\n}");
 
@@ -1282,6 +1304,9 @@ namespace CreateXML {
                 case "bool":
                 case "boolean":
                     tempstr = "Boolean";
+                    break;
+                case "image": //20140925 add by Dick 加入檔案格式
+                    tempstr = "Image";
                     break;
             }
             return tempstr;
@@ -1346,6 +1371,7 @@ namespace CreateXML {
                 line = line.Replace("int", "Int");
                 line = line.Replace("GUID", "Guid");
                 line = line.Replace("datetime", "DateTime");
+                line = line.Replace("image", "Image");
                 File.Delete(Directory.GetCurrentDirectory() + "\\SaveFile.xml");
                 System.IO.File.WriteAllText(Directory.GetCurrentDirectory() + "\\SaveFile.xml", line);
             }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE root[<!ELEMENT Class ANY> <!ATTLIST Class ClassName ID #REQUIRED>]>
 <root>
   <Class ClassName="XDummyOrgFile" Describle="虛擬組織附件" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="False" IDataModifyObject="True" Collection="True" IsCase="False">
@@ -75,5 +75,125 @@
     <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+  </Class>
+  <Class ClassName="XSalesCertificateManagement" Describle="業務員證照維護作業" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="False" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="XSalesCertificateID" Type="Guid" Describe="業務員證照ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XEmployeeID" Type="Guid" Describe="員工資料ID" ReferenceProperty="Employee" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XIsEmployee" Type="Bool" Describe="是否員工" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInsuranceItem" Type="string" Describe="保險種類" ReferenceProperty="CodeInfo" Order="3" UIOrder="" Necessary="" />
+    <Parameter Name="XValidDate" Type="DateTime" Describe="有效日期" ReferenceProperty="" Order="4" UIOrder="" Necessary="" />
+    <Parameter Name="XSalesCode" Type="string" Describe="人員工號" ReferenceProperty="" Order="1" UIOrder="" Necessary="" />
+    <Parameter Name="XSalesName" Type="string" Describe="人員姓名" ReferenceProperty="" Order="2" UIOrder="" Necessary="" />
+    <Parameter Name="XCorporationID" Type="Guid" Describe="所屬公司" ReferenceProperty="Corporation" Order="5" UIOrder="" Necessary="" />
+    <Parameter Name="XLeaveDate" Type="DateTime" Describe="離職日期" ReferenceProperty="" Order="6" UIOrder="" Necessary="" />
+    <Parameter Name="XLeaveNotes" Type="string" Describe="離職註記" ReferenceProperty="" Order="7" UIOrder="" Necessary="" />
+    <Parameter Name="XRegisterType" Type="string" Describe="登錄型態" ReferenceProperty="" Order="8" UIOrder="" Necessary="" />
+    <Parameter Name="XCertificateNum" Type="string" Describe="證件號碼" ReferenceProperty="" Order="9" UIOrder="" Necessary="" />
+    <Parameter Name="XBirthDate" Type="DateTime" Describe="出生日期" ReferenceProperty="" Order="10" UIOrder="" Necessary="" />
+    <Parameter Name="XEducationID" Type="string" Describe="學歷情況" ReferenceProperty="CodeInfo" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XBranchID" Type="Guid" Describe="分支機構" ReferenceProperty="Corporation" Order="11" UIOrder="" Necessary="" />
+    <Parameter Name="XLifeInsuranceRegister" Type="string" Describe="有無登錄壽險" ReferenceProperty="CodeInfo" Order="12" UIOrder="" Necessary="" />
+    <Parameter Name="XLifeInsuranceCapable" Type="string" Describe="有無壽險資格" ReferenceProperty="CodeInfo" Order="13" UIOrder="" Necessary="" />
+    <Parameter Name="XHedgePositionsNote" Type="string" Describe="鎖單註記" ReferenceProperty="CodeInfo" Order="14" UIOrder="" Necessary="" />
+    <Parameter Name="XHedgePositionsBeginDate" Type="DateTime" Describe="鎖單開始日期" ReferenceProperty="" Order="15" UIOrder="" Necessary="" />
+    <Parameter Name="XHedgePositionsEndDate" Type="DateTime" Describe="鎖單結束日期" ReferenceProperty="" Order="16" UIOrder="" Necessary="" />
+    <Parameter Name="XStopAttract" Type="string" Describe="停止招攬" ReferenceProperty="CodeInfo" Order="17" UIOrder="" Necessary="" />
+    <Parameter Name="XStopAttractBeginDate" Type="DateTime" Describe="停止招攬開始日期" ReferenceProperty="" Order="18" UIOrder="" Necessary="" />
+    <Parameter Name="XStopAttractEndDate" Type="DateTime" Describe="停止招攬結束日期" ReferenceProperty="" Order="19" UIOrder="" Necessary="" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="-1" UIOrder="" Necessary="" />
+    <Parameter Name="XIsSync" Type="Bool" Describe="同步註記" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="TrainingRecord" Describle="教育訓練記錄" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="XTrainingRecordID" Type="Guid" Describe="教育訓練記錄ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XSalesCertificateID" Type="Guid" Describe="業務員證照ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XClassName" Type="string" Describe="開班名稱" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XIsNeed" Type="string" Describe="必修/選修" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XTrainType" Type="string" Describe="訓練類別" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XClassType" Type="string" Describe="課程類別" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XClassBeginDate" Type="string" Describe="課程開始日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="XSalesRewards" Describle="業務員獎懲記錄" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="XSalesRewardsID" Type="Guid" Describe="業務員獎懲記錄ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XRewardsKindId" Type="string" Describe="獎懲類型" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XEmployeeRewardItemID" Type="string" Describe="獎懲項目" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XTimes" Type="Int" Describe="次數" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XRecordDate" Type="DateTime" Describe="記錄日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInureDate" Type="DateTime" Describe="生效日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="XLicenseWarningRecord" Describle="預警記錄" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="XLicenseWarningId" Type="Guid" Describe="預警記錄ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XWarningCode" Type="string" Describe="預警編號" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XWarningName" Type="string" Describe="預警名稱" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XExpirationDate" Type="DateTime" Describe="到期日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XSumHours" Type="string" Describe="累計認列時數" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XWarningDate" Type="DateTime" Describe="預警判定日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XWarningState" Type="string" Describe="預警狀態" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+  </Class>
+  <Class ClassName="XSalesCertificate" Describle="業務員證照維護作業" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="False" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="XSalesCertificateID" Type="Guid" Describe="業務員證照ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XEmployeeID" Type="Guid" Describe="員工資料ID" ReferenceProperty="Employee" Order="" UIOrder="" Necessary="True" />
+    <Parameter Name="XIsEmployee" Type="Bool" Describe="是否員工" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInsuranceItem" Type="string" Describe="保險種類" ReferenceProperty="CodeInfo" Order="3" UIOrder="" Necessary="False" />
+    <Parameter Name="XValidDate" Type="DateTime" Describe="有效日期" ReferenceProperty="" Order="4" UIOrder="" Necessary="False" />
+    <Parameter Name="XSalesCode" Type="string" Describe="人員工號" ReferenceProperty="" Order="1" UIOrder="" Necessary="False" />
+    <Parameter Name="XSalesName" Type="string" Describe="人員姓名" ReferenceProperty="" Order="2" UIOrder="" Necessary="False" />
+    <Parameter Name="XCorporationID" Type="Guid" Describe="所屬公司" ReferenceProperty="Corporation" Order="5" UIOrder="" Necessary="False" />
+    <Parameter Name="XLeaveDate" Type="DateTime" Describe="離職日期" ReferenceProperty="" Order="6" UIOrder="" Necessary="False" />
+    <Parameter Name="XLeaveNotes" Type="string" Describe="離職註記" ReferenceProperty="CodeInfo" Order="7" UIOrder="" Necessary="False" />
+    <Parameter Name="XRegisterType" Type="string" Describe="登錄型態" ReferenceProperty="CodeInfo" Order="8" UIOrder="" Necessary="False" />
+    <Parameter Name="XCertificateNum" Type="string" Describe="證件號碼" ReferenceProperty="" Order="9" UIOrder="" Necessary="True" />
+    <Parameter Name="XBirthDate" Type="DateTime" Describe="出生日期" ReferenceProperty="" Order="10" UIOrder="" Necessary="True" />
+    <Parameter Name="XEducationID" Type="string" Describe="學歷情況" ReferenceProperty="CodeInfo" Order="" UIOrder="" Necessary="True" />
+    <Parameter Name="XBranchID" Type="Guid" Describe="分支機構" ReferenceProperty="Corporation" Order="11" UIOrder="" Necessary="False" />
+    <Parameter Name="XLifeInsuranceRegister" Type="string" Describe="有無登錄壽險" ReferenceProperty="CodeInfo" Order="12" UIOrder="" Necessary="False" />
+    <Parameter Name="XLifeInsuranceCapable" Type="string" Describe="有無壽險資格" ReferenceProperty="CodeInfo" Order="13" UIOrder="" Necessary="False" />
+    <Parameter Name="XHedgePositionsNote" Type="string" Describe="鎖單註記" ReferenceProperty="CodeInfo" Order="14" UIOrder="" Necessary="False" />
+    <Parameter Name="XHedgePositionsBeginDate" Type="DateTime" Describe="鎖單開始日期" ReferenceProperty="" Order="15" UIOrder="" Necessary="False" />
+    <Parameter Name="XHedgePositionsEndDate" Type="DateTime" Describe="鎖單結束日期" ReferenceProperty="" Order="16" UIOrder="" Necessary="False" />
+    <Parameter Name="XStopAttract" Type="string" Describe="停止招攬" ReferenceProperty="CodeInfo" Order="17" UIOrder="" Necessary="False" />
+    <Parameter Name="XStopAttractBeginDate" Type="DateTime" Describe="停止招攬開始日期" ReferenceProperty="" Order="18" UIOrder="" Necessary="False" />
+    <Parameter Name="XStopAttractEndDate" Type="DateTime" Describe="停止招攬結束日期" ReferenceProperty="" Order="19" UIOrder="" Necessary="False" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="-1" UIOrder="" Necessary="False" />
+    <Parameter Name="XIsSync" Type="Bool" Describe="同步註記" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+  </Class>
+  <Class ClassName="XCertificateRecord" Describle="證照記錄" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="XCertificateRecordID" Type="Guid" Describe="證照記錄ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XLifeInsuranceTestNum" Type="string" Describe="壽險字號" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XHealthInsuranceTestNum" Type="string" Describe="健康險字號" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XPropertyInsuranceTestNum" Type="string" Describe="產險字號" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XIssueDate" Type="DateTime" Describe="發證日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XCancellationDate" Type="DateTime" Describe="註銷日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XActiveDate" Type="DateTime" Describe="有效日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XNewRegDate" Type="DateTime" Describe="新登日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XRe_RegDate" Type="DateTime" Describe="再登日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XChangeRegDate" Type="DateTime" Describe="換證日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XRe_RegFirstDate" Type="DateTime" Describe="再登第一年日" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInsuranceItem" Type="String" Describe="保險種類" ReferenceProperty="CodeInfo" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="XCertificateFile" Describle="證照附件" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="XCertificateFileId" Type="Guid" Describe="證照附件ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XFile" Type="Image" Describe="附件" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XCertificateName" Type="string" Describe="證件名稱" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XFileType" Type="string" Describe="附件類型" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XFileSize" Type="Int32" Describe="附件大小" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XFileRemark" Type="string" Describe="附件備註" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="Flag" Type="Bool" Describe="附件標記" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
   </Class>
 </root>
