@@ -884,8 +884,10 @@ namespace CreateXML {
             ///加入條件視窗
             dataGridView1.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             var item = dataGridView1.ContextMenuStrip.Items.Add("加入條件");
-            item.Click += new EventHandler(item_Click1);    
+            item.Click += new EventHandler(item_Click1);
+            
         }
+     
 
         private void InitType(ref System.Data.DataTable dtt) {
             DataRow drr = dtt.NewRow();
@@ -2835,6 +2837,34 @@ namespace CreateXML {
             if(e.KeyCode == Keys.F12)
             {
                 雙檔ToolStripMenuItem.PerformClick();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            DetailItem detail = new DetailItem();
+            detail.Show();
+        }      
+
+        private void dataGridView1_DragEnter(object sender, DragEventArgs e) {
+            if(e.Data.GetDataPresent("System.Windows.Forms.TreeNode")) {
+                e.Effect = DragDropEffects.Move;
+            }
+            else {
+                e.Effect = DragDropEffects.None;
+            }  
+        }
+
+        private void dataGridView1_DragDrop(object sender, DragEventArgs e) {
+            TreeNode NewNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");            
+            bool IsExist = false;
+            foreach(TabPage page in tabControlDetail.TabPages) {
+                if(page.Text.Equals(NewNode.Text)) {
+                    IsExist = true;
+                }
+            }
+            if(!IsExist) {
+                tabControlDetail.TabPages.Insert(tabControlDetail.TabPages.Count - 1, NewNode.Text);
+                tabControlDetail.SelectedIndex = tabControlDetail.TabPages.Count - 2;
             }
         }
     }    

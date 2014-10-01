@@ -96,6 +96,7 @@ this.雙檔ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.說明ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.cb_Collection = new System.Windows.Forms.CheckBox();
 this.MainGroup = new System.Windows.Forms.GroupBox();
+this.button2 = new System.Windows.Forms.Button();
 this.button1 = new System.Windows.Forms.Button();
 this.label3 = new System.Windows.Forms.Label();
 this.EnitiesComboBox = new System.Windows.Forms.ComboBox();
@@ -114,6 +115,9 @@ this.tabPage1 = new System.Windows.Forms.TabPage();
 this.tabPage2 = new System.Windows.Forms.TabPage();
 this.tabPage3 = new System.Windows.Forms.TabPage();
 this.label4 = new System.Windows.Forms.Label();
+this.tabControlDetail = new System.Windows.Forms.TabControl();
+this.tabPage4 = new System.Windows.Forms.TabPage();
+this.tabSub = new System.Windows.Forms.TabPage();
 ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 this.menuStrip1.SuspendLayout();
 this.MainGroup.SuspendLayout();
@@ -121,6 +125,8 @@ this.groupBox2.SuspendLayout();
 this.groupBoxMode.SuspendLayout();
 this.tabControl1.SuspendLayout();
 this.tabPage1.SuspendLayout();
+this.tabControlDetail.SuspendLayout();
+this.tabPage4.SuspendLayout();
 this.SuspendLayout();
 // 
 // richTextBox1
@@ -128,14 +134,15 @@ this.SuspendLayout();
 this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-this.richTextBox1.Location = new System.Drawing.Point(1, 444);
+this.richTextBox1.Location = new System.Drawing.Point(6, 6);
 this.richTextBox1.Name = "richTextBox1";
-this.richTextBox1.Size = new System.Drawing.Size(1004, 228);
+this.richTextBox1.Size = new System.Drawing.Size(981, 185);
 this.richTextBox1.TabIndex = 1;
-//this.richTextBox1.Text = global::CreateXML.SampleFile.Resource_zh_CHS;
+//this.richTextBox1.Text = global::CreateXML.SampleFile.Resource_zh_CHS.;
 // 
 // dataGridView1
 // 
+this.dataGridView1.AllowDrop = true;
 this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -145,6 +152,8 @@ this.dataGridView1.RowTemplate.Height = 24;
 this.dataGridView1.Size = new System.Drawing.Size(974, 234);
 this.dataGridView1.TabIndex = 3;
 this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
+this.dataGridView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
+this.dataGridView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragEnter);
 // 
 // cb_IAuditObject
 // 
@@ -665,14 +674,14 @@ this.一鍵生成ToolStripMenuItem.Click += new System.EventHandler(this.一鍵�
 // 單檔ToolStripMenuItem
 // 
 this.單檔ToolStripMenuItem.Name = "單檔ToolStripMenuItem";
-this.單檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.單檔ToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
 this.單檔ToolStripMenuItem.Text = "F11  單檔";
 this.單檔ToolStripMenuItem.Click += new System.EventHandler(this.單檔ToolStripMenuItem_Click);
 // 
 // 雙檔ToolStripMenuItem
 // 
 this.雙檔ToolStripMenuItem.Name = "雙檔ToolStripMenuItem";
-this.雙檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.雙檔ToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
 this.雙檔ToolStripMenuItem.Text = "F12   雙檔";
 this.雙檔ToolStripMenuItem.Click += new System.EventHandler(this.雙檔ToolStripMenuItem_Click);
 // 
@@ -695,6 +704,7 @@ this.cb_Collection.UseVisualStyleBackColor = true;
 // 
 // MainGroup
 // 
+this.MainGroup.Controls.Add(this.button2);
 this.MainGroup.Controls.Add(this.button1);
 this.MainGroup.Controls.Add(this.label3);
 this.MainGroup.Controls.Add(this.EnitiesComboBox);
@@ -720,6 +730,16 @@ this.MainGroup.Size = new System.Drawing.Size(1004, 133);
 this.MainGroup.TabIndex = 19;
 this.MainGroup.TabStop = false;
 this.MainGroup.Text = "主控";
+// 
+// button2
+// 
+this.button2.Location = new System.Drawing.Point(313, 21);
+this.button2.Name = "button2";
+this.button2.Size = new System.Drawing.Size(145, 23);
+this.button2.TabIndex = 28;
+this.button2.Text = "OpenDetail";
+this.button2.UseVisualStyleBackColor = true;
+this.button2.Click += new System.EventHandler(this.button2_Click);
 // 
 // button1
 // 
@@ -860,6 +880,7 @@ this.cb_OnlyParameter.UseVisualStyleBackColor = true;
 // 
 // tabControl1
 // 
+this.tabControl1.AllowDrop = true;
 this.tabControl1.Controls.Add(this.tabPage1);
 this.tabControl1.Controls.Add(this.tabPage2);
 this.tabControl1.Controls.Add(this.tabPage3);
@@ -911,15 +932,45 @@ this.label4.Size = new System.Drawing.Size(77, 12);
 this.label4.TabIndex = 21;
 this.label4.Text = "Design by Dick";
 // 
+// tabControlDetail
+// 
+this.tabControlDetail.Controls.Add(this.tabPage4);
+this.tabControlDetail.Controls.Add(this.tabSub);
+this.tabControlDetail.Location = new System.Drawing.Point(4, 440);
+this.tabControlDetail.Name = "tabControlDetail";
+this.tabControlDetail.SelectedIndex = 0;
+this.tabControlDetail.Size = new System.Drawing.Size(1001, 232);
+this.tabControlDetail.TabIndex = 22;
+// 
+// tabPage4
+// 
+this.tabPage4.Controls.Add(this.richTextBox1);
+this.tabPage4.Location = new System.Drawing.Point(4, 22);
+this.tabPage4.Name = "tabPage4";
+this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+this.tabPage4.Size = new System.Drawing.Size(993, 206);
+this.tabPage4.TabIndex = 0;
+this.tabPage4.Text = "ShowContext";
+this.tabPage4.UseVisualStyleBackColor = true;
+// 
+// tabSub
+// 
+this.tabSub.Location = new System.Drawing.Point(4, 22);
+this.tabSub.Name = "tabSub";
+this.tabSub.Size = new System.Drawing.Size(993, 206);
+this.tabSub.TabIndex = 1;
+this.tabSub.Text = "-";
+this.tabSub.UseVisualStyleBackColor = true;
+// 
 // Form1
 // 
 this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 this.ClientSize = new System.Drawing.Size(1008, 694);
+this.Controls.Add(this.tabControlDetail);
 this.Controls.Add(this.label4);
 this.Controls.Add(this.tabControl1);
 this.Controls.Add(this.MainGroup);
-this.Controls.Add(this.richTextBox1);
 this.Controls.Add(this.menuStrip1);
 this.KeyPreview = true;
 this.MainMenuStrip = this.menuStrip1;
@@ -938,6 +989,8 @@ this.groupBoxMode.ResumeLayout(false);
 this.groupBoxMode.PerformLayout();
 this.tabControl1.ResumeLayout(false);
 this.tabPage1.ResumeLayout(false);
+this.tabControlDetail.ResumeLayout(false);
+this.tabPage4.ResumeLayout(false);
 this.ResumeLayout(false);
 this.PerformLayout();
 
@@ -1031,6 +1084,10 @@ this.PerformLayout();
         private System.Windows.Forms.ToolStripMenuItem 單檔ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 雙檔ToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TabControl tabControlDetail;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabSub;
     }
 }
 

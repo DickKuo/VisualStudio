@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE root[<!ELEMENT Class ANY> <!ATTLIST Class ClassName ID #REQUIRED>]>
 <root>
   <Class ClassName="XDummyOrgFile" Describle="虛擬組織附件" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="False" IDataModifyObject="True" Collection="True" IsCase="False">
@@ -185,14 +185,14 @@
     <Parameter Name="XChangeRegDate" Type="DateTime" Describe="換證日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="XRe_RegFirstDate" Type="DateTime" Describe="再登第一年日" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
-    <Parameter Name="XInsuranceItem" Type="String" Describe="保險種類" ReferenceProperty="CodeInfo" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInsuranceItem" Type="string" Describe="保險種類" ReferenceProperty="CodeInfo" Order="" UIOrder="" Necessary="" />
   </Class>
   <Class ClassName="XCertificateFile" Describle="證照附件" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
     <Parameter Name="XCertificateFileId" Type="Guid" Describe="證照附件ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="XFile" Type="Image" Describe="附件" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="XCertificateName" Type="string" Describe="證件名稱" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="XFileType" Type="string" Describe="附件類型" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
-    <Parameter Name="XFileSize" Type="Int32" Describe="附件大小" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XFileSize" Type="Int" Describe="附件大小" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="XFileRemark" Type="string" Describe="附件備註" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
     <Parameter Name="Flag" Type="Bool" Describe="附件標記" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
   </Class>
