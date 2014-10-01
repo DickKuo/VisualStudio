@@ -8,7 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace CreateXML {
-    public partial class ConditionView : Form {
+    public partial class ConditionView : Form
+    {
         public ConditionView() {
             InitializeComponent();
 

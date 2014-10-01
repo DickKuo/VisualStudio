@@ -1054,8 +1054,12 @@ namespace CreateXML {
             //20140827 modified by Dick 修改成ComboBox
             //ToolStripMenuItem item = sender as ToolStripMenuItem;
             string text = EnitiesComboBox.SelectedItem.ToString();
+            LoadGridView(text, dataGridView1, true);
+            //dataGridView1.Rows.RemoveAt(dataGridView1.ColumnCount-1);
+        }
 
-
+        private void LoadGridView(string NodeName,DataGridView GridView,bool IsMain)
+        {        
             System.Data.DataTable dt = new System.Data.DataTable();
             dt.Columns.Add("Parameter");
             //   dt.Columns.Add("Type", typeof(DataGridViewComboBoxColumn));
@@ -1067,10 +1071,12 @@ namespace CreateXML {
             dt.Columns.Add("UIOrder");
 
             XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
-            XmlNode root = doc.GetElementById(text);
+            XmlNode root = doc.GetElementById(NodeName);
             //XmlNode root = doc.GetElementById(item.Text);
-            this.tb_className.Text = root.Attributes["ClassName"].Value.ToString();
-            this.tb_scrib.Text = root.Attributes["Describle"].Value.ToString();
+            if (IsMain)
+            {
+             this.tb_className.Text = root.Attributes["ClassName"].Value.ToString();
+            this.tb_scrib.Text = root.Attributes["Describle"].Value.ToString();           
             cb_IAuditObject.Checked = Convert.ToBoolean(root.Attributes["IAuditObject"].Value.ToString());
             cb_DataEntity.Checked = Convert.ToBoolean(root.Attributes["DataEntity"].Value.ToString());
             cb_INamedObject.Checked = Convert.ToBoolean(root.Attributes["INamedObject"].Value.ToString());
@@ -1079,13 +1085,16 @@ namespace CreateXML {
             cb_ICodeObject.Checked = Convert.ToBoolean(root.Attributes["ICodeObject"].Value.ToString());
             cb_IDataModifyObject.Checked = Convert.ToBoolean(root.Attributes["IDataModifyObject"].Value.ToString());
             cb_Collection.Checked = Convert.ToBoolean(root.Attributes["Collection"].Value.ToString());
-            try {
+            
+            try
+            {
                 cb_ForCase.Checked = Convert.ToBoolean(root.Attributes["IsCase"].Value.ToString());
             }
             catch { }
-
+            }
             List<string> li = new List<string>();
-            foreach(XmlNode node in root.ChildNodes) {
+            foreach (XmlNode node in root.ChildNodes)
+            {
                 DataRow dr = dt.NewRow();
                 dr[0] = node.Attributes["Name"].Value.ToString();
                 //comboboxColumn.DataPropertyName = node.Attributes["Type"].Value.ToString();              
@@ -1095,23 +1104,27 @@ namespace CreateXML {
                 dr[2] = node.Attributes["ReferenceProperty"].Value;
 
                 //20140904 加入Order 及 UIOrder 及 Necessary
-                dr["Order"] = node.Attributes["Order"] !=null? node.Attributes["Order"].Value.ToString():null ;
+                dr["Order"] = node.Attributes["Order"] != null ? node.Attributes["Order"].Value.ToString() : null;
                 dr["UIOrder"] = node.Attributes["UIOrder"] != null ? node.Attributes["UIOrder"].Value.ToString() : null;
                 bool IsNecessary = false;
-                if(node.Attributes["Necessary"] != null) {
+                if (node.Attributes["Necessary"] != null)
+                {
                     bool.TryParse(node.Attributes["Necessary"].Value, out IsNecessary);
                 }
                 dr["Necessary"] = IsNecessary;
                 dt.Rows.Add(dr);
             }
-            dataGridView1.DataSource = dt;
+            GridView.DataSource = dt;
 
             int count = 0;
-            foreach(string str in li) {
-                dataGridView1.Rows[count].Cells["Type"].Value = str == "Int" ? "Int32" : str;
-                count++;
+            foreach (string str in li)
+            {
+                if (GridView.Rows.Count > count)
+                {
+                    GridView.Rows[count].Cells["Type"].Value = str == "Int" ? "Int32" : str;
+                    count++;
+                }
             }
-            //dataGridView1.Rows.RemoveAt(dataGridView1.ColumnCount-1);
         }
 
         /// <summary>
@@ -2725,6 +2738,8 @@ namespace CreateXML {
             TabControl tab = (TabControl)sender;
             if(tab.SelectedTab.Text =="+") {
                 //加入Browse還有條件
+                ConditionView PageName = new ConditionView();
+                PageName.Show();
                 tab.TabPages.Insert(tab.SelectedIndex ,"new");
                 tab.SelectedIndex = tab.SelectedIndex - 1;
                 TabPage page =tab.SelectedTab;
@@ -2732,8 +2747,16 @@ namespace CreateXML {
             }
             if(tab.SelectedTab.Text == "-") {
                 int index = TabSelectedBefore;
-                tab.SelectedIndex = TabSelectedBefore - 1;
-                tab.TabPages.RemoveAt(index);
+                if (TabSelectedBefore != 0)
+                {
+                    tab.SelectedIndex = TabSelectedBefore - 1;
+                    TabPage page = tab.TabPages[TabSelectedBefore - 1] as TabPage;
+                    if (!page.Name.Equals("tabPage1"))
+                    {
+                        tab.TabPages.RemoveAt(index);
+                    }
+                }
+                tab.SelectedIndex = TabSelectedBefore;
             }
         }
 
@@ -2854,6 +2877,11 @@ namespace CreateXML {
             }  
         }
 
+        /// <summary>
+        /// 20141001 add by Dick for  拖曳名細
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_DragDrop(object sender, DragEventArgs e) {
             TreeNode NewNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");            
             bool IsExist = false;
@@ -2865,6 +2893,42 @@ namespace CreateXML {
             if(!IsExist) {
                 tabControlDetail.TabPages.Insert(tabControlDetail.TabPages.Count - 1, NewNode.Text);
                 tabControlDetail.SelectedIndex = tabControlDetail.TabPages.Count - 2;
+                DataGridView GiedView =new DataGridView();
+                GiedView.Width =1299;
+                GiedView.Height =292;
+                LoadGridView(NewNode.Text,GiedView,false);
+                TabPage Page = tabControlDetail.SelectedTab;
+                Page.Controls.Add(GiedView);
+            }
+        }
+
+        /// <summary>
+        /// 20141001 add by Dick for  加入名細頁籤
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tabControlDetail_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabPage Item =tabControlDetail.SelectedTab;
+            if (Item.Name.Equals("tabIncrease"))
+            {
+                PagesName PageName = new PagesName();
+                if (PageName.ShowDialog() == DialogResult.OK)
+                {
+                    bool IsExist = false;
+                    foreach (TabPage page in tabControlDetail.TabPages)
+                    {
+                        if (page.Text.Equals(PageName.Name))
+                        {
+                            IsExist = true;
+                        }
+                    }
+                    if (!IsExist)
+                    {
+                        tabControlDetail.TabPages.Insert(tabControlDetail.TabPages.Count - 2, PageName.Name);
+                        tabControlDetail.SelectedIndex = tabControlDetail.TabPages.Count - 3;
+                    }
+                }
             }
         }
     }    

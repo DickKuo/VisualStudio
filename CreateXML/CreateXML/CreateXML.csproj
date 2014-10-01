@@ -62,6 +62,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseDialog.Designer.cs">
+      <DependentUpon>BaseDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConditionView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +99,12 @@
     <Compile Include="Packet.Designer.cs">
       <DependentUpon>Packet.cs</DependentUpon>
     </Compile>
+    <Compile Include="PagesName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PagesName.Designer.cs">
+      <DependentUpon>PagesName.cs</DependentUpon>
+    </Compile>
     <Compile Include="PathForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +134,9 @@
     <Compile Include="SQLFilter.Designer.cs">
       <DependentUpon>SQLFilter.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BaseDialog.resx">
+      <DependentUpon>BaseDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConditionView.resx">
       <DependentUpon>ConditionView.cs</DependentUpon>
     </EmbeddedResource>
@@ -136,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Packet.resx">
       <DependentUpon>Packet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PagesName.resx">
+      <DependentUpon>PagesName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PathForm.resx">
       <DependentUpon>PathForm.cs</DependentUpon>
