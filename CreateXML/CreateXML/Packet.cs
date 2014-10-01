@@ -44,10 +44,10 @@ namespace CreateXML {
             foreach(XmlNode child in Server.ChildNodes) {
                 ServerList.Add(child.Attributes["Name"].Value.ToString());
             }
+            
 
-
-            move.MoveEachFile(cb_Path.SelectedItem.ToString(), tb_Number.Text+@"\Client", ClientList,"client");
-            move.MoveEachFile(cb_Path.SelectedItem.ToString(), tb_Number.Text + @"\Server", ServerList,"server");                      
+            move.MoveEachFile(cb_Path.SelectedItem.ToString(), tb_Number.Text+@"\Client", ClientList);
+            move.MoveEachFile(cb_Path.SelectedItem.ToString(), tb_Number.Text + @"\Server", ServerList);                      
             move.RecurrceMove(cb_Path.SelectedItem.ToString() + @"\Configuration",@"C:\Share\"+ tb_Number.Text + @"\Server", true);
             //MoveFileFileNameStart(cb_Path.SelectedItem.ToString() + @"\Configuration\Query", @"C:\Share\" + tb_Number.Text + @"\Server\Configuration\Query","", true);
             MoveFileFileName(cb_Path.SelectedItem.ToString() + @"\Configuration\Query\Case", @"C:\Share\" + tb_Number.Text + @"\Server\Configuration\Query\Case", true);

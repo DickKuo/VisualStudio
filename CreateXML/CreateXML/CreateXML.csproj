@@ -46,9 +46,6 @@
     <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="MoveFile">
-      <HintPath>C:\Users\Dick\Desktop\參數生成工具\MoveFile.dll</HintPath>
-    </Reference>
     <Reference Include="SQL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Dick\Desktop\參數生成工具\SQL.dll</HintPath>
@@ -178,6 +175,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MoveFile\MoveFile.csproj">
+      <Project>{F482A755-F320-4EAA-B722-6BD9182C4D37}</Project>
+      <Name>MoveFile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.csproj">
       <Project>{974707EA-7146-4F23-A5AC-5FCE8C5CBC09}</Project>
       <Name>Tools</Name>
