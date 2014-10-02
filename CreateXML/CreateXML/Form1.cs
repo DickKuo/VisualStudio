@@ -27,6 +27,9 @@ namespace CreateXML {
         private StringBuilder _parameter = new StringBuilder();
         private string _xmlpath;
         private StringBuilder _stringBuilder = new StringBuilder();  //多語系儲存
+        
+        private int DetailTabBefore = 0; //20141002 add by Dick 明細ID
+        private int DetailTabNew = 0;    //20141002 add by Dick 明細ID
 
         public string Xmlpath {
             get { return _xmlpath; }
@@ -2739,11 +2742,12 @@ namespace CreateXML {
             if(tab.SelectedTab.Text =="+") {
                 //加入Browse還有條件
                 ConditionView PageName = new ConditionView();
-                PageName.Show();
-                tab.TabPages.Insert(tab.SelectedIndex ,"new");
-                tab.SelectedIndex = tab.SelectedIndex - 1;
-                TabPage page =tab.SelectedTab;
-                TabAddGridView(tab.SelectedIndex - 1,page);
+                if(PageName.ShowDialog() == DialogResult.OK) {
+                    tab.TabPages.Insert(tab.SelectedIndex, PageName.Result.BrowseName);
+                    tab.SelectedIndex = tab.SelectedIndex - 1;
+                    TabPage page = tab.SelectedTab;
+                    TabAddGridView(tab.SelectedIndex - 1, page);
+                }
             }
             if(tab.SelectedTab.Text == "-") {
                 int index = TabSelectedBefore;
@@ -2891,8 +2895,8 @@ namespace CreateXML {
                 }
             }
             if(!IsExist) {
-                tabControlDetail.TabPages.Insert(tabControlDetail.TabPages.Count - 1, NewNode.Text);
-                tabControlDetail.SelectedIndex = tabControlDetail.TabPages.Count - 2;
+                tabControlDetail.TabPages.Insert(tabControlDetail.TabPages.Count - 2, NewNode.Text);
+                tabControlDetail.SelectedIndex = tabControlDetail.TabPages.Count - 3;
                 DataGridView GiedView =new DataGridView();
                 GiedView.Width =1299;
                 GiedView.Height =292;
@@ -2902,6 +2906,7 @@ namespace CreateXML {
             }
         }
 
+       
         /// <summary>
         /// 20141001 add by Dick for  加入名細頁籤
         /// </summary>
@@ -2909,26 +2914,39 @@ namespace CreateXML {
         /// <param name="e"></param>
         private void tabControlDetail_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TabPage Item =tabControlDetail.SelectedTab;
+            DetailTabBefore = DetailTabNew;
+            DetailTabNew = tabControlDetail.SelectedIndex;
+            TabPage Item =tabControlDetail.SelectedTab;           
             if (Item.Name.Equals("tabIncrease"))
             {
                 PagesName PageName = new PagesName();
-                if (PageName.ShowDialog() == DialogResult.OK)
-                {
+                if(PageName.ShowDialog() == DialogResult.OK) {
                     bool IsExist = false;
-                    foreach (TabPage page in tabControlDetail.TabPages)
-                    {
-                        if (page.Text.Equals(PageName.Name))
-                        {
+                    foreach(TabPage page in tabControlDetail.TabPages) {
+                        if(page.Text.Equals(PageName.Name)) {
                             IsExist = true;
                         }
                     }
-                    if (!IsExist)
-                    {
+                    if(!IsExist) {
                         tabControlDetail.TabPages.Insert(tabControlDetail.TabPages.Count - 2, PageName.Name);
                         tabControlDetail.SelectedIndex = tabControlDetail.TabPages.Count - 3;
                     }
                 }
+                else {
+                    tabControlDetail.SelectedIndex = DetailTabBefore;
+                }
+            }
+            if(Item.Name.Equals("tabSub"))
+            {
+                int index = DetailTabBefore;
+                if(DetailTabBefore != 0) {
+                    tabControlDetail.SelectedIndex = DetailTabBefore - 1;
+                    TabPage page = tabControlDetail.TabPages[DetailTabBefore - 1] as TabPage;
+                    if(!page.Name.Equals("tabPage4") ) {
+                        tabControlDetail.TabPages.RemoveAt(index);
+                    }
+                }
+                tabControlDetail.SelectedIndex = TabSelectedBefore;
             }
         }
     }    
