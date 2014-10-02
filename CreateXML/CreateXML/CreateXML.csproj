@@ -93,6 +93,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="OneClick.cs" />
+    <Compile Include="OneClickMultiFile.cs" />
     <Compile Include="Packet.cs">
       <SubType>Form</SubType>
     </Compile>

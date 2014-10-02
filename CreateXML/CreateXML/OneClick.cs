@@ -842,10 +842,16 @@ namespace CreateXML {
     /// <summary>
     /// 20140923 add by Dick 
     /// QueryView條件
+    ///   &lt;QueryItem ItemType="Dcms.Common.UI.QueryItem" ID="1" ParentID="0" ParameterName="" DbType="Boolean" FieldName="Flag" Value1="True" Value2="" Symbol="EqualCondition" /&gt;
     /// </summary>
     public class Condition {
-        public string Field { set; get; }      //條件欄位位名稱
-        public string Conditon { set; get; }   //條件
-        public string sybel { set; get; }      //And OR 等等
+        public string ID { set; get; }             //ID
+        public string ParentID { set; get; }
+        public string ParameterName { set; get; }
+        public string Type { set; get; }           //資料型態
+        public string Field { set; get; }          //條件欄位位名稱
+        public string Conditon1 { set; get; }      //條件1
+        public string Conditon2 { set; get; }      //條件2
+        public string sybel { set; get; }          //And OR 等等
     }
 }

@@ -1056,8 +1056,10 @@ namespace CreateXML {
             //throw new NotImplementedException();
             //20140827 modified by Dick 修改成ComboBox
             //ToolStripMenuItem item = sender as ToolStripMenuItem;
-            string text = EnitiesComboBox.SelectedItem.ToString();
-            LoadGridView(text, dataGridView1, true);
+            if(EnitiesComboBox.SelectedIndex != -1) {
+                string text = EnitiesComboBox.SelectedItem.ToString();
+                LoadGridView(text, dataGridView1, true);
+            }
             //dataGridView1.Rows.RemoveAt(dataGridView1.ColumnCount-1);
         }
 
@@ -2493,7 +2495,20 @@ namespace CreateXML {
         }
 
         private void 一鍵生成ToolStripMenuItem_Click(object sender, EventArgs e) {
-            
+            if(tabControlDetail.TabPages.Count <= 3) {
+                SingleFile(); //單檔
+            }
+            else {
+                MulitFile(); //雙檔
+            }            
+        }
+
+        /// <summary>
+        /// 20141002 雙檔一鍵生成功能
+        /// </summary>
+        private void MulitFile() {
+          
+
         }
 
         /// <summary>
@@ -2511,7 +2526,7 @@ namespace CreateXML {
             }
             string ParentPath = Directory.GetParent(ProgamPath).FullName;
             OneClick oneclick = new OneClick(ParentPath, ProgamPath);
-            CreateEntities();
+            CreateEntities();            
             oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "DataEntities", tb_className.Text, this.richTextBox1.Text);
             string InterFace = "I" + tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX";
             CreateInterFace();
@@ -2747,6 +2762,8 @@ namespace CreateXML {
                     tab.SelectedIndex = tab.SelectedIndex - 1;
                     TabPage page = tab.SelectedTab;
                     TabAddGridView(tab.SelectedIndex - 1, page);
+                    QueryViewCondition BroseCodition = PageName.Result;                    
+                    DicQueryView[PageName.Result.BrowseName] = BroseCodition;
                 }
             }
             if(tab.SelectedTab.Text == "-") {
@@ -2754,10 +2771,14 @@ namespace CreateXML {
                 if (TabSelectedBefore != 0)
                 {
                     tab.SelectedIndex = TabSelectedBefore - 1;
-                    TabPage page = tab.TabPages[TabSelectedBefore - 1] as TabPage;
+                    TabPage page = tab.TabPages[index] as TabPage;
                     if (!page.Name.Equals("tabPage1"))
                     {
+                        string name = page.Name;
                         tab.TabPages.RemoveAt(index);
+                        if(DicQueryView.ContainsKey(name)) {
+                            DicQueryView.Remove(name);
+                        }                        
                     }
                 }
                 tab.SelectedIndex = TabSelectedBefore;
@@ -2789,15 +2810,24 @@ namespace CreateXML {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         void item_Click1(object sender, EventArgs e) {
-            //throw new NotImplementedException();
-            ConditionView View = new ConditionView();
-            if(View.ShowDialog() == DialogResult.OK) { 
-               
+            TabPage Page = tabControl1.SelectedTab as TabPage;
+            QueryViewCondition BroseCodition=null;
+            if(DicQueryView.ContainsKey(Page.Text)) {
+             BroseCodition  = DicQueryView[Page.Text];
             }
-        }
-
-
-      
+            if(BroseCodition != null) {
+                ConditionView conditionview = new ConditionView(BroseCodition);
+                if(conditionview.ShowDialog() == DialogResult.OK) {
+                    DicQueryView[Page.Text] = conditionview.Result;
+                }
+            }
+            else {
+                ConditionView conditionview = new ConditionView();
+                if(conditionview.ShowDialog() == DialogResult.OK) {
+                    DicQueryView[Page.Text] = conditionview.Result;
+                }
+            }
+        }      
 
         private void queryView排序ToolStripMenuItem_Click(object sender, EventArgs e) {
             string ThisPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"XmlOrder.exe");
@@ -2842,15 +2872,7 @@ namespace CreateXML {
             Description descrip = new Description(this.ProductVersion.ToString());                 
             descrip.ShowDialog();
          }
-
-        private void 單檔ToolStripMenuItem_Click(object sender, EventArgs e) {
-            
-            SingleFile();
-        }
-
-        private void 雙檔ToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
+             
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
             TabSelectedBefore = TabSelectedIndexNow;
@@ -2859,12 +2881,8 @@ namespace CreateXML {
 
         private void Form1_KeyDown(object sender, KeyEventArgs e) {
             if(e.KeyCode == Keys.F11) {
-                單檔ToolStripMenuItem.PerformClick();
-            }
-            if(e.KeyCode == Keys.F12)
-            {
-                雙檔ToolStripMenuItem.PerformClick();
-            }
+                一鍵生成ToolStripMenuItem.PerformClick();
+            }           
         }
 
         private void button2_Click(object sender, EventArgs e) {

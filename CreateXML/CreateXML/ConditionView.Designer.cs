@@ -32,6 +32,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ParameterName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Field = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Conditon1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Conditon2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sybel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -113,11 +119,48 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ParameterName,
+            this.Type,
+            this.Field,
+            this.Conditon1,
+            this.Conditon2,
+            this.sybel});
             this.dataGridView1.Location = new System.Drawing.Point(8, 15);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(723, 172);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // ParameterName
+            // 
+            this.ParameterName.HeaderText = "ParameterName";
+            this.ParameterName.Name = "ParameterName";
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Type";
+            this.Type.Name = "Type";
+            // 
+            // Field
+            // 
+            this.Field.HeaderText = "Field";
+            this.Field.Name = "Field";
+            // 
+            // Conditon1
+            // 
+            this.Conditon1.HeaderText = "Conditon1";
+            this.Conditon1.Name = "Conditon1";
+            // 
+            // Conditon2
+            // 
+            this.Conditon2.HeaderText = "Conditon2";
+            this.Conditon2.Name = "Conditon2";
+            // 
+            // sybel
+            // 
+            this.sybel.HeaderText = "sybel";
+            this.sybel.Name = "sybel";
             // 
             // ConditionView
             // 
@@ -149,5 +192,11 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ParameterName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Field;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Conditon1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Conditon2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sybel;
     }
 }
