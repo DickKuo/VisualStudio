@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE root[<!ELEMENT root ANY> <!ATTLIST root Path ID #REQUIRED>]>
-<root>
+<root Version="1.0.0.1">
   <Path Xpath="C:\Users\Dick\Desktop\38" Set="false" />
   <Path Xpath="D:\HR\HRM雙檔作業V5\V5.0\V5.0_04422" Set="false" />
   <Path Xpath="D:\SourceCenter\Product\V5.0\Export" Set="false" />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE root[<!ELEMENT Class ANY> <!ATTLIST Class ClassName ID #REQUIRED>]>
-<root>
+<root Version="1.0.0.1">
   <Class ClassName="XDummyOrgFile" Describle="虛擬組織附件" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="False" IDataModifyObject="True" Collection="True" IsCase="False">
     <Parameter Name="XDummyOrgFileId" Type="Guid" Describe="附件ID" ReferenceProperty="" />
     <Parameter Name="DummyOrgId" Type="Guid" Describe="虛擬組織Id" ReferenceProperty="DummyOrg" />

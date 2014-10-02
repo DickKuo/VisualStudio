@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <!DOCTYPE root[<!ELEMENT root ANY> <!ATTLIST root File ID #REQUIRED>]>
 
-<root>
-<ServerPath  Path="\\10.40.51.55\hrm\HRM 教育訓練\HRM 工具\懶人機\" />
+<root Version="1.0.0.1">
+<ServerPath  Path="D:\檔案整理\SouceCode\VisualStudio\VisualStudio\CreateXML\Export\" />
   
 <DownLoadList>
   <Item Name="CreateXML.exe" />

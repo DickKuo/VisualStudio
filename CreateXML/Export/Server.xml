@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE root[<!ELEMENT root ANY> <!ATTLIST root Path ID #REQUIRED>]>
-<root> 
+<root Version="1.0.0.1"> 
   <CurrentDbSource>
     Data Source=.;Initial Catalog=CodeData;User Id=sa;Password=dsc; 
   </CurrentDbSource>
