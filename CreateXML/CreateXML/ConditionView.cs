@@ -64,6 +64,7 @@ namespace CreateXML {
             Result = new QueryViewCondition();
             Result.BrowseName = textBox1.Text;
             Result.Description = textBox2.Text;
+            Result.Type = comboBox1.SelectedItem.ToString();
             Result.ConditionList.Clear();
             int count = 1;
              foreach(DataGridViewRow dr in dataGridView1.Rows) {

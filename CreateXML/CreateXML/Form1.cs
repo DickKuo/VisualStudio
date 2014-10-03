@@ -2533,7 +2533,34 @@ namespace CreateXML {
             oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "Services", InterFace, this.richTextBox1.Text);
             CreateServer();
             oneclick.CSFileSave("DigiWin.HR.CustomBusinessImplement", "Services", tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX", this.richTextBox1.Text);
-            oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, this.dataGridView1);
+            #region 20141003 modified by Dick for 修改成多頁籤
+            oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, this.dataGridView1); 
+            List<DataGridView> GridViewList = new List<DataGridView>();            
+            foreach(TabPage page in tabControl1.TabPages)
+            {
+                switch(page.Name)
+                {                   
+                    case "tabPage2":
+                    case "tabPage3":
+                        break;
+                    default:
+                        foreach(Control control in page.Controls) {
+                            if(control.GetType().Name.Equals("DataGridView")) {
+                                DataGridView Gridview = control as DataGridView;
+                                Gridview.Name = page.Text;
+                                GridViewList.Add(Gridview);
+                            }
+                        }
+                    break;
+                }
+            }
+            if(GridViewList.Count > 0) {
+                oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, GridViewList, DicQueryView); 
+            }
+            
+            #endregion
+                   
+
             System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable;
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
             oneclick.RegisterEntity(tb_className.Text);

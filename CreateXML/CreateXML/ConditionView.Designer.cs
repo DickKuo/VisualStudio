@@ -38,6 +38,8 @@
             this.Conditon1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Conditon2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sybel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -77,6 +79,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.textBox1);
@@ -162,6 +166,26 @@
             this.sybel.HeaderText = "sybel";
             this.sybel.Name = "sybel";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(28, 88);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(58, 12);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "QueryType";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Browse",
+            "Select"});
+            this.comboBox1.Location = new System.Drawing.Point(124, 88);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(157, 20);
+            this.comboBox1.TabIndex = 5;
+            // 
             // ConditionView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -198,5 +222,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Conditon1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Conditon2;
         private System.Windows.Forms.DataGridViewTextBoxColumn sybel;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label3;
     }
 }

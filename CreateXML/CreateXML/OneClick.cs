@@ -51,17 +51,137 @@ namespace CreateXML {
             StreamWriter Sw = new StreamWriter(FullFileName, false);
             Sw.Write(pContext);
             Sw.Close();
+            SubQueryView(GridView, FullFileName, EntityName, "Browse", "Browse");
+        }
+
+        /// <summary>
+        /// 建立QueryViewXmL結構
+        /// 20141004 modified by Dick for 修改成只建立基本結構。
+        /// </summary>
+        /// <returns></returns>
+        private string NewQueryView() {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+            sb.Append("<QueryConfiguration  Version=\"5.1.3.1\" IsCase=\"1\">");
+            sb.Append(" <QueryViewXML>");
+            //sb.Append("   <QueryView>");
+            //sb.Append("      <QueryViewId></QueryViewId>");
+            //sb.Append("      <Name>Browse</Name>");
+            //sb.Append("      <RefToTypeKey></RefToTypeKey>");
+            //sb.Append("      <IsSystem>true</IsSystem>");
+            //sb.Append("      <QueryViewColumns></QueryViewColumns>");
+            //sb.Append("   </QueryView>");
+            sb.Append(" </QueryViewXML>");
+            sb.Append(" <QueryProjectXML>");
+            //sb.Append("   <QueryProject>");
+            //sb.Append("   <Text>Browse</Text>");
+            //sb.Append("   <QueryProjectId></QueryProjectId>");
+            //sb.Append("   <ProjectType>2</ProjectType>");
+            //sb.Append("   <Name>Browse</Name>");
+            //sb.Append("   <RefToTypeKey></RefToTypeKey>");
+            //sb.Append("   <QueryViewId></QueryViewId>");
+            //sb.Append("   <IsSystem>true</IsSystem>");
+            //sb.Append("   </QueryProject>");
+            sb.Append(" </QueryProjectXML>");
+            sb.Append(" <QueryCollectXML>");
+            //sb.Append(" <QueryCollect>");
+            //sb.Append(" <QueryCollectId></QueryCollectId>");
+            //sb.Append(" <Name>Browse</Name>");
+            //sb.Append(" <RefToTypeKey></RefToTypeKey>");
+            //sb.Append(" <IsSystem>true</IsSystem>");
+            //sb.Append(" <QueryCollectItems>");
+            //sb.Append(" <QueryCollectItem>");
+            //sb.Append(" <QueryCollectItemId> </QueryCollectItemId>");
+            //sb.Append(" <QueryProjectId> </QueryProjectId>");
+            //sb.Append(" <QueryName>Browse</QueryName>");
+            //sb.Append(" <Text>Browse</Text>");
+            //sb.Append(" <RefToTypeKey> </RefToTypeKey>");
+            //sb.Append(" <OrderNumber>0</OrderNumber>");
+            //sb.Append(" </QueryCollectItem>");
+            //sb.Append(" </QueryCollectItems>");
+            //sb.Append(" </QueryCollect>");
+            sb.Append(" </QueryCollectXML>");
+            sb.Append("</QueryConfiguration>");
+            return sb.ToString();
+        }
+
+
+#region 20141004 modified by Dick for 保留原先寫法，重構此功能
+        //private void SubQueryView(System.Windows.Forms.DataGridView GridView, string FullFileName, string EntityName,string Type) {
+        //    XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
+        //    XmlNode root = doc.SelectSingleNode("QueryConfiguration");
+        //    XmlNode QueryViewXML = root.SelectSingleNode("QueryViewXML/QueryView/QueryViewId");
+        //    QueryViewXML.InnerXml = EntityName + "_" + Type;
+        //    XmlNode RefToTypeKey = root.SelectSingleNode("QueryViewXML/QueryView/RefToTypeKey");
+        //    RefToTypeKey.InnerXml = EntityName;
+        //    XmlNode QueryViewColumns = root.SelectSingleNode("QueryViewXML/QueryView/QueryViewColumns");
+        //    int count = 1;
+        //    bool IsRemarkExit = false;
+        //    QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, EntityName + "Id", 0, false));//加入Id
+        //    foreach(DataGridViewRow dr in GridView.Rows) {
+        //        if(dr.Cells["Order"].Value != null) {
+        //            if(dr.Cells["Order"].Value.ToString() == "-1") {
+        //                IsRemarkExit = true;
+        //            }
+        //            else if(!dr.Cells["Order"].Value.ToString().Equals(string.Empty)) {
+        //                QueryViewColumns.AppendChild(QueryViewColumn(dr, doc, EntityName));
+        //                count++;
+        //            }
+        //        }
+        //    }
+        //    if(IsRemarkExit) {
+        //        QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, "Remark", count, true));
+        //    }
+        //    XmlNode QueryProjectId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryProjectId");
+        //    QueryProjectId.InnerXml = EntityName + "_" + Type;
+        //    XmlNode QueryProjectViewId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryViewId");
+        //    QueryProjectViewId.InnerXml = EntityName + "_" + Type;
+        //    XmlNode QueryProjectRefToTypeKey = root.SelectSingleNode("QueryProjectXML/QueryProject/RefToTypeKey");
+        //    QueryProjectRefToTypeKey.InnerXml = EntityName;
+        //    XmlNode QueryCollectId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectId");
+        //    QueryCollectId.InnerXml = EntityName + "_" + Type;
+        //    XmlNode QueryCollectRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/RefToTypeKey");
+        //    QueryCollectRefToTypeKey.InnerXml = EntityName;
+        //    XmlNode QueryCollectItemId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/QueryCollectItemId");
+        //    QueryCollectItemId.InnerXml = EntityName + "_" + Type + "_QueryCollectItem" + Guid.NewGuid().ToString();
+        //    XmlNode QueryCollectQueryProjectId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/QueryProjectId");
+        //    QueryCollectQueryProjectId.InnerXml = EntityName + "_" + Type;
+        //    XmlNode QueryCollectQueryRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/RefToTypeKey");
+        //    QueryCollectQueryRefToTypeKey.InnerXml = EntityName;
+        //    XmlNode TextTextQueryCollectQueryText = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/Text");
+        //    TextTextQueryCollectQueryText.InnerXml = EntityName + "_" + Type;
+        //    doc.Save(FullFileName);
+        //}
+#endregion
+
+        /// <summary>
+        /// 20141004 modified by Dick 重構此寫法。
+        /// </summary>
+        /// <param name="GridView"></param>
+        /// <param name="FullFileName"></param>
+        /// <param name="EntityName"></param>
+        /// <param name="Type"></param>
+        private void SubQueryView(System.Windows.Forms.DataGridView GridView, string FullFileName, string EntityName, string Type,string PageName) {
             XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("QueryConfiguration");
-            XmlNode QueryViewXML = root.SelectSingleNode("QueryViewXML/QueryView/QueryViewId");
-            QueryViewXML.InnerXml = EntityName + "_Browse";
-            XmlNode RefToTypeKey = root.SelectSingleNode("QueryViewXML/QueryView/RefToTypeKey");
+            XmlNode QueryViewXML = root.SelectSingleNode("QueryViewXML");
+            XmlElement QueryView = doc.CreateElement("QueryView");
+            XmlElement QueryViewId = doc.CreateElement("QueryViewId");
+            QueryViewId.InnerXml = EntityName + "_" + PageName;
+            XmlElement Name = doc.CreateElement("Name");
+            Name.InnerXml = Type;
+            QueryViewXML.AppendChild(QueryView);
+            QueryViewXML.AppendChild(QueryViewId);
+            QueryViewXML.AppendChild(Name);
+            XmlElement RefToTypeKey = doc.CreateElement("RefToTypeKey");
             RefToTypeKey.InnerXml = EntityName;
-            XmlNode QueryViewColumns = root.SelectSingleNode("QueryViewXML/QueryView/QueryViewColumns");
+            QueryViewXML.AppendChild(RefToTypeKey);
+            //XmlNode QueryViewColumns = root.SelectSingleNode("QueryViewXML/QueryView/QueryViewColumns");
+            XmlElement QueryViewColumns = doc.CreateElement("QueryViewColumns");
+
             int count = 1;
             bool IsRemarkExit = false;
-            //加入Id
-            QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, EntityName + "Id", 0, false));
+            QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, EntityName + "Id", 0, false));//加入Id
             foreach(DataGridViewRow dr in GridView.Rows) {
                 if(dr.Cells["Order"].Value != null) {
                     if(dr.Cells["Order"].Value.ToString() == "-1") {
@@ -76,26 +196,184 @@ namespace CreateXML {
             if(IsRemarkExit) {
                 QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, "Remark", count, true));
             }
-            XmlNode QueryProjectId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryProjectId");
-            QueryProjectId.InnerXml = EntityName + "_Browse";
-            XmlNode QueryProjectViewId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryViewId");
-            QueryProjectViewId.InnerXml = EntityName + "_Browse";
-            XmlNode QueryProjectRefToTypeKey = root.SelectSingleNode("QueryProjectXML/QueryProject/RefToTypeKey");
+            QueryViewXML.AppendChild(QueryViewColumns);
+            XmlNode  QueryProjectXML  = root.SelectSingleNode("QueryProjectXML");
+            XmlElement QueryProject = doc.CreateElement("QueryProject");
+            QueryProjectXML.AppendChild(QueryProject);
+            XmlElement QueryProjectId = doc.CreateElement("QueryProjectId");
+            //XmlNode QueryProjectId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryProjectId");
+            QueryProjectId.InnerXml = EntityName + "_" + Type;
+            QueryProject.AppendChild(QueryProjectId);            
+            //XmlNode QueryProjectViewId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryViewId");
+            //QueryProjectViewId.InnerXml = EntityName + "_" + Type;
+            XmlElement QueryProjectViewId = doc.CreateElement("QueryViewId");
+            QueryProjectViewId.InnerXml = QueryViewId.InnerXml;
+            QueryProject.AppendChild(QueryProjectViewId);
+            //XmlNode QueryProjectRefToTypeKey = root.SelectSingleNode("QueryProjectXML/QueryProject/RefToTypeKey");
+            XmlElement QueryProjectRefToTypeKey = doc.CreateElement("RefToTypeKey");
             QueryProjectRefToTypeKey.InnerXml = EntityName;
-            XmlNode QueryCollectId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectId");
-            QueryCollectId.InnerXml = EntityName + "_Browse";
-            XmlNode QueryCollectRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/RefToTypeKey");
-            QueryCollectRefToTypeKey.InnerXml = EntityName;
-            XmlNode QueryCollectItemId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/QueryCollectItemId");
-            QueryCollectItemId.InnerXml = EntityName + "_Browse_QueryCollectItem" + Guid.NewGuid().ToString();
-            XmlNode QueryCollectQueryProjectId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/QueryProjectId");
-            QueryCollectQueryProjectId.InnerXml = EntityName + "_Browse";
-            XmlNode QueryCollectQueryRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/RefToTypeKey");
+            QueryProject.AppendChild(QueryProjectRefToTypeKey);
+            XmlElement ProjectName = doc.CreateElement("Name");
+            ProjectName.InnerXml = PageName;
+            QueryProject.AppendChild(ProjectName);
+            XmlElement ProjectType = doc.CreateElement("ProjectType");
+            ProjectType.InnerXml = Type == "Browse" ? "2" : "1";
+            QueryProject.AppendChild(ProjectType);
+            XmlElement ProjectIsSystem = doc.CreateElement("IsSystem");
+            ProjectIsSystem.InnerXml = "true";
+            QueryProject.AppendChild(ProjectIsSystem);
+            //sb.Append(" <QueryCollectXML>");
+            //sb.Append(" <QueryCollect>");
+            //sb.Append(" <QueryCollectId></QueryCollectId>");
+            //sb.Append(" <Name>Browse</Name>");
+            //sb.Append(" <RefToTypeKey></RefToTypeKey>");
+            //sb.Append(" <IsSystem>true</IsSystem>");
+            //sb.Append(" <QueryCollectItems>");
+            //sb.Append(" <QueryCollectItem>");
+            //sb.Append(" <QueryCollectItemId> </QueryCollectItemId>");
+            //sb.Append(" <QueryProjectId> </QueryProjectId>");
+            //sb.Append(" <QueryName>Browse</QueryName>");
+            //sb.Append(" <Text>Browse</Text>");
+            //sb.Append(" <RefToTypeKey> </RefToTypeKey>");
+            //sb.Append(" <OrderNumber>0</OrderNumber>");
+            //sb.Append(" </QueryCollectItem>");
+            //sb.Append(" </QueryCollectItems>");
+            //sb.Append(" </QueryCollect>");
+            //sb.Append(" </QueryCollectXML>");
+
+
+
+            XmlNode QueryCollectXML = root.SelectSingleNode("QueryCollectXML");
+            QueryCollectXML = CreateCollectByType(EntityName,Type, QueryCollectXML,doc);
+
+            XmlNodeList QueryCollectIds = QueryCollectXML.SelectNodes("QueryCollect/QueryCollectId");
+            XmlNode  QueryCollectId =null;
+            foreach(XmlNode node in QueryCollectIds)
+            {
+                if(node.InnerXml.Equals(EntityName + "_" + PageName)) {
+                    QueryCollectId = node;
+                }
+            }
+            //XmlElement QueryCollectId = doc.CreateElement("QueryCollectId");
+
+            // XmlNode QueryCollectType = root.SelectSingleNode("QueryCollectXML/QueryCollect/Name");
+            ////if()
+
+            //XmlElement QueryCollect = doc.CreateElement("QueryCollect");
+            //QueryCollectXML.AppendChild(QueryCollect);
+            //XmlElement QueryCollectId = doc.CreateElement("QueryCollectId");
+            //QueryCollectId.InnerXml = EntityName + "_" + PageName;
+            //QueryCollect.AppendChild(QueryCollectId);
+           
+            ////QueryCollectId.InnerXml = EntityName + "_" + Type;
+            //XmlElement QueryCollectRefToTypeKey = doc.CreateElement("RefToTypeKey");
+            //QueryCollectRefToTypeKey.InnerXml = EntityName;
+            //QueryCollect.AppendChild(QueryCollectRefToTypeKey);
+            //XmlNode QueryCollectRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/RefToTypeKey");
+            //QueryCollectRefToTypeKey.InnerXml = EntityName;
+
+            XmlNode QueryCollectItems = QueryCollectId.SelectSingleNode("QueryCollectItems");
+            XmlElement QueryCollectItem = doc.CreateElement("QueryCollectItem");
+            QueryCollectItems.AppendChild(QueryCollectItem);
+            XmlElement QueryCollectItemId = doc.CreateElement("QueryCollectItemId");
+            QueryCollectItemId.InnerXml = EntityName + "_" + PageName + "_QueryCollectItem" + Guid.NewGuid().ToString();
+            QueryCollectItem.AppendChild(QueryCollectItemId);
+            //XmlNode QueryCollectItemId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/QueryCollectItemId");
+            //QueryCollectItemId.InnerXml = EntityName + "_" + Type + "_QueryCollectItem" + Guid.NewGuid().ToString();
+            XmlElement QueryCollectQueryProjectId = doc.CreateElement("QueryProjectId");
+            QueryCollectQueryProjectId.InnerXml = EntityName + "_" + Type;
+            QueryCollectItem.AppendChild(QueryCollectQueryProjectId);
+            //XmlNode QueryCollectQueryProjectId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/QueryProjectId");
+            //QueryCollectQueryProjectId.InnerXml = EntityName + "_" + Type;
+            XmlElement QueryCollectQueryName = doc.CreateElement("QueryName");
+            QueryCollectQueryName.InnerXml = PageName;
+            QueryCollectItem.AppendChild(QueryCollectQueryName);
+            XmlElement QueryCollectText = doc.CreateElement("Text");
+            QueryCollectText.InnerXml = EntityName + "_" + Type;
+            QueryCollectItem.AppendChild(QueryCollectText);
+            XmlElement QueryCollectQueryRefToTypeKey = doc.CreateElement("RefToTypeKey");
             QueryCollectQueryRefToTypeKey.InnerXml = EntityName;
-            XmlNode TextTextQueryCollectQueryText = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/Text");
-            TextTextQueryCollectQueryText.InnerXml = EntityName + "_Browse";
+            QueryCollectItem.AppendChild(QueryCollectQueryRefToTypeKey);
+            //XmlNode QueryCollectQueryRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/RefToTypeKey");
+            //QueryCollectQueryRefToTypeKey.InnerXml = EntityName;
+            //XmlNode TextTextQueryCollectQueryText = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/Text");
+            //TextTextQueryCollectQueryText.InnerXml = EntityName + "_" + Type;
             doc.Save(FullFileName);
         }
+
+
+
+        /// <summary>
+        /// 20141004 add by Dick for 建立Collect 類別 Browse || Select 
+        /// </summary>
+        /// <param name="Entity"></param>
+        /// <param name="Type"></param>
+        /// <param name="root"></param>
+        /// <param name="doc"></param>
+        /// <returns></returns>
+        private XmlNode CreateCollectByType(string Entity,string Type,XmlNode root,XmlDocument doc ) {
+            XmlNodeList Names = root.SelectNodes("QueryCollect/Name");
+            bool IsBrowse = true;
+            bool IsSelect = true;
+            foreach(XmlNode node in Names)
+            {
+                if(node.InnerXml.Equals("Browse")) {
+                    IsBrowse = false;
+                }
+                else {
+                    IsSelect = false;
+                }
+            }
+            if(Names.Count==0) {
+                IsSelect = Type=="Select"? false:true;
+                IsBrowse = Type == "Browse" ? false : true;
+            }
+            List<bool> li = new List<bool>();
+            li.Add(IsSelect);
+            li.Add(IsBrowse);
+
+            foreach(bool bo in li) {
+                if(!bo) {
+                    XmlElement QueryCollect = doc.CreateElement("QueryCollect");
+                    root.AppendChild(QueryCollect);
+                    XmlElement QueryCollectId = doc.CreateElement("QueryCollectId");
+                    QueryCollectId.InnerXml = Entity + "_" + Type;
+                    root.AppendChild(QueryCollectId);
+                    XmlElement name = doc.CreateElement("Name");
+                    name.InnerXml = Type;
+                    root.AppendChild(name);
+                    XmlElement RefToTypeKey = doc.CreateElement("RefToTypeKey");
+                    RefToTypeKey.InnerXml = Entity;
+                    root.AppendChild(RefToTypeKey);
+                    XmlElement QueryCollectItems = doc.CreateElement("QueryCollectItems");
+                    root.AppendChild(QueryCollectItems);
+                }
+            }           
+                return root;
+        }
+
+
+        /// <summary>
+        /// 20141003 add by Dick 多頁籤
+        /// </summary>
+        /// <param name="pFileName"></param>
+        /// <param name="pContext"></param>
+        /// <param name="GridView"></param>
+        public void CreateQueryView(string pFileName, string pContext, List<DataGridView> GridViewList, Dictionary<string, QueryViewCondition> DicQueryView) {
+            string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "Query" + Path.DirectorySeparatorChar + "Case";
+            string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".xml";
+            string EntityName = pFileName;
+            if(File.Exists(FullFileName)) {
+                foreach(DataGridView GirdView in GridViewList)
+                {
+                    if(DicQueryView.ContainsKey(GirdView.Name)) {
+                        QueryViewCondition QueryView = DicQueryView[GirdView.Name];
+                        SubQueryView(GirdView, FullFileName, EntityName, QueryView.Type,QueryView.BrowseName);
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// 20140815 建立單檔UI
@@ -597,57 +875,7 @@ namespace CreateXML {
             }
         }
 
-        /// <summary>
-        /// 建立QueryViewXmL結構
-        /// </summary>
-        /// <returns></returns>
-        private string NewQueryView() {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-            sb.Append("<QueryConfiguration  Version=\"5.1.3.1\" IsCase=\"1\">");
-            sb.Append(" <QueryViewXML>");
-            sb.Append("   <QueryView>");
-            sb.Append("      <QueryViewId></QueryViewId>");
-            sb.Append("      <Name>Browse</Name>");
-            sb.Append("      <RefToTypeKey></RefToTypeKey>");
-            sb.Append("      <IsSystem>true</IsSystem>");
-            sb.Append("      <QueryViewColumns></QueryViewColumns>");
-            sb.Append("   </QueryView>");
-            sb.Append(" </QueryViewXML>");
-            sb.Append(" <QueryProjectXML>");
-            sb.Append("   <QueryProject>");
-            sb.Append("   <Text>Browse</Text>");
-            sb.Append("   <QueryProjectId></QueryProjectId>");
-            sb.Append("   <ProjectType>2</ProjectType>");
-            sb.Append("   <Name>Browse</Name>");
-            sb.Append("   <RefToTypeKey></RefToTypeKey>");
-            sb.Append("   <QueryViewId></QueryViewId>");
-            sb.Append("   <IsSystem>true</IsSystem>");
-            sb.Append("   </QueryProject>");
-            sb.Append(" </QueryProjectXML>");
-            sb.Append(" <QueryCollectXML>");
-            sb.Append(" <QueryCollect>");
-            sb.Append(" <QueryCollectId></QueryCollectId>");
-            sb.Append(" <Name>Browse</Name>");
-            sb.Append(" <RefToTypeKey></RefToTypeKey>");
-            sb.Append(" <IsSystem>true</IsSystem>");
-            sb.Append(" <QueryCollectItems>");
-            sb.Append(" <QueryCollectItem>");
-            sb.Append(" <QueryCollectItemId> </QueryCollectItemId>");
-            sb.Append(" <QueryProjectId> </QueryProjectId>");
-            sb.Append(" <QueryName>Browse</QueryName>");
-            sb.Append(" <Text>Browse</Text>");
-            sb.Append(" <RefToTypeKey> </RefToTypeKey>");
-            sb.Append(" <OrderNumber>0</OrderNumber>");
-            sb.Append(" </QueryCollectItem>");
-            sb.Append(" </QueryCollectItems>");
-            sb.Append(" </QueryCollect>");
-            sb.Append(" </QueryCollectXML>");
-            sb.Append("</QueryConfiguration>");
-            return sb.ToString();
-        }
-
-
+        
         private XmlNode QueryViewColumn(DataGridViewRow dr, XmlDocument doc, string Entity) {
             XmlElement element = doc.CreateElement("QueryViewColumn");
             XmlElement OrderNumber = doc.CreateElement("OrderNumber");
