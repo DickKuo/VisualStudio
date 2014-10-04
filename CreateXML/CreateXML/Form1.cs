@@ -2241,16 +2241,16 @@ namespace CreateXML {
         /// 20140827 頁籤多語系英文
         /// </summary>
         /// <returns></returns>
-        private StringBuilder Browse_English() {
+        private StringBuilder Browse_English(string pPageName,string pDecription) {
             StringBuilder sb = new StringBuilder();
             sb.Clear();
-            sb.Append("Browse_QueryProject_");
-            sb.Append(tb_className.Text);
-            sb.Append("_Browse");
-            sb.Append("\t");
-            sb.Append("Browse");
-            sb.Append("\t");
-            sb.Append("瀏覽");
+            sb.Append(string.Format("Browse_QueryProject_{0}_{1}\t{1}\t{2}", tb_className.Text, pPageName, pDecription));
+            //sb.Append(tb_className.Text);
+            //sb.Append("_Browse");
+            //sb.Append("\t");
+            //sb.Append("Browse");
+            //sb.Append("\t");
+            //sb.Append("瀏覽");
             return sb;
         }
 
@@ -2258,16 +2258,17 @@ namespace CreateXML {
         /// 20140827 頁籤多語系繁中
         /// </summary>
         /// <returns></returns>
-        private StringBuilder Browse_CHT() {
+        private StringBuilder Browse_CHT(string pPageName, string pDecription) {
             StringBuilder sb = new StringBuilder();
             sb.Clear();
-            sb.Append("Browse_QueryProject_");
-            sb.Append(tb_className.Text);
-            sb.Append("_Browse");
-            sb.Append("\t");
-            sb.Append("瀏覽");
-            sb.Append("\t");
-            sb.Append("瀏覽");
+            sb.Append(string.Format("Browse_QueryProject_{0}_{1}\t{1}\t{2}", tb_className.Text, pDecription, pDecription));
+            //sb.Append("Browse_QueryProject_");
+            //sb.Append(tb_className.Text);
+            //sb.Append("_Browse");
+            //sb.Append("\t");
+            //sb.Append("瀏覽");
+            //sb.Append("\t");
+            //sb.Append("瀏覽");
             return sb;
         }
 
@@ -2275,16 +2276,17 @@ namespace CreateXML {
         /// 20140827 頁籤多語系簡中
         /// </summary>
         /// <returns></returns>
-        private StringBuilder Browse_CHS() {
+        private StringBuilder Browse_CHS(string pPageName, string pDecription) {
             StringBuilder sb = new StringBuilder();
             sb.Clear();
-            sb.Append("Browse_QueryProject_");
-            sb.Append(tb_className.Text);
-            sb.Append("_Browse");
-            sb.Append("\t");
-            sb.Append("浏览");
-            sb.Append("\t");
-            sb.Append("浏览");
+            sb.Append(string.Format("Browse_QueryProject_{0}_{1}\t{1}\t{2}", tb_className.Text, translateEncodingByWord(pDecription, true).Trim(), translateEncodingByWord(pDecription, true).Trim()));
+            //sb.Append("Browse_QueryProject_");
+            //sb.Append(tb_className.Text);
+            //sb.Append("_Browse");
+            //sb.Append("\t");
+            //sb.Append("浏览");
+            //sb.Append("\t");
+            //sb.Append("浏览");
             return sb;
         }
 
@@ -2595,9 +2597,13 @@ namespace CreateXML {
             #endregion
 
             #region 20140905 add by Dick  加入瀏覽頁籤多語系
-            oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_English().ToString(), "QueryResourcesForCase", true);
-            oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHT().ToString(), "QueryResourcesForCase.zh-CHT", false);
-            oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHS().ToString(), "QueryResourcesForCase.zh-CHS", false);
+
+            foreach( QueryViewCondition conditions in   DicQueryView.Values)
+            {
+                oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_English(conditions.BrowseName, conditions.BrowseName).ToString(), "QueryResourcesForCase", true);
+                oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHT(conditions.BrowseName, conditions.Description).ToString(), "QueryResourcesForCase.zh-CHT", false);
+                oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHS(conditions.BrowseName, conditions.Description).ToString(), "QueryResourcesForCase.zh-CHS", false);
+            }
             #endregion
 
 

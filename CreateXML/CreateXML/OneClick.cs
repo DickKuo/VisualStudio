@@ -51,7 +51,7 @@ namespace CreateXML {
             StreamWriter Sw = new StreamWriter(FullFileName, false);
             Sw.Write(pContext);
             Sw.Close();
-            SubQueryView(GridView, FullFileName, EntityName, "Browse", "Browse");
+            //SubQueryView(GridView, FullFileName, EntityName, "Browse", "Browse");
         }
 
         /// <summary>
@@ -171,13 +171,16 @@ namespace CreateXML {
             XmlElement Name = doc.CreateElement("Name");
             Name.InnerXml = Type;
             QueryViewXML.AppendChild(QueryView);
-            QueryViewXML.AppendChild(QueryViewId);
-            QueryViewXML.AppendChild(Name);
+            QueryView.AppendChild(QueryViewId);
+            QueryView.AppendChild(Name);
             XmlElement RefToTypeKey = doc.CreateElement("RefToTypeKey");
             RefToTypeKey.InnerXml = EntityName;
-            QueryViewXML.AppendChild(RefToTypeKey);
+            QueryView.AppendChild(RefToTypeKey);
             //XmlNode QueryViewColumns = root.SelectSingleNode("QueryViewXML/QueryView/QueryViewColumns");
             XmlElement QueryViewColumns = doc.CreateElement("QueryViewColumns");
+            XmlElement ViewIsSystem = doc.CreateElement("IsSystem");
+            ViewIsSystem.InnerXml = "true";
+            QueryView.AppendChild(ViewIsSystem);
 
             int count = 1;
             bool IsRemarkExit = false;
@@ -196,13 +199,13 @@ namespace CreateXML {
             if(IsRemarkExit) {
                 QueryViewColumns.AppendChild(QueryViewColumnSpecil(doc, EntityName, "Remark", count, true));
             }
-            QueryViewXML.AppendChild(QueryViewColumns);
+            QueryView.AppendChild(QueryViewColumns);
             XmlNode  QueryProjectXML  = root.SelectSingleNode("QueryProjectXML");
             XmlElement QueryProject = doc.CreateElement("QueryProject");
             QueryProjectXML.AppendChild(QueryProject);
             XmlElement QueryProjectId = doc.CreateElement("QueryProjectId");
             //XmlNode QueryProjectId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryProjectId");
-            QueryProjectId.InnerXml = EntityName + "_" + Type;
+            QueryProjectId.InnerXml = EntityName + "_" + PageName;
             QueryProject.AppendChild(QueryProjectId);            
             //XmlNode QueryProjectViewId = root.SelectSingleNode("QueryProjectXML/QueryProject/QueryViewId");
             //QueryProjectViewId.InnerXml = EntityName + "_" + Type;
@@ -222,57 +225,28 @@ namespace CreateXML {
             XmlElement ProjectIsSystem = doc.CreateElement("IsSystem");
             ProjectIsSystem.InnerXml = "true";
             QueryProject.AppendChild(ProjectIsSystem);
-            //sb.Append(" <QueryCollectXML>");
-            //sb.Append(" <QueryCollect>");
-            //sb.Append(" <QueryCollectId></QueryCollectId>");
-            //sb.Append(" <Name>Browse</Name>");
-            //sb.Append(" <RefToTypeKey></RefToTypeKey>");
-            //sb.Append(" <IsSystem>true</IsSystem>");
-            //sb.Append(" <QueryCollectItems>");
-            //sb.Append(" <QueryCollectItem>");
-            //sb.Append(" <QueryCollectItemId> </QueryCollectItemId>");
-            //sb.Append(" <QueryProjectId> </QueryProjectId>");
-            //sb.Append(" <QueryName>Browse</QueryName>");
-            //sb.Append(" <Text>Browse</Text>");
-            //sb.Append(" <RefToTypeKey> </RefToTypeKey>");
-            //sb.Append(" <OrderNumber>0</OrderNumber>");
-            //sb.Append(" </QueryCollectItem>");
-            //sb.Append(" </QueryCollectItems>");
-            //sb.Append(" </QueryCollect>");
-            //sb.Append(" </QueryCollectXML>");
 
-
+            XmlElement ProjectText = doc.CreateElement("Text");
+            ProjectText.InnerXml = PageName;
+            QueryProject.AppendChild(ProjectText);
 
             XmlNode QueryCollectXML = root.SelectSingleNode("QueryCollectXML");
             QueryCollectXML = CreateCollectByType(EntityName,Type, QueryCollectXML,doc);
-
-            XmlNodeList QueryCollectIds = QueryCollectXML.SelectNodes("QueryCollect/QueryCollectId");
-            XmlNode  QueryCollectId =null;
-            foreach(XmlNode node in QueryCollectIds)
+            XmlNodeList QueryCollects = QueryCollectXML.SelectNodes("QueryCollect");
+            //XmlNode QueryCollectId = null;
+            XmlNode QueryCollect = null;
+            foreach(XmlNode node in QueryCollects)
             {
-                if(node.InnerXml.Equals(EntityName + "_" + PageName)) {
-                    QueryCollectId = node;
+                XmlNode NodeName = node.SelectSingleNode("Name");
+                if(NodeName.InnerXml.Equals(Type)) {
+                    QueryCollect = node;
                 }
             }
-            //XmlElement QueryCollectId = doc.CreateElement("QueryCollectId");
 
-            // XmlNode QueryCollectType = root.SelectSingleNode("QueryCollectXML/QueryCollect/Name");
-            ////if()
 
-            //XmlElement QueryCollect = doc.CreateElement("QueryCollect");
-            //QueryCollectXML.AppendChild(QueryCollect);
-            //XmlElement QueryCollectId = doc.CreateElement("QueryCollectId");
-            //QueryCollectId.InnerXml = EntityName + "_" + PageName;
-            //QueryCollect.AppendChild(QueryCollectId);
-           
-            ////QueryCollectId.InnerXml = EntityName + "_" + Type;
-            //XmlElement QueryCollectRefToTypeKey = doc.CreateElement("RefToTypeKey");
-            //QueryCollectRefToTypeKey.InnerXml = EntityName;
-            //QueryCollect.AppendChild(QueryCollectRefToTypeKey);
-            //XmlNode QueryCollectRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/RefToTypeKey");
-            //QueryCollectRefToTypeKey.InnerXml = EntityName;
 
-            XmlNode QueryCollectItems = QueryCollectId.SelectSingleNode("QueryCollectItems");
+            XmlNode QueryCollectItems = QueryCollect.SelectSingleNode("QueryCollectItems");
+            int Order = QueryCollectItems.ChildNodes.Count;
             XmlElement QueryCollectItem = doc.CreateElement("QueryCollectItem");
             QueryCollectItems.AppendChild(QueryCollectItem);
             XmlElement QueryCollectItemId = doc.CreateElement("QueryCollectItemId");
@@ -281,7 +255,7 @@ namespace CreateXML {
             //XmlNode QueryCollectItemId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/QueryCollectItemId");
             //QueryCollectItemId.InnerXml = EntityName + "_" + Type + "_QueryCollectItem" + Guid.NewGuid().ToString();
             XmlElement QueryCollectQueryProjectId = doc.CreateElement("QueryProjectId");
-            QueryCollectQueryProjectId.InnerXml = EntityName + "_" + Type;
+            QueryCollectQueryProjectId.InnerXml = EntityName + "_" + PageName;
             QueryCollectItem.AppendChild(QueryCollectQueryProjectId);
             //XmlNode QueryCollectQueryProjectId = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/QueryProjectId");
             //QueryCollectQueryProjectId.InnerXml = EntityName + "_" + Type;
@@ -289,11 +263,16 @@ namespace CreateXML {
             QueryCollectQueryName.InnerXml = PageName;
             QueryCollectItem.AppendChild(QueryCollectQueryName);
             XmlElement QueryCollectText = doc.CreateElement("Text");
-            QueryCollectText.InnerXml = EntityName + "_" + Type;
+            QueryCollectText.InnerXml = EntityName + "_" + PageName;
             QueryCollectItem.AppendChild(QueryCollectText);
             XmlElement QueryCollectQueryRefToTypeKey = doc.CreateElement("RefToTypeKey");
             QueryCollectQueryRefToTypeKey.InnerXml = EntityName;
             QueryCollectItem.AppendChild(QueryCollectQueryRefToTypeKey);
+
+            XmlElement QueryCollectOrderNumber = doc.CreateElement("OrderNumber");
+            QueryCollectOrderNumber.InnerXml = Order.ToString();
+            QueryCollectItem.AppendChild(QueryCollectOrderNumber);
+
             //XmlNode QueryCollectQueryRefToTypeKey = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/RefToTypeKey");
             //QueryCollectQueryRefToTypeKey.InnerXml = EntityName;
             //XmlNode TextTextQueryCollectQueryText = root.SelectSingleNode("QueryCollectXML/QueryCollect/QueryCollectItems/QueryCollectItem/Text");
@@ -313,42 +292,35 @@ namespace CreateXML {
         /// <returns></returns>
         private XmlNode CreateCollectByType(string Entity,string Type,XmlNode root,XmlDocument doc ) {
             XmlNodeList Names = root.SelectNodes("QueryCollect/Name");
-            bool IsBrowse = true;
-            bool IsSelect = true;
+            bool IsBrowse = false;           
             foreach(XmlNode node in Names)
             {
-                if(node.InnerXml.Equals("Browse")) {
-                    IsBrowse = false;
-                }
-                else {
-                    IsSelect = false;
-                }
+                if(node.InnerXml.Equals(Type)) {
+                    IsBrowse = true;
+                }               
             }
-            if(Names.Count==0) {
-                IsSelect = Type=="Select"? false:true;
+            if(Names.Count==0) {             
                 IsBrowse = Type == "Browse" ? false : true;
             }
-            List<bool> li = new List<bool>();
-            li.Add(IsSelect);
-            li.Add(IsBrowse);
-
-            foreach(bool bo in li) {
-                if(!bo) {
+            if(!IsBrowse) {
                     XmlElement QueryCollect = doc.CreateElement("QueryCollect");
                     root.AppendChild(QueryCollect);
                     XmlElement QueryCollectId = doc.CreateElement("QueryCollectId");
                     QueryCollectId.InnerXml = Entity + "_" + Type;
-                    root.AppendChild(QueryCollectId);
+                    QueryCollect.AppendChild(QueryCollectId);
                     XmlElement name = doc.CreateElement("Name");
                     name.InnerXml = Type;
-                    root.AppendChild(name);
+                    QueryCollect.AppendChild(name);
                     XmlElement RefToTypeKey = doc.CreateElement("RefToTypeKey");
                     RefToTypeKey.InnerXml = Entity;
-                    root.AppendChild(RefToTypeKey);
+                    QueryCollect.AppendChild(RefToTypeKey);
                     XmlElement QueryCollectItems = doc.CreateElement("QueryCollectItems");
-                    root.AppendChild(QueryCollectItems);
+                    QueryCollect.AppendChild(QueryCollectItems);
+                    XmlElement IsSystem = doc.CreateElement("IsSystem");
+                    IsSystem.InnerXml = "true";
+                    QueryCollect.AppendChild(IsSystem);
                 }
-            }           
+                     
                 return root;
         }
 
