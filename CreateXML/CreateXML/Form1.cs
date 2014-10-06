@@ -830,17 +830,7 @@ namespace CreateXML {
 
             dataGridView1.DataSource = dt;
 
-            ///20140303 add by Dick  修改成下拉選單
-            DataGridViewComboBoxColumn comboboxColumn = new DataGridViewComboBoxColumn();
-            comboboxColumn.Name = "Type";
-            System.Data.DataTable dtt = new System.Data.DataTable();
-            dtt.Columns.Add("ID");
-            dtt.Columns.Add("Item");
-            InitType(ref dtt);
-            comboboxColumn.DataSource = dtt;
-            comboboxColumn.ValueMember = "Item";
-            comboboxColumn.DisplayMember = "Item";
-            dataGridView1.Columns.Insert(1, comboboxColumn);
+            GridViewCellType(dataGridView1);
 
             System.Data.DataTable dtt11 = dataGridView1.DataSource as System.Data.DataTable;
             Xmlpath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "SaveFile.xml";
@@ -889,6 +879,24 @@ namespace CreateXML {
             var item = dataGridView1.ContextMenuStrip.Items.Add("加入條件");
             item.Click += new EventHandler(item_Click1);
             
+        }
+
+        /// <summary>
+        /// 20141006 modified by Dick 
+        /// </summary>
+        /// <param name="Grid"></param>
+        private void GridViewCellType(DataGridView Grid) {
+            ///20140303 add by Dick  修改成下拉選單
+            DataGridViewComboBoxColumn comboboxColumn = new DataGridViewComboBoxColumn();
+            comboboxColumn.Name = "Type";
+            System.Data.DataTable dtt = new System.Data.DataTable();
+            dtt.Columns.Add("ID");
+            dtt.Columns.Add("Item");
+            InitType(ref dtt);
+            comboboxColumn.DataSource = dtt;
+            comboboxColumn.ValueMember = "Item";
+            comboboxColumn.DisplayMember = "Item";
+            Grid.Columns.Insert(1, comboboxColumn);
         }
      
 
@@ -1064,9 +1072,11 @@ namespace CreateXML {
         }
 
         private void LoadGridView(string NodeName,DataGridView GridView,bool IsMain)
-        {        
+        {
+            XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
+            XmlNode root = doc.GetElementById(NodeName);
             System.Data.DataTable dt = new System.Data.DataTable();
-            dt.Columns.Add("Parameter");
+            dt.Columns.Add("Parameter");           
             //   dt.Columns.Add("Type", typeof(DataGridViewComboBoxColumn));
             dt.Columns.Add("Describe");
             dt.Columns.Add("ReferenceProperty");
@@ -1074,9 +1084,9 @@ namespace CreateXML {
             dt.Columns.Add("Order");
             //20140818 add by Dick 加入UI排位子順序
             dt.Columns.Add("UIOrder");
-
-            XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
-            XmlNode root = doc.GetElementById(NodeName);
+            if(!IsMain) {
+                dt.Columns.Add("Type");
+            }
             //XmlNode root = doc.GetElementById(item.Text);
             if (IsMain)
             {
@@ -1089,14 +1099,15 @@ namespace CreateXML {
             cb_IOwnerObject.Checked = Convert.ToBoolean(root.Attributes["IOwnerObject"].Value.ToString());
             cb_ICodeObject.Checked = Convert.ToBoolean(root.Attributes["ICodeObject"].Value.ToString());
             cb_IDataModifyObject.Checked = Convert.ToBoolean(root.Attributes["IDataModifyObject"].Value.ToString());
-            cb_Collection.Checked = Convert.ToBoolean(root.Attributes["Collection"].Value.ToString());
-            
-            try
-            {
+            cb_Collection.Checked = Convert.ToBoolean(root.Attributes["Collection"].Value.ToString());            
+            try {
                 cb_ForCase.Checked = Convert.ToBoolean(root.Attributes["IsCase"].Value.ToString());
             }
             catch { }
+
+
             }
+
             List<string> li = new List<string>();
             foreach (XmlNode node in root.ChildNodes)
             {
@@ -1119,14 +1130,15 @@ namespace CreateXML {
                 dr["Necessary"] = IsNecessary;
                 dt.Rows.Add(dr);
             }
+          
             GridView.DataSource = dt;
-
+           
             int count = 0;
             foreach (string str in li)
             {
                 if (GridView.Rows.Count > count)
                 {
-                    GridView.Rows[count].Cells["Type"].Value = str == "Int" ? "Int32" : str;
+                    GridView.Rows[count].Cells["Type"].Value = str == "Int" ? "Int32" : str;                   
                     count++;
                 }
             }
@@ -2261,7 +2273,7 @@ namespace CreateXML {
         private StringBuilder Browse_CHT(string pPageName, string pDecription) {
             StringBuilder sb = new StringBuilder();
             sb.Clear();
-            sb.Append(string.Format("Browse_QueryProject_{0}_{1}\t{1}\t{2}", tb_className.Text, pDecription, pDecription));
+            sb.Append(string.Format("Browse_QueryProject_{0}_{1}\t{2}\t{2}", tb_className.Text, pPageName, pDecription));
             //sb.Append("Browse_QueryProject_");
             //sb.Append(tb_className.Text);
             //sb.Append("_Browse");
@@ -2279,7 +2291,7 @@ namespace CreateXML {
         private StringBuilder Browse_CHS(string pPageName, string pDecription) {
             StringBuilder sb = new StringBuilder();
             sb.Clear();
-            sb.Append(string.Format("Browse_QueryProject_{0}_{1}\t{1}\t{2}", tb_className.Text, translateEncodingByWord(pDecription, true).Trim(), translateEncodingByWord(pDecription, true).Trim()));
+            sb.Append(string.Format("Browse_QueryProject_{0}_{1}\t{2}\t{2}", tb_className.Text, pPageName, translateEncodingByWord(pDecription, true).Trim()));
             //sb.Append("Browse_QueryProject_");
             //sb.Append(tb_className.Text);
             //sb.Append("_Browse");
@@ -2558,11 +2570,8 @@ namespace CreateXML {
             }
             if(GridViewList.Count > 0) {
                 oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, GridViewList, DicQueryView); 
-            }
-            
-            #endregion
-                   
-
+            }            
+            #endregion    
             System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable;
             oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);
             oneclick.RegisterEntity(tb_className.Text);
@@ -2574,7 +2583,6 @@ namespace CreateXML {
                     mode = Convert.ToInt32(cb.Text.Replace("Mode", ""));
                 }
             }
-
             ///20140905 建立檔單UI           
             oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1, mode);
 
@@ -2834,6 +2842,7 @@ namespace CreateXML {
             var item = NewView.ContextMenuStrip.Items.Add("加入條件");
             item.Click += new EventHandler(item_Click1);                    
             pPage.Controls.Add(NewView);
+          
         }
 
         /// <summary>
@@ -2948,12 +2957,13 @@ namespace CreateXML {
             if(!IsExist) {
                 tabControlDetail.TabPages.Insert(tabControlDetail.TabPages.Count - 2, NewNode.Text);
                 tabControlDetail.SelectedIndex = tabControlDetail.TabPages.Count - 3;
-                DataGridView GiedView =new DataGridView();
-                GiedView.Width =1299;
-                GiedView.Height =292;
-                LoadGridView(NewNode.Text,GiedView,false);
+                DataGridView GridView =new DataGridView();
+                GridView.Width =1299;
+                GridView.Height =292;  
                 TabPage Page = tabControlDetail.SelectedTab;
-                Page.Controls.Add(GiedView);
+                Page.AutoScroll = true;
+                Page.Controls.Add(GridView);
+                LoadGridView(NewNode.Text, GridView, false);
             }
         }
 
