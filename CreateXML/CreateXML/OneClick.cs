@@ -318,10 +318,7 @@ namespace CreateXML {
                 if(node.InnerXml.Equals(Type)) {
                     IsBrowse = true;
                 }               
-            }
-            if(Names.Count==0) {             
-                IsBrowse = Type == "Browse" ? false : true;
-            }
+            }          
             if(!IsBrowse) {
                     XmlElement QueryCollect = doc.CreateElement("QueryCollect");
                     root.AppendChild(QueryCollect);
@@ -794,8 +791,13 @@ namespace CreateXML {
             element.SetAttribute("name", spl[0]);
             element.SetAttribute("xml:space", "preserve");
             XmlElement value = doc.CreateElement("value");
-            if(spl[1].Substring(0, 1) == "X") {
-                value.InnerText = spl[1].Remove(0, 1);
+            if(spl[1].Length > 0) {
+                if(spl[1].Substring(0, 1) == "X") {
+                    value.InnerText = spl[1].Remove(0, 1);
+                }
+                else {
+                    value.InnerText = spl[1];
+                }
             }
             else {
                 value.InnerText = spl[1];

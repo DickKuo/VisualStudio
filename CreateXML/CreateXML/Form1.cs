@@ -2603,9 +2603,11 @@ namespace CreateXML {
 
             foreach( QueryViewCondition conditions in   DicQueryView.Values)
             {
-                oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_English(conditions.BrowseName, conditions.BrowseName).ToString(), "QueryResourcesForCase", true);
-                oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHT(conditions.BrowseName, conditions.Description).ToString(), "QueryResourcesForCase.zh-CHT", false);
-                oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHS(conditions.BrowseName, conditions.Description).ToString(), "QueryResourcesForCase.zh-CHS", false);
+                if(!conditions.Type.Equals("Select")) { //20141007 add by Dick for Select 不需要多語系
+                    oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_English(conditions.BrowseName, conditions.BrowseName).ToString(), "QueryResourcesForCase", true);
+                    oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHT(conditions.BrowseName, conditions.Description).ToString(), "QueryResourcesForCase.zh-CHT", false);
+                    oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHS(conditions.BrowseName, conditions.Description).ToString(), "QueryResourcesForCase.zh-CHS", false);
+                }
             }
             #endregion
 
