@@ -8,5 +8,14 @@ namespace CreateXML {
    public class OneClickMultiFile {
 
 
+       public string Export { get; set; }
+
+       public string Parent { get; set; }
+
+       public OneClickMultiFile(string Parent,string Export) {
+           Export = Export;
+           Parent = Parent;       
+       }
+
     }
 }

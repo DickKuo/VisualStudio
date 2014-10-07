@@ -161,7 +161,9 @@ namespace CreateXML {
         /// <param name="FullFileName"></param>
         /// <param name="EntityName"></param>
         /// <param name="Type"></param>
-        private void SubQueryView(System.Windows.Forms.DataGridView GridView, string FullFileName, string EntityName, string Type,string PageName) {
+        private void SubQueryView(System.Windows.Forms.DataGridView GridView, string FullFileName, string EntityName,QueryViewCondition Condition) {
+            string PageName = Condition.BrowseName;
+            string Type = Condition.Type;
             XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("QueryConfiguration");
             XmlNode QueryViewXML = root.SelectSingleNode("QueryViewXML");
@@ -225,6 +227,24 @@ namespace CreateXML {
             XmlElement ProjectIsSystem = doc.CreateElement("IsSystem");
             ProjectIsSystem.InnerXml = "true";
             QueryProject.AppendChild(ProjectIsSystem);
+
+            #region 20141006 add by Dick for ProjectCondition            
+            StringBuilder sb =new StringBuilder();
+            List<Condition> li = Condition.ConditionList;
+            foreach(Condition cond in li )
+            {
+                sb.Append(string.Format("\r\n &lt;QueryItem ItemType=\"Dcms.Common.UI.QueryItem\" ID=\"{0}\" ParentID=\"{1}\" ParameterName=\"{2}\" DbType=\"{3}\" FieldName=\"{4}\" Value1=\"{5}\" Value2=\"{6}\" Symbol=\"{7}\" /&gt; "
+                ,cond.ID,cond.ParentID,cond.ParameterName,cond.Type,cond.Field,cond.Conditon1,cond.Conditon2,cond.sybel));
+            }
+            if(sb.Length > 0) {
+                sb.Append("\r\n");
+                XmlElement ConditionXML = doc.CreateElement("ConditionXML");
+                ConditionXML.InnerXml = sb.ToString();
+                QueryProject.AppendChild(ConditionXML);
+            }
+            #endregion
+
+
 
             XmlElement ProjectText = doc.CreateElement("Text");
             ProjectText.InnerXml = PageName;
@@ -340,7 +360,7 @@ namespace CreateXML {
                 {
                     if(DicQueryView.ContainsKey(GirdView.Name)) {
                         QueryViewCondition QueryView = DicQueryView[GirdView.Name];
-                        SubQueryView(GirdView, FullFileName, EntityName, QueryView.Type,QueryView.BrowseName);
+                        SubQueryView(GirdView, FullFileName, EntityName, QueryView);
                     }
                 }
             }

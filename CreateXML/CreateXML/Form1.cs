@@ -2521,8 +2521,10 @@ namespace CreateXML {
         /// 20141002 雙檔一鍵生成功能
         /// </summary>
         private void MulitFile() {
-          
-
+            string ProgamPath = GetSettinhPath();   //取得設定的資料夾位置
+            string ParentPath = Directory.GetParent(ProgamPath).FullName;
+            OneClick oneclick = new OneClick(ParentPath, ProgamPath);
+           
         }
 
         /// <summary>
@@ -2530,14 +2532,7 @@ namespace CreateXML {
         /// 切開單檔一鍵生成
         /// </summary>
         private void SingleFile() {
-            XmlDocument doc = Tools.XmlTool.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
-            XmlNode root = doc.SelectSingleNode("root");
-            string ProgamPath = string.Empty;
-            foreach(XmlNode node in root.ChildNodes) {
-                if(Convert.ToBoolean(node.Attributes["Set"].Value)) {
-                    ProgamPath = node.Attributes["Xpath"].Value.ToString();
-                }
-            }
+            string ProgamPath = GetSettinhPath();
             string ParentPath = Directory.GetParent(ProgamPath).FullName;
             OneClick oneclick = new OneClick(ParentPath, ProgamPath);
             CreateEntities();            
@@ -2630,6 +2625,22 @@ namespace CreateXML {
 
             //System.Threading.Tasks.Task.WaitAll(tasks);
             MessageBox.Show("完成!!");
+        }
+
+        /// <summary>
+        /// 20141006 add by Dick 取得設定的路徑
+        /// </summary>
+        /// <returns></returns>
+        private static string GetSettinhPath() {
+            XmlDocument doc = Tools.XmlTool.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
+            XmlNode root = doc.SelectSingleNode("root");
+            string ProgamPath = string.Empty;
+            foreach(XmlNode node in root.ChildNodes) {
+                if(Convert.ToBoolean(node.Attributes["Set"].Value)) {
+                    ProgamPath = node.Attributes["Xpath"].Value.ToString();
+                }
+            }
+            return ProgamPath;
         }
 
         private void TreeResource(OneClick oneclick) {           
