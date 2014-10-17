@@ -955,7 +955,7 @@ namespace CreateXML {
         private void InitIAuditObject() {
             List<string[]> IAuditObjectList = new List<string[]>();
             string[] IAuditObjectApproveEmployeeId = new string[] { "ApproveEmployeeId", "Guid", "審核人", "Employee" };
-            string[] IAuditObjectApproveEmployeeName = new string[] { "ApproveEmployeeName", "Guid", "審核人" };
+            string[] IAuditObjectApproveEmployeeName = new string[] { "ApproveEmployeeName", "String", "審核人" };
             string[] IAuditObjectApproveRemark = new string[] { "ApproveRemark", "nText", "審核批註" };
             string[] IAuditObjectApproveOperationDate = new string[] { "ApproveOperationDate", "DateTime", "審核人操作日期" };
             string[] IAuditObjectApproveUserId = new string[] { "ApproveUserId", "Guid", "審核操作人ID", "User" };
