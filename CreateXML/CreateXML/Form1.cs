@@ -3123,5 +3123,62 @@ namespace CreateXML {
                 tabControlDetail.SelectedIndex = TabSelectedBefore;
             }
         }
+
+        private void 載入實體ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertEntities dialog = new InsertEntities();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                System.Data.DataTable dt = this.dataGridView1.DataSource as System.Data.DataTable;
+                int count = dt.Rows.Count;
+                string[] sp = dialog.context.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach(string str in sp)
+                {
+                    string[] arrary = str.Split(new string[] { "\t" }, StringSplitOptions.RemoveEmptyEntries);
+                    DataRow dr = dt.NewRow();
+                    dr[0] = arrary[0];                     
+                    dr[1] = arrary[2];
+                    dt.Rows.Add(dr);
+                    dataGridView1.Rows[count].Cells["Type"].Value = ChangeType(arrary[1]);
+                    count++;
+                }
+            }
+        }
+
+        private string ChangeType(string str)
+        {
+            string Tag = str.ToLower();
+            if (Tag.IndexOf("nvarchar") != -1 | Tag.IndexOf("string") != -1)
+            {
+                return "String";
+            }
+            if (Tag.IndexOf("int") != -1)
+            {
+                return "Int32";
+            }
+            if (Tag.IndexOf("decimal") != -1)
+            {
+                return "Decimal";
+            }
+            if (Tag.IndexOf("datetime") != -1)
+            {
+                return "DateTime";
+            }
+            if (Tag.IndexOf("ntext") != -1)
+            {
+                return "Ntext";
+            }
+
+            if (Tag.IndexOf("guid") != -1 | Tag.IndexOf("uniqueidentifier") != -1)
+            {
+                return "Guid";
+            }
+
+            if (Tag.IndexOf("bool") != -1)
+            {
+                return "Bool";
+            }
+            return "";
+        }
     }    
 }

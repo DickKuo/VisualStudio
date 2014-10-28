@@ -98,6 +98,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="InsertEntities.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertEntities.Designer.cs">
+      <DependentUpon>InsertEntities.cs</DependentUpon>
+    </Compile>
     <Compile Include="OneClick.cs" />
     <Compile Include="OneClickMultiFile.cs" />
     <Compile Include="Packet.cs">
@@ -158,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertEntities.resx">
+      <DependentUpon>InsertEntities.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Packet.resx">
       <DependentUpon>Packet.cs</DependentUpon>
