@@ -24,7 +24,8 @@ namespace CreateXML {
             dt.Columns.Add("Conditon2");
             dt.Columns.Add("sybel");
             textBox1.Text = pOldView.BrowseName;
-            textBox2.Text = pOldView.Description;            
+            textBox2.Text = pOldView.Description;
+            comboBox1.Text = pOldView.Type;  //20141028 add by Dick for 加入回寫 Type: Browse、Select           
             foreach(Condition condition in pOldView.ConditionList)
             {
                 string[] row1 = new string[] { condition.ParameterName, condition.Type, condition.Field, condition.Conditon1, condition.Conditon2, condition.sybel };

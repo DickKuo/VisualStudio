@@ -11,7 +11,7 @@ using System.Xml.Linq;
 using System.Resources;
 
 namespace CreateXML {
-    class OneClick {
+   public class OneClick {
 
         public string Expory { get; set; }
 
@@ -30,11 +30,29 @@ namespace CreateXML {
         /// <param name="pFileName"></param>
         /// <param name="pContext"></param>
         public void CSFileSave(string pDirectory, string pSubDirectory, string pFileName, string pContext) {
-            string pPath = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + pSubDirectory;
-            string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".cs";
+            //string pPath = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + pSubDirectory;
+            //string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".cs";
+            string reuslt =string.Empty;
+            GetDirectory(ref reuslt, Parent + Path.DirectorySeparatorChar + pDirectory, pSubDirectory);
+            string FullFileName = reuslt + Path.DirectorySeparatorChar + pFileName + ".cs";
             using(StreamWriter Sw = new StreamWriter(FullFileName, false)) {
                 Sw.Write(pContext);
             }
+        }
+        public void  GetDirectory(ref string result,string Parent ,string det)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(Parent);
+            foreach (DirectoryInfo dr in dirInfo.GetDirectories())
+            {
+                    if (!dr.Name.Equals(det))
+                    {
+                        GetDirectory(ref result, dr.FullName, det);
+                    }
+                    else
+                    {
+                        result= dr.FullName;
+                    }
+                }
         }
 
         /// <summary>
@@ -1075,5 +1093,13 @@ namespace CreateXML {
         public string Conditon1 { set; get; }      //條件1
         public string Conditon2 { set; get; }      //條件2
         public string sybel { set; get; }          //And OR 等等
+    }
+
+    /// <summary>
+    /// 明細
+    /// </summary>
+    public class Detail {
+        public string Name { set; get; }
+        public string Description { set; get; }
     }
 }

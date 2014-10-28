@@ -26,7 +26,11 @@ namespace CreateXML {
             XmlNode root = doc.SelectSingleNode("root");
              foreach(XmlNode node in root.ChildNodes)
              {
+                 #region 20141028 modified by Dick for 修改加入描述                
                  treeView1.Nodes.Add(node.Attributes["ClassName"].Value);
+                 int count = treeView1.Nodes.Count - 1;
+                 treeView1.Nodes[count].ToolTipText = node.Attributes["Describle"].Value;
+                 #endregion
              }
             
         }

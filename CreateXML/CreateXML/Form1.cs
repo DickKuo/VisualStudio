@@ -70,23 +70,23 @@ namespace CreateXML {
         /// <summary>
         /// 建立NameSpace 和描述
         /// </summary>
-        private void CreateNameSpace() {
+        private void CreateNameSpace(string ClasseName,string Description) {
             _nameSpace.Append("namespace Dcms.HR.DataEntities \r\n" +
             "{\r\n" +
             "    /// <summary>\r\n" +
-            "    ///" + tb_scrib.Text + "\r\n" +
+            "    ///" + Description + "\r\n" +
             "    /// </summary>\r\n" +
-            "    [DataEntity(PrimaryKey = \"" + tb_className.Text + "Id\")]\r\n" +
+            "    [DataEntity(PrimaryKey = \"" + ClasseName + "Id\")]\r\n" +
             "    [Serializable()]\r\n" +
-            "    [Description(\"" + tb_scrib.Text + "\")]\r\n");
+            "    [Description(\"" + Description + "\")]\r\n");
         }
 
         /// <summary>
         /// 建立Class 開頭
         /// </summary>
-        private void CreateClass() {
+        private void CreateClass(string ClassName) {
             _class.Append("    public class ");
-            _class.Append(tb_className.Text);
+            _class.Append(ClassName);
             _class.Append(" : ");
             if(cb_DataEntity.Checked) {
                 _class.Append(cb_DataEntity.Text);
@@ -120,7 +120,7 @@ namespace CreateXML {
             _class.Clear();
             _class.Append(temp);
             _class.Append("{\r\n");
-            _class.Append("        public const string TYPE_KEY = \"" + tb_className.Text + "\";\r\n");
+            _class.Append("        public const string TYPE_KEY = \"" + ClassName + "\";\r\n");
         }
 
         private void EndClass() {
@@ -128,10 +128,12 @@ namespace CreateXML {
         }
 
         /// <summary>
-        /// 加入PrivaterParameter
+        /// 實體的參數PrivaterParameter   
         /// </summary>
-        private void AddPrivateParameter() {
-            foreach(DataGridViewRow dr in dataGridView1.Rows) {
+        /// <param name="dataGrid">給予要使用的GridView</param>
+        private void AddPrivateParameter(DataGridView dataGrid) {
+            foreach (DataGridViewRow dr in dataGrid.Rows)
+            {
                 if(dr.Cells["Parameter"].Value != null) {
                     _privateparameter.Append("        private ");
                     string type =TypeSwap(dr.Cells["Type"].Value.ToString());
@@ -217,29 +219,30 @@ namespace CreateXML {
             if(cb_INamedObject.Checked) {
                 //AddName();
             }
-            if(cb_Collection.Checked) {
-                AddCollection();
-            }
+            ///20141028 modified by Dick for 修改成自動生成判斷
+            //if(cb_Collection.Checked) {
+            //    AddCollection();
+            //}
         }
 
         /// <summary>
         /// 加入集合Collection
         /// </summary>
-        private void AddCollection() {
-            string temp = "_" + tb_className.Text.Substring(0, 1).ToLower() + tb_className.Text.Substring(1, tb_className.Text.Length - 1);
+        private void AddCollection(string ClassName,string Description) {
+            string temp = "_" + ClassName.Substring(0, 1).ToLower() + ClassName.Substring(1, ClassName.Length - 1);
             _parameter.Append(" #region Collection properties\r\n");
             _parameter.Append("        /// <summary>\r\n");
-            _parameter.Append("        /// 返回 " + tb_scrib.Text + "明細集合\r\n");
+            _parameter.Append("        /// 返回 " + Description + "明細集合\r\n");
             _parameter.Append("        /// </summary>\r\n");
-            _parameter.Append("        private " + tb_className.Text + "InfoCollection " + temp + "Infos;\r\n");
-            _parameter.Append("        [CollectionProperty(typeof(" + tb_className.Text + "Info), Alias = \"" + tb_className.Text + "Info\")]\r\n");
-            _parameter.Append("        [Description(\"" + tb_scrib.Text + "明細集合\")]\r\n");
-            _parameter.Append("        public " + tb_className.Text + "InfoCollection " + tb_className.Text + "Infos {\r\n");
+            _parameter.Append("        private " + ClassName + "InfoCollection " + temp + "Infos;\r\n");
+            _parameter.Append("        [CollectionProperty(typeof(" + ClassName + "), Alias = \"" + ClassName + "\")]\r\n");
+            _parameter.Append("        [Description(\"" + Description + "明細集合\")]\r\n");
+            _parameter.Append("        public " + ClassName + "InfoCollection " + ClassName + "Infos {\r\n");
             _parameter.Append("            get {\r\n");
             _parameter.Append("                if ((" + temp + "Infos == null)) {\r\n");
             _parameter.Append("                    System.Threading.Monitor.Enter(this);\r\n");
             _parameter.Append("                    if ((" + temp + "Infos == null)) {\r\n");
-            _parameter.Append("                        this." + temp + "Infos = new " + tb_className.Text + "InfoCollection(this);\r\n");
+            _parameter.Append("                        this." + temp + "Infos = new " + ClassName + "InfoCollection(this);\r\n");
             _parameter.Append("                    }\r\n");
             _parameter.Append("                    System.Threading.Monitor.Exit(this);\r\n");
             _parameter.Append("                }\r\n");
@@ -1264,15 +1267,22 @@ namespace CreateXML {
         /// <summary>
         /// 顯示實體結構
         /// </summary>
-        private void CreateEntities() {
+        private void CreateEntities(DataGridView Grid,bool IsDetail,string ClaseeName,string Descrpion,List<Detail>li) {
             if(!cb_OnlyParameter.Checked) {
                 CreateUsing();
-                CreateNameSpace();
-                CreateClass();
+                CreateNameSpace(ClaseeName, Descrpion);
+                CreateClass(ClaseeName);
                 EndClass();
             }
-            AddPrivateParameter();
-            CheckCheckBox();
+            AddPrivateParameter(Grid);
+            if (!IsDetail)
+            {
+                CheckCheckBox();
+            }
+            foreach(Detail detail in li)
+            {
+                AddCollection(detail.Name, detail.Description);
+            }
             richTextBox1.Clear();
 
             richTextBox1.AppendText(_strUsing.ToString());
@@ -1410,7 +1420,7 @@ namespace CreateXML {
         }
 
         private void 生成生成EntitiesToolStripMenuItem_Click(object sender, EventArgs e) {
-            CreateEntities();
+            CreateEntities(dataGridView1, false, tb_className.Text, tb_scrib.Text, new List<Detail> { });
         }
 
         private void 生成EntitiesXMLToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -2524,7 +2534,96 @@ namespace CreateXML {
             string ProgamPath = GetSettinhPath();   //取得設定的資料夾位置
             string ParentPath = Directory.GetParent(ProgamPath).FullName;
             OneClick oneclick = new OneClick(ParentPath, ProgamPath);
-           
+            OneClickMultiFile multiclick = new OneClickMultiFile(ParentPath, ProgamPath);
+            List<Detail> detailLis = new List<Detail>();
+            #region 20141028 add by Dick for 建立明細實體
+            foreach (TabPage page in tabControlDetail.TabPages)
+            {
+                if (!page.Name.Equals("tabPage4") & !page.Name.Equals("tabIncrease") & !page.Name.Equals("tabSub"))
+                {                    
+                    foreach(Control col in page.Controls)
+                    {
+                      if(col.GetType().Name.Equals("DataGridView"))
+                      {
+                          DataGridView grid =col as DataGridView;
+                          CreateEntities(grid, true, page.Text, page.ToolTipText, new List<Detail> { });
+                          Detail detail = new Detail();
+                          detail.Name = page.Text;
+                          detail.Description = page.ToolTipText;
+                          detailLis.Add(detail);
+                          oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "DataEntities", page.Text,richTextBox1.Text);
+                          string collection = multiclick.CreateCollection(page.Text);
+                          oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "CollectionClass", page.Text + "Collection", collection);
+                      }
+                    }
+                    
+                }
+            }
+            #endregion
+
+            #region 20141028 add by Dick for 建立主表實體
+            CreateEntities(dataGridView1, false, tb_className.Text, tb_scrib.Text, detailLis);
+            oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "DataEntities", tb_className.Text, richTextBox1.Text);
+            #endregion
+
+            string InterFace = "I" + tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX";
+            CreateInterFace();
+            oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "Services", InterFace, this.richTextBox1.Text);
+            CreateServer();
+            oneclick.CSFileSave("DigiWin.HR.CustomBusinessImplement", "Services", tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX", this.richTextBox1.Text);
+            #region 20141003 modified by Dick for 修改成多頁籤
+            oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, this.dataGridView1);
+            List<DataGridView> GridViewList = new List<DataGridView>();
+            foreach (TabPage page in tabControl1.TabPages)
+            {
+                switch (page.Name)
+                {
+                    case "tabPage2":
+                    case "tabPage3":
+                        break;
+                    default:
+                        foreach (Control control in page.Controls)
+                        {
+                            if (control.GetType().Name.Equals("DataGridView"))
+                            {
+                                DataGridView Gridview = control as DataGridView;
+                                Gridview.Name = page.Text;
+                                GridViewList.Add(Gridview);
+                            }
+                        }
+                        break;
+                }
+            }
+            if (GridViewList.Count > 0)
+            {
+                oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, GridViewList, DicQueryView);
+            }
+            #endregion
+            System.Data.DataTable dt = dataGridView1.DataSource as System.Data.DataTable;
+            oneclick.AppendDataEntityDisplayInfo(dt, tb_className.Text);//加入自訂列多語系
+            oneclick.RegisterEntity(tb_className.Text);//註冊實體
+
+            #region QueryView 多語系
+            QueryResource(oneclick, dt);
+            #endregion
+
+            #region 20140905 add by Dick  加入瀏覽頁籤多語系
+
+            foreach (QueryViewCondition conditions in DicQueryView.Values)
+            {
+                if (!conditions.Type.Equals("Select"))
+                { //20141007 add by Dick for Select 不需要多語系
+                    oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_English(conditions.BrowseName, conditions.BrowseName).ToString(), "QueryResourcesForCase", true);
+                    oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHT(conditions.BrowseName, conditions.Description).ToString(), "QueryResourcesForCase.zh-CHT", false);
+                    oneclick.AddResourceRow("DigiWin.HR.CustomBusinessImplement", Browse_CHS(conditions.BrowseName, conditions.Description).ToString(), "QueryResourcesForCase.zh-CHS", false);
+                }
+            }
+            #endregion
+            #region 樹節點多語系
+            //tasks[0]= System.Threading.Tasks.Task.Factory.StartNew(() => TreeResource(oneclick));           
+            //TreeResource(oneclick);
+            #endregion
+            MessageBox.Show("生成完成");
         }
 
         /// <summary>
@@ -2535,7 +2634,7 @@ namespace CreateXML {
             string ProgamPath = GetSettinhPath();
             string ParentPath = Directory.GetParent(ProgamPath).FullName;
             OneClick oneclick = new OneClick(ParentPath, ProgamPath);
-            CreateEntities();            
+            CreateEntities(dataGridView1, false, tb_className.Text, tb_scrib.Text, new List<Detail> { });            
             oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "DataEntities", tb_className.Text, this.richTextBox1.Text);
             string InterFace = "I" + tb_className.Text.Substring(1, tb_className.TextLength - 1) + "ServiceX";
             CreateInterFace();
@@ -2974,6 +3073,7 @@ namespace CreateXML {
                 GridView.Width =1299;
                 GridView.Height =292;  
                 TabPage Page = tabControlDetail.SelectedTab;
+                Page.ToolTipText = NewNode.ToolTipText;//20141028 加入描述
                 Page.AutoScroll = true;
                 Page.Controls.Add(GridView);
                 LoadGridView(NewNode.Text, GridView, false);
