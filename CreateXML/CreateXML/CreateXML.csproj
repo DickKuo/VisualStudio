@@ -74,6 +74,12 @@
     <Compile Include="ConditionView.Designer.cs">
       <DependentUpon>ConditionView.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateDialgo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateDialgo.Designer.cs">
+      <DependentUpon>CreateDialgo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Description.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConditionView.resx">
       <DependentUpon>ConditionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateDialgo.resx">
+      <DependentUpon>CreateDialgo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Description.resx">
       <DependentUpon>Description.cs</DependentUpon>
