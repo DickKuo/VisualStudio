@@ -234,15 +234,15 @@ namespace CreateXML {
             _parameter.Append("        /// <summary>\r\n");
             _parameter.Append("        /// 返回 " + Description + "明細集合\r\n");
             _parameter.Append("        /// </summary>\r\n");
-            _parameter.Append("        private " + ClassName + "InfoCollection " + temp + "Infos;\r\n");
+            _parameter.Append("        private " + ClassName + "Collection " + temp + "Infos;\r\n");
             _parameter.Append("        [CollectionProperty(typeof(" + ClassName + "), Alias = \"" + ClassName + "\")]\r\n");
             _parameter.Append("        [Description(\"" + Description + "明細集合\")]\r\n");
-            _parameter.Append("        public " + ClassName + "InfoCollection " + ClassName + "Infos {\r\n");
+            _parameter.Append("        public " + ClassName + "Collection " + ClassName + "Infos {\r\n");
             _parameter.Append("            get {\r\n");
             _parameter.Append("                if ((" + temp + "Infos == null)) {\r\n");
             _parameter.Append("                    System.Threading.Monitor.Enter(this);\r\n");
             _parameter.Append("                    if ((" + temp + "Infos == null)) {\r\n");
-            _parameter.Append("                        this." + temp + "Infos = new " + ClassName + "InfoCollection(this);\r\n");
+            _parameter.Append("                        this." + temp + "Infos = new " + ClassName + "Collection(this);\r\n");
             _parameter.Append("                    }\r\n");
             _parameter.Append("                    System.Threading.Monitor.Exit(this);\r\n");
             _parameter.Append("                }\r\n");
