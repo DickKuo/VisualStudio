@@ -881,7 +881,13 @@ namespace CreateXML {
             dataGridView1.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             var item = dataGridView1.ContextMenuStrip.Items.Add("加入條件");
             item.Click += new EventHandler(item_Click1);
-            
+            #region 20141029 add by Dick for 預設Browse
+            QueryViewCondition QueryView =new QueryViewCondition();
+            QueryView.BrowseName = "Browse";
+            QueryView.Description = "瀏覽";
+            QueryView.Type = "Browse";
+            DicQueryView["Browse"] = QueryView;
+            #endregion
         }
 
         /// <summary>
