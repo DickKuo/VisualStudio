@@ -3180,7 +3180,7 @@ namespace CreateXML {
                 return "Guid";
             }
 
-            if (Tag.IndexOf("bool") != -1)
+            if (Tag.IndexOf("bool") != -1 | Tag.IndexOf("bit") != -1)
             {
                 return "Bool";
             }
