@@ -11,7 +11,7 @@ namespace AutoUpData {
         static void Main(string[] args) {
             string DocPath = AppDomain.CurrentDomain.BaseDirectory + "VersionConfig.xml";
             if(File.Exists(DocPath)) {
-                XmlDocument doc = Tools.XmlTool.LoadXml(DocPath);
+                XmlDocument doc = LoadXml(DocPath);
                 XmlNode ServerPath = doc.SelectSingleNode("root/ServerPath");
                 string SourcePath = ServerPath.Attributes["Path"].Value;
                 if(Directory.Exists(SourcePath)) {
@@ -32,9 +32,9 @@ namespace AutoUpData {
                                 else {
                                     FileInfo info = new FileInfo(Sourcefile);
                                     if(info.Extension.Equals(".xml")) {
-                                        XmlDocument SourceDoc = Tools.XmlTool.LoadXml(info.FullName);
+                                        XmlDocument SourceDoc = LoadXml(info.FullName);
                                         XmlNode root = SourceDoc.SelectSingleNode("root");
-                                        XmlDocument DeInfo = Tools.XmlTool.LoadXml(FilePath);
+                                        XmlDocument DeInfo = LoadXml(FilePath);
                                         XmlNode deroot = DeInfo.SelectSingleNode("root");
                                         if(root != null && deroot != null) {
                                             if(!root.Attributes["Version"].Value.Equals(deroot.Attributes["Version"].Value)) {
@@ -52,6 +52,16 @@ namespace AutoUpData {
                 }
             }
             Process.Start(AppDomain.CurrentDomain.BaseDirectory + "CreateXML.exe");
+        }
+
+        public static XmlDocument LoadXml(string Path)
+        {
+            XmlDocument doc = new XmlDocument();
+            System.IO.StreamReader sr = new System.IO.StreamReader(Path);
+            doc.Load(sr);
+            sr.Close();
+            sr.Dispose();
+            return doc;
         }
     }
 }
