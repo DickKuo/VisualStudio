@@ -13,7 +13,7 @@ namespace CreateXML {
     public partial class Packet : Form {
         public Packet() {
             InitializeComponent();
-            XmlDocument doc = Tools.XmlTool.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
+            XmlDocument doc = FileTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
             XmlNode root = doc.SelectSingleNode("root");
             foreach(XmlNode node in root.ChildNodes)
             {
@@ -29,7 +29,7 @@ namespace CreateXML {
             List<string> ServerList = new List<string>();
 
             string temp = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "ListDll.xml";
-            XmlDocument doc = Tools.XmlTool.LoadXml(temp);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(temp);
 
             XmlNode root = doc.SelectSingleNode("root");
 
@@ -61,7 +61,7 @@ namespace CreateXML {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if(fbd.ShowDialog() == DialogResult.OK) {
                 string path = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml";
-                XmlDocument doc = Tools.XmlTool.LoadXml(path);
+                XmlDocument doc = FileTool.XmlFile.LoadXml(path);
                 XmlNode root = doc.SelectSingleNode("root");
                 XmlElement child= doc.CreateElement("Path");
                 child.SetAttribute("Xpath",fbd.SelectedPath);

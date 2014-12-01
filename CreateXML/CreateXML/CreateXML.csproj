@@ -216,10 +216,6 @@
       <Project>{F482A755-F320-4EAA-B722-6BD9182C4D37}</Project>
       <Name>MoveFile</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tools\Tools.csproj">
-      <Project>{974707EA-7146-4F23-A5AC-5FCE8C5CBC09}</Project>
-      <Name>Tools</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

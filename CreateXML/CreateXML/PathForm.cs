@@ -14,7 +14,7 @@ namespace CreateXML {
         public PathForm() {
             InitializeComponent();
             string Xmlpath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml";
-            XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
             XmlNode root = doc.SelectSingleNode("root");
             int count = 0;
             foreach(XmlNode child in root.ChildNodes) {
@@ -31,7 +31,7 @@ namespace CreateXML {
             if(FBD.ShowDialog() == DialogResult.OK) {
                 cob_Path.Items.Add(FBD.SelectedPath);
                 string Xmlpath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml";
-                XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
+                XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
                 XmlNode root = doc.SelectSingleNode("root");
                 XmlElement element = doc.CreateElement("Path");
                 element.SetAttribute("Xpath",FBD.SelectedPath);
@@ -44,7 +44,7 @@ namespace CreateXML {
 
         private void button2_Click(object sender, EventArgs e) {
             string Xmlpath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml";
-            XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
             XmlNode root = doc.SelectSingleNode("root");        
             foreach(XmlNode child in root.ChildNodes) {
                 child.Attributes["Set"].Value="false";

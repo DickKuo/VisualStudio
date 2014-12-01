@@ -1,328 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <QueryViewColumns>
+ <QueryViewColumns>
         <QueryViewColumn>
-          <OrderNumber>1</OrderNumber>
-          <QueryViewColumnId>071180328cf6ae1e24dc49c959b8db5e5cde2</QueryViewColumnId>
-          <Name>CorporationId.Name</Name>
-          <DisplayName>Corporation</DisplayName>
+          <OrderNumber>13</OrderNumber>
+          <QueryViewColumnId>084182c2262195d9c411ab9bded6f96b8236e</QueryViewColumnId>
+          <Name>EndMonth.Name</Name>
+          <DisplayName>EmployeeRewards_EndMonth</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
           <IsBrowable>true</IsBrowable>
-          <Description>所O属公?司Dq</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>14</OrderNumber>
-          <QueryViewColumnId>085280bb55c302a314260a8e1820e216705ed</QueryViewColumnId>
-          <Name>IDCardNo</Name>
-          <DisplayName>RecruitResume_IDCardNo</DisplayName>
-          <Visible>true</Visible>
-          <Width>151</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>证件Do号码</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>5</OrderNumber>
-          <QueryViewColumnId>085280d630591e6e4477b9674a708e82792f0</QueryViewColumnId>
-          <Name>Code</Name>
-          <DisplayName>RecruitResume_Code</DisplayName>
-          <Visible>true</Visible>
-          <Width>80</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>应聘Mu人H员简历编号</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>2</OrderNumber>
-          <QueryViewColumnId>085281a5a648143cb43d69ff85ff97f56985b</QueryViewColumnId>
-          <Name>RecruitPlanId.Name</Name>
-          <DisplayName>RecruitResume_RecruitPlan</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>计划E名W称</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>18</OrderNumber>
-          <QueryViewColumnId>085281c192cf5750f461e99ca1c2316fe2015</QueryViewColumnId>
-          <Name>Salary</Name>
-          <DisplayName>RecruitResume_Salary</DisplayName>
-          <Visible>true</Visible>
-          <Width>60</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>期再望羖薪~资</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>3</OrderNumber>
-          <QueryViewColumnId>085281d06d9979bef40edb09de88e1952618c</QueryViewColumnId>
-          <Name>RecruitMediumId.Name</Name>
-          <DisplayName>RecruitResume_RecruitMedium</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>RecruitMediumId</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>28</OrderNumber>
-          <QueryViewColumnId>085282bd3812ac2ef437b9ccbda4e4c587c33</QueryViewColumnId>
-          <Name>Address</Name>
-          <DisplayName>RecruitResume_Address</DisplayName>
-          <Visible>true</Visible>
-          <Width>143</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>家a庭x住i址惦</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>31</OrderNumber>
-          <QueryViewColumnId>0852837a8eee9255042f189cd0d008461347a</QueryViewColumnId>
-          <Name>RecruitResumeId</Name>
-          <DisplayName>RecruitResume_RecruitResumeId</DisplayName>
-          <Visible>true</Visible>
-          <Width>192</Width>
-          <Description>应聘Mu人H员ID</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>9</OrderNumber>
-          <QueryViewColumnId>085283a20550277354bf0b6f2d7df795fd0e0</QueryViewColumnId>
-          <Name>GenderId.ScName</Name>
-          <DisplayName>RecruitResume_Gender</DisplayName>
-          <Visible>true</Visible>
-          <Width>50</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>简体^中?文a代DN码值E</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>27</OrderNumber>
-          <QueryViewColumnId>085283e1367e9391c45a8909ed0603e9220eb</QueryViewColumnId>
-          <Name>Postalcode</Name>
-          <DisplayName>RecruitResume_Postalcode</DisplayName>
-          <Visible>true</Visible>
-          <Width>159</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>邮政F编码</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>15</OrderNumber>
-          <QueryViewColumnId>0852840a0f17dcc444c7187b66719caa9c5be</QueryViewColumnId>
-          <Name>MarriageId.ScName</Name>
-          <DisplayName>RecruitResume_Marriage</DisplayName>
-          <Visible>true</Visible>
-          <Width>50</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>简体^中?文a代DN码值E</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>21</OrderNumber>
-          <QueryViewColumnId>0852843fbe051b30e42108e839c5abaf2b308</QueryViewColumnId>
-          <Name>FirstJobId.Name</Name>
-          <DisplayName>RecruitResume_FirstJob</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>职位i名W称</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>22</OrderNumber>
-          <QueryViewColumnId>0852853884b0e75ea44879c83aebbe3b5eae9</QueryViewColumnId>
-          <Name>SecondJobId.Name</Name>
-          <DisplayName>RecruitResume_SecondJob</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>职位i名W称</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>25</OrderNumber>
-          <QueryViewColumnId>085285eb115b03b2c484893dbf0d2f11d3cfe</QueryViewColumnId>
-          <Name>MobilePhone</Name>
-          <DisplayName>RecruitResume_MobilePhone</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>手a机o号码</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>10</OrderNumber>
-          <QueryViewColumnId>085287289be81bcca4008bb5fbee7dc6ed805</QueryViewColumnId>
-          <Name>EducationId.ScName</Name>
-          <DisplayName>RecruitResume_Education</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>简体^中?文a代DN码值E</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>7</OrderNumber>
-          <QueryViewColumnId>0852872b2646195ad4105b4ac51bf94f7aaa2</QueryViewColumnId>
-          <Name>EnName</Name>
-          <DisplayName>RecruitResume_EnName</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>英^文a名W称</Description>
+          <Description>名W称</Description>
         </QueryViewColumn>
         <QueryViewColumn>
           <OrderNumber>8</OrderNumber>
-          <QueryViewColumnId>0852872b2646195ad4105b4ac51bf94f78aaa4</QueryViewColumnId>
-          <Name>NextRecruitStateId.Name</Name>
-          <DisplayName>RecruitResume_RecruitState</DisplayName>
+          <QueryViewColumnId>0841836ffe2696a4a4e46a97c4c3a05d418fb</QueryViewColumnId>
+          <Name>Times</Name>
+          <DisplayName>EmployeeRewards_Times</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
           <IsBrowable>true</IsBrowable>
-          <Description>招U聘Mu状态</Description>
+          <Description>奖惩次﹐数</Description>
         </QueryViewColumn>
         <QueryViewColumn>
-          <OrderNumber>26</OrderNumber>
-          <QueryViewColumnId>08528885acd3fd1794f079f34b3a6c099142e</QueryViewColumnId>
-          <Name>Email</Name>
-          <DisplayName>RecruitResume_Email</DisplayName>
-          <Visible>true</Visible>
-          <Width>127</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>联系Lt邮件Do</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>17</OrderNumber>
-          <QueryViewColumnId>085288c5b8ba314ab47cea56a82c96a0b922b</QueryViewColumnId>
-          <Name>Location</Name>
-          <DisplayName>RecruitResume_Location</DisplayName>
-          <Visible>true</Visible>
-          <Width>146</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>应聘Mu人H员地a址惦</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>19</OrderNumber>
-          <QueryViewColumnId>0852891d6423148704988b48294a3c34dd4c4</QueryViewColumnId>
-          <Name>IsThisYearId.ScName</Name>
-          <DisplayName>RecruitResume_IsThisYear</DisplayName>
-          <Visible>true</Visible>
-          <Width>60</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>简体^中?文a代DN码值E</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>29</OrderNumber>
-          <QueryViewColumnId>08528a14387369ada40e0b30ca0a4aa3a70c5</QueryViewColumnId>
-          <Name>CharacterTest</Name>
-          <DisplayName>RecruitResume_CharacterTest</DisplayName>
-          <Visible>true</Visible>
-          <Width>144</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>性E向V测试</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>30</OrderNumber>
-          <QueryViewColumnId>08528a14387369ada40e0b30ca0a4aa3a60c4</QueryViewColumnId>
-          <Name>Interest</Name>
-          <DisplayName>RecruitResume_Interest</DisplayName>
-          <Visible>true</Visible>
-          <Width>144</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>兴趣i爱好n</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>31</OrderNumber>
-          <QueryViewColumnId>08528b4342056fdef463399eef244c11d8d3c</QueryViewColumnId>
-          <Name>RecordDate</Name>
-          <DisplayName>RecruitResume_RecordDate</DisplayName>
-          <Visible>true</Visible>
-          <Width>164</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>登gn记日e期再(默q认为当前e日e期再)</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>24</OrderNumber>
-          <QueryViewColumnId>08528bb9abbcfbd5a46d1acfd7770695838d8</QueryViewColumnId>
-          <Name>Telephone</Name>
-          <DisplayName>RecruitResume_Telephone</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>联系Lt电话</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>13</OrderNumber>
-          <QueryViewColumnId>08528c7d8a067fa0c492a8361006c6cec3313</QueryViewColumnId>
-          <Name>IDCardKindId.ScName</Name>
-          <DisplayName>RecruitResume_IDCardKind</DisplayName>
-          <Visible>true</Visible>
-          <Width>80</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>简体^中?文a代DN码值E</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>16</OrderNumber>
-          <QueryViewColumnId>08528c7ecbd5b748848d595aeda2cd6fc03d6</QueryViewColumnId>
-          <Name>NationId.ScName</Name>
-          <DisplayName>RecruitResume_Nation</DisplayName>
-          <Visible>true</Visible>
-          <Width>146</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>简体^中?文a代DN码值E</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>6</OrderNumber>
-          <QueryViewColumnId>08528cb77df4d02da49e295303cb1f817ce90</QueryViewColumnId>
-          <Name>CnName</Name>
-          <DisplayName>RecruitResume_CnName</DisplayName>
-          <Visible>true</Visible>
-          <Width>80</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>中?文a名W称</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>20</OrderNumber>
-          <QueryViewColumnId>08528ce8b12fae2174a5cbf4e5f7acd6a720e</QueryViewColumnId>
-          <Name>PoliticalIdentityId.ScName</Name>
-          <DisplayName>RecruitResume_PoliticalIdentity</DisplayName>
-          <Visible>true</Visible>
-          <Width>80</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>简体^中?文a代DN码值E</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>12</OrderNumber>
-          <QueryViewColumnId>08528d8dc4632ac114844b0238754e9d1cd7f</QueryViewColumnId>
-          <Name>BirthDate</Name>
-          <DisplayName>RecruitResume_BirthDate</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>出DX生DI日e期再</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>23</OrderNumber>
-          <QueryViewColumnId>08528eac8b8ad4e64486591e6780439d75c64</QueryViewColumnId>
-          <Name>ThirdJobId.Name</Name>
-          <DisplayName>RecruitResume_ThirdJob</DisplayName>
+          <OrderNumber>5</OrderNumber>
+          <QueryViewColumnId>0841842605fec2e964a9ab93c2e9c36380a6d</QueryViewColumnId>
+          <Name>EmployeeId.JobId.Name</Name>
+          <DisplayName>Employee_HRJobId</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
           <IsBrowable>true</IsBrowable>
           <Description>职位i名W称</Description>
         </QueryViewColumn>
         <QueryViewColumn>
-          <OrderNumber>11</OrderNumber>
-          <QueryViewColumnId>08528ebc0d8b0da144b1d876f901351f69681</QueryViewColumnId>
-          <Name>Major</Name>
-          <DisplayName>RecruitResume_Major</DisplayName>
+          <OrderNumber>12</OrderNumber>
+          <QueryViewColumnId>0841855ae7ae662d042298b9e0501100b588a</QueryViewColumnId>
+          <Name>BeginMonth.Name</Name>
+          <DisplayName>EmployeeRewards_BeginMonth</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
           <IsBrowable>true</IsBrowable>
-          <Description>主DD修×专业</Description>
+          <Description>名W称</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>10</OrderNumber>
+          <QueryViewColumnId>084186ca5302c31f14865b35f80edd4fc535a</QueryViewColumnId>
+          <Name>InureDate</Name>
+          <DisplayName>EmployeeRewards_InureDate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>生DI效A日e期再</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>6</OrderNumber>
+          <QueryViewColumnId>084189f0ffb17d21a463081b2fbba4e0124c2</QueryViewColumnId>
+          <Name>EmployeeRewardsItemId.RewardsKindId.ScName</Name>
+          <DisplayName>EmployeeRewards_RewardsKindId</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>奖励类型?</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>7</OrderNumber>
+          <QueryViewColumnId>08418ac202042f70e4d85bc444f3984769b3e</QueryViewColumnId>
+          <Name>EmployeeRewardsItemId.Name</Name>
+          <DisplayName>EmployeeRewardsItem_Name</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>奖励名W称</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>11</OrderNumber>
+          <QueryViewColumnId>08418b0170200b0694327b30d85a0ffd5f441</QueryViewColumnId>
+          <Name>IsSalary</Name>
+          <DisplayName>EmployeeRewards_IsSalary</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>是O否巢计入J薪~资</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>2</OrderNumber>
+          <QueryViewColumnId>08418c646ca3d25784f64992b481cd1a817e3</QueryViewColumnId>
+          <Name>EmployeeId.Code</Name>
+          <DisplayName>Employee_Code</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>员工u工u号</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>9</OrderNumber>
+          <QueryViewColumnId>08418cdb596ae81fe40f28a6fd88db4c2b825</QueryViewColumnId>
+          <Name>RecordDate</Name>
+          <DisplayName>EmployeeRewards_RecordDate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>记录日e期再</Description>
         </QueryViewColumn>
         <QueryViewColumn>
           <OrderNumber>4</OrderNumber>
-          <QueryViewColumnId>08528fe9b90ac4730450bbad7d220e8f13afd</QueryViewColumnId>
-          <Name>RecruitApproachId.Name</Name>
-          <DisplayName>RecruitResume_RecruitApproach</DisplayName>
+          <QueryViewColumnId>08418dd9ffe13dd964f2d9091c7427d158f7c</QueryViewColumnId>
+          <Name>EmployeeId.DepartmentId.Name</Name>
+          <DisplayName>Employee_HRDepartmentId</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
           <IsBrowable>true</IsBrowable>
-          <Description>应聘Mu途~径名W称</Description>
+          <Description>部!门</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <QueryViewColumnId>08418e5dae770e0da4e6ca23a86a0032b4620</QueryViewColumnId>
+          <Name>EmployeeRewardsId</Name>
+          <DisplayName>EmployeeRewardsId</DisplayName>
+          <Visible>true</Visible>
+          <Width>141</Width>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>3</OrderNumber>
+          <QueryViewColumnId>08418f0c001a934d84e37b51032b0c76f8f53</QueryViewColumnId>
+          <Name>EmployeeId.CnName</Name>
+          <DisplayName>Employee_Name</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>中?文a名W</Description>
         </QueryViewColumn>
         <QueryViewColumn>
           <OrderNumber>101</OrderNumber>
-          <QueryViewColumnId>224fe4bb52fd4d04b46cb19525d82277</QueryViewColumnId>
+          <QueryViewColumnId>b6a44f7e465a4876875250880e8bcbd4</QueryViewColumnId>
           <Name>CreateBy.UserName</Name>
           <DisplayName>CreateBy</DisplayName>
           <Visible>true</Visible>
@@ -331,7 +139,7 @@
         </QueryViewColumn>
         <QueryViewColumn>
           <OrderNumber>102</OrderNumber>
-          <QueryViewColumnId>4b42d97c07594596a9e23c4216b9623f</QueryViewColumnId>
+          <QueryViewColumnId>e72135872aaf446b80e95e4f750dbca0</QueryViewColumnId>
           <Name>CreateDate</Name>
           <DisplayName>CreateDate</DisplayName>
           <Visible>true</Visible>
@@ -339,8 +147,17 @@
           <Description>创建O日e期再</Description>
         </QueryViewColumn>
         <QueryViewColumn>
+          <OrderNumber>103</OrderNumber>
+          <QueryViewColumnId>5c02660e434d4b03a066426be971032f</QueryViewColumnId>
+          <Name>LastModifiedBy.UserName</Name>
+          <DisplayName>LastModifiedBy</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <Description>修×改張者I</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
           <OrderNumber>104</OrderNumber>
-          <QueryViewColumnId>d660ca8bc8214e2bb44d46b81c7e04bb</QueryViewColumnId>
+          <QueryViewColumnId>1e38cbb483ec444a9967f0a13a45ee6f</QueryViewColumnId>
           <Name>LastModifiedDate</Name>
           <DisplayName>LastModifiedDate</DisplayName>
           <Visible>true</Visible>
@@ -348,13 +165,44 @@
           <Description>修×改張日e期再</Description>
         </QueryViewColumn>
         <QueryViewColumn>
-          <OrderNumber>103</OrderNumber>
-          <QueryViewColumnId>d842661da76e4798b4370db7db14707c</QueryViewColumnId>
-          <Name>LastModifiedBy.UserName</Name>
-          <DisplayName>LastModifiedBy</DisplayName>
+          <OrderNumber>105</OrderNumber>
+          <QueryViewColumnId>7a4887410b404d12b24e202a4fefb4f9</QueryViewColumnId>
+          <Name>IsEss</Name>
+          <DisplayName>IsEss</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
-          <Description>修×改張者I</Description>
+          <IsBrowable>true</IsBrowable>
+          <Description>IsEss</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>106</OrderNumber>
+          <QueryViewColumnId>e385e6a71ba24140a12fb196733268c0</QueryViewColumnId>
+          <Name>EssType</Name>
+          <DisplayName>EssType</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>Ess单别</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>107</OrderNumber>
+          <QueryViewColumnId>fc73fecaf0d44c9881dd96684b4bf2bd</QueryViewColumnId>
+          <Name>EssNo</Name>
+          <DisplayName>EssNo</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>Ess单号</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>1</OrderNumber>
+          <QueryViewColumnId>fc73fecaf0d44c9881dd96684b4bf2fh</QueryViewColumnId>
+          <Name>XEmployeeRewardsCode</Name>
+          <DisplayName>EmployeeRewards_XEmployeeRewardsCode</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>獎u懲g編s號M1</Description>
         </QueryViewColumn>
       </QueryViewColumns>
 </root>

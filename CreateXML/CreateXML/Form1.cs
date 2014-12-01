@@ -837,7 +837,7 @@ namespace CreateXML {
 
             System.Data.DataTable dtt11 = dataGridView1.DataSource as System.Data.DataTable;
             Xmlpath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "SaveFile.xml";
-            XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
             XmlNode root = doc.SelectSingleNode("root");
             foreach(XmlNode node in root.ChildNodes) {
                 string ClassName = node.Attributes["ClassName"].Value.ToString();
@@ -855,7 +855,7 @@ namespace CreateXML {
                 }
             }
             ProjectPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml";
-            XmlDocument doc2 = Tools.XmlTool.LoadXml(ProjectPath);
+            XmlDocument doc2 = FileTool.XmlFile.LoadXml(ProjectPath);
             XmlNode root2 = doc2.SelectSingleNode("root");
             foreach(XmlNode node in root2.ChildNodes) {
                 if(node.Attributes["Set"].Value.ToString() == "true") {
@@ -1082,7 +1082,7 @@ namespace CreateXML {
 
         private void LoadGridView(string NodeName,DataGridView GridView,bool IsMain)
         {
-            XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
             XmlNode root = doc.GetElementById(NodeName);
             System.Data.DataTable dt = new System.Data.DataTable();
             dt.Columns.Add("Parameter");           
@@ -1367,7 +1367,7 @@ namespace CreateXML {
         /// 多語系製作
         /// </summary>
         private void SaveResource(string Xpath, string Name, string value, string comment) {
-            XmlDocument doc = Tools.XmlTool.LoadXml(Xpath);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(Xpath);
             XmlNode root = doc.SelectSingleNode("root");
             XmlElement data = doc.CreateElement("data");
             data.SetAttribute("name", Name + "_" + value);
@@ -1463,7 +1463,7 @@ namespace CreateXML {
         /// </summary>
         private void SaveXml() {
             try {
-                XmlDocument doc = Tools.XmlTool.LoadXml(Xmlpath);
+                XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
                 XmlNode root = doc.SelectSingleNode("root");
                 XmlNode parent = doc.GetElementById(tb_className.Text);
                 if(parent != null) {
@@ -2739,7 +2739,7 @@ namespace CreateXML {
         /// </summary>
         /// <returns></returns>
         private static string GetSettinhPath() {
-            XmlDocument doc = Tools.XmlTool.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
+            XmlDocument doc = FileTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
             XmlNode root = doc.SelectSingleNode("root");
             string ProgamPath = string.Empty;
             foreach(XmlNode node in root.ChildNodes) {

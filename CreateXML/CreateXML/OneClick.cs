@@ -182,7 +182,7 @@ namespace CreateXML {
         private void SubQueryView(System.Windows.Forms.DataGridView GridView, string FullFileName, string EntityName,QueryViewCondition Condition) {
             string PageName = Condition.BrowseName;
             string Type = Condition.Type;
-            XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("QueryConfiguration");
             XmlNode QueryViewXML = root.SelectSingleNode("QueryViewXML");
             XmlElement QueryView = doc.CreateElement("QueryView");
@@ -803,7 +803,7 @@ namespace CreateXML {
         /// <param name="SaveFile"></param>
         /// <param name="spl"></param>
         public static void AddResource(string SaveFile, string[] spl) {
-            XmlDocument doc = Tools.XmlTool.LoadXml(SaveFile);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(SaveFile);
             XmlNode root = doc.SelectSingleNode("root");
             XmlElement element = doc.CreateElement("data");
             element.SetAttribute("name", spl[0]);
@@ -855,7 +855,7 @@ namespace CreateXML {
         /// <param name="pEntityName"></param>
         public void RegisterEntity(string pEntityName) {
             string FullFileName = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomServerApplication" + Path.DirectorySeparatorChar + "EntityTypeRegisterForCase.config";
-            XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("EntityTypeRegister/DataEntity");
             if(root != null) {
                 string basestr = "Dcms.HR.DataEntities." + pEntityName;
@@ -977,7 +977,7 @@ namespace CreateXML {
         public void AppendDataEntityDisplayInfo(DataTable GridTable, string pFileName) {
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "DataEntityDisplay";
             string FullFileName = pPath + Path.DirectorySeparatorChar + "DataEntityDisplayInfoForCase.xml";
-            XmlDocument doc = Tools.XmlTool.LoadXml(FullFileName);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("Root");
             bool IsExistNode = false;
             XmlElement DataEntity = doc.CreateElement("DataEntity");

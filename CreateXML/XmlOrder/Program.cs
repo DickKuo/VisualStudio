@@ -20,7 +20,8 @@ namespace XmlOrder {
             if(!File.Exists(ThisPath)) {
                 return;
             }
-            XmlDocument doc = Tools.XmlTool.LoadXml(ThisPath);
+            XmlDocument doc = 
+                FileTool.XmlFile(ThisPath);
             XmlNode node = doc.SelectSingleNode("root/QueryViewColumns");
             object[] arry = new object[300];
             int order = 0;
