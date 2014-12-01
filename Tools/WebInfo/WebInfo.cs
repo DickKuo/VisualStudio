@@ -10,9 +10,11 @@ namespace WebInfo
     public class WebInfo
     {
 
-
-
-
+        /// <summary>
+        /// 抓取網頁資訊
+        /// </summary>
+        /// <param name="pUrl">網址</param>
+        /// <returns></returns>
         public StreamReader GetResponse(string pUrl)
         {
             WebRequest myWebRequest = WebRequest.Create(pUrl);
@@ -26,6 +28,4 @@ namespace WebInfo
 
 
     }
-
-    
 }

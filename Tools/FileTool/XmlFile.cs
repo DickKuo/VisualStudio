@@ -64,7 +64,7 @@ namespace FileTool
         public virtual XmlDocument XmlLoad()
         {
             XmlDocument doc = new XmlDocument();
-            System.IO.StreamReader sr = new System.IO.StreamReader(Path);
+            System.IO.StreamReader sr = new System.IO.StreamReader(_path);
             doc.Load(sr);
             sr.Close();
             sr.Dispose();
@@ -76,7 +76,7 @@ namespace FileTool
         /// </summary>
         /// <param name="pPath">輸入讀取路徑</param>
         /// <returns></returns>
-        public virtual XmlDocument XmlLoad(string pPath)
+        public static  XmlDocument LoadXml(string pPath)
         {
             XmlDocument doc = new XmlDocument();
             System.IO.StreamReader sr = new System.IO.StreamReader(pPath);
@@ -314,6 +314,79 @@ namespace FileTool
                 sw.Write(sb.ToString());
                 sw.Close();
             }
+        }
+
+
+
+        public static String ReOrderMethod(string pInput)
+        {
+            string ThisPath = AppDomain.CurrentDomain.BaseDirectory +"\\Old.xml";
+            XmlFile xmlfile =new XmlFile();
+            xmlfile.CreateBaseXml(ThisPath, pInput, true);
+            XmlDocument doc = XmlFile.LoadXml(ThisPath);
+            XmlNode node = doc.SelectSingleNode("root/QueryViewColumns");
+            object[] arry = new object[300];
+            int order = 0;
+            foreach (XmlNode child in node.ChildNodes)
+            {
+                foreach (XmlNode grad in child.ChildNodes)
+                {
+                    if (grad.Name.Equals("OrderNumber"))
+                    {
+                        int.TryParse(grad.InnerText, out order);
+                        arry[order] = child;
+                        break;
+                    }
+                }
+            }
+            StringBuilder NewString = new StringBuilder();
+            NewString.Append("<QueryViewColumns> \r\n");
+            foreach (XmlNode child in arry)
+            {
+                if (child != null)
+                {
+                    NewString.Append("  <QueryViewColumn> \r\n");
+                    foreach (XmlNode grad in child.ChildNodes)
+                    {
+                        NewString.Append("    ");
+                        NewString.Append(grad.OuterXml);
+                        NewString.Append("\r\n");
+                    }
+                    NewString.Append("  </QueryViewColumn> \r\n");
+                }
+            }
+            NewString.Append("</QueryViewColumns> \r\n");
+            return NewString.ToString();
+        }
+
+        public static String NewOrderMethod(string pInput)
+        {
+            string NewXmlPath = AppDomain.CurrentDomain.BaseDirectory +"\\"+ "New.xml";
+            XmlFile xmlfile = new XmlFile();
+            xmlfile.CreateBaseXml(NewXmlPath, pInput, true);
+            XmlDocument doc = XmlFile.LoadXml(NewXmlPath);
+            XmlNode node = doc.SelectSingleNode("root/QueryViewColumns");
+            int order = 0;
+            StringBuilder NodeBuilder = new StringBuilder();
+            NodeBuilder.Append("<QueryViewColumns> \r\n");
+            foreach (XmlNode child in node.ChildNodes)
+            {
+                NodeBuilder.Append("  <QueryViewColumn> \r\n");
+                foreach (XmlNode grad in child.ChildNodes)
+                {
+                    if (grad.Name.Equals("OrderNumber"))
+                    {
+                        grad.InnerXml = order.ToString();
+                    }
+                    NodeBuilder.Append("    ");
+                    NodeBuilder.Append(grad.OuterXml);
+                    NodeBuilder.Append("\r\n");
+                }
+                NodeBuilder.Append("  </QueryViewColumn> \r\n");
+                order++;
+            }
+            NodeBuilder.Append("</QueryViewColumns> \r\n");
+            return NodeBuilder.ToString();
         }
 
 
