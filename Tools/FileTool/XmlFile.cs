@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.ComponentModel;
+using System.IO;
 
 namespace FileTool
 {
@@ -64,6 +65,21 @@ namespace FileTool
         {
             XmlDocument doc = new XmlDocument();
             System.IO.StreamReader sr = new System.IO.StreamReader(Path);
+            doc.Load(sr);
+            sr.Close();
+            sr.Dispose();
+            return doc;
+        }
+
+        /// <summary>
+        /// 讀取Xml檔案
+        /// </summary>
+        /// <param name="pPath">輸入讀取路徑</param>
+        /// <returns></returns>
+        public virtual XmlDocument XmlLoad(string pPath)
+        {
+            XmlDocument doc = new XmlDocument();
+            System.IO.StreamReader sr = new System.IO.StreamReader(pPath);
             doc.Load(sr);
             sr.Close();
             sr.Dispose();
@@ -259,6 +275,47 @@ namespace FileTool
 
             return IsExist;
         }
+
+
+       /// <summary>
+        /// 建立基本XML檔案
+       /// </summary>
+       /// <param name="pPath">儲存位置</param>
+       /// <param name="pContext">內容</param>
+       /// <param name="pAppend">是否覆蓋</param>
+        public virtual void CreateBaseXml(string pPath, string pContext, bool pAppend)
+        {
+            using (StreamWriter sw = new StreamWriter(pPath, pAppend))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n");
+                sb.Append("<root>\r\n");
+                sb.Append(pContext);
+                sb.Append("</root>\r\n");
+                sw.Write(sb.ToString());
+                sw.Close();
+            }
+        }
+
+        /// <summary>
+        /// 建立基本XML檔案
+        /// </summary>
+        /// <param name="pContext">Root底下內容</param>
+        /// <param name="pAppend">是否覆蓋</param>
+        public virtual void CreateBaseXml(string pContext,bool pAppend)
+        {
+            using (StreamWriter sw = new StreamWriter(this._path, pAppend))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n");
+                sb.Append("<root>\r\n");
+                sb.Append(pContext);
+                sb.Append("</root>\r\n");
+                sw.Write(sb.ToString());
+                sw.Close();
+            }
+        }
+
 
         #endregion
 

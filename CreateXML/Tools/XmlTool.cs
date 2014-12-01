@@ -24,7 +24,6 @@ namespace Tools {
             XmlNode node = doc.SelectSingleNode("root/QueryViewColumns");
             object[] arry = new object[300];
             int order = 0;
-            int reapet = 199;  
             foreach (XmlNode child in node.ChildNodes)
             {
                 foreach (XmlNode grad in child.ChildNodes)
