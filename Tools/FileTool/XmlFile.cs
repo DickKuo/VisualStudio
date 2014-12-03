@@ -322,7 +322,7 @@ namespace FileTool
         {
             string ThisPath = AppDomain.CurrentDomain.BaseDirectory +"\\Old.xml";
             XmlFile xmlfile =new XmlFile();
-            xmlfile.CreateBaseXml(ThisPath, pInput, true);
+            xmlfile.CreateBaseXml(ThisPath, pInput, false);
             XmlDocument doc = XmlFile.LoadXml(ThisPath);
             XmlNode node = doc.SelectSingleNode("root/QueryViewColumns");
             object[] arry = new object[300];
@@ -367,7 +367,7 @@ namespace FileTool
         {
             string NewXmlPath = AppDomain.CurrentDomain.BaseDirectory +"\\"+ "New.xml";
             XmlFile xmlfile = new XmlFile();
-            xmlfile.CreateBaseXml(NewXmlPath, pInput, true);
+            xmlfile.CreateBaseXml(NewXmlPath, pInput, false);
             XmlDocument doc = XmlFile.LoadXml(NewXmlPath);
             XmlNode node = doc.SelectSingleNode("root/QueryViewColumns");
             int order = 0;
