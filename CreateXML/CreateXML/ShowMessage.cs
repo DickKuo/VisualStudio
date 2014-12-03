@@ -22,7 +22,7 @@ namespace CreateXML {
             {
                 return;
             }
-            richTextBox1.Text = FileTool.XmlFile.ReOrderMethod(richTextBox1.Text);
+            richTextBox1.Text = FileTool.XmlFile.ReOrderMethod(richTextBox1.Text, cbKeepId.Checked);
             MessageBox.Show("重新排序完成");
         }
 

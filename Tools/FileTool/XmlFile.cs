@@ -318,7 +318,7 @@ namespace FileTool
 
 
 
-        public static String ReOrderMethod(string pInput)
+        public static String ReOrderMethod(string pInput,bool pKeepId)
         {
             string ThisPath = AppDomain.CurrentDomain.BaseDirectory +"\\Old.xml";
             XmlFile xmlfile =new XmlFile();
@@ -349,6 +349,10 @@ namespace FileTool
                     foreach (XmlNode grad in child.ChildNodes)
                     {
                         NewString.Append("    ");
+                        if (!pKeepId && grad.Name.Equals("QueryViewColumnId"))
+                        {
+                            continue;
+                        }
                         NewString.Append(grad.OuterXml);
                         NewString.Append("\r\n");
                     }

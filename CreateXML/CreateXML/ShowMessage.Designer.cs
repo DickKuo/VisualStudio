@@ -26,6 +26,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.cbKeepId = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -56,17 +57,31 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // cbKeepId
+            // 
+            this.cbKeepId.AutoSize = true;
+            this.cbKeepId.Checked = true;
+            this.cbKeepId.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbKeepId.Location = new System.Drawing.Point(163, 17);
+            this.cbKeepId.Name = "cbKeepId";
+            this.cbKeepId.Size = new System.Drawing.Size(58, 16);
+            this.cbKeepId.TabIndex = 2;
+            this.cbKeepId.Text = "KeepId";
+            this.cbKeepId.UseVisualStyleBackColor = true;
+            // 
             // ShowMessage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 328);
+            this.Controls.Add(this.cbKeepId);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
             this.Name = "ShowMessage";
             this.Text = "ShowMessage";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -75,5 +90,6 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox cbKeepId;
     }
 }
