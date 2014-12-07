@@ -28,18 +28,18 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ParameterName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Field = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Conditon1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Conditon2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sybel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.sybel = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -47,33 +47,37 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(124, 37);
+            this.textBox1.Location = new System.Drawing.Point(165, 46);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(157, 22);
+            this.textBox1.Size = new System.Drawing.Size(208, 25);
             this.textBox1.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 40);
+            this.label1.Location = new System.Drawing.Point(16, 50);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(85, 12);
+            this.label1.Size = new System.Drawing.Size(105, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "QueryViewName";
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(389, 37);
+            this.textBox2.Location = new System.Drawing.Point(519, 46);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(165, 22);
+            this.textBox2.Size = new System.Drawing.Size(219, 25);
             this.textBox2.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(304, 40);
+            this.label2.Location = new System.Drawing.Point(405, 50);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 12);
+            this.label2.Size = new System.Drawing.Size(72, 15);
             this.label2.TabIndex = 3;
             this.label2.Text = "Description";
             // 
@@ -85,17 +89,42 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(16, 15);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(740, 138);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(987, 172);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Browse",
+            "Select"});
+            this.comboBox1.Location = new System.Drawing.Point(165, 110);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(208, 23);
+            this.comboBox1.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(37, 110);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 15);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "QueryType";
+            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(574, 355);
+            this.button1.Location = new System.Drawing.Point(765, 444);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(100, 29);
             this.button1.TabIndex = 5;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = true;
@@ -103,9 +132,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(669, 355);
+            this.button2.Location = new System.Drawing.Point(892, 444);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(100, 29);
             this.button2.TabIndex = 5;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
@@ -114,9 +144,11 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dataGridView1);
-            this.groupBox2.Location = new System.Drawing.Point(13, 156);
+            this.groupBox2.Location = new System.Drawing.Point(17, 195);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(739, 193);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(985, 241);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             // 
@@ -130,10 +162,11 @@
             this.Conditon1,
             this.Conditon2,
             this.sybel});
-            this.dataGridView1.Location = new System.Drawing.Point(8, 15);
+            this.dataGridView1.Location = new System.Drawing.Point(8, 18);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(723, 172);
+            this.dataGridView1.Size = new System.Drawing.Size(964, 215);
             this.dataGridView1.TabIndex = 0;
             // 
             // ParameterName
@@ -144,6 +177,16 @@
             // Type
             // 
             this.Type.HeaderText = "Type";
+            this.Type.Items.AddRange(new object[] {
+            "String",
+            "Int32",
+            "Decimal",
+            "DateTime",
+            "Ntext",
+            "Guid",
+            "Bool",
+            "Int64",
+            "Image"});
             this.Type.Name = "Type";
             // 
             // Field
@@ -164,37 +207,20 @@
             // sybel
             // 
             this.sybel.HeaderText = "sybel";
+            this.sybel.Items.AddRange(new object[] {
+            "Equal"});
             this.sybel.Name = "sybel";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 88);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 12);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "QueryType";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Browse",
-            "Select"});
-            this.comboBox1.Location = new System.Drawing.Point(124, 88);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(157, 20);
-            this.comboBox1.TabIndex = 5;
             // 
             // ConditionView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(756, 390);
+            this.ClientSize = new System.Drawing.Size(1008, 488);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ConditionView";
             this.Text = "ConditionView";
             this.groupBox1.ResumeLayout(false);
@@ -216,13 +242,13 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParameterName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn Field;
         private System.Windows.Forms.DataGridViewTextBoxColumn Conditon1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Conditon2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sybel;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DataGridViewComboBoxColumn sybel;
     }
 }

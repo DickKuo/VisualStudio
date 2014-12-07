@@ -894,7 +894,7 @@ namespace CreateXML {
         /// 20141006 modified by Dick 
         /// </summary>
         /// <param name="Grid"></param>
-        private void GridViewCellType(DataGridView Grid) {
+        public void GridViewCellType(DataGridView Grid) {
             ///20140303 add by Dick  修改成下拉選單
             DataGridViewComboBoxColumn comboboxColumn = new DataGridViewComboBoxColumn();
             comboboxColumn.Name = "Type";

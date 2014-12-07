@@ -18,13 +18,14 @@ namespace CreateXML {
             InitializeComponent();
             DataTable dt = new DataTable();
             dt.Columns.Add("ParameterName");
-            dt.Columns.Add("Type");
+            //dt.Columns.Add("Type");
             dt.Columns.Add("Field");
             dt.Columns.Add("Conditon1");
             dt.Columns.Add("Conditon2");
             dt.Columns.Add("sybel");
             textBox1.Text = pOldView.BrowseName;
             textBox2.Text = pOldView.Description;
+
             comboBox1.Text = pOldView.Type;  //20141028 add by Dick for 加入回寫 Type: Browse、Select           
             foreach(Condition condition in pOldView.ConditionList)
             {
@@ -42,8 +43,6 @@ namespace CreateXML {
                 //NewRow["sybel"] = condition.sybel;                
                 //dt.Rows.Add(NewRow);
             }
-            
-          
         }
 
          
