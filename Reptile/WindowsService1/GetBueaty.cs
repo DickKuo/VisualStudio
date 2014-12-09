@@ -19,6 +19,7 @@ namespace WindowsService1
     {
         public GetBueaty()
         {
+            FileTool.ToolLog.ToolPath = Settings1.Default.LogPath;
             InitializeComponent();
         }
         public int Tag { set; get; }
@@ -36,7 +37,7 @@ namespace WindowsService1
         /// <param name="args"></param>
         protected override void OnStart(string[] args)
         {
-            Log("服務啟動" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+            FileTool.ToolLog.Log("服務啟動" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             System.Timers.Timer time = new System.Timers.Timer();
             time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
             time.Interval = Settings1.Default.Interval*1000*60;
@@ -56,20 +57,15 @@ namespace WindowsService1
             {
                 listold.Add(node.InnerText);
             }
-            Log(string.Format("已有記錄 {0} 筆", listold.Count));
+            FileTool.ToolLog.Log(string.Format("已有記錄 {0} 筆", listold.Count));
         }
 
 
-        private static void Log(string str)
-        {
-            FileTool.ToolLog log = new FileTool.ToolLog(Settings1.Default.LogPath);
-            log.Log(str);
-        }
 
         void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             //throw new NotImplementedException();
-            Log("執行" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+            FileTool.ToolLog.Log("執行" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             Start();
         }
 
@@ -91,7 +87,7 @@ namespace WindowsService1
             //Log("Tag=" + Tag + "   " + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             string Site = Settings1.Default.Site;
             SitePlus siteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + Tag + ".html");
-            Log("取得表特列表" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+            FileTool.ToolLog.Log("取得表特列表" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             List<SiteInfo> SiteInfoList = new List<SiteInfo>();
             Recursive(Tag, siteplus, SiteInfoList, Site, "/bbs/" + Site + "/index", Condition, doc, root);
         }
@@ -121,7 +117,7 @@ namespace WindowsService1
         private long POST(string Address, List<SiteInfo> SiteInfoList)
         {
             SiteInfo info =SiteInfoList[0];
-            Log("Post 開始" + info.Title);
+            FileTool.ToolLog.Log("Post 開始" + info.Title);
             string strJson = "SiteInfoList=" + JsonConvert.SerializeObject(SiteInfoList, Newtonsoft.Json.Formatting.Indented);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Address);
             request.ContentType = "application/x-www-form-urlencoded";
@@ -150,9 +146,9 @@ namespace WindowsService1
             }
             catch (WebException ex)
             {
-                Log("POST失敗："+ex.Message + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                FileTool.ToolLog.Log("POST失敗：" + ex.Message + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             }
-            Log("Post 結束" + info.Title);
+            FileTool.ToolLog.Log("Post 結束" + info.Title);
             return length;
         }
 
@@ -182,10 +178,10 @@ namespace WindowsService1
                                 long length = POST(Address, li);
                                 Thread.Sleep(1000);
                                 RecordTime = info.PostDate;
-                                listold.Add(info.Title.Trim());                             
-                                Log(string.Format("寫入紀錄 {0} ", info.Title));
+                                listold.Add(info.Title.Trim());
+                                FileTool.ToolLog.Log(string.Format("寫入紀錄 {0} ", info.Title));
                                 Record(doc, info.Title.Trim());
-                                Log("記錄結束");
+                                FileTool.ToolLog.Log("記錄結束");
                             }
                             li.Clear();
                         }
@@ -211,7 +207,7 @@ namespace WindowsService1
 
         protected override void OnStop()
         {
-            Log( string.Format("服務停止 {0}" , DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")));
+           FileTool.ToolLog.Log( string.Format("服務停止 {0}" , DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")));
         }
     }
 }

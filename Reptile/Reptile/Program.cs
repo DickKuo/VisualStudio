@@ -27,7 +27,7 @@ namespace Reptile
 
         static void Main(string[] args)
         {
-            XmlDocument doc = Tools.XmlTool.LoadXml(Directory.GetCurrentDirectory() + "\\" + "Record.xml");
+            XmlDocument doc = FileTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + "\\" + "Record.xml");
             XmlNodeList NodeList = doc.SelectNodes("/root/Title");
             foreach(XmlNode node in NodeList)
             {
@@ -45,7 +45,7 @@ namespace Reptile
         public static string Address { set; get; }
         private static void Start() {
             GetSite.GetSite site = new GetSite.GetSite(@"C:\Users\Dick\Desktop\22");
-            XmlDocument doc = Tools.XmlTool.LoadXml(Directory.GetCurrentDirectory() + "\\" + "Config.xml");
+            XmlDocument doc = FileTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + "\\" + "Config.xml");
             XmlNode PostAddress = doc.SelectSingleNode(@"/root/PostAddress");
             XmlNode NodeCondition = doc.SelectSingleNode(@"/root/Condition");
             XmlNode NodeSite = doc.SelectSingleNode(@"/root/Site");
@@ -85,7 +85,7 @@ namespace Reptile
                 //Console.WriteLine("OK");
                 //NodeStart.InnerText = Tag.ToString();
                 //NodeRecordTime.InnerText = RecordTime.ToString("yyyy/MM/dd HH:mm:ss");
-            XmlDocument Recorddoc = Tools.XmlTool.LoadXml(Directory.GetCurrentDirectory() + "\\" + "Record.xml");
+            XmlDocument Recorddoc = FileTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + "\\" + "Record.xml");
               XmlNode root =doc.SelectSingleNode("root");
               foreach (string str in RecordList)
               {
