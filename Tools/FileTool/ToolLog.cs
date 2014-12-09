@@ -10,7 +10,7 @@ namespace FileTool
 {
    public  class ToolLog 
     {
-       private string _path=@"D:\Log";
+       private static string _path = @"D:\Log";
       
        public ToolLog(string path)
        {
@@ -19,23 +19,24 @@ namespace FileTool
 
        public ToolLog() { }
 
-       public string ToolPath {
+       public static string ToolPath
+       {
            set { _path =value;}
            get { return _path; }
        }
 
-       public virtual void Log(Exception ex)
+       public static  void Log(Exception ex)
        {
            Log(LogType.Error,"【"+ex.Message+"】  " +"【"+ex.StackTrace+"】" );           
        }
 
-       public virtual void Log(System.Net.Mail.SmtpException ex)
+       public static  void Log(System.Net.Mail.SmtpException ex)
        {
            Log(LogType.Error,"【" + ex.Message + "】  " + "【" + ex.StackTrace + "】");   
        }
-            
 
-       public virtual void Log(string str)
+
+       public static  void Log(string str)
        {
            DateTime dt = DateTime.Now;
            string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString("yyyy-MM-dd") + ".txt";        
@@ -47,7 +48,7 @@ namespace FileTool
            }  
        }
 
-       public virtual void Log(LogType type, string str)
+       public static  void Log(LogType type, string str)
        {
            DateTime dt = DateTime.Now;           
            string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString("yyyy-MM-dd") + ".txt";
@@ -70,7 +71,7 @@ namespace FileTool
            }
        }
 
-       private string typeconvert(LogType type)
+       private static string typeconvert(LogType type)
        { 
            string temp ="";
            switch(type)

@@ -189,13 +189,13 @@ namespace FileTool
                 root.RemoveChild(element);
                 doc.Save(Path);
                 ToolLog tools = new ToolLog();
-                tools.Log(LogType.Delete, "XmlNode ID：" + ID);
+                ToolLog.Log(LogType.Delete, "XmlNode ID：" + ID);
                 return "ok";
             }
             catch (Exception ex)
             {
                 ToolLog tools = new ToolLog();
-                tools.Log(ex);
+                ToolLog.Log(ex);
                 return ex.ToString();
             }
         }
@@ -220,13 +220,13 @@ namespace FileTool
                 }
                 doc.Save(Path);
                 ToolLog tools = new ToolLog();
-                tools.Log(LogType.Delete, "XmlNode ID：" + SB.ToString().Substring(0, SB.Length - 2));
+                ToolLog.Log(LogType.Delete, "XmlNode ID：" + SB.ToString().Substring(0, SB.Length - 2));
                 return "ok";
             }
             catch (Exception ex)
             {
                 ToolLog tools = new ToolLog();
-                tools.Log(ex);
+                ToolLog.Log(ex);
                 return ex.ToString();
             }
         }
@@ -250,7 +250,7 @@ namespace FileTool
             }
             doc.Save(Path);
             ToolLog tools = new ToolLog();
-            tools.Log(LogType.Delete, "XmlNode ID：" + SB.ToString().Substring(0, SB.Length - 2));
+            ToolLog.Log(LogType.Delete, "XmlNode ID：" + SB.ToString().Substring(0, SB.Length - 2));
         }
 
 
