@@ -19,11 +19,14 @@ namespace AutoUpData {
                     XmlNode DownLoadList = doc.SelectSingleNode("root/DownLoadList");
                     ///20141210 取得更新清單
                     List<string> FileList = new List<string>();
+                    List<string> NotExistFile = new List<string>();
                     foreach (XmlNode node in DownLoadList.ChildNodes){
                         FileList.Add(node.Attributes["Name"].Value);
-                    }
+                        NotExistFile.Add(node.Attributes["Name"].Value);
+                    }                    
                     DirectoryInfo DirInfo = new DirectoryInfo(SourcePath);
                     DirectoryInfo DesInfo = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+                    #region 20141210 已存在檔案 判斷版號更新
                     foreach (FileInfo fi in DirInfo.GetFiles())
                     {
                         if (FileList.Contains(fi.Name))
@@ -34,23 +37,69 @@ namespace AutoUpData {
                                 {
                                     if (fi.Name.Equals(desfi.Name))
                                     {
-                                        FileVersionInfo SourceFile = FileVersionInfo.GetVersionInfo(fi.FullName);
-                                        FileVersionInfo Info = FileVersionInfo.GetVersionInfo(desfi.FullName);
-                                        if (SourceFile.FileVersion != null)
-                                        {
-                                            if (!SourceFile.FileVersion.Equals(Info.FileVersion))
+                                        if (fi.Extension.Equals(".xml"))
+                                        {                                          
+                                            try
                                             {
-                                                File.Copy(fi.FullName, desfi.FullName, true);
+                                                XmlDocument SourceDoc = LoadXml(fi.FullName);
+                                                XmlNode root = SourceDoc.SelectSingleNode("root");
+                                                XmlDocument DeInfo = LoadXml(desfi.FullName);
+                                                XmlNode deroot = DeInfo.SelectSingleNode("root");
+                                                if (root != null && deroot != null)
+                                                {
+                                                    if (!root.Attributes["Version"].Value.Equals(deroot.Attributes["Version"].Value))
+                                                    {
+                                                        try
+                                                        {
+                                                            File.Copy(fi.FullName, desfi.FullName, true);
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            Console.WriteLine(ex.Message);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine(ex.Message);
                                             }
                                         }
+                                        else
+                                        {
+                                            FileVersionInfo SourceFile = FileVersionInfo.GetVersionInfo(fi.FullName);
+                                            FileVersionInfo Info = FileVersionInfo.GetVersionInfo(desfi.FullName);
+                                            if (SourceFile.FileVersion != null)
+                                            {
+                                                if (!SourceFile.FileVersion.Equals(Info.FileVersion))
+                                                {
+                                                    File.Copy(fi.FullName, desfi.FullName, true);
+                                                }
+                                            }
+                                        }
+                                        NotExistFile.Remove(desfi.Name);
                                     }
                                 }
                             }
                         }
                     }
-                    
+                    #endregion
 
-                    #region 20141210 舊的寫法
+                    #region 20141210 新檔案處理
+                    if (NotExistFile.Count > 0)
+                    {
+                        foreach (FileInfo fi in DirInfo.GetFiles())
+                        {
+                            if (NotExistFile.Contains(fi.Name))
+                            {
+                                File.Copy(fi.FullName, DesInfo.FullName + Path.DirectorySeparatorChar + fi.Name, true);
+                            }
+                        }
+                    }
+                    #endregion
+                   
+
+                    #region 20141210 舊的寫法 註解掉
                     //foreach (XmlNode node in DownLoadList.ChildNodes)
                     ////{
                     //    string FilePath = AppDomain.CurrentDomain.BaseDirectory + node.Attributes["Name"].Value;
@@ -115,8 +164,7 @@ namespace AutoUpData {
                     //}                           
                     //}
 
-                    #endregion
-                   
+                    #endregion                   
                 }
             }
             Console.WriteLine("請按任意建繼續....");
