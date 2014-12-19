@@ -25,7 +25,7 @@ namespace DService {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\SLog")]
         public string LogPath {
             get {
                 return ((string)(this["LogPath"]));
@@ -52,7 +52,7 @@ namespace DService {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Lazy")]
         public string UpDateGradPath {
             get {
                 return ((string)(this["UpDateGradPath"]));

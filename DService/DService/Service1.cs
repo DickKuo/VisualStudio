@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using System.IO;
 
 
 namespace DService
@@ -88,13 +89,25 @@ namespace DService
         private void UpDateDll()
         {
             DServerLog("更新開始");
+            DirectoryInfo LocalDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            List<string>LocalFileList =new List<string>();
+            foreach (FileInfo FiInfo in LocalDir.GetFiles())
+            {
+                LocalFileList.Add(FiInfo.Name);
+            }
+            DirectoryInfo RemoveDir = new DirectoryInfo(Settings1.Default.UpDateGradPath);
+            foreach (FileInfo FiInfo in RemoveDir.GetFiles())
+            {
 
+                //FileVersionInfo SourceFile = FileVersionInfo.GetVersionInfo(fi.FullName);
+
+            }
             DServerLog("更新結束");
         }
 
         public static void DServerLog(string Message)
         {
-            FileTool.ToolLog.Log(string.Format("{0} {1} ", Message , DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")));
+            FileTool.ToolLog.Log(Message);
         }
     }
 }

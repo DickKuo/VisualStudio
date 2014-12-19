@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="LogPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">C:\SLog</Value>
     </Setting>
     <Setting Name="Interval" Type="System.String" Scope="Application">
       <Value Profile="(Default)">1</Value>
@@ -12,7 +12,7 @@
       <Value Profile="(Default)">M</Value>
     </Setting>
     <Setting Name="UpDateGradPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">C:\Lazy</Value>
     </Setting>
     <Setting Name="UpDateTime" Type="System.String" Scope="User">
       <Value Profile="(Default)">21:00</Value>
