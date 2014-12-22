@@ -15,20 +15,20 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_7F429EFFA699E8451450303E8C9DE7E1"
-        "OwnerKey" = "8:_93DC596B05AA47828298973A420BBBB9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_93DC596B05AA47828298973A420BBBB9"
+        "MsmKey" = "8:_2A7287D217C04146B5DFF716D7DBB396"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_7F429EFFA699E8451450303E8C9DE7E1"
+        "OwnerKey" = "8:_2A7287D217C04146B5DFF716D7DBB396"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F096D8D81BA323A9B0696C2F498007FE"
-        "OwnerKey" = "8:_93DC596B05AA47828298973A420BBBB9"
+        "OwnerKey" = "8:_2A7287D217C04146B5DFF716D7DBB396"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -40,7 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_93DC596B05AA47828298973A420BBBB9"
+        "OwnerKey" = "8:_2A7287D217C04146B5DFF716D7DBB396"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -67,6 +67,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -83,65 +91,73 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_5F94AAFF1274433BA473F9521BBFB77B"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_4B0B95D57E3D4CCEBCEAD8AA02958C40"
             {
             "Name" = "8:主要輸出 從 DService (作用中)"
             "Condition" = "8:"
-            "Object" = "8:_93DC596B05AA47828298973A420BBBB9"
+            "Object" = "8:_2A7287D217C04146B5DFF716D7DBB396"
             "FileType" = "3:2"
             "InstallAction" = "3:2"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_758C32C4_3D4B_43BF_9D1B_0D9DF1C3E546"
+            "Identifier" = "8:_D2579E96_9F12_4FFC_959C_06DD79B481ED"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_776539D0DA6C427EB617C3C9F551F940"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_52B29545400D42B9A33E5CD53826D84E"
             {
             "Name" = "8:主要輸出 從 DService (作用中)"
             "Condition" = "8:"
-            "Object" = "8:_93DC596B05AA47828298973A420BBBB9"
+            "Object" = "8:_2A7287D217C04146B5DFF716D7DBB396"
             "FileType" = "3:2"
             "InstallAction" = "3:3"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_92EC2444_AB37_4A50_9B63_717D10502ABB"
+            "Identifier" = "8:_C9920701_C2E6_49C1_B081_1542CAAA29A6"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_98CAED9EB14943E0B2C8C1A5153066CD"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_5539258D412847739C03C6C504D14709"
             {
             "Name" = "8:主要輸出 從 DService (作用中)"
             "Condition" = "8:"
-            "Object" = "8:_93DC596B05AA47828298973A420BBBB9"
-            "FileType" = "3:2"
-            "InstallAction" = "3:1"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_A3C7E164_ADC0_4402_AEB1_32D658299C4E"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_9DE17F5C9F584FA39A73F81DE69A5FF2"
-            {
-            "Name" = "8:主要輸出 從 DService (作用中)"
-            "Condition" = "8:"
-            "Object" = "8:_93DC596B05AA47828298973A420BBBB9"
+            "Object" = "8:_2A7287D217C04146B5DFF716D7DBB396"
             "FileType" = "3:2"
             "InstallAction" = "3:4"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_671F6ED0_F8DA_4381_91E4_D7EA8CE48984"
+            "Identifier" = "8:_6CD3077A_740D_4F49_A41C_F499B20655CC"
+            "InstallerClass" = "11:TRUE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_E8157555D43C4111B08FC3F73FDB1530"
+            {
+            "Name" = "8:主要輸出 從 DService (作用中)"
+            "Condition" = "8:"
+            "Object" = "8:_2A7287D217C04146B5DFF716D7DBB396"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_0C005C34_B765_4F14_9438_F47717DDD7FA"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
@@ -806,7 +822,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_93DC596B05AA47828298973A420BBBB9"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2A7287D217C04146B5DFF716D7DBB396"
             {
             "SourcePath" = "8:..\\DService\\obj\\x86\\Debug\\DService.exe"
             "TargetName" = "8:"

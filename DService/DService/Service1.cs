@@ -7,6 +7,8 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.IO;
+using System.Xml;
+using System.Threading;
 
 
 namespace DService
@@ -32,6 +34,9 @@ namespace DService
         protected override void OnStart(string[] args)
         {
             DServerLog("服務啟動");
+            DServerLog("服務啟動更新開始...");
+            UpdateDll(Settings1.Default.UpDateGradPath);
+            DServerLog("服務啟動更新結束...");
             System.Timers.Timer time = new System.Timers.Timer();
             time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
             time.Interval = 1000;
@@ -41,14 +46,17 @@ namespace DService
         void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             string time = DateTime.Now.ToString("HH:mm:ss");
+            DExecute.DExecute execute = new DExecute.DExecute();
             if (DateTime.Now.ToString("HH:mm") == Settings1.Default.UpDateTime)
             {
-                UpDateDll();
+                DServerLog("更新開始");
+                UpdateDll(Settings1.Default.UpDateGradPath);
+                DServerLog("更新結束");
             }
 
             if (_timelist.Contains(time))
             {
-                DExecute.DExecute execute = new DExecute.DExecute();
+               
                 execute.Start();
             }
         }
@@ -83,26 +91,96 @@ namespace DService
             return Result;
         }
 
+
         /// <summary>
-        /// 20141219 add by Dick 自動更新
+        /// 20141219 add by Dick for 更新檔案
         /// </summary>
-        private void UpDateDll()
+        /// <param name="UpdatePath"></param>
+        public virtual void UpdateDll(string UpdatePath)
         {
-            DServerLog("更新開始");
-            DirectoryInfo LocalDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-            List<string>LocalFileList =new List<string>();
-            foreach (FileInfo FiInfo in LocalDir.GetFiles())
+            try
             {
-                LocalFileList.Add(FiInfo.Name);
+                DirectoryInfo LocalDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+                List<string> LocalFileList = new List<string>();
+                foreach (FileInfo FiInfo in LocalDir.GetFiles())
+                {
+                    LocalFileList.Add(FiInfo.Name);
+                }
+                DirectoryInfo RemoveDir = new DirectoryInfo(UpdatePath);
+                foreach (FileInfo FiInfo in RemoveDir.GetFiles())
+                {
+                    if (FiInfo.Name.Equals("FileTool.dll"))
+                    {
+                        continue;
+                    }
+                    if (!LocalFileList.Contains(FiInfo.Name))
+                    {
+                        File.Copy(FiInfo.FullName, AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name, true);
+                    }
+                    else
+                    {
+                        if (FiInfo.Extension.Equals(".xml"))
+                        {
+                            try
+                            {
+                                XmlDocument SourceDoc = LoadXml(FiInfo.FullName);
+                                XmlNode root = SourceDoc.SelectSingleNode("root");
+                                XmlDocument DeInfo = LoadXml(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name);
+                                XmlNode deroot = DeInfo.SelectSingleNode("root");
+                                if (root != null && deroot != null)
+                                {
+                                    if (!root.Attributes["Version"].Value.Equals(deroot.Attributes["Version"].Value))
+                                    {
+                                        try
+                                        {
+                                            File.Copy(FiInfo.FullName, AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name, true);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            FileVersionInfo SourceFile = FileVersionInfo.GetVersionInfo(FiInfo.FullName); //遠端檔案
+                            FileVersionInfo Info = FileVersionInfo.GetVersionInfo(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name); //本地檔案
+                            if (SourceFile.FileVersion != null)
+                            {
+                                if (!SourceFile.FileVersion.Equals(Info.FileVersion))
+                                {
+                                    File.Copy(SourceFile.FileName, Info.FileName, true);
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            DirectoryInfo RemoveDir = new DirectoryInfo(Settings1.Default.UpDateGradPath);
-            foreach (FileInfo FiInfo in RemoveDir.GetFiles())
+            catch (Exception ex)
             {
-
-                //FileVersionInfo SourceFile = FileVersionInfo.GetVersionInfo(fi.FullName);
-
+                DServerLog(ex.Message);
             }
-            DServerLog("更新結束");
+        }
+
+        /// <summary>
+        /// 讀取Xml檔案
+        /// </summary>
+        /// <param name="pPath">輸入讀取路徑</param>
+        /// <returns></returns>
+        public  XmlDocument LoadXml(string pPath)
+        {
+            XmlDocument doc = new XmlDocument();
+            System.IO.StreamReader sr = new System.IO.StreamReader(pPath);
+            doc.Load(sr);
+            sr.Close();
+            sr.Dispose();
+            return doc;
         }
 
         public static void DServerLog(string Message)

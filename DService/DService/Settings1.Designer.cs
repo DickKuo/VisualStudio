@@ -61,13 +61,61 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("21:00")]
+        [global::System.Configuration.DefaultSettingValueAttribute("18:30")]
         public string UpDateTime {
             get {
                 return ((string)(this["UpDateTime"]));
             }
             set {
                 this["UpDateTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AppPath {
+            get {
+                return ((string)(this["AppPath"]));
+            }
+            set {
+                this["AppPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string Mode {
+            get {
+                return ((string)(this["Mode"]));
+            }
+            set {
+                this["Mode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0900")]
+        public string StartTime {
+            get {
+                return ((string)(this["StartTime"]));
+            }
+            set {
+                this["StartTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1330")]
+        public string EndTime {
+            get {
+                return ((string)(this["EndTime"]));
+            }
+            set {
+                this["EndTime"] = value;
             }
         }
     }

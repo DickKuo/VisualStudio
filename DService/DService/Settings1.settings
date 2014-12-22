@@ -15,7 +15,19 @@
       <Value Profile="(Default)">C:\Lazy</Value>
     </Setting>
     <Setting Name="UpDateTime" Type="System.String" Scope="User">
-      <Value Profile="(Default)">21:00</Value>
+      <Value Profile="(Default)">18:30</Value>
+    </Setting>
+    <Setting Name="AppPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Mode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="StartTime" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0900</Value>
+    </Setting>
+    <Setting Name="EndTime" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1330</Value>
     </Setting>
   </Settings>
 </SettingsFile>
