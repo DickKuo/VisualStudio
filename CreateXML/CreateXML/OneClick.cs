@@ -750,23 +750,34 @@ namespace CreateXML {
 
         /// <summary>
         /// 20140815 add by Dick for DisPlayName 加入多語系
+        ///  20141223 modified by Dick for 修改會重複加入多語系問題 #4 
         /// </summary>
         /// <param name="pString"></param>
         /// <param name="FileName"></param>
-        public void AddResourceRow(string pDirectory, string pString, string FileName, bool IsAppend) {
-            string SaveFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resx";
+        public void AddResourceRow(string pDirectory, string pString, string FileName, bool IsAppend)
+        {
+            string SaveFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resx";          
             string[] spl = pString.Split('\t');
             if(spl.Length > 2) {
                 AddResource(SaveFile, spl);
                 if(IsAppend) {
                     string DesignerFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".Designer.cs";
+                    List<string> ExistList = this.GetResoutList(DesignerFile); //#4
                     StringBuilder sb = new StringBuilder();
                     using(StreamReader reader = new StreamReader(DesignerFile)) {
                         string line = string.Empty;
                         while((line = reader.ReadLine()) != null) {
                             sb.Append(line);
                             sb.Append("\r\n");
-                            if(line.IndexOf("resourceCulture = value;") != -1) {
+                            if(line.IndexOf("resourceCulture = value;") != -1)
+                            {
+                                #region 20141223  已存在的就跳過 #4
+                                if (ExistList.Contains(spl[0]))
+                                {
+                                    continue;
+                                }
+                                #endregion
+                               
                                 sb.Append(reader.ReadLine());
                                 sb.Append("\r\n");
                                 sb.Append(reader.ReadLine());
@@ -829,10 +840,10 @@ namespace CreateXML {
         }
 
         /// <summary>
-        /// QueryView 的多語系
+        /// QueryView 的多語系         
         /// </summary>
         public void AddQueryView(DataTable dt, string pDirectory, string[] pContext, string FileName, bool IsAppend) {
-            string SaveFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resx";
+            string SaveFile = Parent + Path.DirectorySeparatorChar + pDirectory + Path.DirectorySeparatorChar + "Properties" + Path.DirectorySeparatorChar + FileName + ".resx";          
             List<string> QueryList = new List<string>();
             foreach(DataRow dr in dt.Rows) {
                 if(!string.IsNullOrEmpty(dr["Order"].ToString())) {
@@ -846,6 +857,32 @@ namespace CreateXML {
                     }
                 }
             }
+        }
+        
+       /// <summary>
+       /// 20141223 add by Dick for 修改會重複加入多語系問題 #4   
+       /// </summary>
+       /// <param name="pSaveFile"></param>
+       /// <returns></returns>
+        public List<string> GetResoutList(string pSaveFile)
+        {
+            List<string> result = new List<string>();
+            using (StreamReader reader = new StreamReader(pSaveFile))
+            {
+                string line = string.Empty;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.IndexOf("public static string") != -1)
+                    {
+                        string temp = line.Replace("public static string", "").Replace("{","").Trim();
+                        if (!result.Contains(temp))
+                        {
+                            result.Add(temp);
+                        }
+                    }
+                }
+            }
+            return result;
         }
 
 
