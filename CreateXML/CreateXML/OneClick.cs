@@ -189,7 +189,10 @@ namespace CreateXML {
             XmlElement QueryViewId = doc.CreateElement("QueryViewId");
             QueryViewId.InnerXml = EntityName + "_" + PageName;
             XmlElement Name = doc.CreateElement("Name");
-            Name.InnerXml = Type;
+            #region 20141224 modified by Dick for #10
+            //Name.InnerXml = Type;
+            Name.InnerXml = QueryViewId.InnerXml;
+            #endregion
             QueryViewXML.AppendChild(QueryView);
             QueryView.AppendChild(QueryViewId);
             QueryView.AppendChild(Name);
