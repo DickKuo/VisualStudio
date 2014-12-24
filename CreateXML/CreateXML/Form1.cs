@@ -47,9 +47,12 @@ namespace CreateXML {
         private Dictionary<string, List<string[]>> _DicCheckBox = new Dictionary<string, List<string[]>>();
         private System.Data.DataTable RefereceTable = new System.Data.DataTable();
         private Dictionary<string, string> RefereceDic = new Dictionary<string, string>();
-
-
         private Dictionary<string, QueryViewCondition> DicQueryView = new Dictionary<string, QueryViewCondition>(); //QueryView的字典
+
+        //20141224 
+        Dictionary<string, List<string>> Modules = new Dictionary<string, List<string>>();
+        Dictionary<string, string> EnToCHT = new Dictionary<string, string>();
+        Dictionary<string, string> CHTToEn = new Dictionary<string, string>();
         #endregion
 
 
@@ -888,7 +891,81 @@ namespace CreateXML {
             QueryView.Type = "Browse";
             DicQueryView["Browse"] = QueryView;
             #endregion
+
+
+            #region 20141224 add by Dick for 加入模組下拉方式           
+            string ProgamPath = GetSettinhPath();
+            DirectoryInfo DirInfo = new DirectoryInfo(ProgamPath);
+            string Permission = DirInfo.FullName + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "Permission.xml";
+            Modules = GetModules(Permission);
+            string ModuleResource = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "ModResource.xml";
+            XmlDocument docResource = FileTool.XmlFile.LoadXml(ModuleResource);
+            XmlNode ResourceRoot = docResource.SelectSingleNode("root");            
+            foreach (XmlNode node in ResourceRoot.ChildNodes)
+            {
+                //XmlNode ch = node.InnerText.Trim();
+                string innerText = node.ChildNodes[1].InnerXml.Trim();
+                string Attributes = node.Attributes[0].Value.Replace("Mod_", "");
+                EnToCHT.Add(Attributes, innerText);
+
+                if (!CHTToEn.ContainsKey(innerText))
+                {
+                    CHTToEn.Add(innerText, Attributes);
+                }
+            }
+
+            foreach (string key in Modules.Keys)
+            {
+                string name = EnToCHT[key];
+                CB_Modules.Items.Add(name);
+            }
+
+
+            #endregion
         }
+
+        /// <summary>
+        /// 20141224 add by Dick 取得模組架構 #6
+        /// </summary>
+        /// <param name="pXmlPath"></param>
+        /// <returns></returns>
+        private Dictionary<string, List<string>> GetModules(string pXmlPath)
+        {
+            Dictionary<string, List<string>> DicModules = new Dictionary<string, List<string>>();
+            XmlDocument doc = FileTool.XmlFile.LoadXml(pXmlPath);
+            XmlNode root = doc.ChildNodes[1];
+            StringBuilder SB = new StringBuilder();
+            FileTool.XmlFile XmlFile = new FileTool.XmlFile();
+            XmlNode Module = root.ChildNodes[1];
+            foreach (XmlNode child in root.ChildNodes)
+            {
+                if (child.Name.Equals("Modules"))
+                {
+                    foreach (XmlNode node in child.ChildNodes)
+                    {
+                        string ModuleName = string.Empty;
+                        if (node.Name.Equals("Module"))
+                        {
+                            ModuleName = node.Attributes[0].Value;
+                            List<string> ChildList = new List<string>();
+                            foreach (XmlNode SubNode in node.FirstChild.ChildNodes)
+                            {
+                                if (SubNode.Name.Equals("Module"))
+                                {
+                                    if (!ChildList.Contains(SubNode.Attributes[0].Value))
+                                    {
+                                        ChildList.Add(SubNode.Attributes[0].Value);
+                                    }
+                                }
+                            }
+                            DicModules[ModuleName] = ChildList;
+                        }
+                    }
+                }
+            }
+            return DicModules;
+        }
+
 
         /// <summary>
         /// 20141006 modified by Dick 
@@ -3186,6 +3263,43 @@ namespace CreateXML {
                 return "Bool";
             }
             return "";
+        }
+
+        /// <summary>
+        /// 20141224 add by Dick for 可儲存"權限設定"及"模式設定"(一鍵生成加入Permission) #6
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CB_Modules_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CB_Modules.SelectedIndex != -1)
+            {
+                CB_SubModule.Items.Clear();
+                string English = CHTToEn[CB_Modules.Text];
+                if (Modules.ContainsKey(English))
+                {
+                    List<string> li = Modules[English];
+                    foreach (string item in li)
+                    {
+                        CB_SubModule.Items.Add(EnToCHT[item]);
+                    }
+                }
+                else
+                {
+                    English = English + "Module";
+                    if (Modules.ContainsKey(English))
+                    {
+                        List<string> li = Modules[English];
+                        foreach (string item in li)
+                        {
+                            if(EnToCHT.ContainsKey(item))
+                            {
+                                CB_SubModule.Items.Add(EnToCHT[item]);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }    
 }

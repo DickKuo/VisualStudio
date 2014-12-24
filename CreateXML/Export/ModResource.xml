@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<data name="Mod_PositionJobPlan" xml:space="preserve">
+    <value>職務職位規劃</value>
+  </data>
+<data name="Mod_SynthetizeQueryManage" xml:space="preserve">
+    <value>綜合查詢管理</value>
+  </data>
+<data name="Mod_PublicConfigManage" xml:space="preserve">
+    <value>公共配置</value>
+  </data>
+<data name="Mod_BaseDataManage" xml:space="preserve">
+    <value>基礎數據</value>
+  </data>
+<data name="Mod_WorkingDissensionManage" xml:space="preserve">
+    <value>勞動爭議管理</value>
+  </data>
+<data name="Mod_MyWorkPlaceModule" xml:space="preserve">
+    <value>我的主工作臺</value>
+  </data>
+<data name="Mod_HumanResourcePlanModule" xml:space="preserve">
+    <value>組織架構管理</value>
+    <comment>組織架構管理</comment>
+  </data>
+<data name="Mod_HumantrackManagerModule" xml:space="preserve">
+    <value>人事跟蹤管理</value>
+    <comment>人事跟踪管理</comment>
+  </data>
+<data name="Mod_SystemSettingModule" xml:space="preserve">
+    <value>系統配置中心</value>
+    <comment>系统配置中心</comment>
+  </data>
+<data name="Mod_Department_RootTextManage" xml:space="preserve">
+    <value>組織架構規劃</value>
+    <comment>组织架构规劃</comment>
+  </data>
+<data name="Mod_EmployeeCheckUpManage" xml:space="preserve">
+    <value>健康檢查管理</value>
+    <comment>健康检查管理</comment>
+  </data>
+<data name="Mod_EmployeeClothingManage" xml:space="preserve">
+    <value>員工服裝管理</value>
+    <comment>员工服装管理</comment>
+  </data>
+<data name="Mod_EmployeeContractManage" xml:space="preserve">
+    <value>合同協議管理</value>
+    <comment>合同协议管理</comment>
+  </data>
+<data name="Mod_EmployeeDimissionManage" xml:space="preserve">
+    <value>離職退休管理</value>
+    <comment>离职退休管理</comment>
+  </data>
+<data name="Mod_EmployeeDormitoryFareManage" xml:space="preserve">
+    <value>員工宿舍管理</value>
+    <comment>员工宿舍管理</comment>
+  </data>
+<data name="Mod_EmployeeInfoManage" xml:space="preserve">
+    <value>員工資料管理</value>
+    <comment>雇员資料管理</comment>
+  </data>
+<data name="Mod_EmployeePartyManage" xml:space="preserve">
+    <value>黨員資料管理</value>
+    <comment>党员資料管理</comment>
+  </data>
+<data name="Mod_EmployeeRehiringManage" xml:space="preserve">
+    <value>員工回聘管理</value>
+    <comment>员工回聘管理</comment>
+  </data>
+<data name="Mod_EmployeeResidenceManage" xml:space="preserve">
+    <value>員工戶口管理</value>
+    <comment>员工户口管理</comment>
+  </data>
+<data name="Mod_EmployeeTranslationManager" xml:space="preserve">
+    <value>職位變動管理</value>
+    <comment>职位变动管理</comment>
+  </data>
+<data name="Mod_PositionJobManage" xml:space="preserve">
+    <value>職位規劃</value>
+    <comment>職位規劃</comment>
+  </data>
+<data name="Mod_PositionJobManage_Ultimate" xml:space="preserve">
+    <value>公司職位規劃</value>
+  </data>
+<data name="Mod_ProbationershipManage" xml:space="preserve">
+    <value>試用期管理</value>
+    <comment>试用期管理</comment>
+  </data>
+<data name="Mod_RewardManage" xml:space="preserve">
+    <value>員工獎懲管理</value>
+    <comment>员工奖惩管理</comment>
+  </data>
+<data name="Mod_CertificateManage" xml:space="preserve">
+    <value>特殊證照管理</value>
+    <comment>特殊證照管理</comment>
+  </data>
+<data name="Mod_EmployeeInsuranceManage" xml:space="preserve">
+    <value>員工商業保險</value>
+    <comment>員工商業保險</comment>
+  </data>
+<data name="Mod_IeciuiuentSelectManagement" xml:space="preserve">
+    <value>招募甄選管理</value>
+    <comment>招募甄選管理</comment>
+  </data>
+<data name="Mod_ResourceApplyManagement" xml:space="preserve">
+    <value>資源申領管理</value>
+  </data>
+<data name="Mod_EmployeeSatisfySurvey" xml:space="preserve">
+    <value>員工滿意度調查</value>
+  </data>
+<data name="Mod_TrainEmpolderManagement" xml:space="preserve">
+    <value>培訓開發管理</value>
+  </data>
+<data name="Mod_PerformanceAssessManagement" xml:space="preserve">
+    <value>績效考核管理</value>
+    <comment>绩效考核管理</comment>
+  </data>
+<data name="Mod_WorkTimeManagement" xml:space="preserve">
+    <value>考勤時間管理</value>
+    <comment>考勤时间管理</comment>
+  </data>
+<data name="Mod_BusinessApplyManagement" xml:space="preserve">
+    <value>因公出差管理</value>
+    <comment>因公出差管理</comment>
+  </data>
+<data name="Mod_AnnualLeaveSystem" xml:space="preserve">
+    <value>年假休假管理</value>
+  </data>
+<data name="Mod_PayBoonManagement" xml:space="preserve">
+    <value>薪資福利管理</value>
+  </data>
+<data name="Mod_DinnerManagement" xml:space="preserve">
+    <value>員工就餐管理</value>
+  </data>
+<data name="Mod_RelateToForeignSafeManagement" xml:space="preserve">
+    <value>涉外安全管理</value>
+  </data>
+<data name="Mod_AnnualLeaveBalanceManage" xml:space="preserve">
+    <value>年假結餘管理</value>
+  </data>
+<data name="Mod_AnnualLeaveCurrentManage" xml:space="preserve">
+    <value>當年年假資料</value>
+  </data>
+<data name="Mod_AnnualLeavePlanManage" xml:space="preserve">
+    <value>年假計劃管理</value>
+  </data>
+<data name="Mod_AnnualLeaveRegisterManage" xml:space="preserve">
+    <value>員工年假申請</value>
+  </data>
+<data name="Mod_AnnualLeaveSystemManage" xml:space="preserve">
+    <value>年假制度管理</value>
+  </data>
+<data name="Mod_AssessBasicSettingManage" xml:space="preserve">
+    <value>考核基本設置</value>
+  </data>
+<data name="Mod_AttendanceSumManage" xml:space="preserve">
+    <value>考勤月度關帳</value>
+  </data>
+<data name="Mod_BaseDataManage1" xml:space="preserve">
+    <value>基礎數據</value>
+  </data>
+<data name="Mod_BusinessApplyAnalyseManage" xml:space="preserve">
+    <value>統計分析</value>
+  </data>
+<data name="Mod_BusinessApplyBasicSettingManage" xml:space="preserve">
+    <value>基本設置</value>
+  </data>
+<data name="Mod_BusinessApplyManage" xml:space="preserve">
+    <value>出差管理</value>
+  </data>
+<data name="Mod_CanledarCenterManage" xml:space="preserve">
+    <value>日曆中心</value>
+  </data>
+<data name="Mod_CardManage" xml:space="preserve">
+    <value>考勤機設置管理</value>
+  </data>
+<data name="Mod_CommonPersonManage" xml:space="preserve">
+    <value>常用人員</value>
+  </data>
+<data name="Mod_DataCollectManage" xml:space="preserve">
+    <value>數據採集管理</value>
+  </data>
+<data name="Mod_DinnerBasicSettingManage" xml:space="preserve">
+    <value>就餐參數設定</value>
+  </data>
+<data name="Mod_DinnerDataManage" xml:space="preserve">
+    <value>就餐數據管理</value>
+  </data>
+<data name="Mod_DinnerPlanManage" xml:space="preserve">
+    <value>部門訂餐管理</value>
+  </data>
+<data name="Mod_DummyOrgRootManage" xml:space="preserve">
+    <value>虛擬組織管理</value>
+  </data>
+<data name="Mod_ExamineAppealManage" xml:space="preserve">
+    <value>考核申訴管理</value>
+  </data>
+<data name="Mod_FriendlyRemindManage" xml:space="preserve">
+    <value>友情提醒</value>
+  </data>
+<data name="Mod_GoOutToForeignManage" xml:space="preserve">
+    <value>出國出境管理</value>
+  </data>
+<data name="Mod_GuestRegisterManage" xml:space="preserve">
+    <value>來賓登記管理</value>
+  </data>
+<data name="Mod_HRNominatorManage" xml:space="preserve">
+    <value>職位繼任管理</value>
+  </data>
+<data name="Mod_HRSurveyManage" xml:space="preserve">
+    <value>人力資源調查</value>
+  </data>
+<data name="Mod_HumanResourcePlanManage" xml:space="preserve">
+    <value>人員編制計畫</value>
+  </data>
+<data name="Mod_IntegrationSettingManage" xml:space="preserve">
+    <value>整合設置</value>
+  </data>
+<data name="Mod_LogManage" xml:space="preserve">
+    <value>日誌管理</value>
+  </data>
+<data name="Mod_MyHomePageManage" xml:space="preserve">
+    <value>我的主頁</value>
+  </data>
+<data name="Mod_PABaseSettingManage" xml:space="preserve">
+    <value>薪資基本設置</value>
+  </data>
+<data name="Mod_PACalculateFuncManage" xml:space="preserve">
+    <value>薪資公式設置</value>
+  </data>
+<data name="Mod_PACitySettingManage" xml:space="preserve">
+    <value>社會統籌設置</value>
+  </data>
+<data name="Mod_PASalaryAdjustManage" xml:space="preserve">
+    <value>定薪調薪管理</value>
+  </data>
+<data name="Mod_PASalaryBoonManage" xml:space="preserve">
+    <value>員工福利管理</value>
+  </data>
+<data name="Mod_PASalaryByJobSettingManage" xml:space="preserve">
+    <value>計件工資管理</value>
+  </data>
+<data name="Mod_PASalaryCountManage" xml:space="preserve">
+    <value>薪酬計算管理</value>
+  </data>
+<data name="Mod_PASalaryEmployeeSetManage" xml:space="preserve">
+    <value>員工薪酬設置</value>
+  </data>
+<data name="Mod_PEPlanImplimentManage" xml:space="preserve">
+    <value>考核計劃實施</value>
+  </data>
+<data name="Mod_PEPlanManage" xml:space="preserve">
+    <value>考核計劃管理</value>
+  </data>
+<data name="Mod_PerformanceImproveManage" xml:space="preserve">
+    <value>考核改進管理</value>
+  </data>
+<data name="Mod_PlanEvaluateManage" xml:space="preserve">
+    <value>招募評估管理</value>
+  </data>
+<data name="Mod_PowerManage" xml:space="preserve">
+    <value>權限管理</value>
+  </data>
+<data name="Mod_PublicConfigManage1" xml:space="preserve">
+    <value>公共配置</value>
+  </data>
+<data name="Mod_RecruitEmployeeManage" xml:space="preserve">
+    <value>人才庫管理</value>
+  </data>
+<data name="Mod_RecruitReportManage" xml:space="preserve">
+    <value>報到處理</value>
+  </data>
+<data name="Mod_RecruitRequirementManage" xml:space="preserve">
+    <value>招募需求管理</value>
+  </data>
+<data name="Mod_RecruitResumeAssignManage" xml:space="preserve">
+    <value>求職人員管理</value>
+  </data>
+<data name="Mod_RecruitResumeDealManage" xml:space="preserve">
+    <value>應聘人員處理</value>
+  </data>
+<data name="Mod_RecruitSettingManage" xml:space="preserve">
+    <value>招募參數設置</value>
+  </data>
+<data name="Mod_RelationEmployyManage" xml:space="preserve">
+    <value>涉外人員管理</value>
+  </data>
+<data name="Mod_RepastDataAnalyseManage" xml:space="preserve">
+    <value>就餐數據查詢</value>
+  </data>
+<data name="Mod_REPlanMakeManage" xml:space="preserve">
+    <value>招募計劃制訂</value>
+  </data>
+<data name="Mod_ResourceApplyManage" xml:space="preserve">
+    <value>資源申領</value>
+  </data>
+<data name="Mod_ResourceGiveBackManage" xml:space="preserve">
+    <value>資源歸還</value>
+  </data>
+<data name="Mod_ResourceGiveBackSelectManage" xml:space="preserve">
+    <value>資源歸還查詢</value>
+  </data>
+<data name="Mod_ResourceSettingManage" xml:space="preserve">
+    <value>資源設置</value>
+  </data>
+<data name="Mod_RetainPersonnelRegisterManage" xml:space="preserve">
+    <value>求職人員管理</value>
+  </data>
+<data name="Mod_SurveyAnalyseManage" xml:space="preserve">
+    <value>調查分析</value>
+  </data>
+<data name="Mod_SurveyImplemntManage" xml:space="preserve">
+    <value>調查實施</value>
+  </data>
+<data name="Mod_SurveyInstallManage" xml:space="preserve">
+    <value>調查設置</value>
+  </data>
+<data name="Mod_SurveyPlanManage" xml:space="preserve">
+    <value>調查計劃</value>
+  </data>
+<data name="Mod_SystemSurveilManage" xml:space="preserve">
+    <value>系統監控器</value>
+  </data>
+<data name="Mod_TrainBasicSettingManage" xml:space="preserve">
+    <value>培訓基本設置</value>
+  </data>
+<data name="Mod_TrainEvaluateManager" xml:space="preserve">
+    <value>培訓滿意度調查</value>
+  </data>
+<data name="Mod_TrainImplementManager" xml:space="preserve">
+    <value>培訓實施管理</value>
+  </data>
+<data name="Mod_TrainingRenewManage" xml:space="preserve">
+    <value>續簽轉檔管理</value>
+  </data>
+<data name="Mod_TrainPlanManager" xml:space="preserve">
+    <value>培訓規劃管理</value>
+  </data>
+<data name="Mod_TrainProgramManager" xml:space="preserve">
+    <value>培訓計劃管理</value>
+  </data>
+<data name="Mod_TrainRequireManager" xml:space="preserve">
+    <value>培訓需求管理</value>
+  </data>
+<data name="Mod_WorkDayDutyManage" xml:space="preserve">
+    <value>每日作業管理</value>
+  </data>
+<data name="Mod_WorkInjuryManage" xml:space="preserve">
+    <value>工傷事故管理</value>
+  </data>
+<data name="Mod_WorkOverTimeManage" xml:space="preserve">
+    <value>員工加班管理</value>
+  </data>
+<data name="Mod_WorkTimeBasicSettingManage" xml:space="preserve">
+    <value>考勤基本設置</value>
+  </data>
+<data name="Mod_AnnualLeaveManagementModule" xml:space="preserve">
+    <value>年假休假管理</value>
+    <comment>年假休假管理</comment>
+  </data>
+<data name="Mod_BusinessApplyManagementModule" xml:space="preserve">
+    <value>因公出差管理</value>
+    <comment>因公出差管理</comment>
+  </data>
+<data name="Mod_DinnerManagementModule" xml:space="preserve">
+    <value>員工就餐管理</value>
+    <comment>员工就餐管理</comment>
+  </data>
+<data name="Mod_EmployeeSatisfySurveyModule" xml:space="preserve">
+    <value>員工滿意度調查</value>
+    <comment>员工满意度調查</comment>
+  </data>
+<data name="Mod_PayBoonManagementModule" xml:space="preserve">
+    <value>薪資福利管理</value>
+    <comment>薪資福利管理</comment>
+  </data>
+<data name="Mod_PerformanceAssessManagementModule" xml:space="preserve">
+    <value>績效考核管理</value>
+    <comment>绩效考核管理</comment>
+  </data>
+<data name="Mod_ReciuiuentSelectManagementModule" xml:space="preserve">
+    <value>招募甄選管理</value>
+    <comment>招募甄選管理</comment>
+  </data>
+<data name="Mod_RelateToForeignSafeManagementModule" xml:space="preserve">
+    <value>涉外安全管理</value>
+    <comment>涉外安全管理</comment>
+  </data>
+<data name="Mod_ReportModule" xml:space="preserve">
+    <value>系統報表中心</value>
+    <comment>系统報表中心</comment>
+  </data>
+<data name="Mod_ResourceApplyManagementModule" xml:space="preserve">
+    <value>資源申領管理</value>
+    <comment>資源申领管理</comment>
+  </data>
+<data name="Mod_TrainEmpolderManagementModule" xml:space="preserve">
+    <value>培訓開發管理</value>
+    <comment>培訓开发管理</comment>
+  </data>
+<data name="Mod_WorkTimeManagemenModule" xml:space="preserve">
+    <value>考勤時間管理</value>
+    <comment>考勤时间管理</comment>
+  </data>
+<data name="Mod_HumanResourcePlanReportNode" xml:space="preserve">
+    <value>組織架構管理</value>
+    <comment>組織架構管理</comment>
+  </data>
+<data name="Mod_HumantrackManager" xml:space="preserve">
+    <value>人事跟蹤管理</value>
+    <comment>人事跟踪管理</comment>
+  </data>
+<data name="Mod_IeciuiuentSelectManagement1" xml:space="preserve">
+    <value>招募甄選管理</value>
+    <comment>招募甄選管理</comment>
+  </data>
+<data name="Mod_PerformanceResult" xml:space="preserve">
+    <value>績效考核管理</value>
+    <comment>绩效考核管理</comment>
+  </data>
+<data name="Mod_RelateToForeignSafeManagementReport" xml:space="preserve">
+    <value>涉外安全管理</value>
+    <comment>涉外安全管理</comment>
+  </data>
+<data name="Mod_ResearchManagement" xml:space="preserve">
+    <value>員工滿意度管理</value>
+    <comment>员工满意度管理</comment>
+  </data>
+<data name="Mod_SalaryBoonManagement" xml:space="preserve">
+    <value>薪資福利管理</value>
+    <comment>薪資福利管理</comment>
+  </data>
+<data name="Mod_TimeManagement" xml:space="preserve">
+    <value>考勤時間管理</value>
+    <comment>考勤时间管理</comment>
+  </data>
+<data name="Mod_TrainEmpolderManagement1" xml:space="preserve">
+    <value>培訓開發管理</value>
+    <comment>培訓开发管理</comment>
+  </data>
+<data name="Mod_EmployeeCostCenterChangeManage" xml:space="preserve">
+    <value>成本中心變動管理</value>
+    <comment>成本中心变动管理</comment>
+  </data>
+<data name="Mod_PAEmpHealthCareSettingManage" xml:space="preserve">
+    <value>員工勞健保管理</value>
+  </data>
+<data name="Mod_AttendanceRankAnalysisManage" xml:space="preserve">
+    <value>班次自動分析</value>
+    <comment>班次自动分析</comment>
+  </data>
+<data name="Mod_PATaxApplyManage" xml:space="preserve">
+    <value>所得稅申報管理</value>
+    <comment>所得稅申報管理</comment>
+  </data>
+<data name="Mod_CustomReport" xml:space="preserve">
+    <value>自定義報表</value>
+    <comment>自定義報表</comment>
+  </data>
+<data name="Mod_EmpHealthCareSettingManage" xml:space="preserve">
+    <value>員工勞健保管理</value>
+    <comment>員工勞健保管理</comment>
+  </data>
+<data name="Mod_DaySTHoursTypeManage" xml:space="preserve">
+    <value>日標準工時數分類</value>
+    <comment>日標準工時數分類</comment>
+  </data>
+<data name="Mod_EmpDaySTHoursSetManage" xml:space="preserve">
+    <value>員工日標準工時設定</value>
+    <comment>員工日標準工時設定</comment>
+  </data>
+<data name="Mod_MyShortcut" xml:space="preserve">
+    <value>我的選單</value>
+  </data>
+<data name="Mod_MyShortcutManage" xml:space="preserve">
+    <value>我的選單</value>
+  </data>
+<data name="Mod_AttendanceBackupManage" xml:space="preserve">
+    <value>移轉考勤歷史資料</value>
+  </data>
+<data name="Mod_PAWorkFlowEntryPapersManage" xml:space="preserve">
+    <value>WorkFlow分錄底稿</value>
+  </data>
+<data name="Mod_PAYiFeiEntryPapersManage" xml:space="preserve">
+    <value>易飛財務集成</value>
+  </data>
+<data name="Mod_PATipTopEntryPapersManage" xml:space="preserve">
+    <value>TIPTOP分錄底稿</value>
+  </data>
+<data name="Mod_GroupInsuranceManage" xml:space="preserve">
+    <value>團保管理</value>
+  </data>
+<data name="Mod_AnnualLeaveManage" xml:space="preserve">
+    <value>員工年假管理</value>
+    <comment>員工年假管理</comment>
+  </data>
+<data name="Mod_EssManage" xml:space="preserve">
+    <value>ESS管理</value>
+  </data>
+<data name="Mod_SpecialLeaveManagementModule" xml:space="preserve">
+    <value>特休休假管理</value>
+    <comment>特休休假管理</comment>
+  </data>
+<data name="Mod_SpecialBaseSetManage" xml:space="preserve">
+    <value>基本設置</value>
+  </data>
+<data name="Mod_SpecialLeaveManage" xml:space="preserve">
+    <value>特休休假管理</value>
+  </data>
+<data name="Mod_PAAcctItemManage" xml:space="preserve">
+    <value>经营分析管理</value>
+  </data>
+<data name="Mod_PACosmosEntryPapersManage" xml:space="preserve">
+    <value>Cosmos薪資傳票底稿</value>
+  </data>
+<data name="Mod_TrainAnalyseManager" xml:space="preserve">
+    <value>培訓分析管理</value>
+  </data>
+<data name="Mod_TrainClassManager" xml:space="preserve">
+    <value>培訓課程管理</value>
+  </data>
+<data name="Mod_TrainTeacherManager" xml:space="preserve">
+    <value>培訓講師管理</value>
+  </data>
+<data name="Mod_PersonalInfoManage" xml:space="preserve">
+    <value>個資管理</value>
+  </data>
+<data name="Mod_PABaseSettingManage_Release" xml:space="preserve">
+    <value>薪資基本設定</value>
+  </data>
+<data name="Mod_PACalculateFuncManage_Release" xml:space="preserve">
+    <value>薪資公式設定</value>
+  </data>
+<data name="Mod_PASalaryEmployeeSetManage_Release" xml:space="preserve">
+    <value>員工薪酬設定</value>
+  </data>
+<data name="Mod_EmployeeBlackManage" xml:space="preserve">
+    <value>黑名單管理</value>
+    <comment>黑名单管理</comment>
+  </data>
+<data name="Mod_CollectDiffrenceManage" xml:space="preserve">
+    <value>差勤管理</value>
+  </data>
+<data name="Mod_OtherConcordancyManage" xml:space="preserve">
+    <value>其它整合</value>
+    <comment>其它整合</comment>
+  </data>
+<data name="Mod_OtherSetManage" xml:space="preserve">
+    <value>其他設置</value>
+  </data>
+<data name="Mod_PATipTopEntryPapersManage_Ultimate" xml:space="preserve">
+    <value>TOP GP分錄底稿</value>
+    <comment>TOP GP分錄底稿</comment>
+  </data>
+<data name="Mod_PAE10EntryPapersManage" xml:space="preserve">
+    <value>E10財務集成</value>
+    <comment>E10財務集成</comment>
+  </data>
+<data name="Mod_EmployeeDormitoryManage" xml:space="preserve">
+    <value>員工宿舍管理</value>
+    <comment>员工宿舍管理</comment>
+  </data>
+<data name="Mod_PESolutionSetting" xml:space="preserve">
+    <value>考核方案設置</value>
+    <comment>20140627</comment>
+  </data>
+<data name="Mod_DormitorySetting" xml:space="preserve">
+    <value>宿舍基本設置</value>
+  </data>
+<data name="Mod_IntegrationManage" xml:space="preserve">
+    <value>整合管理</value>
+    <comment>集成管理</comment>
+  </data>
+<data name="Mod_EatingMealStatistics" xml:space="preserve">
+    <value>就餐誤餐統計</value>
+    <comment>就餐誤餐統計</comment>
+  </data>
+<data name="Mod_DormitoryChange" xml:space="preserve">
+    <value>宿舍變動管理</value>
+  </data>
+<data name="Mod_DormitoryFare" xml:space="preserve">
+    <value>宿舍費用管理</value>
+  </data>
+</root>

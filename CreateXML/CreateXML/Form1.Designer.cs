@@ -98,6 +98,8 @@ this.MainGroup = new System.Windows.Forms.GroupBox();
 this.button2 = new System.Windows.Forms.Button();
 this.button1 = new System.Windows.Forms.Button();
 this.label3 = new System.Windows.Forms.Label();
+this.CB_SubModule = new System.Windows.Forms.ComboBox();
+this.CB_Modules = new System.Windows.Forms.ComboBox();
 this.EnitiesComboBox = new System.Windows.Forms.ComboBox();
 this.groupBox2 = new System.Windows.Forms.GroupBox();
 this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -109,6 +111,8 @@ this.radioButton6 = new System.Windows.Forms.RadioButton();
 this.radioButton5 = new System.Windows.Forms.RadioButton();
 this.cb_ForCase = new System.Windows.Forms.CheckBox();
 this.cb_OnlyParameter = new System.Windows.Forms.CheckBox();
+this.label6 = new System.Windows.Forms.Label();
+this.label5 = new System.Windows.Forms.Label();
 this.tabControl1 = new System.Windows.Forms.TabControl();
 this.tabPage1 = new System.Windows.Forms.TabPage();
 this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -179,7 +183,7 @@ this.cb_IOwnerObject.CheckedChanged += new System.EventHandler(this.cb_IOwnerObj
 // 
 // tb_className
 // 
-this.tb_className.Location = new System.Drawing.Point(66, 84);
+this.tb_className.Location = new System.Drawing.Point(66, 64);
 this.tb_className.Name = "tb_className";
 this.tb_className.Size = new System.Drawing.Size(166, 22);
 this.tb_className.TabIndex = 6;
@@ -187,7 +191,7 @@ this.tb_className.TabIndex = 6;
 // label1
 // 
 this.label1.AutoSize = true;
-this.label1.Location = new System.Drawing.Point(1, 94);
+this.label1.Location = new System.Drawing.Point(1, 70);
 this.label1.Name = "label1";
 this.label1.Size = new System.Drawing.Size(56, 12);
 this.label1.TabIndex = 7;
@@ -196,7 +200,7 @@ this.label1.Text = "實體名稱:";
 // label2
 // 
 this.label2.AutoSize = true;
-this.label2.Location = new System.Drawing.Point(256, 88);
+this.label2.Location = new System.Drawing.Point(256, 70);
 this.label2.Name = "label2";
 this.label2.Size = new System.Drawing.Size(32, 12);
 this.label2.TabIndex = 8;
@@ -204,7 +208,7 @@ this.label2.Text = "描述:";
 // 
 // tb_scrib
 // 
-this.tb_scrib.Location = new System.Drawing.Point(313, 81);
+this.tb_scrib.Location = new System.Drawing.Point(313, 67);
 this.tb_scrib.Name = "tb_scrib";
 this.tb_scrib.Size = new System.Drawing.Size(145, 22);
 this.tb_scrib.TabIndex = 9;
@@ -699,6 +703,8 @@ this.cb_Collection.Visible = false;
 this.MainGroup.Controls.Add(this.button2);
 this.MainGroup.Controls.Add(this.button1);
 this.MainGroup.Controls.Add(this.label3);
+this.MainGroup.Controls.Add(this.CB_SubModule);
+this.MainGroup.Controls.Add(this.CB_Modules);
 this.MainGroup.Controls.Add(this.EnitiesComboBox);
 this.MainGroup.Controls.Add(this.groupBox2);
 this.MainGroup.Controls.Add(this.groupBoxMode);
@@ -710,6 +716,8 @@ this.MainGroup.Controls.Add(this.tb_scrib);
 this.MainGroup.Controls.Add(this.cb_IFlagObject);
 this.MainGroup.Controls.Add(this.label2);
 this.MainGroup.Controls.Add(this.cb_ICodeObject);
+this.MainGroup.Controls.Add(this.label6);
+this.MainGroup.Controls.Add(this.label5);
 this.MainGroup.Controls.Add(this.label1);
 this.MainGroup.Controls.Add(this.tb_className);
 this.MainGroup.Controls.Add(this.cb_INamedObject);
@@ -751,6 +759,23 @@ this.label3.Name = "label3";
 this.label3.Size = new System.Drawing.Size(32, 12);
 this.label3.TabIndex = 26;
 this.label3.Text = "舊檔:";
+// 
+// CB_SubModule
+// 
+this.CB_SubModule.FormattingEnabled = true;
+this.CB_SubModule.Location = new System.Drawing.Point(313, 101);
+this.CB_SubModule.Name = "CB_SubModule";
+this.CB_SubModule.Size = new System.Drawing.Size(145, 20);
+this.CB_SubModule.TabIndex = 25;
+// 
+// CB_Modules
+// 
+this.CB_Modules.FormattingEnabled = true;
+this.CB_Modules.Location = new System.Drawing.Point(66, 99);
+this.CB_Modules.Name = "CB_Modules";
+this.CB_Modules.Size = new System.Drawing.Size(166, 20);
+this.CB_Modules.TabIndex = 25;
+this.CB_Modules.SelectedIndexChanged += new System.EventHandler(this.CB_Modules_SelectedIndexChanged);
 // 
 // EnitiesComboBox
 // 
@@ -869,6 +894,24 @@ this.cb_OnlyParameter.Size = new System.Drawing.Size(96, 16);
 this.cb_OnlyParameter.TabIndex = 19;
 this.cb_OnlyParameter.Text = "Only Parameter";
 this.cb_OnlyParameter.UseVisualStyleBackColor = true;
+// 
+// label6
+// 
+this.label6.AutoSize = true;
+this.label6.Location = new System.Drawing.Point(248, 106);
+this.label6.Name = "label6";
+this.label6.Size = new System.Drawing.Size(44, 12);
+this.label6.TabIndex = 7;
+this.label6.Text = "子模組:";
+// 
+// label5
+// 
+this.label5.AutoSize = true;
+this.label5.Location = new System.Drawing.Point(25, 102);
+this.label5.Name = "label5";
+this.label5.Size = new System.Drawing.Size(32, 12);
+this.label5.TabIndex = 7;
+this.label5.Text = "模組:";
 // 
 // tabControl1
 // 
@@ -1092,6 +1135,10 @@ this.PerformLayout();
         private System.Windows.Forms.TabPage tabSub;
         private System.Windows.Forms.TabPage tabIncrease;
         private System.Windows.Forms.ToolStripMenuItem 載入實體ToolStripMenuItem;
+        private System.Windows.Forms.ComboBox CB_Modules;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox CB_SubModule;
+        private System.Windows.Forms.Label label6;
     }
 }
 
