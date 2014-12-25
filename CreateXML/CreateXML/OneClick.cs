@@ -17,6 +17,8 @@ namespace CreateXML {
 
         public string Parent { get; set; }
 
+        
+
         public OneClick(string parent, string export) {
             Expory = export;
             Parent = parent;
@@ -1035,6 +1037,229 @@ namespace CreateXML {
             root.AppendChild(DataEntity);
             doc.Save(FullFileName);
         }
+
+
+       /// <summary>
+        /// 20141225 add by Dick for 寫入Permission檔案#6
+       /// </summary>
+       /// <param name="pPermissionPath"></param>
+       /// <param name="pModuleName"></param>
+       /// <param name="pSubModuleName"></param>
+       /// <param name="pModules"></param>
+       /// <param name="pEnToCHT"></param>
+       /// <param name="pCHTToEn"></param>
+        public void WritePermissionFile(string pPermissionPath,string pEntityName,string pModuleName,string pSubModuleName,string ActionString,Dictionary<string, List<string>> pModules, Dictionary<string, string> pEnToCHT ,Dictionary<string, string> pCHTToEn)
+        {
+            string ModuleName =string.Empty;
+            string SubName =string.Empty;
+            if (pCHTToEn.ContainsKey(pModuleName))
+            {
+                string temp = pCHTToEn[pModuleName];
+                if (pModules.ContainsKey(temp))
+                {
+                    ModuleName = temp;
+                }
+                else
+                {
+                    if (pModules.ContainsKey(temp+"Module"))
+                     {
+                         ModuleName = temp + "Module";
+                     }
+                }                
+            }
+            if (pCHTToEn.ContainsKey(pSubModuleName))
+            {
+                SubName = pCHTToEn[pSubModuleName];
+            }
+            if (string.IsNullOrEmpty(ModuleName))
+            {
+                throw new Exception("寫入Permission失敗");
+            }
+
+            CheckModule(pPermissionPath, ModuleName, SubName);
+            CheckSubModule(pPermissionPath, ModuleName, SubName);
+            XmlDocument doc = FileTool.XmlFile.LoadXml(pPermissionPath);
+            AppendModule(pEntityName, ModuleName, doc);
+            AppendAction(pEntityName, doc);
+            AppendBusinessObject(pEntityName, ActionString, doc);
+            doc.Save(pPermissionPath);
+        }
+
+       /// <summary>
+        /// 20141225 add by Dick for 加入BusinessObject #6
+       /// </summary>
+       /// <param name="pEntityName"></param>
+       /// <param name="ActionString"></param>
+       /// <param name="doc"></param>
+        private void AppendBusinessObject(string pEntityName,string ActionString, XmlDocument doc)
+        {
+            XmlNode node = doc.ChildNodes[1].ChildNodes[2];
+
+            XmlElement BusinessObject = doc.CreateElement("BusinessObject");
+            BusinessObject.SetAttribute("Name",pEntityName);
+            BusinessObject.SetAttribute("ProgramName", pEntityName+"Browse");
+            XmlElement ExtendCodes = doc.CreateElement("ExtendCodes");
+            XmlElement ExtendCode = doc.CreateElement("ExtendCode");
+            ExtendCode.SetAttribute("Name","DEFAULT");
+            ExtendCode.SetAttribute("ActionSetting", ActionString);
+            ExtendCodes.AppendChild(ExtendCode);
+            BusinessObject.AppendChild(ExtendCodes);
+            node.AppendChild(BusinessObject);
+        }
+
+
+       /// <summary>
+        /// 20141225 add by Dick for 加入動作包 #6
+       /// </summary>
+       /// <param name="pEntityName"></param>
+       /// <param name="doc"></param>
+        private void AppendAction(string pEntityName,XmlDocument doc)
+        {
+            XmlNode node = doc.ChildNodes[1].ChildNodes[0];
+            XmlElement ActionSetting = doc.CreateElement("ActionSetting");
+            ActionSetting.SetAttribute("Name", pEntityName + "Action");
+            XmlElement Actions = doc.CreateElement("Actions");
+            ActionSetting.AppendChild(Actions);
+            XmlElement Action1 = doc.CreateElement("Action");
+            Action1.SetAttribute("Name", "Read");
+            XmlElement Action2 = doc.CreateElement("Action");
+            Action1.SetAttribute("Name", "Create");
+            XmlElement Action3 = doc.CreateElement("Action");
+            Action1.SetAttribute("Name", "Write");
+            XmlElement Action4 = doc.CreateElement("Action");
+            Action1.SetAttribute("Name", "Delete");
+            Actions.AppendChild(Action1);
+            Actions.AppendChild(Action2);
+            Actions.AppendChild(Action3);
+            Actions.AppendChild(Action4);
+            ActionSetting.AppendChild(Actions);
+            node.AppendChild(ActionSetting);            
+        }
+
+       /// <summary>
+        /// 20141225 add by Dick for 加入Permission Browse #6
+       /// </summary>
+       /// <param name="pEntityName"></param>
+       /// <param name="ModuleName"></param>
+       /// <param name="doc"></param>
+        private void AppendModule( string pEntityName, string ModuleName, XmlDocument doc)
+        {
+            foreach (XmlNode node in doc.ChildNodes[1].ChildNodes[1].ChildNodes)
+            {
+                if (node.Name.Equals("Module"))
+                {
+                    if (node.Attributes[0].Value.Equals(ModuleName))
+                    {
+                        XmlNode child = node.ChildNodes[0];
+                        foreach (XmlNode childNode in child.ChildNodes)
+                        {
+                            if (childNode.Name.Equals("Module"))
+                            {
+                                XmlNode Programs = childNode.ChildNodes[0];
+                                XmlElement Program = doc.CreateElement("Program");
+                                Program.SetAttribute("Name", pEntityName + "Browse");
+                                Program.SetAttribute("ActionSetting",pEntityName+"Action");
+                                Program.SetAttribute("BusinessObject", pEntityName);
+                                Program.SetAttribute("Image", "TrainingType_16");
+                                Program.SetAttribute("UriAction", "Browse");
+                                Program.SetAttribute("UriTypeKey", "XDepDeduction");
+                                Programs.AppendChild(Program);                            
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 20141225 add by Dick for 檢查節點並補上 #6
+        /// </summary>
+        /// <param name="pPermissionPath"></param>
+        /// <param name="pModuleName"></param>
+        /// <param name="pSubModuleName"></param>
+        private void CheckModule(string pPermissionPath,string pModuleName, string pSubModuleName)
+        {
+            bool Has = false;
+            XmlDocument doc = FileTool.XmlFile.LoadXml(pPermissionPath);
+            foreach (XmlNode node in doc.ChildNodes[1].ChildNodes[1].ChildNodes)
+            {
+                if (node.Name.Equals("Module"))
+                {
+                    if (node.Attributes[0].Value.Equals(pModuleName))
+                    {
+                        Has = true;
+                    }
+                }
+            }
+            if (!Has)
+            {
+                XmlElement Module = doc.CreateElement("Module");
+                Module.SetAttribute("Name", pModuleName);
+                XmlElement Modules = doc.CreateElement("Modules");
+                Module.AppendChild(Modules);
+                XmlElement SubModule = doc.CreateElement("Module");
+                SubModule.SetAttribute("Name", pSubModuleName);
+                Modules.AppendChild(SubModule);
+                XmlElement Programs = doc.CreateElement("Programs");
+                SubModule.AppendChild(Programs);
+                doc.ChildNodes[1].ChildNodes[1].AppendChild(Module);
+                doc.Save(pPermissionPath);
+            }
+        }
+
+        /// <summary>
+        /// 20141225 add by Dick for 檢查節點並補上 #6
+        /// </summary>
+        /// <param name="pPermissionPath"></param>
+        /// <param name="pModuleName"></param>
+        /// <param name="pSubModuleName"></param>
+        private void CheckSubModule(string pPermissionPath, string pModuleName, string pSubModuleName)
+        {
+            bool Has = false;
+            XmlDocument doc = FileTool.XmlFile.LoadXml(pPermissionPath);
+            foreach (XmlNode node in doc.ChildNodes[1].ChildNodes[1].ChildNodes)
+            {
+                if (node.Name.Equals("Module"))
+                {
+                    if (node.Attributes[0].Value.Equals(pModuleName))
+                    {
+                        XmlNode Modules = node.ChildNodes[0];
+                        foreach (XmlNode child in Modules.ChildNodes)
+                        {
+                            if (child.Name.Equals("Module"))
+                            {
+                                if (child.Attributes[0].Value.Equals(pSubModuleName))
+                                {
+                                    Has = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!Has)
+            {
+                foreach (XmlNode node in doc.ChildNodes[1].ChildNodes[1].ChildNodes)
+                {
+                    if (node.Name.Equals("Module"))
+                    {
+                        if (node.Attributes[0].Value.Equals(pModuleName))
+                        {
+                            XmlNode Modules = node.ChildNodes[0];
+                            XmlElement SubModule = doc.CreateElement("Module");
+                            SubModule.SetAttribute("Name", pSubModuleName);
+                            Modules.AppendChild(SubModule);
+                            XmlElement Programs = doc.CreateElement("Programs");
+                            SubModule.AppendChild(Programs);
+                            Modules.AppendChild(SubModule);
+                            doc.Save(pPermissionPath);
+                        }
+                    }
+                }
+            }
+        }
+
 
     }
 

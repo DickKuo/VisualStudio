@@ -2601,13 +2601,16 @@ namespace CreateXML {
             CreateServer(str);
         }
 
-        private void 一鍵生成ToolStripMenuItem_Click(object sender, EventArgs e) {
-            if(tabControlDetail.TabPages.Count <= 3) {
+        private void 一鍵生成ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabControlDetail.TabPages.Count <= 3)
+            {
                 SingleFile(); //單檔
             }
-            else {
+            else
+            {
                 MulitFile(); //雙檔
-            }            
+            }
         }
 
         /// <summary>
@@ -2706,6 +2709,28 @@ namespace CreateXML {
             //tasks[0]= System.Threading.Tasks.Task.Factory.StartNew(() => TreeResource(oneclick));           
             //TreeResource(oneclick);
             #endregion
+
+
+            #region  20141225 add by Dick for 加入Permission
+            DirectoryInfo DirPro = new DirectoryInfo(ProgamPath);
+            string PermissionPath = DirPro.Parent.FullName +Path.DirectorySeparatorChar+ "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "PermissionForCase.xml";
+            string ActionString = string.Empty;
+            if (radioButton1.Checked)
+            {
+                ActionString = "BaseActions";
+            }
+            if (radioButton2.Checked)
+            {
+                ActionString = "CorpActions";
+            }
+            if (radioButton3.Checked)
+            {
+                ActionString = "EmpActions";
+            }
+
+            oneclick.WritePermissionFile(PermissionPath, tb_className.Text, CB_Modules.Text, CB_SubModule.Text, ActionString, Modules, EnToCHT, CHTToEn);
+            #endregion
+
             MessageBox.Show("生成完成");
         }
 
@@ -2806,6 +2831,26 @@ namespace CreateXML {
 
             #endregion
 
+
+            #region  20141225 add by Dick for 加入Permission
+            DirectoryInfo DirPro = new DirectoryInfo(ProgamPath);
+            string PermissionPath = DirPro.Parent.FullName + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "PermissionForCase.xml";
+            string ActionString=string.Empty;
+            if (radioButton1.Checked)
+            {
+                ActionString = "BaseActions";
+            }
+            if(radioButton2.Checked)
+            {
+            ActionString="CorpActions";
+            }
+            if (radioButton3.Checked)
+            {
+            ActionString="EmpActions";
+            }
+
+            oneclick.WritePermissionFile(PermissionPath, tb_className.Text, CB_Modules.Text, CB_SubModule.Text, ActionString, Modules, EnToCHT, CHTToEn);
+            #endregion
 
             //System.Threading.Tasks.Task.WaitAll(tasks);
             MessageBox.Show("完成!!");
