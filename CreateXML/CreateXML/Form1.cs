@@ -918,10 +918,10 @@ namespace CreateXML {
             {
                 string name = EnToCHT[key];
                 CB_Modules.Items.Add(name);
-            }
-
-
+            }            
             #endregion
+            //20141226 add by Dick for 顯示當前設定位置 #9
+           label7.Text ="當前設定位置："+  GetSettinhPath();
         }
 
         /// <summary>
@@ -1727,6 +1727,8 @@ namespace CreateXML {
         private void 路徑ToolStripMenuItem_Click(object sender, EventArgs e) {
             PathForm _pathForm = new PathForm();
             _pathForm.ShowDialog();
+            //20141226 add by Dick for 顯示當前設定位置 #9
+            label7.Text = "當前設定位置：" + GetSettinhPath();
         }
 
         private void 一併修改ToolStripMenuItem_Click(object sender, EventArgs e) {
