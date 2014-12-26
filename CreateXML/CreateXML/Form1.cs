@@ -3038,13 +3038,19 @@ namespace CreateXML {
             if(tab.SelectedTab.Text =="+") {
                 //加入Browse還有條件
                 ConditionView PageName = new ConditionView();
-                if(PageName.ShowDialog() == DialogResult.OK) {
+                if (PageName.ShowDialog() == DialogResult.OK)
+                {
                     tab.TabPages.Insert(tab.SelectedIndex, PageName.Result.BrowseName);
                     tab.SelectedIndex = tab.SelectedIndex - 1;
                     TabPage page = tab.SelectedTab;
                     TabAddGridView(tab.SelectedIndex - 1, page);
-                    QueryViewCondition BroseCodition = PageName.Result;                    
+                    QueryViewCondition BroseCodition = PageName.Result;
                     DicQueryView[PageName.Result.BrowseName] = BroseCodition;
+                }
+                else
+                {
+                    //20141226 add by Dick for  新增QueryView畫面取消後，不會移置前一個QueryView頁籤#11
+                    tab.SelectedIndex = TabSelectedBefore;
                 }
             }
             if(tab.SelectedTab.Text == "-") {
@@ -3099,8 +3105,14 @@ namespace CreateXML {
             }
             if(BroseCodition != null) {
                 ConditionView conditionview = new ConditionView(BroseCodition);
-                if(conditionview.ShowDialog() == DialogResult.OK) {
+                if (conditionview.ShowDialog() == DialogResult.OK)
+                {
                     DicQueryView[Page.Text] = conditionview.Result;
+                }
+                else
+                {
+                    //20141226  Modified by  Dick for  #11
+                    tabControl1.SelectedIndex = 0;
                 }
             }
             else {
