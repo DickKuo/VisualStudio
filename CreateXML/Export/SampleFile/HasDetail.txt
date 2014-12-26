@@ -1,0 +1,415 @@
+//---------------------------------------------------------------- 
+//Copyright (C) 2005-2005 Digital China Management System Co.,Ltd
+//Http://www.Dcms.com.cn 
+// All rights reserved.
+//<author>author</author>
+//<createDate>XTestDate</createDate>
+//<description>description</description>
+//---------------------------------------------------------------- 
+using System;
+using System.Data;
+using System.Text;
+using System.Drawing;
+using System.Windows.Forms;
+using System.ComponentModel;
+using System.Collections.Generic;
+ 
+using Dcms.Common;
+using Dcms.Common.UI;
+using Dcms.HR.Services;
+using Dcms.HR.DataEntities;
+using Dcms.HR.UI.Properties;
+ 
+namespace Dcms.HR.UI
+{
+ 
+    /// <summary>
+    /// XTest實體編輯介面
+    /// </summary>
+    public class XTestEditerView : HREditerView
+    {
+ 
+        /// <summary>
+        /// 初始化XTestEditerView
+        /// </summary>
+        public XTestEditerView()
+        {
+            InitializeComponent();
+ 
+            //添加明細編輯介面之後，再取消下面注釋
+            this.XTestDetailDcmsEditGrid.EditerView = new XTestDetailEditerView();
+        }
+ 
+        #region Windows 表單設計器生成的代碼
+ 
+        private BindingSource entityBindingSource;
+        private BindingSource XTestDetailBindingSource;
+        private ErrorProvider errorProvider;
+        private TabPage tpgXTestDetail;
+        private DataEntityListView devXTestDetail;
+        private DcmsEditGrid XTestDetailDcmsEditGrid;
+        private DevExpress.XtraGrid.Views.Grid.GridView grvXTestDetail;
+ 
+        /// <summary>
+        /// 必需的設計器變數。
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+ 
+        /// <summary>
+        /// 清理所有正在使用的資源。
+        /// </summary>
+        /// <param name="disposing">如果應釋放託管資源，為 true；否則為 false。</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+ 
+        /// <summary>
+        /// 設計器支持所需的方法 - 不要
+        /// 使用代碼編輯器修改此方法的內容。
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.entityBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.XTestDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.tpgXTestDetail = new System.Windows.Forms.TabPage();
+            this.devXTestDetail = new Dcms.Common.UI.DataEntityListView();
+            this.XTestDetailDcmsEditGrid = new Dcms.Common.UI.DcmsEditGrid();
+            this.grvXTestDetail = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
+            this.MainTabControl.SuspendLayout();
+            this.DetailTabControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.entityBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            this.tpgXTestDetail.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.XTestDetailDcmsEditGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.XTestDetailBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.devXTestDetail)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvXTestDetail)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // entityBindingSource
+            // 
+            this.entityBindingSource.DataSource = typeof(Dcms.HR.DataEntities.XTest);
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            this.errorProvider.DataSource = this.entityBindingSource;
+            // 
+            // tpgXTestDetail
+            // 
+            this.tpgXTestDetail.Controls.Add(this.XTestDetailDcmsEditGrid);
+            this.tpgXTestDetail.Name = "tpgXTestDetail";
+            this.tpgXTestDetail.Text = "XTestDetail";
+            this.tpgXTestDetail.UseVisualStyleBackColor = true;
+            // 
+            // XTestDetailBindingSource
+            // 
+            this.XTestDetailBindingSource.DataSource = typeof(Dcms.HR.DataEntities.XTestDetail);
+            // 
+            // XTestDetailDcmsEditGrid
+            // 
+            this.XTestDetailDcmsEditGrid.DataSource = this.devXTestDetail;
+            this.XTestDetailDcmsEditGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.XTestDetailDcmsEditGrid.EmbeddedNavigator.Name = "";
+            this.XTestDetailDcmsEditGrid.MainView = this.grvXTestDetail;
+            this.XTestDetailDcmsEditGrid.Name = "XTestDetailDcmsEditGrid";
+            this.XTestDetailDcmsEditGrid.ReadOnly = false;
+            this.XTestDetailDcmsEditGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.grvXTestDetail});
+            // 
+            // devXTestDetail
+            // 
+            this.devXTestDetail.DataMember = "Detail";
+            this.devXTestDetail.DataSource = this.entityBindingSource;
+            this.devXTestDetail.SourceType = typeof(Dcms.HR.DataEntities.XTestDetail);
+            // 
+            // grvXTestDetail
+            // 
+            this.grvXTestDetail.Appearance.EvenRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(226)))), ((int)(((byte)(227)))));
+            this.grvXTestDetail.Appearance.EvenRow.Options.UseBackColor = true;
+            this.grvXTestDetail.GridControl = this.XTestDetailDcmsEditGrid;
+            this.grvXTestDetail.Name = "grvXTestDetail";
+            this.grvXTestDetail.OptionsBehavior.Editable = false;
+            this.grvXTestDetail.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.grvXTestDetail.OptionsView.EnableAppearanceEvenRow = true;
+            this.grvXTestDetail.OptionsView.ShowGroupPanel = false;
+            // 
+            // DetailTabControl
+            // 
+            this.DetailTabControl.Controls.Add(this.tpgXTestDetail);
+            // 
+            // XTestEditerView
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "XTestEditerView";
+ 
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
+            this.splitContainer.ResumeLayout(false);
+            this.MainTabControl.ResumeLayout(false);
+            this.DetailTabControl.ResumeLayout(false);
+ 
+            ((System.ComponentModel.ISupportInitialize)(this.entityBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            this.tpgXTestDetail.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.XTestDetailDcmsEditGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.devXTestDetail)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvXTestDetail)).EndInit();
+            this.ResumeLayout(false);
+ 
+        }
+ 
+        #endregion
+ 
+        #region Override
+        /// <summary>
+        /// 觸發DataSourceChanged事件
+        /// </summary>
+        /// <param name="e">事件需要的參數</param>
+        protected override void OnDataSourceChanged(EventArgs e)
+        {
+            this.entityBindingSource.DataSource = this.DataSource;
+            base.OnDataSourceChanged(e);
+        }
+ 
+        /// <summary>
+        /// 控制表單中控制項的Enabled屬性
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnReadonlyChanged(EventArgs e)
+        {
+            base.OnReadonlyChanged(e);
+            //如：this.txtDept.Enabled = false;
+        }
+ 
+        /// <summary>
+        /// 結束編輯
+        /// </summary>
+        public override void EndEdit()
+        {
+            base.EndEdit();
+            this.entityBindingSource.EndEdit();
+        }
+        #endregion
+ 
+    }
+ 
+ 
+    /// <summary>
+    /// XTest文件視窗的訪問服務類
+    /// </summary>
+    public class XTestDocumentProvider : HRDocumentServiceProvider, IDocumentInfoProvider
+    {
+ 
+        #region Override
+ 
+        /// <summary>
+        /// 所屬模組
+        /// </summary>
+        public override string ModuleName
+        {
+            get
+            {
+                //人事：HumantrackManagerProvider
+                //考勤：WorkTimeManagementProvider
+                return ModuleName.TYPE_KEY;
+            }
+        }
+ 
+        /// <summary>
+        /// 創建流覽窗口
+        /// </summary>
+        /// <returns>新的流覽視窗物件</returns>
+        protected override IWindow CreateBrowseWindow()
+        {
+            XTestBrowseDocumentWindow browseWindow = new XTestBrowseDocumentWindow();
+            browseWindow.Name = GetBrowseWindowName();
+            browseWindow.UsingExtraText = true;
+            return browseWindow;
+        }
+ 
+        /// <summary>
+        /// 創建DocumentWindow對象 
+        /// </summary>
+        /// <returns>新的DocumentWindow物件</returns>
+        protected override DocumentWindow CreateDocumentWindow()
+        {
+            return new XTestDocument();
+        }
+ 
+        /// <summary>
+        /// 獲得XTest的商業服務類
+        /// </summary>
+        /// <param name="pCustom"></param>
+        /// <returns></returns>
+        public override object GetBusinessService(object pCustom)
+        {
+            return Factory.GetService<IXTestServiceX>();
+        }
+ 
+        /// <summary>
+        /// 返回XTest文檔類型的關鍵字
+        /// </summary>
+        public override string TypeKey
+        {
+            get { return XTest.TYPE_KEY; }
+        }
+ 
+        #endregion
+ 
+        #region IDocumentInfoProvider Members
+        /// <summary>
+        /// 返回XTest文檔類型的當地語系化名稱
+        /// </summary>
+        public string DisplayName
+        {
+            get { return Resources.XTestDisplayName; }
+        }
+ 
+        /// <summary>
+        /// 返回描述XTest文檔的大圖形
+        /// </summary>
+        public System.Drawing.Image LargeImage
+        {
+            get { return Resources.AnnualLeavePlan_32; }
+        }
+ 
+        /// <summary>
+        /// 返回描述XTest文檔的小圖形
+        /// </summary>
+        public System.Drawing.Image SmallImage
+        {
+            get { return Resources.AnnualLeavePlan_16; }
+        }
+ 
+        #endregion
+    }
+ 
+ 
+    /// <summary>
+    /// XTest文檔的視窗物件
+    /// </summary>
+    public class XTestDocument : DcmsDocumentWindow
+    {
+ 
+        /// <summary>
+        /// 返回XTest窗口的文檔關鍵字
+        /// </summary>
+        public override string TypeKey
+        {
+            get
+            {
+                return XTest.TYPE_KEY;
+            }
+        }
+ 
+        public override string HelpKey
+        {
+            get
+            {
+                return XTest.TYPE_KEY;
+            }
+        }
+ 
+        #region InitializeComponent
+ 
+        /// <summary>
+        /// 初始化XTestDocument
+        /// </summary>
+        public XTestDocument()
+        {
+            InitializeComponent();
+        }
+ 
+        private XTestEditerView entityEditerView1;
+ 
+        private void InitializeComponent()
+        {
+            this.entityEditerView1 = new Dcms.HR.UI.XTestEditerView();
+            this.SuspendLayout();
+            // 
+            // entityEditerView1
+            // 
+            this.entityEditerView1.DataSource = null;
+            this.entityEditerView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.entityEditerView1.Name = "XTestEditerView1";
+            this.entityEditerView1.Readonly = false;
+            this.entityEditerView1.TabIndex = 0;
+            // 
+            // XTestDocument
+            // 
+            this.Controls.Add(this.entityEditerView1);
+            this.EditerView = this.entityEditerView1;
+            this.Name = "XTestDocument";
+            this.Controls.SetChildIndex(this.entityEditerView1, 0);
+            this.entityEditerView1.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(442, 422);
+            this.ResumeLayout(false);
+ 
+        }
+        #endregion
+    }
+ 
+    /// <summary>
+    /// XTest實體的流覽視窗
+    /// </summary>
+    public class XTestBrowseDocumentWindow : HRBrowseDocumentWindow
+    {
+ 
+        /// <summary>
+        /// 初始化XTestBrowseDocumentWindow
+        /// </summary>
+        public XTestBrowseDocumentWindow()
+        {
+            this.Name = "XTestBrowseDocumentWindow";
+            this.TabControl.TypeKey = "XTest";
+            this.TabControl.CollectName = "Browse";
+            /* 明細拼湊介面添加之後去掉注釋即可*/
+			//加入明細列表
+            XTestDetailUI editView = new XTestDetailUI();
+            editView.MainTabControlCollapsed = true;
+            editView.Dock = DockStyle.Fill;
+            this.EditerView = editView;
+            this.TabControl.DataBind();
+            base.panBott.Controls.Add(editView);
+            this.EditViewVisable = true;//該屬性控制無論是否有資料，都載入明細頁簽
+			
+        }
+ 
+        /// <summary>
+        /// XTest類型的TypeKey
+        /// </summary>
+        public override string TypeKey
+        {
+            get { return XTest.TYPE_KEY; }
+        }
+ 
+        /// <summary>
+        /// XTest類型的HelpKey
+        /// </summary>
+        public override string HelpKey
+        {
+            get { return XTest.TYPE_KEY; }
+        }
+ 
+        public override string ProgramName
+        {
+            get
+            {
+                return "XTestBrowse";
+            }
+        }
+ 
+    }
+}
+

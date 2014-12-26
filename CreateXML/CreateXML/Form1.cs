@@ -2624,6 +2624,7 @@ namespace CreateXML {
             OneClick oneclick = new OneClick(ParentPath, ProgamPath);
             OneClickMultiFile multiclick = new OneClickMultiFile(ParentPath, ProgamPath);
             List<Detail> detailLis = new List<Detail>();
+            string DetailEntity =string.Empty;
             #region 20141028 add by Dick for 建立明細實體
             foreach (TabPage page in tabControlDetail.TabPages)
             {
@@ -2642,6 +2643,7 @@ namespace CreateXML {
                           oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "DataEntities", page.Text,richTextBox1.Text);
                           string collection = multiclick.CreateCollection(page.Text);
                           oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "CollectionClass", page.Text + "Collection", collection);
+                          DetailEntity =page.Text;
                       }
                     }
                     
@@ -2710,6 +2712,13 @@ namespace CreateXML {
             #region 樹節點多語系
             //tasks[0]= System.Threading.Tasks.Task.Factory.StartNew(() => TreeResource(oneclick));           
             //TreeResource(oneclick);
+            #endregion
+
+
+            #region 20141226 add by Dick for 加入UI
+            multiclick.CreateEntityHasDetail(ProgamPath, tb_className.Text, DetailEntity, dataGridView1, 1);
+            multiclick.CreateDetailEntityBrowse(ProgamPath, tb_className.Text, DetailEntity);
+            multiclick.CreateDetailEditView(ProgamPath, tb_className.Text, DetailEntity);
             #endregion
 
 

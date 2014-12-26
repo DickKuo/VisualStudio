@@ -567,10 +567,10 @@ namespace CreateXML {
             #endregion
             sr.Close();
             string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
-            StreamWriter sw = new StreamWriter(SaveFile);
-            sw.Write(sb.ToString());
-            sw.Close();
+            FileTool.Files.WritFile(sb, SaveFile);
         }
+
+       
 
         
 

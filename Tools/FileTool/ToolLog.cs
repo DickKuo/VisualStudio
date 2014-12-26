@@ -10,7 +10,7 @@ namespace FileTool
 {
    public  class ToolLog 
     {
-       private static string _path = @"D:\Log";
+       private static string _path = @"C:\Log";
       
        public ToolLog(string path)
        {

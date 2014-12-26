@@ -1,0 +1,164 @@
+//---------------------------------------------------------------- 
+//Copyright (C) 2005-2005 Digital China Management System Co.,Ltd
+//Http://www.Dcms.com.cn 
+// All rights reserved.
+//<author>author</author>
+//<createDate>XTestDate</createDate>
+//<description>description</description>
+//---------------------------------------------------------------- 
+using System;
+using System.Data;
+using System.Text;
+using System.Drawing;
+using System.Windows.Forms;
+using System.ComponentModel;
+using System.Collections.Generic;
+ 
+using Dcms.Common;
+using Dcms.Common.UI;
+using Dcms.HR.Services;
+using Dcms.HR.DataEntities;
+using Dcms.HR.UI.Properties;
+ 
+namespace Dcms.HR.UI
+{
+ 
+    /// <summary>
+    /// XTestDetail實體編輯介面
+    /// </summary>
+    public class XTestDetailEditerView : HREditerView
+    {
+ 
+        /// <summary>
+        /// 初始化XTestDetailEditerView
+        /// </summary>
+        public XTestDetailEditerView()
+        {
+            InitializeComponent();
+        }
+ 
+        #region Windows 表單設計器生成的代碼
+ 
+        private BindingSource XTestDetailBindingSource;
+        private ErrorProvider errorProvider;
+ 
+        /// <summary>
+        /// 必需的設計器變數。
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+ 
+        /// <summary>
+        /// 清理所有正在使用的資源。
+        /// </summary>
+        /// <param name="disposing">如果應釋放託管資源，為 true；否則為 false。</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+ 
+        /// <summary>
+        /// 設計器支持所需的方法 - 不要
+        /// 使用代碼編輯器修改此方法的內容。
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.XTestDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
+            this.MainTabControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.XTestDetailBindingSource)).BeginInit();
+            this.MainTabControl.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // splitContainer
+            // 
+            this.splitContainer.Panel2Collapsed = true;
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            this.errorProvider.DataSource = this.XTestDetailBindingSource;
+            // 
+            // XTestDetailBindingSource
+            // 
+            this.XTestDetailBindingSource.DataSource = typeof(Dcms.HR.DataEntities.XTestDetail);
+            // 
+            // XTestDetailEditerView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.DetailTabControlCollapsed = true;
+            this.Name = "XTestDetailEditerView";
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
+            this.splitContainer.ResumeLayout(false);
+            this.MainTabControl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.XTestDetailBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            this.ResumeLayout(false);
+ 
+        }
+ 
+        #endregion
+ 
+        #region Override
+        /// <summary>
+        /// 觸發DataSourceSourceChanged事件
+        /// </summary>
+        /// <param name="e">事件需要的參數</param>
+        protected override void OnDataSourceChanged(EventArgs e)
+        {
+            this.XTestDetailBindingSource.DataSource = this.DataSource;
+            base.OnDataSourceChanged(e);
+        }
+ 
+        /// <summary>
+        /// 讀時設置控制項UnEnable
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnReadonlyChanged(EventArgs e)
+        {
+            base.OnReadonlyChanged(e);
+        }
+ 
+        /// <summary>
+        /// 結束編輯
+        /// </summary>
+        public override void EndEdit()
+        {
+            //this.CheckBeforeSave();
+            base.EndEdit();
+            this.XTestDetailBindingSource.EndEdit();
+        }
+        #endregion
+ 
+        //必填欄位校驗
+        //private void CheckBeforeSave() {
+        //    StatuteCost statuteCost = this.DataSource as StatuteCost;
+        //    statuteCost.ClearErrors();
+        //    ExceptionCollection exceptions = new ExceptionCollection();
+        //    HRClientVerifyHelper verify = new HRClientVerifyHelper(exceptions);
+ 
+        //    verify.StringNotNullOrEmpty(statuteCost, "StatuteCostTypeId", this.statuteCostTypeIdLabel.Text.TrimEnd(':'));//法規成本類型ID
+        //    verify.LessThan<decimal>(statuteCost, "CalamityInsurance", 1m, true, this.calamityInsuranceLabel.Text.TrimEnd(':'));//職災
+ 
+        //    if (exceptions.Count > 0) {
+        //        string msg = string.Empty;
+        //        foreach (Exception ex in exceptions) {
+        //            msg += ex.Message + "\n";
+        //        }
+        //        throw new BusinessRuleException(msg);
+        //    }
+        //} 
+ 
+    }
+}
+
