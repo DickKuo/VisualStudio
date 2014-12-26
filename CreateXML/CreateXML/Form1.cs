@@ -1378,7 +1378,11 @@ namespace CreateXML {
             richTextBox1.AppendText(_parameter.ToString());
             richTextBox1.AppendText("        #endregion \r\n");
             richTextBox1.AppendText(_classEnd.ToString());
-            richTextBox1.AppendText("\r\n}");
+            //20141226 modified by Dick for 修正只有參數的功能時多補了一個}問題 #16
+            if (!cb_OnlyParameter.Checked)
+            {
+                richTextBox1.AppendText("\r\n}");
+            }
 
             richTextBox1.Text = richTextBox1.Text.Replace("GeneralDbType.$$Text", "GeneralDbType.Text");
             richTextBox1.Text = richTextBox1.Text.Replace("$$Text", "String");
