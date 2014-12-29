@@ -3,7 +3,7 @@
 //Http://www.Dcms.com.cn 
 // All rights reserved.
 //<author>author</author>
-//<createDate>date</createDate>
+//<createDate>XTestDate</createDate>
 //<description>description</description>
 //---------------------------------------------------------------- 
 using System;

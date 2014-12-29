@@ -32,26 +32,26 @@ namespace CreateXML {
        public string CreateCollection(string ClassName)
        {
            StringBuilder sb = new StringBuilder();
-        sb.Append("namespace Dcms.HR.DataEntities {\r\n");
-        sb.Append("    using System;\r\n");
-        sb.Append("    using System.ComponentModel;\r\n");
-        sb.Append("    using System.Runtime.Serialization;\r\n");
-        sb.Append("    using System.Security.Permissions;\r\n");
-        sb.Append("    using System.Xml.Serialization;\r\n");
-        sb.Append("    using Dcms.Common.Torridity;\r\n");
-                // using Dcms.Common.Torridity.Properties;        
-        sb.Append("    [Serializable()]\r\n");
-        sb.Append(string.Format(@"    public class {0}Collection : DataEntityList<{0}> ", ClassName));
-        sb.Append("{\r\n");
-        sb.Append(string.Format(@"        public {0}Collection() ", ClassName));
-        sb.Append("{\r\n");
-        sb.Append("    }\r\n");
+           sb.AppendLine("namespace Dcms.HR.DataEntities {");
+           sb.AppendLine("    using System;");
+           sb.AppendLine("    using System.ComponentModel;");
+           sb.AppendLine("    using System.Runtime.Serialization;");
+           sb.AppendLine("    using System.Security.Permissions;");
+           sb.AppendLine("    using System.Xml.Serialization;");
+           sb.AppendLine("    using Dcms.Common.Torridity;");
+           // using Dcms.Common.Torridity.Properties;        
+           sb.AppendLine("    [Serializable()]");
+           sb.AppendLine(string.Format(@"    public class {0}Collection : DataEntityList<{0}> ", ClassName));
+           sb.AppendLine("{");
+           sb.AppendLine(string.Format(@"        public {0}Collection() ", ClassName));
+           sb.AppendLine("{");
+           sb.AppendLine("    }");
 
-        sb.Append(string.Format(@"        public {0}Collection(object pOwner) : ", ClassName));
-        sb.Append("\r\n");
-        sb.Append("        base(pOwner) {}\r\n");
-        sb.Append("    }\r\n");
-        sb.Append("}\r\n"); 
+           sb.AppendLine(string.Format(@"        public {0}Collection(object pOwner) : ", ClassName));
+           sb.AppendLine("");
+           sb.AppendLine("        base(pOwner) {}");
+           sb.AppendLine("    }");
+           sb.AppendLine("}"); 
            return sb.ToString();
        }
 
@@ -80,7 +80,7 @@ namespace CreateXML {
            string SaveFile = DirInfo.Parent.FullName + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
            FileTool.Files.WritFile(Content, SaveFile);
        }
-
+       
 
 
        /// <summary>

@@ -2609,13 +2609,20 @@ namespace CreateXML {
 
         private void 一鍵生成ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tabControlDetail.TabPages.Count <= 3)
+            if (CB_SubModule.SelectedIndex != -1)
             {
-                SingleFile(); //單檔
+                if (tabControlDetail.TabPages.Count <= 3)
+                {
+                    SingleFile(); //單檔
+                }
+                else
+                {
+                    MulitFile(); //雙檔
+                }
             }
             else
             {
-                MulitFile(); //雙檔
+                MessageBox.Show("請選擇模組");
             }
         }
 
@@ -2648,6 +2655,8 @@ namespace CreateXML {
                           string collection = multiclick.CreateCollection(page.Text);
                           oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "CollectionClass", page.Text + "Collection", collection);
                           DetailEntity =page.Text;
+                          multiclick.CreateDetailEditView(ProgamPath, tb_className.Text, page.Text);
+                          oneclick.CreateentityNoDetailBrowseEditViewV5(page.Text+"UI", grid, 2, "DetailEditView.txt");
                       }
                     }
                     
@@ -2722,9 +2731,9 @@ namespace CreateXML {
             #region 20141226 add by Dick for 加入UI
             multiclick.CreateEntityHasDetail(ProgamPath, tb_className.Text, DetailEntity, dataGridView1, 1);
             multiclick.CreateDetailEntityBrowse(ProgamPath, tb_className.Text, DetailEntity);
-            multiclick.CreateDetailEditView(ProgamPath, tb_className.Text, DetailEntity);
+           
             #endregion
-
+            //CreateentityNoDetailBrowseEditViewV5
 
             #region  20141225 add by Dick for 加入Permission
             DirectoryInfo DirPro = new DirectoryInfo(ProgamPath);
@@ -2801,7 +2810,7 @@ namespace CreateXML {
                 }
             }
             ///20140905 建立檔單UI           
-            oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1, mode);
+            oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1, mode,"Sample.txt");
 
             ///20140827 多執行緒
             //System.Threading.Tasks.Task[] tasks = new System.Threading.Tasks.Task[1];
@@ -3347,6 +3356,7 @@ namespace CreateXML {
             if (CB_Modules.SelectedIndex != -1)
             {
                 CB_SubModule.Items.Clear();
+                CB_SubModule.Text = string.Empty;
                 string English = CHTToEn[CB_Modules.Text];
                 if (Modules.ContainsKey(English))
                 {

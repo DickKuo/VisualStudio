@@ -391,10 +391,8 @@ namespace CreateXML {
         /// 20140815 建立單檔UI
         /// </summary>
         /// <param name="pEntityName"></param>
-        public void CreateentityNoDetailBrowseEditViewV5(string pEntityName, DataGridView dt,int Mode) {
-            string SourcePath = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "SampleFile\\Sample.txt";
-            StreamReader sr = new StreamReader(SourcePath);
-            string line = string.Empty;
+        public void CreateentityNoDetailBrowseEditViewV5(string pEntityName, DataGridView dt,int Mode,string pSourceFile) {        
+           
             #region 加入控件插入
             List<SubUIControl> li = AddControlerInit(dt, pEntityName);
             StringBuilder SBParameter = new StringBuilder();
@@ -402,8 +400,7 @@ namespace CreateXML {
             StringBuilder SBLayout = new StringBuilder();
             StringBuilder SBContext = new StringBuilder();
             StringBuilder SBAdd = new StringBuilder();
-            bool HasRemark = false;
-            string AddGroupBox = string.Empty;
+            bool HasRemark = false;           
             //起始座標
             int x = 30;
             int y = 0;
@@ -415,14 +412,14 @@ namespace CreateXML {
                 #region  20140905 add by Dick 針對備註另外處理
                 if(control.Order == -1) {
                     HasRemark = true;
-                    SBParameter.Append(control.Declare);
-                    SBParameter.Append("\r\n");
-                    SBNewControl.Append(control.NewControl);
-                    SBNewControl.Append("\r\n");
-                    SBLayout.Append(control.Layout);
-                    SBLayout.Append("\r\n");
-                    SBContext.Append(control.Context);
-                    SBContext.Append("\r\n");
+                    SBParameter.AppendLine(control.Declare);
+
+                    SBNewControl.AppendLine(control.NewControl);
+
+                    SBLayout.AppendLine(control.Layout);
+
+                    SBContext.AppendLine(control.Context);
+                
                     continue;
                 }
                 #endregion
@@ -443,136 +440,182 @@ namespace CreateXML {
                 #endregion
 
                 #region  20140904 add by Dick 加入控件
-                SBParameter.Append(control.Declare);
-                SBParameter.Append("\r\n");
-                    SBParameter.Append(control.LabelDeclare);
-                    SBParameter.Append("\r\n");
-                    SBNewControl.Append(control.NewControl);
-                    SBNewControl.Append("\r\n");
-                    SBNewControl.Append(control.LabelNewControl);
-                    SBNewControl.Append("\r\n");
-                    SBLayout.Append(control.Layout);
-                    SBLayout.Append("\r\n");
+                SBParameter.AppendLine(control.Declare);
+              
+                SBParameter.AppendLine(control.LabelDeclare);
+              
+                    SBNewControl.AppendLine(control.NewControl);
+                    
+                    SBNewControl.AppendLine(control.LabelNewControl);
+              
+                    SBLayout.AppendLine(control.Layout);             
                     if(!string.IsNullOrEmpty(control.LabelContext)) {
-                        SBContext.Append(control.LabelContext.Replace("$X", x.ToString()).Replace("$Y", y.ToString()));
-                        SBContext.Append("\r\n");
+                        SBContext.AppendLine(control.LabelContext.Replace("$X", x.ToString()).Replace("$Y", y.ToString()));                    
                     }
-                    SBContext.Append(control.Context.Replace("$X", (x + 85).ToString()).Replace("$Y", y.ToString()));
-                    SBContext.Append("\r\n");               
+                    SBContext.AppendLine(control.Context.Replace("$X", (x + 85).ToString()).Replace("$Y", y.ToString()));
+                             
                     if(Mode == 2) {
                         x += 350;
                     }
                     if(Mode==3) {
                         x += 100;
                     }
-                    SBAdd.Append(control.LabelAdd);
-                    SBAdd.Append("\r\n");
-                    SBAdd.Append(control.GroupAdd);
-                    SBAdd.Append("\r\n");
+                    SBAdd.AppendLine(control.LabelAdd);
+                    SBAdd.AppendLine(control.GroupAdd);                  
                     x += 130;
                 #endregion
                     count++;
             }
 
             #endregion
+            StringBuilder sb  =new StringBuilder();           
+            sb = AnalysisUI(pEntityName, pSourceFile, SBParameter, SBNewControl, SBLayout, SBContext, SBAdd, HasRemark);
+            string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
+            FileTool.Files.WritFile(sb, SaveFile);
+           
+        }
+
+       /// <summary>
+       /// 20141229 add by Dick for 實體UI分析功能。
+       /// </summary>
+       /// <param name="pEntityName"></param>
+       /// <param name="pSourceFile"></param>
+       /// <param name="line"></param>
+       /// <param name="SBParameter"></param>
+       /// <param name="SBNewControl"></param>
+       /// <param name="SBLayout"></param>
+       /// <param name="SBContext"></param>
+       /// <param name="SBAdd"></param>
+       /// <param name="HasRemark"></param>
+       /// <param name="AddGroupBox"></param>
+       /// <returns></returns>
+        private static StringBuilder AnalysisUI(string pEntityName, string pSourceFile, StringBuilder SBParameter, StringBuilder SBNewControl, StringBuilder SBLayout, StringBuilder SBContext, StringBuilder SBAdd, bool HasRemark)
+        {
+            string line = string.Empty;
+            string AddGroupBox = string.Empty;
+            string SourcePath = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "SampleFile\\" + pSourceFile;
+            StreamReader sr = new StreamReader(SourcePath,Encoding.Default);
             StringBuilder sb = new StringBuilder();
             #region 每行撈取分析
-            while((line = sr.ReadLine()) != null) {
-                if(line.IndexOf("this.entityEditerView1 = new Dcms.HR.UI.EntityEditerView();") != -1) {
+            while ((line = sr.ReadLine()) != null)
+            {
+                if (line.IndexOf("this.entityEditerView1 = new Dcms.HR.UI.EntityEditerView();") != -1)
+                {
                     sb.Append("\r\n");
                     string temp = "            ((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text = ((Label)(this.Controls.Find(\"labDoc\",true)[0])).Text  + \"*\";";
-                    sb.Append(temp);
-                    sb.Append("\r\n");
+                    sb.AppendLine(temp);                  
                 }
-                if(line.IndexOf("//<createDate>date</createDate>") != -1) {
-                    line = line.Replace("date", DateTime.Now.ToString("yyyy/MM/dd"));
+                if (line.IndexOf("XTestDate") != -1)
+                {
+                    line = line.Replace("XTestDate", DateTime.Now.ToString("yyyy/MM/dd"));
                 }
-                if(line.IndexOf("//<description>description</description>") != -1) {
-                    line = line.Replace("//<description>description</description>", "//<description>新增單檔作業</description>");
+                if (line.IndexOf("//<description>description</description>") != -1)
+                {
+                    line = line.Replace("//<description>description</description>", "//<description>UI編輯畫面</description>");
                 }
-                if(line.IndexOf(" public class EntityEditerView : HREditerView {") != -1) {
+                if (line.IndexOf(" public class EntityEditerView : HREditerView {") != -1)
+                {
                     line = line.Replace("Entity", pEntityName);
                 }
-                if(line.IndexOf("EntityEditerView()") != -1) {
+                if (line.IndexOf("EntityEditerView()") != -1)
+                {
                     line = line.Replace("Entity", pEntityName);
                 }
-                if(line.IndexOf("this.entityBindingSource") != -1) {
+                if (line.IndexOf("this.entityBindingSource") != -1)
+                {
                     line = line.Replace("entity", pEntityName.ToLower());
                 }
-                if(line.IndexOf("private BindingSource entityBindingSource;") != -1) {
+                if (line.IndexOf("private BindingSource entityBindingSource;") != -1)
+                {
                     line = line.Replace("entity", pEntityName.ToLower());
                 }
-                if(line.IndexOf("Dcms.HR.DataEntities.Entity") != -1) {
+                if (line.IndexOf("Dcms.HR.DataEntities.Entity") != -1)
+                {
                     line = line.Replace("Entity", pEntityName);
                 }
-                if(line.IndexOf("return Factory.GetService<IEntityService>();") != -1) {
+                if (line.IndexOf("return Factory.GetService<IEntityService>();") != -1)
+                {
                     line = line.Replace("IEntityService", "I" + pEntityName.Remove(0, 1) + "ServiceX");
                 }
-                if(line.IndexOf("browseWindow.Name = GetBrowseWindowName();") != -1) {
+                if (line.IndexOf("browseWindow.Name = GetBrowseWindowName();") != -1)
+                {
                     sb.Append("\r\n");
-                    sb.Append("            browseWindow.UsingExtraText = true;\r\n");
+                    sb.AppendLine("            browseWindow.UsingExtraText = true;");
                 }
-                if(line.IndexOf("Resources.EntityDisplayName;") != -1) {
+                if (line.IndexOf("Resources.EntityDisplayName;") != -1)
+                {
                     line = line.Replace("Resources.Entity", "ResourcesForCase." + pEntityName);
                 }
-                if(line.IndexOf("entity") != -1) {
+                if (line.IndexOf("entity") != -1)
+                {
                     line = line.Replace("entity", pEntityName.ToLower());
                 }
-                if(line.IndexOf("Entity") != -1) {
+                if (line.IndexOf("Entity") != -1)
+                {
                     line = line.Replace("Entity", pEntityName);
                 }
-                if(line.IndexOf("//ResourceExtend") != -1) {
+                if (line.IndexOf("//ResourceExtend") != -1)
+                {
                     line = line.Replace("//ResourceExtend", "System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(" + pEntityName + "EditerView));");
                 }
-                if(SBParameter.Length > 0) {
-                    if(line.IndexOf("//ParameterExtend") != -1) {
+                if (SBParameter.Length > 0)
+                {
+                    if (line.IndexOf("//ParameterExtend") != -1)
+                    {
                         line = line.Replace("//ParameterExtend", "");
                         sb.Append(SBParameter);
                     }
                 }
-                if(SBNewControl.Length > 0) {
-                    if(line.IndexOf("//NewControlExtend") != -1) {
+                if (SBNewControl.Length > 0)
+                {
+                    if (line.IndexOf("//NewControlExtend") != -1)
+                    {
                         line = line.Replace("//NewControlExtend", "");
-                        sb.Append(SBNewControl);
+                        sb.Append(SBNewControl);                    
                     }
                 }
-                if(SBLayout.Length > 0) {
-                    if(line.IndexOf("//LayoutExtend") != -1) {
+                if (SBLayout.Length > 0)
+                {
+                    if (line.IndexOf("//LayoutExtend") != -1)
+                    {
                         line = line.Replace("//LayoutExtend", "");
                         sb.Append(SBLayout);
                     }
                 }
-                if(SBContext.Length > 0) {
-                    if(line.IndexOf("//ContextExtend") != -1) {
+                if (SBContext.Length > 0)
+                {
+                    if (line.IndexOf("//ContextExtend") != -1)
+                    {
                         line = line.Replace("//ContextExtend", "");
                         sb.Append(SBContext);
                     }
                 }
-                if(SBAdd.Length > 0) {
-                    if(line.IndexOf("//groupBoxExtend") != -1) {
+                if (SBAdd.Length > 0)
+                {
+                    if (line.IndexOf("//groupBoxExtend") != -1)
+                    {
                         line = line.Replace("//groupBoxExtend", "");
                         sb.Append(SBAdd);
                     }
                 }
-                if(HasRemark) {
-                    if(line.IndexOf("this.GeneralTabPage.Controls.Add(this.groupBox1);") != -1) {
+                if (HasRemark)
+                {
+                    if (line.IndexOf("this.GeneralTabPage.Controls.Add(this.groupBox1);") != -1)
+                    {
 
                         AddGroupBox = "\r\n            this.GeneralTabPage.Controls.Add(this.groupBox2);";
                         AddGroupBox += "\r\n" + line;
                         line = AddGroupBox;
                     }
                 }
-                sb.Append(line + "\r\n");
+                sb.AppendLine(line);
             }
             #endregion
-            sr.Close();
-            string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
-            FileTool.Files.WritFile(sb, SaveFile);
+            sr.Close();          
+            return sb;
         }
 
        
-
-        
 
         /// <summary>
         /// 20140818 add by Dick 生出控件出來，讓後面可以加入控件
@@ -686,8 +729,8 @@ namespace CreateXML {
                                         if(dr.Cells["Type"].Value.ToString().ToLower() != "bool" & control.Order!=-1) {
                                             //加入Label
                                             string temp = control.Name.ToLower().IndexOf("x") != -1 ? control.Name.Substring(1, control.Name.Length-1) : control.Name;
-                                            control.LabelName = control.Name + "Label1";
-                                            control.LabelDeclare += "\r\n            System.Windows.Forms.Label  " + control.Name + "Label1;";
+                                            control.LabelName = control.Name + "Label";
+                                            control.LabelDeclare += "\r\n        System.Windows.Forms.Label  " + control.Name + "Label1;";
                                             control.LabelNewControl += "\r\n            " + control.Name + "Label1 = new System.Windows.Forms.Label();";
                                             control.LabelAdd = "\r\n            this.groupBox1.Controls.Add(" + control.Name + "Label1);";
                                             control.LabelContext += "\r\n            //";
