@@ -781,7 +781,14 @@ namespace CreateXML {
                 control.NewControl = "            this." + temp + control.Name + " = new " + ControlType + "();\r\n";
             } 
             else {
-                control.NewControl = "            this." + temp + control.Name + " = new Dcms.Common.UI." + ControlType + "();\r\n";
+                if (ControlType == "HRPickList")
+                {
+                    control.NewControl = "            this." + temp + control.Name + " = new " + ControlType + "();\r\n";
+                }
+                else
+                {
+                    control.NewControl = "            this." + temp + control.Name + " = new Dcms.Common.UI." + ControlType + "();\r\n";
+                }
                 control.Layout += "            ((System.ComponentModel.ISupportInitialize)(this." + temp + control.Name + ".Properties)).BeginInit();";            
             }         
             control.GroupAdd = "\r\n            this.groupBox1.Controls.Add(this."+temp + control.Name + ");";
@@ -1166,11 +1173,11 @@ namespace CreateXML {
             XmlElement Action1 = doc.CreateElement("Action");
             Action1.SetAttribute("Name", "Read");
             XmlElement Action2 = doc.CreateElement("Action");
-            Action1.SetAttribute("Name", "Create");
+            Action2.SetAttribute("Name", "Create");
             XmlElement Action3 = doc.CreateElement("Action");
-            Action1.SetAttribute("Name", "Write");
+            Action3.SetAttribute("Name", "Write");
             XmlElement Action4 = doc.CreateElement("Action");
-            Action1.SetAttribute("Name", "Delete");
+            Action4.SetAttribute("Name", "Delete");
             Actions.AppendChild(Action1);
             Actions.AppendChild(Action2);
             Actions.AppendChild(Action3);
@@ -1205,7 +1212,7 @@ namespace CreateXML {
                                 Program.SetAttribute("BusinessObject", pEntityName);
                                 Program.SetAttribute("Image", "TrainingType_16");
                                 Program.SetAttribute("UriAction", "Browse");
-                                Program.SetAttribute("UriTypeKey", "XDepDeduction");
+                                Program.SetAttribute("UriTypeKey", pEntityName);
                                 Programs.AppendChild(Program);                            
                             }
                         }
