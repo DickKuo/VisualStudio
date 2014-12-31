@@ -1983,7 +1983,7 @@ namespace CreateXML {
             richTextBox1.AppendText("    [Description(\"" + tb_scrib.Text + "\")]\r\n");
             richTextBox1.AppendText("    [Serializable()]\r\n");
             richTextBox1.AppendText("    public class " + tb_className.Text + "Virtual : VirtualObjectBase<" + tb_className.Text + "> {\r\n");
-            richTextBox1.AppendText("        public new const string TYPE_KEY = " + tb_className.Text + "Virtual;\r\n");
+            richTextBox1.AppendText("        public new const string TYPE_KEY = \"" + tb_className.Text + "Virtual\";\r\n");
             richTextBox1.AppendText("\r\n");
             richTextBox1.AppendText("        [CollectionProperty(typeof(" + tb_className.Text + "))]\r\n");
             richTextBox1.AppendText("        public override ActualDataEntityList<" + tb_className.Text + "> ActualDataEntities {\r\n");
