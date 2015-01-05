@@ -3325,7 +3325,7 @@ namespace CreateXML {
             {
                 return "Decimal";
             }
-            if (Tag.IndexOf("datetime") != -1)
+            if (Tag.IndexOf("date") != -1 )
             {
                 return "DateTime";
             }
