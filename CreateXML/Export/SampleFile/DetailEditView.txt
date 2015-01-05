@@ -13,22 +13,22 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Collections.Generic;
-
+ 
 using Dcms.Common;
 using Dcms.Common.UI;
 using Dcms.HR.Services;
 using Dcms.HR.DataEntities;
 using Dcms.HR.UI.Properties;
-
+ 
 namespace Dcms.HR.UI
 {
-
+ 
     /// <summary>
-    /// XTestDetail?体??界面
+    /// XTestDetail實體編輯介面
     /// </summary>
     public class XTestDetailEditerView : HREditerView
     {
-
+ 
         /// <summary>
         /// 初始化XTestDetailEditerView
         /// </summary>
@@ -36,23 +36,21 @@ namespace Dcms.HR.UI
         {
             InitializeComponent();
         }
-
-        #region Windows 窗体??器生成的代?
-
+ 
+        #region Windows 表單設計器生成的代碼
+ 
         private BindingSource xTestDetailBindingSource;
         private ErrorProvider errorProvider;
-        private GroupBox groupBox1;
-	//ParameterExtend
-
+ 
         /// <summary>
-        /// 必需的??器?量。
+        /// 必需的設計器變數。
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+ 
         /// <summary>
-        /// 清理所有正在使用的?源。
+        /// 清理所有正在使用的資源。
         /// </summary>
-        /// <param name="disposing">如果??放托管?源，? true；否?? false。</param>
+        /// <param name="disposing">如果應釋放託管資源，為 true；否則為 false。</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -61,59 +59,37 @@ namespace Dcms.HR.UI
             }
             base.Dispose(disposing);
         }
-
+ 
         /// <summary>
-        /// ??器支持所需的方法 - 不要
-        /// 使用代???器修改此方法的?容。
+        /// 設計器支持所需的方法 - 不要
+        /// 使用代碼編輯器修改此方法的內容。
         /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.xTestDetailBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            //NewControlExtend
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainTabControl)).BeginInit();
             this.MainTabControl.SuspendLayout();
-            this.GeneralTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.xTestDetailBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-	    //LayoutExtend
+            ((System.ComponentModel.ISupportInitialize)(this.xTestDetailBindingSource)).BeginInit();
+            this.MainTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer
             // 
             this.splitContainer.Panel2Collapsed = true;
             // 
-            // MainTabControl
-            // 
-            this.MainTabControl.SelectedTabPage = this.GeneralTabPage;
-            this.MainTabControl.Size = new System.Drawing.Size(825, 522);
-            // 
-            // GeneralTabPage
-            // 
-            this.GeneralTabPage.Controls.Add(this.groupBox1);
-            this.GeneralTabPage.Size = new System.Drawing.Size(819, 493);
-            //ContextExtend
-            // 
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
             this.errorProvider.DataSource = this.xTestDetailBindingSource;
             // 
-            // groupBox1
+            // xTestDetailBindingSource
             // 
-            this.groupBox1.Location = new System.Drawing.Point(6, 17);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(807, 285);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            //groupBoxExtend
+            this.xTestDetailBindingSource.DataSource = typeof(Dcms.HR.DataEntities.XTestDetail);
             // 
             // XTestDetailEditerView
             // 
@@ -123,41 +99,38 @@ namespace Dcms.HR.UI
             this.Name = "XTestDetailEditerView";
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.MainTabControl)).EndInit();
             this.MainTabControl.ResumeLayout(false);
-            this.GeneralTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.xTestDetailBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
-
+ 
         }
-
+ 
         #endregion
-
+ 
         #region Override
         /// <summary>
-        /// 触?DataSourceSourceChanged事件
+        /// 觸發DataSourceSourceChanged事件
         /// </summary>
-        /// <param name="e">事件需要的??</param>
+        /// <param name="e">事件需要的參數</param>
         protected override void OnDataSourceChanged(EventArgs e)
         {
             this.xTestDetailBindingSource.DataSource = this.DataSource;
             base.OnDataSourceChanged(e);
         }
-
+ 
         /// <summary>
-        /// ???置控件UnEnable
+        /// 讀時設置控制項UnEnable
         /// </summary>
         /// <param name="e"></param>
         protected override void OnReadonlyChanged(EventArgs e)
         {
             base.OnReadonlyChanged(e);
         }
-
+ 
         /// <summary>
-        /// ?束??
+        /// 結束編輯
         /// </summary>
         public override void EndEdit()
         {
@@ -166,17 +139,17 @@ namespace Dcms.HR.UI
             this.xTestDetailBindingSource.EndEdit();
         }
         #endregion
-
-        //必填字段校?
+ 
+        //必填欄位校驗
         //private void CheckBeforeSave() {
         //    StatuteCost statuteCost = this.DataSource as StatuteCost;
         //    statuteCost.ClearErrors();
         //    ExceptionCollection exceptions = new ExceptionCollection();
         //    HRClientVerifyHelper verify = new HRClientVerifyHelper(exceptions);
-
-        //    verify.StringNotNullOrEmpty(statuteCost, "StatuteCostTypeId", this.statuteCostTypeIdLabel.Text.TrimEnd(':'));//法?成本?型ID
-        //    verify.LessThan<decimal>(statuteCost, "CalamityInsurance", 1m, true, this.calamityInsuranceLabel.Text.TrimEnd(':'));//??
-
+ 
+        //    verify.StringNotNullOrEmpty(statuteCost, "StatuteCostTypeId", this.statuteCostTypeIdLabel.Text.TrimEnd(':'));//法規成本類型ID
+        //    verify.LessThan<decimal>(statuteCost, "CalamityInsurance", 1m, true, this.calamityInsuranceLabel.Text.TrimEnd(':'));//職災
+ 
         //    if (exceptions.Count > 0) {
         //        string msg = string.Empty;
         //        foreach (Exception ex in exceptions) {
@@ -185,6 +158,7 @@ namespace Dcms.HR.UI
         //        throw new BusinessRuleException(msg);
         //    }
         //} 
-
+ 
     }
 }
+

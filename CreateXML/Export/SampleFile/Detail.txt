@@ -26,13 +26,13 @@ namespace Dcms.HR.UI
     /// <summary>
     /// XTest實體明細清單介面（注：默認只有一張明細表）
     /// </summary>
-    public class XTestDetailUI : HREditerView
+    public class XTestDetail : HREditerView
     {
  
         /// <summary>
-        /// 初始化XTestDetailUI
+        /// 初始化XTestDetail
         /// </summary>
-        public XTestDetailUI()
+        public XTestDetail()
         {
             InitializeComponent();
             //設置明細表編輯視圖之後，再取消下面注釋

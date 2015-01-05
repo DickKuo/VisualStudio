@@ -2650,7 +2650,7 @@ namespace CreateXML {
                           oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "CollectionClass", page.Text + "Collection", collection);
                           DetailEntity =page.Text;
                           multiclick.CreateDetailEditView(ProgamPath, tb_className.Text, page.Text);
-                          oneclick.CreateentityNoDetailBrowseEditViewV5(page.Text + "UI", grid, 2, "DetailEditView.txt");
+                          //oneclick.CreateentityNoDetailBrowseEditViewV5(page.Text + "UI", grid, 2, "DetailEditView.txt");
                       }
                     }
                     
@@ -2724,7 +2724,7 @@ namespace CreateXML {
 
             #region 20141226 add by Dick for 加入UI
             multiclick.CreateEntityHasDetail(ProgamPath, tb_className.Text, DetailEntity, dataGridView1, 1);
-            multiclick.CreateDetailEntityBrowse(ProgamPath, tb_className.Text, DetailEntity);
+            multiclick.CreateDetailEntityBrowse(ProgamPath, tb_className.Text, tb_className.Text+"Infos");
            
             #endregion
             //CreateentityNoDetailBrowseEditViewV5
