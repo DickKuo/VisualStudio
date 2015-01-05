@@ -78,7 +78,7 @@ namespace CreateXML {
                }
            }
            string SaveFile = DirInfo.Parent.FullName + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
-           FileTool.Files.WritFile(Content, SaveFile);
+           FileTool.Files.WritFile(Content.ToString(), SaveFile,false);
        }
        
 
@@ -106,7 +106,7 @@ namespace CreateXML {
                }
            }
            string SaveFile = DirInfo.Parent.FullName + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityDetailName + ".cs";
-           FileTool.Files.WritFile(Content, SaveFile);
+           FileTool.Files.WritFile(Content.ToString(), SaveFile,false);
        }
 
 
@@ -115,6 +115,8 @@ namespace CreateXML {
            DirectoryInfo DirInfo = new DirectoryInfo(pSettingPath);
            string SourcePath = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "SampleFile\\DetailEditView.txt";
            StringBuilder Content = new StringBuilder();
+           string SubName = pEntityDetailName.Substring(0, 1).ToLower();
+           SubName += pEntityDetailName.Substring(1,pEntityDetailName.Length-1);
            using (StreamReader sr = new StreamReader(SourcePath, Encoding.Default))
            {
                string line = string.Empty;
@@ -123,11 +125,12 @@ namespace CreateXML {
                    line = line.Replace("XTestDate", DateTime.Now.ToString("yyyyMMdd"));
                    line = line.Replace("XTestDetail", pEntityDetailName);
                    line = line.Replace("XTest", pEntityName);
+                   line = line.Replace("xTestDetail", SubName);
                    Content.AppendLine(line);
                }
            }
            string SaveFile = DirInfo.Parent.FullName + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityDetailName+"UI" + ".cs";
-           FileTool.Files.WritFile(Content, SaveFile);
+           FileTool.Files.WritFile(Content.ToString(), SaveFile,false);
        }
 
 
