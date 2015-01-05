@@ -804,12 +804,6 @@ namespace CreateXML {
 
 
 
-
-
-
-
-
-
         #endregion
 
 
@@ -1047,7 +1041,7 @@ namespace CreateXML {
             string[] IAuditObjectApproveUserId = new string[] { "ApproveUserId", "Guid", "審核操作人ID", "User" };
             string[] IAuditObjectRepealOperationDate = new string[] { "RepealOperationDate", "DateTime", "撤銷操作日期" };
             string[] IAuditObjectRRepealUserId = new string[] { "RepealUserId", "Guid", "撤銷操作人ID", "User" };
-            string[] IAuditObjectApproveResultId = new string[] { "ApproveResultId", "String", "審核結果ID" };
+            string[] IAuditObjectApproveResultId = new string[] { "ApproveResultId", "String", "審核結果ID","CodeInfo"};
             string[] IAuditObjectSubmitUserId = new string[] { "SubmitUserId", "Guid", "提交操作人ID", "User" };
             string[] IAuditObjectSubmitOperationDate = new string[] { "SubmitOperationDate", "DateTime", "提交操作日期" };
             string[] IAuditObjectStateId = new string[] { "StateId", "String", "狀態ID", "CodeInfo" };
@@ -2655,8 +2649,8 @@ namespace CreateXML {
                           string collection = multiclick.CreateCollection(page.Text);
                           oneclick.CSFileSave("DigiWin.HR.CustomBusiness", "CollectionClass", page.Text + "Collection", collection);
                           DetailEntity =page.Text;
-                          //multiclick.CreateDetailEditView(ProgamPath, tb_className.Text, page.Text);
-                          //oneclick.CreateentityNoDetailBrowseEditViewV5(page.Text + "UI", grid, 2, "DetailEditView.txt");
+                          multiclick.CreateDetailEditView(ProgamPath, tb_className.Text, page.Text);
+                          oneclick.CreateentityNoDetailBrowseEditViewV5(page.Text + "UI", grid, 2, "DetailEditView.txt");
                       }
                     }
                     
@@ -2729,8 +2723,8 @@ namespace CreateXML {
 
 
             #region 20141226 add by Dick for 加入UI
-            //multiclick.CreateEntityHasDetail(ProgamPath, tb_className.Text, DetailEntity, dataGridView1, 1);
-            //multiclick.CreateDetailEntityBrowse(ProgamPath, tb_className.Text, DetailEntity);
+            multiclick.CreateEntityHasDetail(ProgamPath, tb_className.Text, DetailEntity, dataGridView1, 1);
+            multiclick.CreateDetailEntityBrowse(ProgamPath, tb_className.Text, DetailEntity);
            
             #endregion
             //CreateentityNoDetailBrowseEditViewV5
