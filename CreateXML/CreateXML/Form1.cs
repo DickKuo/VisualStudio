@@ -43,11 +43,15 @@ namespace CreateXML {
             set { _projectPath = value; }
         }
 
+        private static string _moduleName;//20150109 模組名稱 #14
+        public static string ModuleProviderName { get {  return _moduleName; } }
 
         private Dictionary<string, List<string[]>> _DicCheckBox = new Dictionary<string, List<string[]>>();
         private System.Data.DataTable RefereceTable = new System.Data.DataTable();
         private Dictionary<string, string> RefereceDic = new Dictionary<string, string>();
         private Dictionary<string, QueryViewCondition> DicQueryView = new Dictionary<string, QueryViewCondition>(); //QueryView的字典
+
+        private Dictionary<string, string> ModuleWindows = new Dictionary<string, string>();
 
         //20141224 
         Dictionary<string, List<string>> Modules = new Dictionary<string, List<string>>();
@@ -873,7 +877,7 @@ namespace CreateXML {
             InitCode();
             InitModify();
             InitName();
-
+            InitModuleName();
             ///加入條件視窗
             dataGridView1.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             var item = dataGridView1.ContextMenuStrip.Items.Add("加入條件");
@@ -917,6 +921,29 @@ namespace CreateXML {
             //20141226 add by Dick for 顯示當前設定位置 #9
            label7.Text ="當前設定位置："+  GetSettinhPath();
         }
+
+        /// <summary>
+        /// 20150109 add by Dick for 加入模組轉換字典。  #14
+        /// </summary>
+        private void InitModuleName()
+        {
+            ModuleWindows.Add("我的主工作臺", "MyWorkPlaceModuleProvider");
+            ModuleWindows.Add("人事跟蹤管理", "HumantrackManagerProvider");
+            ModuleWindows.Add("招募甄選管理", "RecruitSelectManagementProvider");
+            ModuleWindows.Add("培訓開發管理", "TrainEmpolderManagementProvider");
+            ModuleWindows.Add("績效考核管理", "PerformanceAssessManagementProvider");
+            ModuleWindows.Add("考勤時間管理", "WorkTimeManagementProvider");
+            ModuleWindows.Add("薪資福利管理", "PayBoonManagementProvider");
+            ModuleWindows.Add("系統配置中心", "SystemSettingModuleProvider");
+            ModuleWindows.Add("資源申領管理", "ResourceApplyManagementProvider");
+            ModuleWindows.Add("員工就餐管理", "DinnerManagementProvider");
+            ModuleWindows.Add("員工滿意度調查", "EmployeeSatisfySurveyProvider");
+            ModuleWindows.Add("涉外安全管理", "RelateToForeignSafeManagementProvider");
+            ModuleWindows.Add("因公出差管理", "BusinessApplyManagementProvider");
+            ModuleWindows.Add("年假休假管理", "AnnualLeaveManagementProvider");
+            ModuleWindows.Add("員工宿舍管理", "DormManagementProvider");
+        }
+
 
         /// <summary>
         /// 20141224 add by Dick 取得模組架構 #6
@@ -2804,7 +2831,7 @@ namespace CreateXML {
                 }
             }
             ///20140905 建立檔單UI           
-            oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1, mode,"Sample.txt");
+            oneclick.CreateentityNoDetailBrowseEditViewV5(tb_className.Text, dataGridView1, mode, "Sample.txt", ModuleProviderName);
 
             ///20140827 多執行緒
             //System.Threading.Tasks.Task[] tasks = new System.Threading.Tasks.Task[1];
@@ -3352,13 +3379,19 @@ namespace CreateXML {
                 CB_SubModule.Items.Clear();
                 CB_SubModule.Text = string.Empty;
                 string English = CHTToEn[CB_Modules.Text];
+                #region 20150109 取的模組Prvider名稱 #14
+                if (ModuleWindows.ContainsKey(CB_Modules.Text))
+                {
+                    _moduleName = ModuleWindows[CB_Modules.Text];
+                }
+                #endregion               
                 if (Modules.ContainsKey(English))
                 {
                     List<string> li = Modules[English];
                     foreach (string item in li)
                     {
                         CB_SubModule.Items.Add(EnToCHT[item]);
-                    }
+                    }                   
                 }
                 else
                 {
@@ -3373,7 +3406,7 @@ namespace CreateXML {
                                 CB_SubModule.Items.Add(EnToCHT[item]);
                             }
                         }
-                    }
+                    }                   
                 }
             }
         }

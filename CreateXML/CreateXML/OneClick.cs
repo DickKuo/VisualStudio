@@ -389,9 +389,10 @@ namespace CreateXML {
 
         /// <summary>
         /// 20140815 建立單檔UI
+        /// 20150109 Modifide by Dick for 加入模組ProviderName #14
         /// </summary>
         /// <param name="pEntityName"></param>
-        public void CreateentityNoDetailBrowseEditViewV5(string pEntityName, DataGridView dt,int Mode,string pSourceFile) {        
+        public void CreateentityNoDetailBrowseEditViewV5(string pEntityName, DataGridView dt,int Mode,string pSourceFile,string ModuleProviderName) {        
            
             #region 加入控件插入
             List<SubUIControl> li = AddControlerInit(dt, pEntityName);
@@ -468,8 +469,8 @@ namespace CreateXML {
             }
 
             #endregion
-            StringBuilder sb  =new StringBuilder();           
-            sb = AnalysisUI(pEntityName, pSourceFile, SBParameter, SBNewControl, SBLayout, SBContext, SBAdd, HasRemark);
+            StringBuilder sb  =new StringBuilder();
+            sb = AnalysisUI(pEntityName, pSourceFile, SBParameter, SBNewControl, SBLayout, SBContext, SBAdd, HasRemark, ModuleProviderName);
             string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
             FileTool.Files.WritFile(sb, SaveFile);
            
@@ -477,6 +478,7 @@ namespace CreateXML {
 
        /// <summary>
        /// 20141229 add by Dick for 實體UI分析功能。
+       /// 20150109 modified by Dick for 加入實體模組的ProviderName
        /// </summary>
        /// <param name="pEntityName"></param>
        /// <param name="pSourceFile"></param>
@@ -489,7 +491,7 @@ namespace CreateXML {
        /// <param name="HasRemark"></param>
        /// <param name="AddGroupBox"></param>
        /// <returns></returns>
-        private static StringBuilder AnalysisUI(string pEntityName, string pSourceFile, StringBuilder SBParameter, StringBuilder SBNewControl, StringBuilder SBLayout, StringBuilder SBContext, StringBuilder SBAdd, bool HasRemark)
+        private static StringBuilder AnalysisUI(string pEntityName, string pSourceFile, StringBuilder SBParameter, StringBuilder SBNewControl, StringBuilder SBLayout, StringBuilder SBContext, StringBuilder SBAdd, bool HasRemark,string ModuleProviderName)
         {
             string line = string.Empty;
             string AddGroupBox = string.Empty;
@@ -558,6 +560,13 @@ namespace CreateXML {
                 {
                     line = line.Replace("//ResourceExtend", "System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(" + pEntityName + "EditerView));");
                 }
+                #region 20150109 add by Dick for 修改模組Provider Mame #14
+                if (line.IndexOf("ModuleNameProvider") != -1)
+                {
+                    line = line.Replace("ModuleNameProvider", ModuleProviderName);
+                }
+                #endregion              
+
                 if (SBParameter.Length > 0)
                 {
                     if (line.IndexOf("//ParameterExtend") != -1)

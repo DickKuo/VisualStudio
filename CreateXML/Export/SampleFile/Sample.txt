@@ -188,7 +188,7 @@ namespace Dcms.HR.UI {
 		/// </summary>
 		public override string ModuleName {
 			get {
-				return HumantrackManagerProvider.TYPE_KEY;
+				return ModuleNameProvider.TYPE_KEY;
 			}
 		}
 
