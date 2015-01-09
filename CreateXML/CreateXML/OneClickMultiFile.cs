@@ -109,7 +109,12 @@ namespace CreateXML {
            FileTool.Files.WritFile(Content.ToString(), SaveFile,false);
        }
 
-
+       /// <summary>
+       /// 20150106 modified by Dick for 明細的編輯畫面
+       /// </summary>
+       /// <param name="pSettingPath"></param>
+       /// <param name="pEntityName"></param>
+       /// <param name="pEntityDetailName"></param>
        public void CreateDetailEditView(string pSettingPath, string pEntityName, string pEntityDetailName)
        {
            DirectoryInfo DirInfo = new DirectoryInfo(pSettingPath);

@@ -1144,46 +1144,74 @@ namespace CreateXML {
         private void AppendBusinessObject(string pEntityName,string ActionString, XmlDocument doc)
         {
             XmlNode node = doc.ChildNodes[1].ChildNodes[2];
-
-            XmlElement BusinessObject = doc.CreateElement("BusinessObject");
-            BusinessObject.SetAttribute("Name",pEntityName);
-            BusinessObject.SetAttribute("ProgramName", pEntityName+"Browse");
-            XmlElement ExtendCodes = doc.CreateElement("ExtendCodes");
-            XmlElement ExtendCode = doc.CreateElement("ExtendCode");
-            ExtendCode.SetAttribute("Name","DEFAULT");
-            ExtendCode.SetAttribute("ActionSetting", ActionString);
-            ExtendCodes.AppendChild(ExtendCode);
-            BusinessObject.AppendChild(ExtendCodes);
-            node.AppendChild(BusinessObject);
+            bool IsExist = false;
+            foreach(XmlNode Child in node.ChildNodes)
+            {
+                if (Child.Name.Equals("BusinessObject"))
+                {
+                    if (Child.Attributes[0].Value.Equals(pEntityName))
+                    {
+                        IsExist = true;
+                    }
+                }
+            }
+            if (!IsExist)
+            {
+                XmlElement BusinessObject = doc.CreateElement("BusinessObject");
+                BusinessObject.SetAttribute("Name", pEntityName);
+                BusinessObject.SetAttribute("ProgramName", pEntityName + "Browse");
+                XmlElement ExtendCodes = doc.CreateElement("ExtendCodes");
+                XmlElement ExtendCode = doc.CreateElement("ExtendCode");
+                ExtendCode.SetAttribute("Name", "DEFAULT");
+                ExtendCode.SetAttribute("ActionSetting", ActionString);
+                ExtendCodes.AppendChild(ExtendCode);
+                BusinessObject.AppendChild(ExtendCodes);
+                node.AppendChild(BusinessObject);
+            }
         }
 
 
        /// <summary>
         /// 20141225 add by Dick for 加入動作包 #6
+        /// 20150109 modified by Dicl for 避免重複加入節點問題 #18
        /// </summary>
        /// <param name="pEntityName"></param>
        /// <param name="doc"></param>
         private void AppendAction(string pEntityName,XmlDocument doc)
         {
             XmlNode node = doc.ChildNodes[1].ChildNodes[0];
-            XmlElement ActionSetting = doc.CreateElement("ActionSetting");
-            ActionSetting.SetAttribute("Name", pEntityName + "Action");
-            XmlElement Actions = doc.CreateElement("Actions");
-            ActionSetting.AppendChild(Actions);
-            XmlElement Action1 = doc.CreateElement("Action");
-            Action1.SetAttribute("Name", "Read");
-            XmlElement Action2 = doc.CreateElement("Action");
-            Action2.SetAttribute("Name", "Create");
-            XmlElement Action3 = doc.CreateElement("Action");
-            Action3.SetAttribute("Name", "Write");
-            XmlElement Action4 = doc.CreateElement("Action");
-            Action4.SetAttribute("Name", "Delete");
-            Actions.AppendChild(Action1);
-            Actions.AppendChild(Action2);
-            Actions.AppendChild(Action3);
-            Actions.AppendChild(Action4);
-            ActionSetting.AppendChild(Actions);
-            node.AppendChild(ActionSetting);            
+            bool IsExist = false;
+            foreach(XmlNode Child in node.ChildNodes)
+            {
+                if (Child.Name.Equals("ActionSetting"))
+                {
+                    if (Child.Attributes[0].Value.Equals(pEntityName + "Actions"))
+                    {
+                        IsExist = true;
+                    }
+                }            
+            }
+            if (!IsExist)
+            {
+                XmlElement ActionSetting = doc.CreateElement("ActionSetting");
+                ActionSetting.SetAttribute("Name", pEntityName + "Actions");
+                XmlElement Actions = doc.CreateElement("Actions");
+                ActionSetting.AppendChild(Actions);
+                XmlElement Action1 = doc.CreateElement("Action");
+                Action1.SetAttribute("Name", "Read");
+                XmlElement Action2 = doc.CreateElement("Action");
+                Action2.SetAttribute("Name", "Create");
+                XmlElement Action3 = doc.CreateElement("Action");
+                Action3.SetAttribute("Name", "Write");
+                XmlElement Action4 = doc.CreateElement("Action");
+                Action4.SetAttribute("Name", "Delete");
+                Actions.AppendChild(Action1);
+                Actions.AppendChild(Action2);
+                Actions.AppendChild(Action3);
+                Actions.AppendChild(Action4);
+                ActionSetting.AppendChild(Actions);
+                node.AppendChild(ActionSetting);
+            }
         }
 
        /// <summary>
@@ -1204,16 +1232,32 @@ namespace CreateXML {
                         foreach (XmlNode childNode in child.ChildNodes)
                         {
                             if (childNode.Name.Equals("Module"))
-                            {
+                            {                                
                                 XmlNode Programs = childNode.ChildNodes[0];
-                                XmlElement Program = doc.CreateElement("Program");
-                                Program.SetAttribute("Name", pEntityName + "Browse");
-                                Program.SetAttribute("ActionSetting",pEntityName+"Action");
-                                Program.SetAttribute("BusinessObject", pEntityName);
-                                Program.SetAttribute("Image", "TrainingType_16");
-                                Program.SetAttribute("UriAction", "Browse");
-                                Program.SetAttribute("UriTypeKey", pEntityName);
-                                Programs.AppendChild(Program);                            
+                                #region 20150109 modified by Dick for 避免重複增加節點問題  #18
+                                bool IsExsit = false;
+                                foreach (XmlNode PNode in Programs.ChildNodes)
+                                {
+                                    if (PNode.Name.Equals("Program"))
+                                    {
+                                       if(PNode.Attributes[0].Value.Equals(pEntityName + "Browse"))
+                                       {                                          
+                                          IsExsit = true;                                           
+                                       }
+                                    }
+                                }
+                                if (!IsExsit)
+                                {
+                                    XmlElement Program = doc.CreateElement("Program");
+                                    Program.SetAttribute("Name", pEntityName + "Browse");
+                                    Program.SetAttribute("ActionSetting", pEntityName + "Action");
+                                    Program.SetAttribute("BusinessObject", pEntityName);
+                                    Program.SetAttribute("Image", "TrainingType_16");
+                                    Program.SetAttribute("UriAction", "Browse");
+                                    Program.SetAttribute("UriTypeKey", pEntityName);
+                                    Programs.AppendChild(Program);
+                                }
+                                #endregion                               
                             }
                         }
                     }
