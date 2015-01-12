@@ -1120,6 +1120,11 @@ namespace CreateXML {
                 }
                 else
                 {
+                    //20150112 add by Dick for 考勤錯誤 #24
+                    if (temp.Equals("WorkTimeManagement"))
+                    {
+                        temp = "WorkTimeManagemen";
+                    }
                     if (pModules.ContainsKey(temp+"Module"))
                      {
                          ModuleName = temp + "Module";

@@ -3396,6 +3396,12 @@ namespace CreateXML {
                 else
                 {
                     English = English + "Module";
+                    #region 20150109 Add by Dick for #24
+                    if (English.Equals("WorkTimeManagementModule"))
+                    {
+                        English = "WorkTimeManagemenModule";
+                    }
+                    #endregion                    
                     if (Modules.ContainsKey(English))
                     {
                         List<string> li = Modules[English];
