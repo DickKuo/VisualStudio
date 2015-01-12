@@ -628,6 +628,7 @@ namespace CreateXML {
 
         /// <summary>
         /// 20140818 add by Dick 生出控件出來，讓後面可以加入控件
+        /// 20150112 modifed by Dick for 修正控鍵錯誤
         /// </summary>
         /// <param name="dt"></param>
         public List<SubUIControl> AddControlerInit(System.Windows.Forms.DataGridView dv, string EntityName) {
@@ -693,16 +694,22 @@ namespace CreateXML {
                                             break;
                                         case "decimal":
                                             control = ControlsSetting(EntityName, dr, control, "DcmsCalcEdit");
-                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.DataBindings.Add(new System.Windows.Forms.Binding(\"Value\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));";
-                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
-                                            control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"" + control.Name + "DcmsCalcEdit.Properties.Buttons\"))))});";
-                                            control.Context += "\r\n            this." + control.Name + "DcmsCalcEdit.Properties.Mask.UseMaskAsDisplayFormat = ((bool)(resources.GetObject(\"" + control.Name + "DcmsCalcEdit.Properties.Mask.UseMaskAsDisplayFormat\")));";			
-                                            control.Layout = "             ((System.ComponentModel.ISupportInitialize)(this." + control.Name + "DcmsCalcEdit.Properties)).EndInit();\r\n";
+                                            //control.Context += "\r\n            this.dcmsCalcEdit" + control.Name + ".DataBindings.Add(new System.Windows.Forms.Binding(\"Value\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));";
+                                            //control.Context += "\r\n            this.dcmsCalcEdit" + control.Name + ".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                            //control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"dcmsCalcEdit" + control.Name + ".Properties.Buttons\"))))});";
+                                            //control.Context += "\r\n            this.dcmsCalcEdit" + control.Name + ".Properties.Mask.UseMaskAsDisplayFormat = ((bool)(resources.GetObject(\"dcmsCalcEdit" + control.Name + ".Properties.Mask.UseMaskAsDisplayFormat\")));";
+                                            //control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this.dcmsCalcEdit" + control.Name + ".Properties)).EndInit();";
+                                            control.Context += "\r\n            this.dcmsCalcEdit" + control.Name + ".DataBindings.Add(new System.Windows.Forms.Binding(\"Value\", this.xempotlimitBindingSource, \"" + control.Name + "\", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));";
+                                            control.Context += "\r\n            resources.ApplyResources(this.dcmsCalcEdit" + control.Name + ", \"dcmsCalcEdit" + control.Name + "\");";
+                                            control.Context += "\r\n            this.dcmsCalcEdit" + control.Name + ".Name = \"dcmsCalcEdit" + control.Name + "\";";
+                                            control.Context += "\r\n            this.dcmsCalcEdit" + control.Name + ".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
+                                            control.Context += "\r\n            new DevExpress.XtraEditors.Controls.EditorButton(((DevExpress.XtraEditors.Controls.ButtonPredefines)(resources.GetObject(\"dcmsCalcEdit" + control.Name + ".Properties.Buttons\"))))});";
+                                            control.Context += "\r\n            this.dcmsCalcEdit" + control.Name + ".Properties.Mask.UseMaskAsDisplayFormat = ((bool)(resources.GetObject(\"dcmsCalcEdit" + control.Name + ".Properties.Mask.UseMaskAsDisplayFormat\")));";
                                             break;
                                         case "guid":
                                             if(!string.IsNullOrEmpty(dr.Cells["ReferenceProperty"].Value.ToString())) {
                                                 control = ControlsSetting(EntityName, dr, control, "HRSelectControl");
-                                                control.Context += "            this.hRSelectControlDepartmentId.TypeKey =\"" + dr.Cells["ReferenceProperty"].Value.ToString() + "\";";
+                                                control.Context += "           this.hRSelectControl"+dr.Cells["ReferenceProperty"].Value.ToString()+"Id.TypeKey =\"" + dr.Cells["ReferenceProperty"].Value.ToString() + "\";";
                                             }
                                             break;
                                         case "string":
@@ -725,7 +732,7 @@ namespace CreateXML {
                                             }
                                             break;
                                         case "datetime":
-                                            control = ControlsSetting(EntityName, dr, control, "DcmsDateEdit");
+                                            control = ControlsSetting(EntityName, dr, control, "dcmsDateEdit");
                                             control.Layout = "            ((System.ComponentModel.ISupportInitialize)(this.dcmsDateEdit" + control.Name + ".Properties.VistaTimeProperties)).BeginInit();\r\n";
                                             control.Context += "            this.dcmsDateEdit" + control.Name + ".DataBindings.Add(new System.Windows.Forms.Binding(\"EditValue\", this." + EntityName.ToLower() + "BindingSource, \"" + control.Name + "\", true));\r\n";
                                             control.Context += "            this.dcmsDateEdit" + control.Name + ".Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {";
@@ -739,9 +746,9 @@ namespace CreateXML {
                                             //加入Label
                                             string temp = control.Name.ToLower().IndexOf("x") != -1 ? control.Name.Substring(1, control.Name.Length-1) : control.Name;
                                             control.LabelName = control.Name + "Label";
-                                            control.LabelDeclare += "\r\n        System.Windows.Forms.Label  " + control.Name + "Label1;";
-                                            control.LabelNewControl += "\r\n            " + control.Name + "Label1 = new System.Windows.Forms.Label();";
-                                            control.LabelAdd = "\r\n            this.groupBox1.Controls.Add(" + control.Name + "Label1);";
+                                            control.LabelDeclare += "\r\n        System.Windows.Forms.Label  " + control.Name + "Label;";
+                                            control.LabelNewControl += "\r\n            " + control.Name + "Label = new System.Windows.Forms.Label();";
+                                            control.LabelAdd = "\r\n            this.groupBox1.Controls.Add(" + control.Name + "Label);";
                                             control.LabelContext += "\r\n            //";
                                             control.LabelContext += "\r\n            // " + control.LabelName;
                                             control.LabelContext += "\r\n            // ";
@@ -773,7 +780,7 @@ namespace CreateXML {
 
 
         /// <summary>
-        /// 20140904 動態件利控件
+        /// 20140904 動態建立控件
         /// </summary>
         /// <param name="EntityName"></param>
         /// <param name="dr"></param>
@@ -787,16 +794,16 @@ namespace CreateXML {
             control.Order = Convert.ToInt32(dr.Cells["UIOrder"].Value);
             control.Declare = "        private " + ControlType + " "+temp + control.Name + ";";
             if(ControlType.Equals("HRSelectControl")) { ///SelectControl 命名空間不一樣
-                control.NewControl = "            this." + temp + control.Name + " = new " + ControlType + "();\r\n";
+                control.NewControl = "            this." + temp + control.Name + " = new " + ControlType + "();";
             } 
             else {
                 if (ControlType == "HRPickList")
                 {
-                    control.NewControl = "            this." + temp + control.Name + " = new " + ControlType + "();\r\n";
+                    control.NewControl = "            this." + temp + control.Name + " = new " + ControlType + "();";
                 }
                 else
                 {
-                    control.NewControl = "            this." + temp + control.Name + " = new Dcms.Common.UI." + ControlType + "();\r\n";
+                    control.NewControl = "            this." + temp + control.Name + " = new Dcms.Common.UI." + ControlType + "();";
                 }
                 control.Layout += "            ((System.ComponentModel.ISupportInitialize)(this." + temp + control.Name + ".Properties)).BeginInit();";            
             }         
