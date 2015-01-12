@@ -979,40 +979,48 @@ namespace CreateXML {
                 if(Data != null)
                 {
                     #region 20150112 modified by Dick for 修正重複加入節點問題 #25
-                    XmlNode TypeName = doc.SelectSingleNode("EntityTypeRegister/TypeName");
-                    if (TypeName == null)
-                    {
-                        string basestr = "Dcms.HR.DataEntities." + pEntityName;
-                        XmlElement DataEntity = doc.CreateElement("TypeName");
-                        DataEntity.SetAttribute("dllFile", "DigiWin.HR.CaseBusiness.dll");
-                        XmlElement element = doc.CreateElement("TypeName");
-                        element.InnerText = basestr;
-                        DataEntity.AppendChild(element);
-                        Data.AppendChild(DataEntity);
-                        doc.Save(FullFileName);
-                    }
-                    else
-                    {
-                        bool IsExsist = false;
-                        string NewNodeName ="Dcms.HR.DataEntities." + pEntityName;
-                        foreach (XmlNode node in TypeName.ChildNodes)
-                        {
-                            if (node.Name.Equals("TypeName"))
-                            {
-                                if (node.InnerText.Equals(NewNodeName))
-                                {
-                                    IsExsist = true;
-                                }
-                            }
-                        }
-                        if (!IsExsist)
-                        { //不存在則加入新節點
-                            XmlElement element = doc.CreateElement("TypeName");
-                            element.InnerText = NewNodeName;
-                            TypeName.AppendChild(element);
-                            doc.Save(FullFileName);
-                        }
-                    }
+                    XmlElement DataEntity = doc.CreateElement("DataEntity");
+                    string basestr = "Dcms.HR.DataEntities." + pEntityName;                  
+                    DataEntity.SetAttribute("dllFile", "DigiWin.HR.CaseBusiness.dll");
+                    XmlElement element = doc.CreateElement("TypeName");
+                    element.InnerText = basestr;
+                    DataEntity.AppendChild(element);
+                    Data.AppendChild(DataEntity);
+                    doc.Save(FullFileName);
+                    //XmlNode TypeName = doc.SelectSingleNode("EntityTypeRegister");
+                    //if (TypeName == null)
+                    //{
+                    //    string basestr = "Dcms.HR.DataEntities." + pEntityName;
+                    //    XmlElement DataEntity = doc.CreateElement("DataEntity");
+                    //    DataEntity.SetAttribute("dllFile", "DigiWin.HR.CaseBusiness.dll");
+                    //    XmlElement element = doc.CreateElement("TypeName");
+                    //    element.InnerText = basestr;
+                    //    DataEntity.AppendChild(element);
+                    //    Data.AppendChild(DataEntity);
+                    //    doc.Save(FullFileName);
+                    //}
+                    //else
+                    //{
+                    //    bool IsExsist = false;
+                    //    string NewNodeName ="Dcms.HR.DataEntities." + pEntityName;
+                    //    foreach (XmlNode node in TypeName.ChildNodes)
+                    //    {
+                    //        if (node.Name.Equals("TypeName"))
+                    //        {
+                    //            if (node.InnerText.Equals(NewNodeName))
+                    //            {
+                    //                IsExsist = true;
+                    //            }
+                    //        }
+                    //    }
+                    //    if (!IsExsist)
+                    //    { //不存在則加入新節點
+                    //        XmlElement element = doc.CreateElement("TypeName");
+                    //        element.InnerText = NewNodeName;
+                    //        TypeName.AppendChild(element);
+                    //        doc.Save(FullFileName);
+                    //    }
+                    //}
                     #endregion                   
                 }
             }
