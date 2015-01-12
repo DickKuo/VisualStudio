@@ -952,6 +952,7 @@ namespace CreateXML {
 
         /// <summary>
         /// 20140815 add by Dick for 加入掛節點
+        /// 20150112 modified by Dick for 修正重複加入節點問題 #25
         /// </summary>
         /// <param name="pEntityName"></param>
         public void RegisterEntity(string pEntityName) {
