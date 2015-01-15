@@ -53,6 +53,8 @@ namespace CreateXML {
                 }
             }
             doc.Save(Xmlpath);
+            MessageBox.Show("設定完成!!");
+            this.Close();
         }
     }
 }

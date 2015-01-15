@@ -814,112 +814,125 @@ namespace CreateXML {
 
 
 
-        public Form1() {
-            InitializeComponent();
-            System.Data.DataTable dt = new System.Data.DataTable();
-            dt.Columns.Add("Parameter");
-            //dt.Columns.Add("Type");
-            dt.Columns.Add("Describe");
-            dt.Columns.Add("ReferenceProperty");
-            dt.Columns.Add("Necessary", typeof(bool));
-            dt.Columns.Add("Order");
-            //20140818 add by Dick
-            dt.Columns.Add("UIOrder");
-           
-           
-
-            RefereceTable.Columns.Add("Entity");
-
-
-
-            dataGridView1.DataSource = dt;
-
-            GridViewCellType(dataGridView1);
-
-            System.Data.DataTable dtt11 = dataGridView1.DataSource as System.Data.DataTable;
-            Xmlpath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "SaveFile.xml";
-            XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
-            XmlNode root = doc.SelectSingleNode("root");
-            foreach(XmlNode node in root.ChildNodes) {
-                string ClassName = node.Attributes["ClassName"].Value.ToString();
-                #region 20140827 modified by Dick for 修改成ComboBox
-                EnitiesComboBox.Items.Add(ClassName);              
-                //ToolStripMenuItem item = new ToolStripMenuItem(ClassName);
-                //item.Click += new EventHandler(item_Click);               
-                //載入上次作業ToolStripMenuItem.DropDownItems.Add(item);
-                #endregion
-                foreach(XmlNode child in node.ChildNodes) {
-                    string temp = child.Attributes["ReferenceProperty"].Value;
-                    if(!string.IsNullOrEmpty(temp)) {
-                        RefereceDic[temp] = temp;
+        public Form1() {           
+                InitializeComponent();
+                System.Data.DataTable dt = new System.Data.DataTable();
+                dt.Columns.Add("Parameter");
+                //dt.Columns.Add("Type");
+                dt.Columns.Add("Describe");
+                dt.Columns.Add("ReferenceProperty");
+                dt.Columns.Add("Necessary", typeof(bool));
+                dt.Columns.Add("Order");
+                //20140818 add by Dick
+                dt.Columns.Add("UIOrder");
+                RefereceTable.Columns.Add("Entity");
+                dataGridView1.DataSource = dt;
+                GridViewCellType(dataGridView1);
+                System.Data.DataTable dtt11 = dataGridView1.DataSource as System.Data.DataTable;
+                Xmlpath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "SaveFile.xml";
+                XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
+                XmlNode root = doc.SelectSingleNode("root");
+                foreach (XmlNode node in root.ChildNodes)
+                {
+                    string ClassName = node.Attributes["ClassName"].Value.ToString();
+                    #region 20140827 modified by Dick for 修改成ComboBox
+                    EnitiesComboBox.Items.Add(ClassName);
+                    //ToolStripMenuItem item = new ToolStripMenuItem(ClassName);
+                    //item.Click += new EventHandler(item_Click);               
+                    //載入上次作業ToolStripMenuItem.DropDownItems.Add(item);
+                    #endregion
+                    foreach (XmlNode child in node.ChildNodes)
+                    {
+                        string temp = child.Attributes["ReferenceProperty"].Value;
+                        if (!string.IsNullOrEmpty(temp))
+                        {
+                            RefereceDic[temp] = temp;
+                        }
                     }
                 }
-            }
-            ProjectPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml";
-            XmlDocument doc2 = FileTool.XmlFile.LoadXml(ProjectPath);
-            XmlNode root2 = doc2.SelectSingleNode("root");
-            foreach(XmlNode node in root2.ChildNodes) {
-                if(node.Attributes["Set"].Value.ToString() == "true") {
-                    ProjectPath = node.Attributes["Xpath"].Value.ToString();
-                }
-            }
-            ProjectPath += @"\Dcms.HR.Support\Business.Implement\Resources\Dcms.HR.Business.Implement.Resources\Properties\";
-
-            foreach(string str in RefereceDic.Values) {
-                DataRow dr = RefereceTable.NewRow();
-                dr[0] = str;
-                RefereceTable.Rows.Add(dr);
-            }
-                    
-            InitIAuditObject();
-            InitIFlag();
-            InitOwnerObject();
-            InitCode();
-            InitModify();
-            InitName();
-            InitModuleName();
-            ///加入條件視窗
-            dataGridView1.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
-            var item = dataGridView1.ContextMenuStrip.Items.Add("加入條件");
-            item.Click += new EventHandler(item_Click1);
-            #region 20141029 add by Dick for 預設Browse
-            QueryViewCondition QueryView =new QueryViewCondition();
-            QueryView.BrowseName = "Browse";
-            QueryView.Description = "瀏覽";
-            QueryView.Type = "Browse";
-            DicQueryView["Browse"] = QueryView;
-            #endregion
-
-
-            #region 20141224 add by Dick for 加入模組下拉方式           
-            string ProgamPath = GetSettinhPath();
-            DirectoryInfo DirInfo = new DirectoryInfo(ProgamPath);
-            string Permission = DirInfo.FullName + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "Permission.xml";
-            Modules = GetModules(Permission);
-            string ModuleResource = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "ModResource.xml";
-            XmlDocument docResource = FileTool.XmlFile.LoadXml(ModuleResource);
-            XmlNode ResourceRoot = docResource.SelectSingleNode("root");            
-            foreach (XmlNode node in ResourceRoot.ChildNodes)
-            {
-                //XmlNode ch = node.InnerText.Trim();
-                string innerText = node.ChildNodes[1].InnerXml.Trim();
-                string Attributes = node.Attributes[0].Value.Replace("Mod_", "");
-                EnToCHT.Add(Attributes, innerText);
-
-                if (!CHTToEn.ContainsKey(innerText))
+                ProjectPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml";
+                XmlDocument doc2 = FileTool.XmlFile.LoadXml(ProjectPath);
+                XmlNode root2 = doc2.SelectSingleNode("root");
+                foreach (XmlNode node in root2.ChildNodes)
                 {
-                    CHTToEn.Add(innerText, Attributes);
+                    if (node.Attributes["Set"].Value.ToString() == "true")
+                    {
+                        ProjectPath = node.Attributes["Xpath"].Value.ToString();
+                    }
                 }
-            }
+                ProjectPath += @"\Dcms.HR.Support\Business.Implement\Resources\Dcms.HR.Business.Implement.Resources\Properties\";
 
-            foreach (string key in Modules.Keys)
-            {
-                string name = EnToCHT[key];
-                CB_Modules.Items.Add(name);
-            }            
-            #endregion
-            //20141226 add by Dick for 顯示當前設定位置 #9
-           label7.Text ="當前設定位置："+  GetSettinhPath();
+                foreach (string str in RefereceDic.Values)
+                {
+                    DataRow dr = RefereceTable.NewRow();
+                    dr[0] = str;
+                    RefereceTable.Rows.Add(dr);
+                }
+
+                InitIAuditObject();
+                InitIFlag();
+                InitOwnerObject();
+                InitCode();
+                InitModify();
+                InitName();
+                InitModuleName();
+                ///加入條件視窗
+                dataGridView1.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+                var item = dataGridView1.ContextMenuStrip.Items.Add("加入條件");
+                item.Click += new EventHandler(item_Click1);
+                #region 20141029 add by Dick for 預設Browse
+                QueryViewCondition QueryView = new QueryViewCondition();
+                QueryView.BrowseName = "Browse";
+                QueryView.Description = "瀏覽";
+                QueryView.Type = "Browse";
+                DicQueryView["Browse"] = QueryView;
+                #endregion
+
+                #region 20141224 add by Dick for 加入模組下拉方式
+                         //20150115 modified by Dick for 加入未設定位置時的提示訊息 #30
+                string ProgamPath = GetSettinhPath();
+                if (!Directory.Exists(ProgamPath))
+                {
+                    MessageBox.Show("Export未設定，請設定好後重新啟動工具");
+                }
+                else
+                {
+                    DirectoryInfo DirInfo = new DirectoryInfo(ProgamPath);
+                    string Permission = DirInfo.FullName + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "Permission.xml";
+                    if (!File.Exists(Permission))
+                    {
+                        MessageBox.Show("Permission.xml不存在");
+                    }
+                    else
+                    {
+                        Modules = GetModules(Permission);
+                        string ModuleResource = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "ModResource.xml";
+                        XmlDocument docResource = FileTool.XmlFile.LoadXml(ModuleResource);
+                        XmlNode ResourceRoot = docResource.SelectSingleNode("root");
+                        foreach (XmlNode node in ResourceRoot.ChildNodes)
+                        {
+                            //XmlNode ch = node.InnerText.Trim();
+                            string innerText = node.ChildNodes[1].InnerXml.Trim();
+                            string Attributes = node.Attributes[0].Value.Replace("Mod_", "");
+                            EnToCHT.Add(Attributes, innerText);
+
+                            if (!CHTToEn.ContainsKey(innerText))
+                            {
+                                CHTToEn.Add(innerText, Attributes);
+                            }
+                        }
+
+                        foreach (string key in Modules.Keys)
+                        {
+                            string name = EnToCHT[key];
+                            CB_Modules.Items.Add(name);
+                        }
+
+                    }
+                }
+                    #endregion               
+                //20141226 add by Dick for 顯示當前設定位置 #9
+                label7.Text = "當前設定位置：" + GetSettinhPath();           
         }
 
         /// <summary>
