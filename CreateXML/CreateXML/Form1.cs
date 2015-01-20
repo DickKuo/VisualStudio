@@ -1844,18 +1844,18 @@ namespace CreateXML {
                     if(bo) {
                         string Parameter = dr.Cells["Parameter"].Value.ToString();
                         switch(dr.Cells["Type"].Value.ToString().ToLower()) {
-                            case "decmail":
-                                str.Append("            vh.GreaterThan<decimal>(e.DataEntity,\"" + Parameter + "\" , 0, true);\r\n");
+                            case "decimal": //20150120 修正decimal 不會生成預設 Service 必填檢查#28
+                                str.AppendLine("            vh.GreaterThan<decimal>(e.DataEntity,\"" + Parameter + "\" , 0, true);");
                                 break;
                             case "int32":
-                                str.Append("            vh.GreaterThan<int>(e.DataEntity,\"" + Parameter + "\" , 0, true);\r\n");
+                                str.AppendLine("            vh.GreaterThan<int>(e.DataEntity,\"" + Parameter + "\" , 0, true);n");
                                 break;
                             case "datetime":
-                                str.Append("            vh.DateTimeNotIsEmpty(e.DataEntity, \"" + Parameter + "\" );\r\n");
+                                str.AppendLine("            vh.DateTimeNotIsEmpty(e.DataEntity, \"" + Parameter + "\" );");
                                 break;
                             case "string":
                             case "guid":
-                                str.Append("            vh.StringNotNullOrEmpty(e.DataEntity, \"" + Parameter + "\" );\r\n");
+                                str.AppendLine("            vh.StringNotNullOrEmpty(e.DataEntity, \"" + Parameter + "\" );");
                                 break;
                         }
                     }
