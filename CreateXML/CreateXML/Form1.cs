@@ -2670,6 +2670,11 @@ namespace CreateXML {
             OneClickMultiFile multiclick = new OneClickMultiFile(ParentPath, ProgamPath);
             List<Detail> detailLis = new List<Detail>();
             string DetailEntity =string.Empty;
+            #region 20150121 add by Dick for 產生明細瀏覽畫面控件 #13
+            StringBuilder dev = new StringBuilder();
+            StringBuilder declare = new StringBuilder();
+            StringBuilder InitComponent = new StringBuilder();
+            #endregion         
             #region 20141028 add by Dick for 建立明細實體
             foreach (TabPage page in tabControlDetail.TabPages)
             {
@@ -2691,9 +2696,13 @@ namespace CreateXML {
                           DetailEntity =page.Text;
                           multiclick.CreateDetailEditView(ProgamPath, tb_className.Text, page.Text);
                           //oneclick.CreateentityNoDetailBrowseEditViewV5(page.Text + "UI", grid, 2, "DetailEditView.txt");
+                          #region 20150121 add by Dick for 產生明細瀏覽畫面控件 #13
+                          dev.Append(multiclick.CreateNewDev(tb_className.Text, page.Text));
+                          declare.Append(multiclick.CreateDeclare(page.Text, grid));
+                          InitComponent.Append(multiclick.CreateInit(page.Text, grid));
+                          #endregion                         
                       }
-                    }
-                    
+                    }                    
                 }
             }
             #endregion
@@ -2764,7 +2773,7 @@ namespace CreateXML {
 
             #region 20141226 add by Dick for 加入UI
             multiclick.CreateEntityHasDetail(ProgamPath, tb_className.Text, DetailEntity, dataGridView1, 1);
-            multiclick.CreateDetailEntityBrowse(ProgamPath, tb_className.Text, tb_className.Text+"Infos");
+            multiclick.CreateDetailEntityBrowse(ProgamPath, tb_className.Text, tb_className.Text+"Infos",dev);
            
             #endregion
             //CreateentityNoDetailBrowseEditViewV5
