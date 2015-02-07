@@ -8,8 +8,8 @@
     <ProjectGuid>{E9D26E84-C166-48CC-854E-99372DF4EB3C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileTool</RootNamespace>
-    <AssemblyName>FileTool</AssemblyName>
+    <RootNamespace>CommTool</RootNamespace>
+    <AssemblyName>CommTool</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comm.cs" />
     <Compile Include="Files.cs" />
     <Compile Include="ToolLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

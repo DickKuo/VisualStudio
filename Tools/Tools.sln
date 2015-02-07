@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTool", "FileTool\FileTool.csproj", "{E9D26E84-C166-48CC-854E-99372DF4EB3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommTool", "FileTool\CommTool.csproj", "{E9D26E84-C166-48CC-854E-99372DF4EB3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQL", "SQL\SQL.csproj", "{08943F60-124E-42C0-B4B8-4279EB064EF7}"
 EndProject

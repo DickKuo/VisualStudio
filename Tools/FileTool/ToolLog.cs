@@ -6,7 +6,7 @@ using System.IO;
 using System.Xml;
 using System.ComponentModel;
 
-namespace FileTool
+namespace CommTool
 {
    public  class ToolLog 
     {

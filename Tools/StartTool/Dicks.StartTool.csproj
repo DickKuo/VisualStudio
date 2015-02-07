@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileTool\FileTool.csproj">
+    <ProjectReference Include="..\FileTool\CommTool.csproj">
       <Project>{E9D26E84-C166-48CC-854E-99372DF4EB3C}</Project>
-      <Name>FileTool</Name>
+      <Name>CommTool</Name>
     </ProjectReference>
     <ProjectReference Include="..\Stock\Stock.csproj">
       <Project>{6BD4C474-7A0D-4E83-821B-AA9D1CBA1E24}</Project>

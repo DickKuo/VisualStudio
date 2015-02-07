@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileTool\FileTool.csproj">
+    <ProjectReference Include="..\FileTool\CommTool.csproj">
       <Project>{E9D26E84-C166-48CC-854E-99372DF4EB3C}</Project>
-      <Name>FileTool</Name>
+      <Name>CommTool</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

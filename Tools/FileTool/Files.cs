@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace FileTool
+namespace CommTool
 {
     public class Files
     {
@@ -26,7 +26,7 @@ namespace FileTool
             }
             catch (Exception ex)
             {
-                FileTool.ToolLog.Log(ex);
+                CommTool.ToolLog.Log(ex);
             }
         }
 
@@ -47,7 +47,7 @@ namespace FileTool
             }
             catch (Exception ex)
             {
-                FileTool.ToolLog.Log(ex);
+                CommTool.ToolLog.Log(ex);
             }
         }
 
@@ -70,7 +70,7 @@ namespace FileTool
             }
             catch (Exception ex)
             {
-                FileTool.ToolLog.Log(ex);
+                CommTool.ToolLog.Log(ex);
             }
         }
 
@@ -93,7 +93,7 @@ namespace FileTool
             }
             catch (Exception ex)
             {
-                FileTool.ToolLog.Log(ex);
+                CommTool.ToolLog.Log(ex);
             }
         }
     }

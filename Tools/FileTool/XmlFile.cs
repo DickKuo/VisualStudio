@@ -6,7 +6,7 @@ using System.Xml;
 using System.ComponentModel;
 using System.IO;
 
-namespace FileTool
+namespace CommTool
 {
     public class XmlFile
     {
