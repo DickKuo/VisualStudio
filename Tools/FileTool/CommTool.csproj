@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comm.cs" />
+    <Compile Include="ExcelHelper.cs" />
     <Compile Include="Files.cs" />
     <Compile Include="ToolLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
