@@ -184,7 +184,7 @@ namespace CreateXML {
         private void SubQueryView(System.Windows.Forms.DataGridView GridView, string FullFileName, string EntityName,QueryViewCondition Condition) {
             string PageName = Condition.BrowseName;
             string Type = Condition.Type;
-            XmlDocument doc = FileTool.XmlFile.LoadXml(FullFileName);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("QueryConfiguration");
             XmlNode QueryViewXML = root.SelectSingleNode("QueryViewXML");
             XmlElement QueryView = doc.CreateElement("QueryView");
@@ -472,7 +472,7 @@ namespace CreateXML {
             StringBuilder sb  =new StringBuilder();
             sb = AnalysisUI(pEntityName, pSourceFile, SBParameter, SBNewControl, SBLayout, SBContext, SBAdd, HasRemark, ModuleProviderName);
             string SaveFile = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
-            FileTool.Files.WritFile(sb, SaveFile);
+            CommTool.Files.WritFile(sb, SaveFile);
            
         }
 
@@ -885,7 +885,7 @@ namespace CreateXML {
         /// <param name="SaveFile"></param>
         /// <param name="spl"></param>
         public static void AddResource(string SaveFile, string[] spl) {
-            XmlDocument doc = FileTool.XmlFile.LoadXml(SaveFile);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(SaveFile);
             XmlNode root = doc.SelectSingleNode("root");
             XmlElement element = doc.CreateElement("data");
             element.SetAttribute("name", spl[0]);
@@ -964,7 +964,7 @@ namespace CreateXML {
         /// <param name="pEntityName"></param>
         public void RegisterEntity(string pEntityName) {
             string FullFileName = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomServerApplication" + Path.DirectorySeparatorChar + "EntityTypeRegisterForCase.config";
-            XmlDocument doc = FileTool.XmlFile.LoadXml(FullFileName);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("EntityTypeRegister/DataEntity");
             if(root != null) {
                 string basestr = "Dcms.HR.DataEntities." + pEntityName;
@@ -1123,7 +1123,7 @@ namespace CreateXML {
         public void AppendDataEntityDisplayInfo(DataTable GridTable, string pFileName) {
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "DataEntityDisplay";
             string FullFileName = pPath + Path.DirectorySeparatorChar + "DataEntityDisplayInfoForCase.xml";
-            XmlDocument doc = FileTool.XmlFile.LoadXml(FullFileName);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(FullFileName);
             XmlNode root = doc.SelectSingleNode("Root");
             bool IsExistNode = false;
             XmlElement DataEntity = doc.CreateElement("DataEntity");
@@ -1187,7 +1187,7 @@ namespace CreateXML {
 
             CheckModule(pPermissionPath, ModuleName, SubName);
             CheckSubModule(pPermissionPath, ModuleName, SubName);
-            XmlDocument doc = FileTool.XmlFile.LoadXml(pPermissionPath);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(pPermissionPath);
             AppendModule(pEntityName, ModuleName, doc);
             AppendAction(pEntityName, doc);
             AppendBusinessObject(pEntityName, ActionString, doc);
@@ -1333,7 +1333,7 @@ namespace CreateXML {
         private void CheckModule(string pPermissionPath,string pModuleName, string pSubModuleName)
         {
             bool Has = false;
-            XmlDocument doc = FileTool.XmlFile.LoadXml(pPermissionPath);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(pPermissionPath);
             foreach (XmlNode node in doc.ChildNodes[1].ChildNodes[1].ChildNodes)
             {
                 if (node.Name.Equals("Module"))
@@ -1369,7 +1369,7 @@ namespace CreateXML {
         private void CheckSubModule(string pPermissionPath, string pModuleName, string pSubModuleName)
         {
             bool Has = false;
-            XmlDocument doc = FileTool.XmlFile.LoadXml(pPermissionPath);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(pPermissionPath);
             foreach (XmlNode node in doc.ChildNodes[1].ChildNodes[1].ChildNodes)
             {
                 if (node.Name.Equals("Module"))

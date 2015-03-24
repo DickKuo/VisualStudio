@@ -22,7 +22,7 @@ namespace CreateXML {
             {
                 return;
             }
-            richTextBox1.Text = FileTool.XmlFile.ReOrderMethod(richTextBox1.Text, cbKeepId.Checked);
+            richTextBox1.Text = CommTool.XmlFile.ReOrderMethod(richTextBox1.Text, cbKeepId.Checked);
             MessageBox.Show("重新排序完成");
         }
 
@@ -32,7 +32,7 @@ namespace CreateXML {
             {
                 return;
             }
-            richTextBox1.Text = FileTool.XmlFile.NewOrderMethod(richTextBox1.Text);
+            richTextBox1.Text = CommTool.XmlFile.NewOrderMethod(richTextBox1.Text);
             MessageBox.Show("重新產生完成");
         }
     }

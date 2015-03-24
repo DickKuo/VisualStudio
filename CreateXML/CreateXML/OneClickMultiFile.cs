@@ -78,7 +78,7 @@ namespace CreateXML {
                }
            }
            string SaveFile = DirInfo.Parent.FullName + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityName + ".cs";
-           FileTool.Files.WritFile(Content.ToString(), SaveFile,false);
+           CommTool.Files.WritFile(Content.ToString(), SaveFile,false);
        }
 
 
@@ -171,7 +171,7 @@ namespace CreateXML {
                }
            }
            string SaveFile = DirInfo.Parent.FullName + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityDetailName + ".cs";
-           FileTool.Files.WritFile(Content.ToString(), SaveFile,false);
+           CommTool.Files.WritFile(Content.ToString(), SaveFile,false);
        }
 
        /// <summary>
@@ -200,7 +200,7 @@ namespace CreateXML {
                }
            }
            string SaveFile = DirInfo.Parent.FullName + Path.DirectorySeparatorChar + "DigiWin.HR.CustomUI" + Path.DirectorySeparatorChar + pEntityDetailName+"UI" + ".cs";
-           FileTool.Files.WritFile(Content.ToString(), SaveFile,false);
+           CommTool.Files.WritFile(Content.ToString(), SaveFile,false);
        }
 
 

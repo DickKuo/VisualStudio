@@ -22,7 +22,7 @@ namespace CreateXML {
             this.treeView1.ItemDrag += new ItemDragEventHandler(treeView1_ItemDrag);
             this.treeView1.DragEnter += new DragEventHandler(treeView1_DragEnter);
 
-            XmlDocument doc = FileTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "SaveFile.xml");
+            XmlDocument doc = CommTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "SaveFile.xml");
             XmlNode root = doc.SelectSingleNode("root");
              foreach(XmlNode node in root.ChildNodes)
              {

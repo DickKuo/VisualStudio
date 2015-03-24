@@ -5,6 +5,8 @@ using System.Text;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CommTool
 {
@@ -12,10 +14,10 @@ namespace CommTool
     {
 
 
-        public DataTable ReadXlsTable(string FileName, int SheetNumber)
-        {
+        //public DataTable ReadXlsTable(string FileName, int SheetNumber)
+        //{
 
-        }
+        //}
 
 
         private bool isHDR = true;
@@ -74,18 +76,18 @@ namespace CommTool
         {
             List<string> sheetNames = new List<string>();
             FileStream pStream = File.OpenRead(filePath);
-            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(pStream, false))
-            {
-                IEnumerable<Sheet> allSheets = doc.WorkbookPart.Workbook.Descendants<Sheet>();
-                foreach (Sheet itemSheet in allSheets)
-                {
-                    sheetNames.Add(itemSheet.Name.Value);
-                }
-            }
-            if (sheetNames.Count == 0)
-            {
-                MessageBox.Show("Excel里面没有任何页签!");
-            }
+            //using (SpreadsheetDocument doc = SpreadsheetDocument.Open(pStream, false))
+            //{
+            //    IEnumerable<Sheet> allSheets = doc.WorkbookPart.Workbook.Descendants<Sheet>();
+            //    foreach (Sheet itemSheet in allSheets)
+            //    {
+            //        sheetNames.Add(itemSheet.Name.Value);
+            //    }
+            //}
+            //if (sheetNames.Count == 0)
+            //{
+            //    MessageBox.Show("Excel里面没有任何页签!");
+            //}
             pStream.Close();
             pStream.Dispose();
             return sheetNames;

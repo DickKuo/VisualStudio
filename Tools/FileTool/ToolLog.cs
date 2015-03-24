@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.ComponentModel;
+using System.Collections;
 
 namespace CommTool
 {
@@ -105,4 +106,95 @@ namespace CommTool
       Delete =3
     }
 
+   public class ExcetionCollection 
+   {
+       // For IsReadOnly
+       private bool isRO = false;
+       List<Exception> ExcetionCollectionList = null;
+
+       public ExcetionCollection()
+       {
+           ExcetionCollectionList = new List<Exception>();
+       }
+
+       /// <summary>
+       /// 20150302 加入例外訊息
+       /// </summary>
+       /// <param name="ex"></param>
+       public void Add(Exception ex)
+       {
+           if (!ExcetionCollectionList.Contains(ex))
+           {
+               ExcetionCollectionList.Add(ex);
+           }
+       }
+
+       /// <summary>
+       /// 20150302 列出所有例外訊息
+       /// </summary>
+       /// <returns></returns>
+       public string ShowException()
+       {
+           StringBuilder Error = new StringBuilder();
+           foreach (Exception ex in ExcetionCollectionList)
+           {
+               Error.AppendLine(ex.Message);
+           }
+           return Error.ToString();
+       }
+
+
+       public int Count
+       {
+           get
+           {
+               return ExcetionCollectionList.Count;
+           }
+       }
+
+       public void Clear()
+       {
+           ExcetionCollectionList.Clear();
+       }
+
+       public bool IsReadOnly
+       {
+           get { return isRO; }
+       }
+
+
+       public bool Remove(Exception item)
+       {
+           bool result = false;
+
+           // Iterate the inner collection to 
+           // find the box to be removed.
+           for (int i = 0; i < ExcetionCollectionList.Count; i++)
+           {
+               Exception Ex = (Exception)ExcetionCollectionList[i];
+               if (Ex.Message.Equals(item.Message))
+               {
+                   ExcetionCollectionList.RemoveAt(i);
+                   result = true;
+                   break;
+               }
+           }
+           return result;
+       }
+
+
+       public bool Contains(Exception item, EqualityComparer<Exception> comp)
+       {
+           bool found = false;
+           foreach (Exception bx in ExcetionCollectionList)
+           {
+               if (comp.Equals(bx, item))
+               {
+                   found = true;
+               }
+           }
+           return found;
+       }
+       
+   }
 }

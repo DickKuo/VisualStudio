@@ -14,6 +14,10 @@ using System.Reflection;
 using System.Web;
 using System.Diagnostics;
 using System.Threading;
+using System.Globalization;
+using System.Configuration;
+using CreateXML.Properties;
+using CommTool;
 
 namespace CreateXML {
     public partial class Form1 : Form {
@@ -810,12 +814,36 @@ namespace CreateXML {
 
         #endregion
 
+        /// <summary>
+        /// 20150302 初始化
+        /// </summary>
+        private void Init()
+        {
+            //Configuration coinf = new Configuration(,);
+            string value = ConfigurationManager.AppSettings["Language"];
+            //string language = ConfigurationManager.AppSettings.Get("Language");   
+            //switch (language)
+            //{
+            //    case "0":
+            //        Properties.Resources.Culture = new CultureInfo("en");
+            //        break;
+            //    case "1":
+            //        Properties.Resources.Culture = new CultureInfo("zh-CHT"); 
+            //        break;
+            //    case "2":
+            //        Properties.Resources.Culture = new CultureInfo("zh-CN");                
+            //        break;    
+            //}
+        }
 
 
-
-
-        public Form1() {           
-                InitializeComponent();
+        public Form1()
+        {
+            InitializeComponent();
+            ExcetionCollection collection = new ExcetionCollection();
+            try
+            {
+                Init();
                 System.Data.DataTable dt = new System.Data.DataTable();
                 dt.Columns.Add("Parameter");
                 //dt.Columns.Add("Type");
@@ -830,7 +858,7 @@ namespace CreateXML {
                 GridViewCellType(dataGridView1);
                 System.Data.DataTable dtt11 = dataGridView1.DataSource as System.Data.DataTable;
                 Xmlpath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "SaveFile.xml";
-                XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
+                XmlDocument doc = CommTool.XmlFile.LoadXml(Xmlpath);
                 XmlNode root = doc.SelectSingleNode("root");
                 foreach (XmlNode node in root.ChildNodes)
                 {
@@ -851,7 +879,7 @@ namespace CreateXML {
                     }
                 }
                 ProjectPath = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml";
-                XmlDocument doc2 = FileTool.XmlFile.LoadXml(ProjectPath);
+                XmlDocument doc2 = CommTool.XmlFile.LoadXml(ProjectPath);
                 XmlNode root2 = doc2.SelectSingleNode("root");
                 foreach (XmlNode node in root2.ChildNodes)
                 {
@@ -889,7 +917,7 @@ namespace CreateXML {
                 #endregion
 
                 #region 20141224 add by Dick for 加入模組下拉方式
-                         //20150115 modified by Dick for 加入未設定位置時的提示訊息 #30
+                //20150115 modified by Dick for 加入未設定位置時的提示訊息 #30
                 string ProgamPath = GetSettinhPath();
                 if (!Directory.Exists(ProgamPath))
                 {
@@ -907,7 +935,7 @@ namespace CreateXML {
                     {
                         Modules = GetModules(Permission);
                         string ModuleResource = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "ModResource.xml";
-                        XmlDocument docResource = FileTool.XmlFile.LoadXml(ModuleResource);
+                        XmlDocument docResource = CommTool.XmlFile.LoadXml(ModuleResource);
                         XmlNode ResourceRoot = docResource.SelectSingleNode("root");
                         foreach (XmlNode node in ResourceRoot.ChildNodes)
                         {
@@ -930,9 +958,18 @@ namespace CreateXML {
 
                     }
                 }
-                    #endregion               
+                #endregion
                 //20141226 add by Dick for 顯示當前設定位置 #9
-                label7.Text = "當前設定位置：" + GetSettinhPath();           
+                label7.Text = "當前設定位置：" + GetSettinhPath();
+            }
+            catch (Exception ex)
+            {
+                collection.Add(ex);
+            }
+            if (collection.Count > 0)
+            {
+                MessageBox.Show(collection.ShowException());
+            }
         }
 
         /// <summary>
@@ -966,10 +1003,10 @@ namespace CreateXML {
         private Dictionary<string, List<string>> GetModules(string pXmlPath)
         {
             Dictionary<string, List<string>> DicModules = new Dictionary<string, List<string>>();
-            XmlDocument doc = FileTool.XmlFile.LoadXml(pXmlPath);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(pXmlPath);
             XmlNode root = doc.ChildNodes[1];
             StringBuilder SB = new StringBuilder();
-            FileTool.XmlFile XmlFile = new FileTool.XmlFile();
+            CommTool.XmlFile XmlFile = new CommTool.XmlFile();
             XmlNode Module = root.ChildNodes[1];
             foreach (XmlNode child in root.ChildNodes)
             {
@@ -1193,7 +1230,7 @@ namespace CreateXML {
 
         private void LoadGridView(string NodeName,DataGridView GridView,bool IsMain)
         {
-            XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(Xmlpath);
             XmlNode root = doc.GetElementById(NodeName);
             System.Data.DataTable dt = new System.Data.DataTable();
             dt.Columns.Add("Parameter");           
@@ -1482,7 +1519,7 @@ namespace CreateXML {
         /// 多語系製作
         /// </summary>
         private void SaveResource(string Xpath, string Name, string value, string comment) {
-            XmlDocument doc = FileTool.XmlFile.LoadXml(Xpath);
+            XmlDocument doc = CommTool.XmlFile.LoadXml(Xpath);
             XmlNode root = doc.SelectSingleNode("root");
             XmlElement data = doc.CreateElement("data");
             data.SetAttribute("name", Name + "_" + value);
@@ -1578,7 +1615,7 @@ namespace CreateXML {
         /// </summary>
         private void SaveXml() {
             try {
-                XmlDocument doc = FileTool.XmlFile.LoadXml(Xmlpath);
+                XmlDocument doc = CommTool.XmlFile.LoadXml(Xmlpath);
                 XmlNode root = doc.SelectSingleNode("root");
                 XmlNode parent = doc.GetElementById(tb_className.Text);
                 if(parent != null) {
@@ -2928,7 +2965,7 @@ namespace CreateXML {
         /// </summary>
         /// <returns></returns>
         private static string GetSettinhPath() {
-            XmlDocument doc = FileTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
+            XmlDocument doc = CommTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
             XmlNode root = doc.SelectSingleNode("root");
             string ProgamPath = string.Empty;
             foreach(XmlNode node in root.ChildNodes) {
