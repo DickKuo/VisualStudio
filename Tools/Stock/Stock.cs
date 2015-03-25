@@ -283,7 +283,7 @@ namespace Stock
     {
         private string _stockNum;
         private string _url;
-
+        
         private Stock _stock;
 
         #region  Parameter
@@ -306,6 +306,9 @@ namespace Stock
             _stock = new Stock();
             StockNum = pStockNum;
             _stock.StockNum = this._stockNum;
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["sqlconnection"] = "Data Source=.;Initial Catalog=Stock;User Id=sa;Password=dsc;";
+            SQLHelper.SHelper.InitSHelper(dic);
         }        
         public StockData(){}
 
@@ -343,13 +346,17 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                SQL.SQL sql = new SQL.SQL(ConnetionString);
-                sql.CommandString = "insert into ErrorLog values(@ErrorType,@ErrorMessage,@ErrorTime,@ErrorStockNum)";
-                sql.AddParameter("@ErrorType", "001");
-                sql.AddParameter("@ErrorMessage", ex.Message);
-                sql.AddParameter("@ErrorTime", DateTime.Now);
-                sql.AddParameter("@ErrorStockNum", this._stock.StockNum);
-                sql.ExeNotRetun();
+                #region  20150324 modifed 修改維新的方式撰寫SQL                
+                string sql = string.Format(@"insert into ErrorLog values({0},{1},{2},{3})", "001", ex.Message, DateTime.Now, this._stock.StockNum);
+                //SQL.SQL sql = new SQL.SQL(ConnetionString);
+                //sql.CommandString = "insert into ErrorLog values(@ErrorType,@ErrorMessage,@ErrorTime,@ErrorStockNum)";
+                //sql.AddParameter("@ErrorType", "001");
+                //sql.AddParameter("@ErrorMessage", ex.Message);
+                //sql.AddParameter("@ErrorTime", DateTime.Now);
+                //sql.AddParameter("@ErrorStockNum", this._stock.StockNum);
+                //sql.ExeNotRetun();
+                SQLHelper.SHelper.ExeNoQuery(sql);
+                #endregion               
             }
             return this._stock;
         }
@@ -358,20 +365,26 @@ namespace Stock
         {
             if (this._stock.IsSucess)
             {
-                SQL.SQL sql = new SQL.SQL(ConnetionString);
-                sql.CommandString = "Insert into StockData values(@StockNum, GetDate(),@Price,@BuyPrice, @SellPrice, @Change, @Quantity, @YesterDay, @Start,@Highest,@Lowest)";
-                sql.AddParameter("@StockNum", this._stock.StockNum);
-                //sql.AddParameter("@StockTime", this._stock.StockTime);
-                sql.AddParameter("@Price", this._stock.Price);
-                sql.AddParameter("@BuyPrice", this._stock.BuyPrice);
-                sql.AddParameter("@SellPrice", this._stock.SellPrice);
-                sql.AddParameter("@Change", this._stock.Change);
-                sql.AddParameter("@Quantity", this._stock.Quantity);
-                sql.AddParameter("@YesterDay", this._stock.Yesterday);
-                sql.AddParameter("@Start", this._stock.Start);
-                sql.AddParameter("@Highest", this._stock.Highest);
-                sql.AddParameter("@Lowest", this._stock.Lowest);
-                sql.ExeNotRetun();
+                #region  20150324 modifed 修改維新的方式撰寫SQL
+                //SQL.SQL sql = new SQL.SQL(ConnetionString);
+                //sql.CommandString = "Insert into StockData values(@StockNum, GetDate(),@Price,@BuyPrice, @SellPrice, @Change, @Quantity, @YesterDay, @Start,@Highest,@Lowest)";
+                //sql.AddParameter("@StockNum", this._stock.StockNum);
+                ////sql.AddParameter("@StockTime", this._stock.StockTime);
+                //sql.AddParameter("@Price", this._stock.Price);
+                //sql.AddParameter("@BuyPrice", this._stock.BuyPrice);
+                //sql.AddParameter("@SellPrice", this._stock.SellPrice);
+                //sql.AddParameter("@Change", this._stock.Change);
+                //sql.AddParameter("@Quantity", this._stock.Quantity);
+                //sql.AddParameter("@YesterDay", this._stock.Yesterday);
+                //sql.AddParameter("@Start", this._stock.Start);
+                //sql.AddParameter("@Highest", this._stock.Highest);
+                //sql.AddParameter("@Lowest", this._stock.Lowest);
+                //sql.ExeNotRetun();
+                string sql = string.Format(@"Insert into StockData values({0}, {1},{2},{3}, {4},{5}, {6}, {7}, {8},{9},{10})", this._stock.StockNum,
+                    this._stock.StockTime, this._stock.Price, this._stock.BuyPrice, this._stock.SellPrice, this._stock.Change, this._stock.Quantity,
+                   this._stock.Yesterday, this._stock.Start, this._stock.Highest, this._stock.Lowest);
+                SQLHelper.SHelper.ExeNoQuery(sql);
+                #endregion
             }
         }
 
@@ -427,8 +440,8 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                FileTool.ToolLog log = new FileTool.ToolLog();
-                log.Log(FileTool.LogType.Error, _stockNum.ToString());
+                CommTool.ToolLog log = new  CommTool.ToolLog();
+                CommTool.ToolLog.Log(CommTool.LogType.Error, _stockNum.ToString());
                 return "error";
             }
         }
@@ -440,25 +453,40 @@ namespace Stock
             if (temp != "error")
             {
                 string[]  arry =temp.Split(',');
-                SQL.SQL sql = new SQL.SQL("Data Source=.;Initial Catalog=Stock;User Id=sa;Password=dsc;");
-                sql.CommandString = "select count(*) from StockList where StockNum=@StockNum and EPS1=@EPS1 and EPS2=@EPS2 and EPS3 =@EPS3 and EPS4 =@EPS4 ";
-                sql.AddParameter("@StockNum", pCode);
-                sql.AddParameter("@EPS1", arry[1]);
-                sql.AddParameter("@EPS2", arry[2]);
-                sql.AddParameter("@EPS3", arry[3]);
-                sql.AddParameter("@EPS4", arry[4]);
-                if (Convert.ToInt32(sql.ExeRetrunScalary()) == 0)
+                #region  20150324 modifed by Dick for 修改維新的方式撰寫SQL
+                #region old
+                //SQL.SQL sql = new SQL.SQL("");
+                //sql.CommandString = "select count(*) from StockList where StockNum=@StockNum and EPS1=@EPS1 and EPS2=@EPS2 and EPS3 =@EPS3 and EPS4 =@EPS4 ";
+                //sql.AddParameter("@StockNum", pCode);
+                //sql.AddParameter("@EPS1", arry[1]);
+                //sql.AddParameter("@EPS2", arry[2]);
+                //sql.AddParameter("@EPS3", arry[3]);
+                //sql.AddParameter("@EPS4", arry[4]);
+                //if (Convert.ToInt32(sql.ExeRetrunScalary()) == 0)
+                //{
+                //    sql.CommandString = "Insert into  StockList values(@StockNum,@StockName,@EPS1,@EPS2,@EPS3,@EPS4,@Date) ";
+                //    sql.AddParameter("@StockNum", pCode);
+                //    sql.AddParameter("@StockName", arry[0]);
+                //    sql.AddParameter("@EPS1", arry[1]);
+                //    sql.AddParameter("@EPS2", arry[2]);
+                //    sql.AddParameter("@EPS3", arry[3]);
+                //    sql.AddParameter("@EPS4", arry[4]);
+                //    sql.AddParameter("@Date", DateTime.Now.Date);
+                //    sql.ExeNotRetun();
+                //}              
+                #endregion
+                string sql = string.Format(@"select count(*) from StockList where StockNum={0} and EPS1={1} and EPS2={2} and EPS3 ={3} and EPS4 ={4} ", pCode, arry[1], arry[2], arry[3], arry[4]);
+                DataTable dt = SQLHelper.SHelper.ExeDataTable(sql);
+                if (dt != null && dt.Rows.Count > 0)
                 {
-                    sql.CommandString = "Insert into  StockList values(@StockNum,@StockName,@EPS1,@EPS2,@EPS3,@EPS4,@Date) ";
-                    sql.AddParameter("@StockNum", pCode);
-                    sql.AddParameter("@StockName", arry[0]);
-                    sql.AddParameter("@EPS1", arry[1]);
-                    sql.AddParameter("@EPS2", arry[2]);
-                    sql.AddParameter("@EPS3", arry[3]);
-                    sql.AddParameter("@EPS4", arry[4]);
-                    sql.AddParameter("@Date", DateTime.Now.Date);
-                    sql.ExeNotRetun();
-                }              
+                    int tag = Convert.ToInt32(dt.Rows[0][0]);
+                    if (tag == 0)
+                    {
+                        sql = string.Format(@"Insert into  StockList values({0},{1},{2},{3},{4},{5},{6}) ", pCode, arry[0], arry[1], arry[2], arry[3], arry[4], DateTime.Now.Date);
+                        SQLHelper.SHelper.ExeNoQuery(sql);
+                    }                        
+                }
+                #endregion
             }
         }
 
@@ -469,32 +497,41 @@ namespace Stock
         /// <returns></returns>
         public string  TraceEPS()
         {
-            SQL.SQL sql = new SQL.SQL("Data Source=.;Initial Catalog=Stock;User Id=sa;Password=dsc;");
-            sql.CommandString = "Select StockNum,StockName,EPS1,EPS2,EPS3,EPS4 from StockList Group by StockNum,StockName,EPS1,EPS2,EPS3,EPS4";
-            DataTable dt = sql.ExeRetrunDataTable();
+            #region  20150324 modifed by Dick for 修改維新的方式撰寫SQL
+            
+            #region Old          
+            //SQL.SQL sql = new SQL.SQL("Data Source=.;Initial Catalog=Stock;User Id=sa;Password=dsc;");
+            //sql.CommandString = "Select StockNum,StockName,EPS1,EPS2,EPS3,EPS4 from StockList Group by StockNum,StockName,EPS1,EPS2,EPS3,EPS4";
+            //DataTable dt = sql.ExeRetrunDataTable();
+            #endregion
+            DataTable dt = SQLHelper.SHelper.ExeDataTable("Select StockNum,StockName,EPS1,EPS2,EPS3,EPS4 from StockList Group by StockNum,StockName,EPS1,EPS2,EPS3,EPS4");          
             StringBuilder sb = new StringBuilder();
-            foreach(DataRow dr in dt.Rows)
+            if (dt != null)
             {
-                double EPS1 = Convert.ToDouble(EPSSplit(dr[2].ToString()));
-                double EPS2 = Convert.ToDouble(EPSSplit(dr[3].ToString()));
-                double EPS3 = Convert.ToDouble(EPSSplit(dr[4].ToString()));
-                double EPS4 = Convert.ToDouble(EPSSplit(dr[5].ToString()));
-                if (EPS1 > EPS2 & EPS2 > EPS3 & EPS3 > EPS4)
+                foreach (DataRow dr in dt.Rows)
                 {
-                    sb.Append(dr[0].ToString());
-                    sb.Append("   ");
-                    sb.Append(dr[1].ToString());
-                    sb.Append("   ");    
-                    sb.Append(dr[2].ToString());
-                    sb.Append("   ");
-                    sb.Append(dr[3].ToString());
-                    sb.Append("   ");
-                    sb.Append(dr[4].ToString());
-                    sb.Append("   ");
-                    sb.Append(dr[5].ToString());
-                    sb.Append("\r\n");
+                    double EPS1 = Convert.ToDouble(EPSSplit(dr[2].ToString()));
+                    double EPS2 = Convert.ToDouble(EPSSplit(dr[3].ToString()));
+                    double EPS3 = Convert.ToDouble(EPSSplit(dr[4].ToString()));
+                    double EPS4 = Convert.ToDouble(EPSSplit(dr[5].ToString()));
+                    if (EPS1 > EPS2 & EPS2 > EPS3 & EPS3 > EPS4)
+                    {
+                        sb.Append(dr[0].ToString());
+                        sb.Append("   ");
+                        sb.Append(dr[1].ToString());
+                        sb.Append("   ");
+                        sb.Append(dr[2].ToString());
+                        sb.Append("   ");
+                        sb.Append(dr[3].ToString());
+                        sb.Append("   ");
+                        sb.Append(dr[4].ToString());
+                        sb.Append("   ");
+                        sb.Append(dr[5].ToString());
+                        sb.Append("\r\n");
+                    }
                 }
-            }
+            }           
+            #endregion
             return sb.ToString();            
         }
 

@@ -19,7 +19,7 @@ namespace SQLHelper
         /// 20150324 建構子
         /// </summary>
         /// <param name="DicSetting"></param>
-        public SHelper(Dictionary<string, string> DicSetting)
+        public static void InitSHelper(Dictionary<string, string> DicSetting)
         {
             if (DicSetting.ContainsKey("sqlconnection"))
             {
@@ -53,6 +53,36 @@ namespace SQLHelper
         }
 
         /// <summary>
+        /// 20150324 add by Dick for SQL執行使用Parameter 方式。
+        /// </summary>
+        /// <param name="SqlSrting"></param>
+        /// <param name="DicParameters"></param>
+        /// <returns></returns>
+        public static DataTable ExeDataTableUseParameter(string SqlSrting,Dictionary<string,object> DicParameters)
+        {
+            DataTable dt = new DataTable();
+            SqlCommand scm = null;
+            try
+            {
+                using (SqlConnection scon = new SqlConnection(_sqlconnection))
+                {
+                    scon.Open();
+                    scm = new SqlCommand(SqlSrting, scon);
+                    foreach (string ParamName in DicParameters.Keys)
+                    {
+                        scm.Parameters.Add(ParamName, DicParameters[ParamName]);
+                    }
+                    dt.Load(scm.ExecuteReader());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return dt;
+        }
+
+        /// <summary>
         /// 20150324 執行SQL 無傳回值
         /// </summary>
         /// <param name="SqlSrting">輸入SQL指令</param>
@@ -74,6 +104,33 @@ namespace SQLHelper
             }
         }
 
+        /// <summary>
+        /// 20150324 add by Dick for SQL執行使用Parameter 方式。
+        /// </summary>
+        /// <param name="SqlSrting"></param>
+        /// <param name="DicParameters"></param>
+        /// <returns></returns>
+        public static void ExeNoQueryUseParameter(string SqlSrting, Dictionary<string, object> DicParameters)
+        {
+            try
+            {
+                using (SqlConnection scon = new SqlConnection(_sqlconnection))
+                {
+                    scon.Open();
+                    SqlCommand scm = new SqlCommand(SqlSrting, scon);
+                    foreach (string ParamName in DicParameters.Keys)
+                    {
+                        scm.Parameters.Add(ParamName, DicParameters[ParamName]);
+                    }
+                    scm.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }          
+        }
+        
         #endregion
 
     }
@@ -82,7 +139,7 @@ namespace SQLHelper
         public string Name;  //索引名
         public bool IsUnique;  //是否唯一
         public bool IsClustered;  //是否聚集索引
-        public string Name;  //列名
+        public string ColumnName;  //列名
         public bool IsDesc; //是否降序
     }
     

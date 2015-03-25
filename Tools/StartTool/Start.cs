@@ -49,9 +49,9 @@ namespace StartTool
         public void Start()
         {
 
-            FileTool.ToolLog tool = new FileTool.ToolLog(_logpath);
-            tool.Log("抓取資料");
-            FileTool.XmlFile xf = new FileTool.XmlFile(_stockxml);
+            CommTool.ToolLog tool = new CommTool.ToolLog(_logpath);
+            CommTool.ToolLog.Log("抓取資料");
+            CommTool.XmlFile xf = new CommTool.XmlFile(_stockxml);
             List<string> nodes = xf.XmlLoadList();
             foreach (string node in nodes)
             {

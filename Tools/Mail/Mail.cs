@@ -69,7 +69,7 @@ namespace Mail
             msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
             msg.IsBodyHtml = false;//是否是HTML郵件 
             msg.Priority = MailPriority.Normal;//郵件優先級 
-            FileTool.ToolLog tool = new FileTool.ToolLog(_logPath);
+            CommTool.ToolLog tool = new CommTool.ToolLog(_logPath);
             try
             {
                 //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
@@ -85,11 +85,11 @@ namespace Mail
                 //MySmtp.Send("", "", "C# Gmail發信測試", "文件內容");
                 MySmtp.Send(msg);
 
-                tool.Log(FileTool.LogType.Mail,"發送信件");
+                CommTool.ToolLog.Log(CommTool.LogType.Mail, "發送信件");
             }
             catch (System.Net.Mail.SmtpException ex)
             {
-                tool.Log(ex);                
+                CommTool.ToolLog.Log(ex);           
             }
         }
 
