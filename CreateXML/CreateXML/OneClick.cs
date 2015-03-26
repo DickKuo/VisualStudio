@@ -59,13 +59,22 @@ namespace CreateXML {
 
         /// <summary>
         /// 產生QueryView
+        /// 20150326 add by Dick for 允許不指定資料夾
         /// </summary>
         /// <param name="pFileName"></param>
         /// <param name="pContext"></param>
         /// <param name="GridView"></param>
-        public void CreateQueryView(string pFileName, string pContext, System.Windows.Forms.DataGridView GridView) {
+        public void CreateQueryView(string pFileName, string pContext, System.Windows.Forms.DataGridView GridView,bool IsDir=true) {            
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "Query" + Path.DirectorySeparatorChar + "Case";
-            string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".xml";
+            string FullFileName = string.Empty;
+            if (IsDir)
+            {
+                FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".xml";
+            }
+            else
+            {
+                FullFileName = AppDomain.CurrentDomain.BaseDirectory + "QueryView.xml";
+            }           
             string EntityName = pFileName;
             pContext = NewQueryView();
             StreamWriter Sw = new StreamWriter(FullFileName, false);
@@ -367,13 +376,22 @@ namespace CreateXML {
 
         /// <summary>
         /// 20141003 add by Dick 多頁籤
+        /// 20150326 modified by Dick for 多加入不指定資料夾功能
         /// </summary>
         /// <param name="pFileName"></param>
         /// <param name="pContext"></param>
         /// <param name="GridView"></param>
-        public void CreateQueryView(string pFileName, string pContext, List<DataGridView> GridViewList, Dictionary<string, QueryViewCondition> DicQueryView) {
+        public void CreateQueryView(string pFileName, string pContext, List<DataGridView> GridViewList, Dictionary<string, QueryViewCondition> DicQueryView,bool IsDir =true) {            
             string pPath = Parent + Path.DirectorySeparatorChar + "DigiWin.HR.CustomBusinessImplement" + Path.DirectorySeparatorChar + "Configuration" + Path.DirectorySeparatorChar + "Query" + Path.DirectorySeparatorChar + "Case";
-            string FullFileName = pPath + Path.DirectorySeparatorChar + pFileName + ".xml";
+            string FullFileName = string.Empty;
+            if (IsDir)
+            {
+               FullFileName= pPath + Path.DirectorySeparatorChar + pFileName + ".xml";
+            }
+            else
+            {
+                FullFileName = AppDomain.CurrentDomain.BaseDirectory + "QueryView.xml";
+            }
             string EntityName = pFileName;
             if(File.Exists(FullFileName)) {
                 foreach(DataGridView GirdView in GridViewList)
@@ -385,6 +403,10 @@ namespace CreateXML {
                 }
             }
         }
+
+
+       
+         
 
 
         /// <summary>

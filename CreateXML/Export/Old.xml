@@ -1,208 +1,362 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
- <QueryViewColumns>
+   <QueryViewColumns>
         <QueryViewColumn>
-          <OrderNumber>13</OrderNumber>
-          <QueryViewColumnId>084182c2262195d9c411ab9bded6f96b8236e</QueryViewColumnId>
-          <Name>EndMonth.Name</Name>
-          <DisplayName>EmployeeRewards_EndMonth</DisplayName>
+          <QueryViewColumnId>073238fd8597b00394a64aed1c9f95fade719</QueryViewColumnId>
+          <Name>PerformancePlanId</Name>
+          <DisplayName>PerformancePlanId</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>名W称</Description>
+          <Description>考核计划ID</Description>
         </QueryViewColumn>
         <QueryViewColumn>
-          <OrderNumber>8</OrderNumber>
-          <QueryViewColumnId>0841836ffe2696a4a4e46a97c4c3a05d418fb</QueryViewColumnId>
-          <Name>Times</Name>
-          <DisplayName>EmployeeRewards_Times</DisplayName>
+          <OrderNumber>1</OrderNumber>
+          <QueryViewColumnId>113210dabf5019b984cbba7c36343265d6b7a</QueryViewColumnId>
+          <Name>CorporationId.Name</Name>
+          <DisplayName>PERewardsRule_CorporationId</DisplayName>
           <Visible>true</Visible>
-          <Width>100</Width>
+          <Width>196</Width>
           <IsBrowable>true</IsBrowable>
-          <Description>奖惩次﹐数</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>5</OrderNumber>
-          <QueryViewColumnId>0841842605fec2e964a9ab93c2e9c36380a6d</QueryViewColumnId>
-          <Name>EmployeeId.JobId.Name</Name>
-          <DisplayName>Employee_HRJobId</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>职位i名W称</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>12</OrderNumber>
-          <QueryViewColumnId>0841855ae7ae662d042298b9e0501100b588a</QueryViewColumnId>
-          <Name>BeginMonth.Name</Name>
-          <DisplayName>EmployeeRewards_BeginMonth</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>名W称</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>10</OrderNumber>
-          <QueryViewColumnId>084186ca5302c31f14865b35f80edd4fc535a</QueryViewColumnId>
-          <Name>InureDate</Name>
-          <DisplayName>EmployeeRewards_InureDate</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>生DI效A日e期再</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>6</OrderNumber>
-          <QueryViewColumnId>084189f0ffb17d21a463081b2fbba4e0124c2</QueryViewColumnId>
-          <Name>EmployeeRewardsItemId.RewardsKindId.ScName</Name>
-          <DisplayName>EmployeeRewards_RewardsKindId</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>奖励类型?</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>7</OrderNumber>
-          <QueryViewColumnId>08418ac202042f70e4d85bc444f3984769b3e</QueryViewColumnId>
-          <Name>EmployeeRewardsItemId.Name</Name>
-          <DisplayName>EmployeeRewardsItem_Name</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>奖励名W称</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>11</OrderNumber>
-          <QueryViewColumnId>08418b0170200b0694327b30d85a0ffd5f441</QueryViewColumnId>
-          <Name>IsSalary</Name>
-          <DisplayName>EmployeeRewards_IsSalary</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>是O否巢计入J薪~资</Description>
+          <Description>公司</Description>
         </QueryViewColumn>
         <QueryViewColumn>
           <OrderNumber>2</OrderNumber>
-          <QueryViewColumnId>08418c646ca3d25784f64992b481cd1a817e3</QueryViewColumnId>
-          <Name>EmployeeId.Code</Name>
-          <DisplayName>Employee_Code</DisplayName>
+          <QueryViewColumnId>073232f7a65d7278645adbefa13bfc4ee19ef</QueryViewColumnId>
+          <Name>Code</Name>
+          <DisplayName>PerformancePlan_Code</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
           <IsBrowable>true</IsBrowable>
-          <Description>员工u工u号</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>9</OrderNumber>
-          <QueryViewColumnId>08418cdb596ae81fe40f28a6fd88db4c2b825</QueryViewColumnId>
-          <Name>RecordDate</Name>
-          <DisplayName>EmployeeRewards_RecordDate</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>记录日e期再</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>4</OrderNumber>
-          <QueryViewColumnId>08418dd9ffe13dd964f2d9091c7427d158f7c</QueryViewColumnId>
-          <Name>EmployeeId.DepartmentId.Name</Name>
-          <DisplayName>Employee_HRDepartmentId</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>部!门</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <QueryViewColumnId>08418e5dae770e0da4e6ca23a86a0032b4620</QueryViewColumnId>
-          <Name>EmployeeRewardsId</Name>
-          <DisplayName>EmployeeRewardsId</DisplayName>
-          <Visible>true</Visible>
-          <Width>141</Width>
+          <Description>考核计划编码</Description>
         </QueryViewColumn>
         <QueryViewColumn>
           <OrderNumber>3</OrderNumber>
-          <QueryViewColumnId>08418f0c001a934d84e37b51032b0c76f8f53</QueryViewColumnId>
-          <Name>EmployeeId.CnName</Name>
-          <DisplayName>Employee_Name</DisplayName>
+          <QueryViewColumnId>073230e067da3f82d43aabf73c2d0be8b2de0</QueryViewColumnId>
+          <Name>Name</Name>
+          <DisplayName>PerformancePlan_Name</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
           <IsBrowable>true</IsBrowable>
-          <Description>中?文a名W</Description>
+          <Description>考核计划名称</Description>
         </QueryViewColumn>
         <QueryViewColumn>
+          <OrderNumber>4</OrderNumber>
+          <QueryViewColumnId>07323e6ecee11ecfe4f79befb0c99be17b23b</QueryViewColumnId>
+          <Name>FiscalYearId.Year</Name>
+          <DisplayName>PerformancePlan_FiscalYear</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>Year</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>5</OrderNumber>
+          <QueryViewColumnId>0732304b7cc1596934406958d60eb3b8c1a72</QueryViewColumnId>
+          <Name>PerformanceTypeId.Name</Name>
+          <DisplayName>PerformancePlan_PEType</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>考核类型名称</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>6</OrderNumber>
+          <QueryViewColumnId>11321be56d1afa43848339cb2360abcfa6fb7</QueryViewColumnId>
+          <Name>IsSequence</Name>
+          <DisplayName>PerformancePlan_IsSequence</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>是否按顺序评分</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>7</OrderNumber>
+          <QueryViewColumnId>113218ecc1d6fe423404da8000aab44a36dbc</QueryViewColumnId>
+          <Name>IsCustom</Name>
+          <DisplayName>PerformancePlan_IsCustom</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>是否自定义考核指标</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>8</OrderNumber>
+          <QueryViewColumnId>07323c5743f7b91374ca28bdc257a868cb094</QueryViewColumnId>
+          <Name>PerformanceStandardId.Name</Name>
+          <DisplayName>PerformancePlan_PEStandard</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>考核制度名称</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>9</OrderNumber>
+          <QueryViewColumnId>11321e9c9eac1079e47ada885a0a2cc703917</QueryViewColumnId>
+          <Name>PerformanceGradeId.Name</Name>
+          <DisplayName>PerformancePlan_PerformanceGradeId</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>考核等级</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>10</OrderNumber>
+          <QueryViewColumnId>11321aa816d9c94e5435597e94e264e0ef2ec</QueryViewColumnId>
+          <Name>IsRealPersons</Name>
+          <DisplayName>PerformancePlan_IsRealPersons</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>是否按实际人数计分</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>11</OrderNumber>
+          <QueryViewColumnId>113214dfa590fbd024891853c5e066d111709</QueryViewColumnId>
+          <Name>IsSalary</Name>
+          <DisplayName>PerformancePlan_IsSalary</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>是否计入薪资</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>12</OrderNumber>
+          <QueryViewColumnId>1132166ca869ade9249f486d0916c0a99f36f</QueryViewColumnId>
+          <Name>BeginMonth.Name</Name>
+          <DisplayName>PerformancePlan_BeginMonth</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>生效薪资月度</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>13</OrderNumber>
+          <QueryViewColumnId>11321fc05c919a4ce403d90331e4b6739cf2b</QueryViewColumnId>
+          <Name>EndMonth.Name</Name>
+          <DisplayName>PerformancePlan_EndMonth</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>失效薪资月度</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>14</OrderNumber>
+          <QueryViewColumnId>113210a53e457988c455a919ea7c6f2bdec8b</QueryViewColumnId>
+          <Name>IsRP</Name>
+          <DisplayName>PerformancePlan_IsRP</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>奖惩是否参与考核</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>15</OrderNumber>
+          <QueryViewColumnId>11321aa963cd63c424b2d94871a269a76703c</QueryViewColumnId>
+          <Name>IsAT</Name>
+          <DisplayName>PerformancePlan_IsAT</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>考勤是否参与考核</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <FormatString>#0.00</FormatString>
+          <OrderNumber>16</OrderNumber>
+          <QueryViewColumnId>11321b856e12211a2488db9ab91760d8cd57f</QueryViewColumnId>
+          <Name>RPRate</Name>
+          <DisplayName>PerformancePlan_RPRate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>奖惩权重</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <FormatString>#0.00</FormatString>
+          <OrderNumber>17</OrderNumber>
+          <QueryViewColumnId>11321193e9ad258a04430894a507ba459cef4</QueryViewColumnId>
+          <Name>ATRate</Name>
+          <DisplayName>PerformancePlan_ATRate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>考勤权重</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>18</OrderNumber>
+          <QueryViewColumnId>11321696121e4e7e64744a5b8329e00c3118e</QueryViewColumnId>
+          <Name>PEBeginDate</Name>
+          <DisplayName>PerformancePlan_PEBeginDate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>考核开始日期</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>19</OrderNumber>
+          <QueryViewColumnId>113210be82837f8844553a0d3e99c43daadc4</QueryViewColumnId>
+          <Name>PEEndDate</Name>
+          <DisplayName>PerformancePlan_PEEndDate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>考核结束日期</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>20</OrderNumber>
+          <QueryViewColumnId>07323753511d83b6a4448a2669612923138cf</QueryViewColumnId>
+          <Name>PlanBeginDate</Name>
+          <DisplayName>PerformancePlan_PlanBeginDate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>计划开始时间</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>21</OrderNumber>
+          <QueryViewColumnId>07323f95120b6c3e64dc2af6a6a6d879fe3fd</QueryViewColumnId>
+          <Name>PlanEndDate</Name>
+          <DisplayName>PerformancePlan_PlanEndDate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>计划结束时间</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>22</OrderNumber>
+          <QueryViewColumnId>07323e6f8fa50d23d434384c248bfca6ec57c</QueryViewColumnId>
+          <Name>StateId.ScName</Name>
+          <DisplayName>PerformancePlan_StateId</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>计划状态</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>23</OrderNumber>
+          <QueryViewColumnId>113211db2c66347f94ce89d8d8d18b48fd8b9</QueryViewColumnId>
+          <Name>FoundEmployeeId.CnName</Name>
+          <DisplayName>PerformancePlan_FoundEmployeeId</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>制订人</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>24</OrderNumber>
+          <QueryViewColumnId>07323871825adf9e445bca587dba48aaa1d27</QueryViewColumnId>
+          <Name>FoundDate</Name>
+          <DisplayName>PerformancePlan_FoundDate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>制订日期</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>25</OrderNumber>
+          <QueryViewColumnId>11503a93c4d29ac244b3e8b295fbe69b7c719</QueryViewColumnId>
+          <Name>CustomEndDate</Name>
+          <DisplayName>PerformancePlan_CustomEndDate</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>自定义指标结束日期</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>26</OrderNumber>
+          <QueryViewColumnId>1153143896a1d748e4fea9fa3b76c051ae571</QueryViewColumnId>
+          <Name>AppealEmployeeId.CnName</Name>
+          <DisplayName>PerformancePlan_xAppealEmployeeId</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>考核申诉审核人</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>27</OrderNumber>
+          <QueryViewColumnId>11531dfa149408beb4c46800cc08f9b34a1f8</QueryViewColumnId>
+          <Name>ImproveEmployeeId.CnName</Name>
+          <DisplayName>PerformancePlan_ImproveEmployeeId</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>考核改进审核人</Description>
+        </QueryViewColumn>
+
+
+        <QueryViewColumn>
+          <OrderNumber>28</OrderNumber>
+          <Name>XPerformanceTargetOfYear</Name>
+          <DisplayName>PerformancePlan_XPerformanceTargetOfYear</DisplayName>
+          <Visible>true</Visible>
+          <Width>75</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>年度績效目標達成</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>29</OrderNumber>
+          <Name>XCoreTarget</Name>
+          <DisplayName>PerformancePlan_XCoreTarget</DisplayName>
+          <Visible>true</Visible>
+          <Width>75</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>核心價值目標達成</Description>
+        </QueryViewColumn>
+        <QueryViewColumn>
+          <OrderNumber>30</OrderNumber>
+          <Name>XAppreciationStandard</Name>
+          <DisplayName>PerformancePlan_XAppreciationStandard</DisplayName>
+          <Visible>true</Visible>
+          <Width>75</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>人事評價制度</Description>
+        </QueryViewColumn>
+
+
+        <QueryViewColumn>
+          <OrderNumber>28</OrderNumber>
+          <QueryViewColumnId>07323f679cafbe6db451c88e6a46d5c1ef519</QueryViewColumnId>
+          <Name>Remark</Name>
+          <DisplayName>Remark</DisplayName>
+          <Visible>true</Visible>
+          <Width>100</Width>
+          <IsBrowable>true</IsBrowable>
+          <Description>备注</Description>
+        </QueryViewColumn>
+        
+        <QueryViewColumn>
           <OrderNumber>101</OrderNumber>
-          <QueryViewColumnId>b6a44f7e465a4876875250880e8bcbd4</QueryViewColumnId>
+          <QueryViewColumnId>2d54cdb39bab4975a389b14bb2b6373b</QueryViewColumnId>
           <Name>CreateBy.UserName</Name>
           <DisplayName>CreateBy</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
-          <Description>创建O人H</Description>
+          <Description>创建人</Description>
         </QueryViewColumn>
         <QueryViewColumn>
           <OrderNumber>102</OrderNumber>
-          <QueryViewColumnId>e72135872aaf446b80e95e4f750dbca0</QueryViewColumnId>
+          <QueryViewColumnId>a2232f726eb44b6392c54c28f58d2d83</QueryViewColumnId>
           <Name>CreateDate</Name>
           <DisplayName>CreateDate</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
-          <Description>创建O日e期再</Description>
+          <Description>创建日期</Description>
         </QueryViewColumn>
         <QueryViewColumn>
           <OrderNumber>103</OrderNumber>
-          <QueryViewColumnId>5c02660e434d4b03a066426be971032f</QueryViewColumnId>
+          <QueryViewColumnId>5f157cef132b4666a9070f62224ef0a9</QueryViewColumnId>
           <Name>LastModifiedBy.UserName</Name>
           <DisplayName>LastModifiedBy</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
-          <Description>修×改張者I</Description>
+          <Description>修改者</Description>
         </QueryViewColumn>
         <QueryViewColumn>
           <OrderNumber>104</OrderNumber>
-          <QueryViewColumnId>1e38cbb483ec444a9967f0a13a45ee6f</QueryViewColumnId>
+          <QueryViewColumnId>5342ddae78d94cb8b2ea172467a891f5</QueryViewColumnId>
           <Name>LastModifiedDate</Name>
           <DisplayName>LastModifiedDate</DisplayName>
           <Visible>true</Visible>
           <Width>100</Width>
-          <Description>修×改張日e期再</Description>
+          <Description>修改日期</Description>
         </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>105</OrderNumber>
-          <QueryViewColumnId>7a4887410b404d12b24e202a4fefb4f9</QueryViewColumnId>
-          <Name>IsEss</Name>
-          <DisplayName>IsEss</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>IsEss</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>106</OrderNumber>
-          <QueryViewColumnId>e385e6a71ba24140a12fb196733268c0</QueryViewColumnId>
-          <Name>EssType</Name>
-          <DisplayName>EssType</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>Ess单别</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>107</OrderNumber>
-          <QueryViewColumnId>fc73fecaf0d44c9881dd96684b4bf2bd</QueryViewColumnId>
-          <Name>EssNo</Name>
-          <DisplayName>EssNo</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>Ess单号</Description>
-        </QueryViewColumn>
-        <QueryViewColumn>
-          <OrderNumber>1</OrderNumber>
-          <QueryViewColumnId>fc73fecaf0d44c9881dd96684b4bf2fh</QueryViewColumnId>
-          <Name>XEmployeeRewardsCode</Name>
-          <DisplayName>EmployeeRewards_XEmployeeRewardsCode</DisplayName>
-          <Visible>true</Visible>
-          <Width>100</Width>
-          <IsBrowable>true</IsBrowable>
-          <Description>獎u懲g編s號M1</Description>
-        </QueryViewColumn>
-      </QueryViewColumns>
-</root>
+      </QueryViewColumns></root>

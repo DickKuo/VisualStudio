@@ -3475,5 +3475,45 @@ namespace CreateXML {
                 }
             }
         }
+
+
+        /// <summary>
+        /// 20150326 add by Dick for 加入個別產生QueryView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 生成QuryViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OneClick oneclick = new OneClick("", "");           
+            oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, this.dataGridView1,false);
+            List<DataGridView> GridViewList = new List<DataGridView>();
+            foreach (TabPage page in tabControl1.TabPages)
+            {
+                switch (page.Name)
+                {
+                    case "tabPage2":
+                    case "tabPage3":
+                        break;
+                    default:
+                        foreach (Control control in page.Controls)
+                        {
+                            if (control.GetType().Name.Equals("DataGridView"))
+                            {
+                                DataGridView Gridview = control as DataGridView;
+                                Gridview.Name = page.Text;
+                                GridViewList.Add(Gridview);
+                            }
+                        }
+                        break;
+                }
+            }
+            if (GridViewList.Count > 0)
+            {
+                oneclick.CreateQueryView(tb_className.Text, this.richTextBox1.Text, GridViewList, DicQueryView,false);
+            }
+            StreamReader sw = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "QueryView.xml");
+
+            richTextBox1.Text = sw.ReadToEnd();
+        }
     }    
 }
