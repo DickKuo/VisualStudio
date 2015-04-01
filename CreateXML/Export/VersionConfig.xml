@@ -2,7 +2,7 @@
 <!DOCTYPE root[<!ELEMENT root ANY> <!ATTLIST root File ID #REQUIRED>]>
 
 <root Version="1.0.0.1">
-<ServerPath  Path="\\P04442-CLOVER\testtttt\" />
+<ServerPath  Path="C:\Users\Dick\Documents\GitHub\VisualStudio\CreateXML\Export\" />
   
 <DownLoadList>
   <Item Name="CreateXML.exe" />

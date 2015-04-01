@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
+using System.Diagnostics;
 
 
 namespace CreateXML
@@ -16,8 +18,9 @@ namespace CreateXML
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-            //Application.Run(new CheckVersionForm());
+            string UpdateFilePath =AppDomain.CurrentDomain.BaseDirectory  + "AutoUpData.exe";
+            Process.Start(UpdateFilePath);
+            Application.Run(new Form1());                      
         }
     }
 }

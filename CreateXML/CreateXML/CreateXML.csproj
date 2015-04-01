@@ -35,7 +35,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>QQ截图20141210140128.ico</ApplicationIcon>
+    <ApplicationIcon>BicycleGreen.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CheckVersion, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
@@ -136,6 +136,7 @@
     <Compile Include="QandA.Designer.cs">
       <DependentUpon>QandA.cs</DependentUpon>
     </Compile>
+    <Content Include="BicycleGreen.ico" />
     <Content Include="QQ截图20141210140128.ico" />
     <Content Include="SampleFile\Sample.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -283,4 +283,298 @@
     <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
     <Parameter Name="XMoneySum" Type="decimal" Describe="累計納入金額" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
   </Class>
+  <Class ClassName="XPALTJPayrollRecordsDetail" Describle="PALTI 員工發薪記錄明細" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="True">
+    <Parameter Name="XPALTJPayrollRecordsDetailId" Type="Guid" Describe="PALTJ 員工發薪記錄明細Id" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XSalaryResultId" Type="Guid" Describe="計算結果索引ID" ReferenceProperty="SalaryResult" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XHR001" Type="Int" Describe="HR發薪次數" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XHR002" Type="DateTime" Describe="HR給付日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XTJ001" Type="Guid" Describe="員工代號" ReferenceProperty="Employee" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XTJ002" Type="string" Describe="發薪年月" ReferenceProperty="SalaryMonth" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XTJ003" Type="string" Describe="津貼扣款代號" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XTJ004" Type="string" Describe="津貼扣款名稱" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XTJ005" Type="decimal" Describe="加扣別" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XTJ006" Type="decimal" Describe="金額(上半月)" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XTJ007" Type="decimal" Describe="金額(下半月)" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XTJ008" Type="string" Describe="申報公司別" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XTJ009" Type="string" Describe="抵減應課稅所得" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+  </Class>
+  <Class ClassName="XPALTRIndependentPayment" Describle="PALTR獨立發放資料檔" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="False" ICodeObject="False" IDataModifyObject="True" Collection="False" IsCase="True">
+    <Parameter Name="XPALTRIndependentPaymentId" Type="Guid" Describe="PALTR獨立發放資料檔Id" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XSalaryResultId" Type="Guid" Describe="計算結果索引ID" ReferenceProperty="SalaryResult" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XTR001" Type="string" Describe="發放日期" ReferenceProperty="" Order="1" UIOrder="" Necessary="" />
+    <Parameter Name="XTR002" Type="string" Describe="員工代號" ReferenceProperty="" Order="2" UIOrder="" Necessary="" />
+    <Parameter Name="XTR003" Type="string" Describe="部門別" ReferenceProperty="" Order="3" UIOrder="" Necessary="" />
+    <Parameter Name="XTR004" Type="string" Describe="公司別" ReferenceProperty="" Order="4" UIOrder="" Necessary="" />
+    <Parameter Name="XTR005" Type="string" Describe="發放類別" ReferenceProperty="" Order="5" UIOrder="" Necessary="" />
+    <Parameter Name="XTR006" Type="string" Describe="須課稅" ReferenceProperty="" Order="6" UIOrder="" Necessary="" />
+    <Parameter Name="XTR007" Type="decimal" Describe="所得稅率" ReferenceProperty="" Order="7" UIOrder="" Necessary="" />
+    <Parameter Name="XTR008" Type="decimal" Describe="應發金額" ReferenceProperty="" Order="8" UIOrder="" Necessary="" />
+    <Parameter Name="XTR009" Type="decimal" Describe="扣繳稅額" ReferenceProperty="" Order="9" UIOrder="" Necessary="" />
+    <Parameter Name="XTR010" Type="string" Describe="備註" ReferenceProperty="" Order="10" UIOrder="" Necessary="" />
+    <Parameter Name="XTR011" Type="string" Describe="更新碼" ReferenceProperty="" Order="11" UIOrder="" Necessary="" />
+    <Parameter Name="XTR012" Type="string" Describe="產生分錄碼" ReferenceProperty="" Order="12" UIOrder="" Necessary="" />
+    <Parameter Name="XTR013" Type="string" Describe="傳票單別" ReferenceProperty="" Order="13" UIOrder="" Necessary="" />
+    <Parameter Name="XTR014" Type="string" Describe="傳票單號" ReferenceProperty="" Order="14" UIOrder="" Necessary="" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="XPALTIPayrollRecords" Describle="PALTI 員工發薪記錄" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="True">
+    <Parameter Name="XPALTIPayrollRecordsId" Type="Guid" Describe="PALTI 員工發薪記錄Id" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XSalaryResultId" Type="Guid" Describe="計算結果索引ID" ReferenceProperty="SalaryResult" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XHR001" Type="Int" Describe="HR發薪次數" ReferenceProperty="" Order="64" UIOrder="" Necessary="False" />
+    <Parameter Name="XHR002" Type="DateTime" Describe="HR給付日期" ReferenceProperty="" Order="65" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI001" Type="Guid" Describe="員工代號" ReferenceProperty="Employee" Order="1" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI002" Type="string" Describe="發薪年月" ReferenceProperty="SalaryMonth" Order="2" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI003" Type="string" Describe="申報公司別" ReferenceProperty="" Order="3" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI004" Type="string" Describe="部門別" ReferenceProperty="" Order="4" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI005" Type="decimal" Describe="每小時加班費(上半月)" ReferenceProperty="" Order="5" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI006" Type="decimal" Describe="每小時加班費(下半月)" ReferenceProperty="" Order="6" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI007" Type="decimal" Describe="平常加班時數-1類(上半月)" ReferenceProperty="" Order="7" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI008" Type="decimal" Describe="平常加班時數-1類(下半月)" ReferenceProperty="" Order="8" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI009" Type="decimal" Describe="平常加班時數-2類(上半月)" ReferenceProperty="" Order="9" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI010" Type="decimal" Describe="平常加班時數-2類(下半月)" ReferenceProperty="" Order="10" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI011" Type="decimal" Describe="平常加班時數-3類(上半月)" ReferenceProperty="" Order="11" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI012" Type="decimal" Describe="平常加班時數-3類(下半月)" ReferenceProperty="" Order="12" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI013" Type="decimal" Describe="假日加班免稅時數(上半月)" ReferenceProperty="" Order="13" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI014" Type="decimal" Describe="假日加班免稅時數(下半月)" ReferenceProperty="" Order="14" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI015" Type="decimal" Describe="出勤天數(上半月)" ReferenceProperty="" Order="15" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI016" Type="decimal" Describe="出勤天數(下半月)" ReferenceProperty="" Order="16" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI017" Type="decimal" Describe="日薪給薪休假天數(上半月)" ReferenceProperty="" Order="17" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI018" Type="decimal" Describe="日薪給薪休假天數(下半月)" ReferenceProperty="" Order="18" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI019" Type="decimal" Describe="日薪給薪請假天數(上半月)" ReferenceProperty="" Order="19" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI020" Type="decimal" Describe="日薪給薪請假天數(下半月)" ReferenceProperty="" Order="20" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI021" Type="decimal" Describe="請假扣款天數(上半月)" ReferenceProperty="" Order="21" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI022" Type="decimal" Describe="請假扣款天數(下半月)" ReferenceProperty="" Order="22" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI023" Type="decimal" Describe="底薪或本薪(上半月)" ReferenceProperty="" Order="23" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI024" Type="decimal" Describe="底薪或本薪(下半月)" ReferenceProperty="" Order="24" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI025" Type="decimal" Describe="加班費免稅部分(上半月)" ReferenceProperty="" Order="25" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI026" Type="decimal" Describe="加班費免稅部分(下半月)" ReferenceProperty="" Order="26" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI027" Type="decimal" Describe="加班費課稅部分(上半月)" ReferenceProperty="" Order="27" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI028" Type="decimal" Describe="加班費課稅部分(下半月)" ReferenceProperty="" Order="28" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI029" Type="decimal" Describe="全勤獎金(上半月)" ReferenceProperty="" Order="29" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI030" Type="decimal" Describe="全勤獎金(下半月)" ReferenceProperty="" Order="30" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI031" Type="decimal" Describe="請假扣款(上半月)" ReferenceProperty="" Order="31" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI032" Type="decimal" Describe="請假扣款(下半月)" ReferenceProperty="" Order="32" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI033" Type="decimal" Describe="健保費(下半月)" ReferenceProperty="" Order="33" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI034" Type="decimal" Describe="勞保費(下半月)" ReferenceProperty="" Order="34" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI035" Type="decimal" Describe="扣所得稅(上半月)" ReferenceProperty="" Order="35" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI036" Type="decimal" Describe="扣所得稅(下半月)" ReferenceProperty="" Order="36" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI037" Type="decimal" Describe="獨立發放金額" ReferenceProperty="" Order="37" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI038" Type="decimal" Describe="獨立課稅所得" ReferenceProperty="" Order="38" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI039" Type="decimal" Describe="獨立扣所得稅" ReferenceProperty="" Order="39" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI040" Type="decimal" Describe="實付金額(上半月)" ReferenceProperty="" Order="40" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI041" Type="decimal" Describe="實付金額(下半月)" ReferenceProperty="" Order="41" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI042" Type="decimal" Describe="課稅所得(上半月)" ReferenceProperty="" Order="42" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI043" Type="decimal" Describe="課稅所得(下半月)" ReferenceProperty="" Order="43" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI044" Type="decimal" Describe="加扣款金額(上半月)" ReferenceProperty="" Order="44" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI045" Type="decimal" Describe="加扣款金額(下半月)" ReferenceProperty="" Order="45" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI046" Type="decimal" Describe="納入課稅金額(上半月)" ReferenceProperty="" Order="46" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI047" Type="decimal" Describe="納入課稅金額(下半月)" ReferenceProperty="" Order="47" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI048" Type="string" Describe="上半月傳票單別" ReferenceProperty="" Order="48" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI049" Type="string" Describe="上半月傳票單號" ReferenceProperty="" Order="49" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI050" Type="string" Describe="下半月傳票單別" ReferenceProperty="" Order="50" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI051" Type="string" Describe="下半月傳票單號" ReferenceProperty="" Order="51" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI052" Type="decimal" Describe="借支金額(上半月)" ReferenceProperty="" Order="52" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI053" Type="decimal" Describe="員工本月提繳金額" ReferenceProperty="" Order="53" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI054" Type="decimal" Describe="公司本月提繳金額" ReferenceProperty="" Order="54" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI055" Type="decimal" Describe="員工累計提繳金額" ReferenceProperty="" Order="55" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI056" Type="decimal" Describe="公司累計提繳金額" ReferenceProperty="" Order="56" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI057" Type="decimal" Describe="預留欄位" ReferenceProperty="" Order="57" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI058" Type="decimal" Describe="假日加班課稅時數(上半月)" ReferenceProperty="" Order="58" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI059" Type="decimal" Describe="假日加班課稅時數(下半月)" ReferenceProperty="" Order="59" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI060" Type="string" Describe="產生分錄碼(上半月)" ReferenceProperty="" Order="60" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI061" Type="string" Describe="產生分錄碼(下半月)" ReferenceProperty="" Order="61" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI200" Type="decimal" Describe="假日加班時數-2類(上半月)" ReferenceProperty="" Order="62" UIOrder="" Necessary="False" />
+    <Parameter Name="XTI201" Type="decimal" Describe="假日加班時數-2類(下半月)" ReferenceProperty="" Order="63" UIOrder="" Necessary="False" />
+  </Class>
+  <Class ClassName="XWiesinBusiness" Describle="出差單資料" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="False" ICodeObject="False" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="BusCode" Type="string" Describe="出差單號" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="EmpCode" Type="string" Describe="工號" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="EmpName" Type="string" Describe="姓名" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="BeginDate" Type="DateTime" Describe="起始日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="EndDate" Type="DateTime" Describe="訖止日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="AdjustedDate" Type="DateTime" Describe="調整後日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="Remark" Type="DateTime" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XWiesinBusinessId" Type="Guid" Describe="出差單資料Id" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="XEmpOTLimit" Describle="員工加班時數上限設" IAuditObject="True" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="False" ICodeObject="False" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="XEmpOTLimitId" Type="Guid" Describe="員工加班時數上限ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="EmployeeId" Type="Guid" Describe="員工ID" ReferenceProperty="Employee" Order="1" UIOrder="1" Necessary="True" />
+    <Parameter Name="AtMonthId" Type="Guid" Describe="考勤期間" ReferenceProperty="ATMonth" Order="5" UIOrder="7" Necessary="True" />
+    <Parameter Name="LimitTotalOT" Type="decimal" Describe="加班總時數上限" ReferenceProperty="" Order="8" UIOrder="10" Necessary="True" />
+    <Parameter Name="LimitOT" Type="decimal" Describe="加班費時數上限" ReferenceProperty="" Order="9" UIOrder="11" Necessary="True" />
+    <Parameter Name="LimitAdjust" Type="decimal" Describe="累計調休上限" ReferenceProperty="" Order="10" UIOrder="12" Necessary="True" />
+    <Parameter Name="Remark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="11" UIOrder="-1" Necessary="False" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="ApproveEmployeeId" Type="Guid" Describe="審核人" ReferenceProperty="Employee" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="ApproveEmployeeName" Type="string" Describe="審核人" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="ApproveRemark" Type="nText" Describe="審核批註" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="ApproveOperationDate" Type="DateTime" Describe="審核人操作日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="ApproveUserId" Type="Guid" Describe="審核操作人ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="RepealOperationDate" Type="DateTime" Describe="撤銷操作日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="RepealUserId" Type="Guid" Describe="撤銷操作人ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="ApproveResultId" Type="string" Describe="審核結果ID" ReferenceProperty="CodeInfo" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="SubmitUserId" Type="Guid" Describe="提交操作人ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="SubmitOperationDate" Type="DateTime" Describe="提交操作日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="StateId" Type="string" Describe="狀態ID" ReferenceProperty="CodeInfo" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="ApproveDate" Type="DateTime" Describe="審核日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="ConfirmOperationDate" Type="DateTime" Describe="歸檔操作日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="ConfirmUserId" Type="Guid" Describe="歸檔操作人ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="FoundOperationDate" Type="DateTime" Describe="制定操作日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="FoundUserId" Type="Guid" Describe="制定操作人ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="EmpCode" Type="string" Describe="工號" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="DepName" Type="Guid" Describe="部門" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="ZhiJian" Type="string" Describe="直/間接" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="XYearEndBonusRule" Describle="年終獎金規則" IAuditObject="False" DataEntity="True" INamedObject="True" IFlagObject="True" IOwnerObject="True" ICodeObject="True" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="XYearEndBonusRuleId" Type="Guid" Describe="年終獎金規則Id" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XBeginDate" Type="DateTime" Describe="生效日" ReferenceProperty="" Order="3" UIOrder="3" Necessary="True" />
+    <Parameter Name="XSalaryLevelPer" Type="Int" Describe="薪資水準比較百分比" ReferenceProperty="" Order="4" UIOrder="4" Necessary="True" />
+    <Parameter Name="XCompanyBasic" Type="Int" Describe="公司基準" ReferenceProperty="" Order="5" UIOrder="5" Necessary="True" />
+    <Parameter Name="XPerformance" Type="decimal" Describe="新到職人員績效參數" ReferenceProperty="" Order="6" UIOrder="6" Necessary="True" />
+    <Parameter Name="XSalaryLevelBasic" Type="Int" Describe="薪資水準比較基準" ReferenceProperty="" Order="7" UIOrder="7" Necessary="True" />
+    <Parameter Name="XCentralPro" Type="decimal" Describe="本部獎金比例" ReferenceProperty="" Order="8" UIOrder="8" Necessary="True" />
+    <Parameter Name="XLocalPro" Type="decimal" Describe="銷售區/處獎金比例" ReferenceProperty="" Order="9" UIOrder="9" Necessary="True" />
+    <Parameter Name="XDepartmentPro" Type="decimal" Describe="部門獎金比例" ReferenceProperty="" Order="10" UIOrder="10" Necessary="True" />
+    <Parameter Name="XLeaveabsence" Type="Int" Describe="事假累計每日扣除獎金" ReferenceProperty="" Order="11" UIOrder="11" Necessary="True" />
+    <Parameter Name="XAbsent" Type="Int" Describe="曠職累計每日扣除獎金" ReferenceProperty="" Order="12" UIOrder="12" Necessary="True" />
+    <Parameter Name="XWithoutBasic" Type="Int" Describe="額外獎金基準" ReferenceProperty="" Order="13" UIOrder="13" Necessary="True" />
+    <Parameter Name="XCurrAward" Type="Int" Describe="當年度獎勵" ReferenceProperty="" Order="14" UIOrder="14" Necessary="True" />
+    <Parameter Name="Remark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="-1" UIOrder="-1" Necessary="False" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="Code" Type="string" Describe="分類編號" ReferenceProperty="" Order="1" UIOrder="1" Necessary="True" />
+    <Parameter Name="Name" Type="string" Describe="分類名稱" ReferenceProperty="" Order="2" UIOrder="2" Necessary="True" />
+  </Class>
+  <Class ClassName="NewEmpInterviewDetail" Describle="新進人員面談維護作業明細" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="XNewEmpInterviewDetailId" Type="Guid" Describe="新進人員作業明細ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XNewEmpInterviewId" Type="Guid" Describe="新進人員作業ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XEmployeeId" Type="Guid" Describe="員工ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview1" Type="Guid" Describe="第一個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate1" Type="DateTime" Describe="第一個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview2" Type="Guid" Describe="第三個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate2" Type="DateTime" Describe="第三個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview3" Type="Guid" Describe="第六個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate3" Type="DateTime" Describe="第六個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview4" Type="Guid" Describe="滿1年面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate4" Type="DateTime" Describe="滿1年面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XIsClose" Type="Bool" Describe="結案" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XRemark" Type="" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="NewEmpInterview" Describle="新進人員面談維護作業" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="True" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="XNewEmpInterviewId" Type="Guid" Describe="新進人員作業Id" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="CorporationId" Type="Guid" Describe="公司Id" ReferenceProperty="Corporation" Order="" UIOrder="" Necessary="True" />
+    <Parameter Name="XFiscalYearId" Type="Guid" Describe="年份" ReferenceProperty="FiscalYear" Order="" UIOrder="" Necessary="True" />
+    <Parameter Name="XFiscalYearMonthId" Type="Guid" Describe="首次面談月份" ReferenceProperty="FiscalYearMonth" Order="" UIOrder="" Necessary="True" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="Code" Type="string" Describe="分組編碼" ReferenceProperty="" Order="" UIOrder="" Necessary="True" />
+  </Class>
+  <Class ClassName="XNewEmpInterview" Describle="新進人員面談維護作業" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="True" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="XNewEmpInterviewId" Type="Guid" Describe="新進人員作業Id" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="CorporationId" Type="Guid" Describe="公司Id" ReferenceProperty="Corporation" Order="1" UIOrder="1" Necessary="True" />
+    <Parameter Name="XFiscalYearId" Type="Guid" Describe="年份" ReferenceProperty="FiscalYear" Order="2" UIOrder="2" Necessary="True" />
+    <Parameter Name="XFiscalYearMonthId" Type="Guid" Describe="首次面談月份" ReferenceProperty="FiscalYearMonth" Order="4" UIOrder="3" Necessary="True" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="-1" UIOrder="-1" Necessary="False" />
+    <Parameter Name="AssignReason" Type="string" Describe="分配原因" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="OwnerId" Type="string" Describe="所有者ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="CreateDate" Type="DateTime" Describe="建立日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="LastModifiedDate" Type="DateTime" Describe="最後一次編輯日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="CreateBy" Type="Guid" Describe="建立 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="LastModifiedBy" Type="Guid" Describe="最後一次編輯 用戶ID" ReferenceProperty="User" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="Flag" Type="Bool" Describe="是否有效" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="Code" Type="string" Describe="分組編碼" ReferenceProperty="" Order="3" UIOrder="4" Necessary="True" />
+  </Class>
+  <Class ClassName="XNewEmpInterviewDetail" Describle="新進人員面談維護作業明細" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="XNewEmpInterviewDetailId" Type="Guid" Describe="新進人員作業明細ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XNewEmpInterviewId" Type="Guid" Describe="新進人員作業ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XEmployeeId" Type="Guid" Describe="員工ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterview1" Type="Guid" Describe="第一個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterviewDate1" Type="DateTime" Describe="第一個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterview2" Type="Guid" Describe="第三個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterviewDate2" Type="DateTime" Describe="第三個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterview3" Type="Guid" Describe="第六個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterviewDate3" Type="DateTime" Describe="第六個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterview4" Type="Guid" Describe="滿1年面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterviewDate4" Type="DateTime" Describe="滿1年面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XIsClose" Type="Bool" Describe="結案" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XRemark" Type="" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+  </Class>
+  <Class ClassName="XCloseData" Describle="結案人員" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="True" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="XCloseDataId" Type="Guid" Describe="結案人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XNewEmpInterviewId" Type="Guid" Describe="新進人員作業ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XEmployeeId" Type="Guid" Describe="員工ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview1" Type="Guid" Describe="第一個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate1" Type="DateTime" Describe="第一個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview2" Type="Guid" Describe="第三個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate2" Type="DateTime" Describe="第三個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview3" Type="Guid" Describe="第六個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate3" Type="DateTime" Describe="第六個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview4" Type="Guid" Describe="滿1年面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate4" Type="DateTime" Describe="滿1年面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XRemark" Type="Ntext" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="NewEmpInterviewClose" Describle="結案人員" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="True" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="NewEmpInterviewCloseId" Type="Guid" Describe="新進人員作業明細ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XNewEmpInterviewId" Type="Guid" Describe="新進人員作業ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XEmployeeId" Type="Guid" Describe="員工ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview1" Type="Guid" Describe="第一個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate1" Type="DateTime" Describe="第一個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview2" Type="Guid" Describe="第三個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate2" Type="DateTime" Describe="第三個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview3" Type="Guid" Describe="第六個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate3" Type="DateTime" Describe="第六個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterview4" Type="Guid" Describe="滿1年面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XInterviewDate4" Type="DateTime" Describe="滿1年面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+    <Parameter Name="XRemark" Type="string" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+  </Class>
+  <Class ClassName="XNewEmpInterviewClose" Describle="結案人員" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="True" IOwnerObject="True" ICodeObject="True" IDataModifyObject="True" Collection="False" IsCase="False">
+    <Parameter Name="XNewEmpInterviewCloseId" Type="Guid" Describe="新進人員作業明細ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XNewEmpInterviewId" Type="Guid" Describe="新進人員作業ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XEmployeeId" Type="Guid" Describe="員工ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterview1" Type="Guid" Describe="第一個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterviewDate1" Type="DateTime" Describe="第一個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterview2" Type="Guid" Describe="第三個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterviewDate2" Type="DateTime" Describe="第三個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterview3" Type="Guid" Describe="第六個月面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterviewDate3" Type="DateTime" Describe="第六個月面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterview4" Type="Guid" Describe="滿1年面談人員ID" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XInterviewDate4" Type="DateTime" Describe="滿1年面談日期" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+    <Parameter Name="XRemark" Type="string" Describe="備註" ReferenceProperty="" Order="" UIOrder="" Necessary="False" />
+  </Class>
+  <Class ClassName="XPerformanceResult" Describle="考核評分明細" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="PerformancePersonId.Code" Type="string" Describe="工號" ReferenceProperty="" Order="1" UIOrder="" Necessary="" />
+    <Parameter Name="PerformancePersonId.CnName" Type="string" Describe="姓名" ReferenceProperty="" Order="2" UIOrder="" Necessary="" />
+    <Parameter Name="PerformancePersonId.DepartmentId.Name" Type="string" Describe="部門" ReferenceProperty="" Order="3" UIOrder="" Necessary="" />
+    <Parameter Name="PerformancePersonId.JobId.Name" Type="string" Describe="職位" ReferenceProperty="" Order="4" UIOrder="" Necessary="" />
+    <Parameter Name="PerformancePlanId.Code" Type="string" Describe="考核計劃編碼" ReferenceProperty="" Order="5" UIOrder="" Necessary="" />
+    <Parameter Name="PerformancePlanId.Name" Type="string" Describe="考核計劃名稱" ReferenceProperty="" Order="6" UIOrder="" Necessary="" />
+    <Parameter Name="XSelfScore" Type="string" Describe="自評分數" ReferenceProperty="" Order="7" UIOrder="" Necessary="" />
+    <Parameter Name="XFirstScore" Type="string" Describe="初評分數" ReferenceProperty="" Order="8" UIOrder="" Necessary="" />
+    <Parameter Name="XSecondScore" Type="string" Describe="複評分數" ReferenceProperty="" Order="9" UIOrder="" Necessary="" />
+    <Parameter Name="XAppreciationFirst" Type="string" Describe="人事評價初核" ReferenceProperty="" Order="10" UIOrder="" Necessary="" />
+    <Parameter Name="XAppreciationSecond" Type="string" Describe="人事評價複核" ReferenceProperty="" Order="11" UIOrder="" Necessary="" />
+    <Parameter Name="PerformanceGradeRuleId.Name" Type="string" Describe="考核等級" ReferenceProperty="" Order="12" UIOrder="" Necessary="" />
+    <Parameter Name="ConfirmGradeRuleId.Name" Type="string" Describe="核定等級" ReferenceProperty="" Order="13" UIOrder="" Necessary="" />
+    <Parameter Name="Remark" Type="string" Describe="綜合評價" ReferenceProperty="" Order="14" UIOrder="" Necessary="" />
+  </Class>
 </root>

@@ -10,11 +10,13 @@ namespace AutoUpData {
     class Program {
         static void Main(string[] args) {
             string DocPath = AppDomain.CurrentDomain.BaseDirectory + "VersionConfig.xml";
+            CommTool.ToolLog.ToolPath = @"C:\Log";
             if(File.Exists(DocPath)) {
                 XmlDocument doc = LoadXml(DocPath);
                 XmlNode ServerPath = doc.SelectSingleNode("root/ServerPath");
                 string SourcePath = ServerPath.Attributes["Path"].Value;
-                Console.WriteLine(SourcePath);
+                //Console.WriteLine(SourcePath);
+                //CommTool.ToolLog.Log(DocPath);
                 if(Directory.Exists(SourcePath)) {
                     XmlNode DownLoadList = doc.SelectSingleNode("root/DownLoadList");
                     ///20141210 取得更新清單
@@ -55,14 +57,15 @@ namespace AutoUpData {
                                                         }
                                                         catch (Exception ex)
                                                         {
-                                                            Console.WriteLine(ex.Message);
+                                                            CommTool.ToolLog.Log(ex);
                                                         }
                                                     }
                                                 }
                                             }
                                             catch (Exception ex)
                                             {
-                                                Console.WriteLine(ex.Message);
+                                                //Console.WriteLine(ex.Message);
+                                                CommTool.ToolLog.Log(ex);
                                             }
                                         }
                                         else
@@ -97,8 +100,6 @@ namespace AutoUpData {
                         }
                     }
                     #endregion
-                   
-
                     #region 20141210 舊的寫法 註解掉
                     //foreach (XmlNode node in DownLoadList.ChildNodes)
                     ////{
@@ -167,9 +168,9 @@ namespace AutoUpData {
                     #endregion                   
                 }
             }
-            Console.WriteLine("請按任意建繼續....");
-            Console.Read();
-            Process.Start(AppDomain.CurrentDomain.BaseDirectory + "CreateXML.exe");
+            //Console.WriteLine("請按任意建繼續....");
+            //Console.Read();
+            //Process.Start(AppDomain.CurrentDomain.BaseDirectory + "CreateXML.exe");
         }
 
         public static XmlDocument LoadXml(string Path)
