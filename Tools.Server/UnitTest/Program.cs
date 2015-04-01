@@ -6,6 +6,7 @@ using WebInfo;
 using System.IO;
 using WebInfo.Business.DataEntities;
 using System.Reflection;
+using CommTool;
 
 namespace UnitTest
 {
@@ -13,8 +14,9 @@ namespace UnitTest
     {
         static void Main(string[] args)
         {
-            System.Attribute attribute = null;
-            Assembly ii = Assembly.LoadFile(@"C:\Users\Dick\Desktop\Black\CommTool.Service.dll");
+            ToolLog.Log("111");
+            //System.Attribute attribute = null;
+            //Assembly ii = Assembly.LoadFile(@"C:\Users\Dick\Desktop\Black\CommTool.Service.dll");
             //ITestService Itest = CallService.GetService<ITestService>();
             //Itest.HelloWord();
           //  System.Type[] types = ii.GetTypes();

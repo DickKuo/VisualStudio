@@ -154,7 +154,7 @@ namespace WebInfo
                     StreamReader secoend = new StreamReader(memory);
                     StringBuilder sb = new StringBuilder();
                     string line = string.Empty;
-                    List<string> ExistImage = new List<string>();
+                    List<string> ExistImage = new List<string>(); //避免重複加入圖片
                     while ((line = secoend.ReadLine()) != null)
                     {                       
                         if (line.IndexOf("<span class=\"article-meta-value\">") != -1)
@@ -228,7 +228,8 @@ namespace WebInfo
                                     StringBuilder ImageUrls = new StringBuilder();                                   
                                     foreach (Match match in matches)
                                     {
-                                        ImageUrls.AppendLine(this.GetMiupixImg(match.Value.Replace("<a href=\"", "")));
+                                        ImageUrls.Append(this.GetMiupixImg(match.Value.Replace("<a href=\"", "")));
+                                        ImageUrls.Append("\r\n");
                                     }
                                     if (!ExistImage.Contains(ImageUrls.ToString()))
                                     {

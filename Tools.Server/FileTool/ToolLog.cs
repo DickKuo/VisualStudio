@@ -28,6 +28,48 @@ namespace CommTool
                Directory.CreateDirectory(_path);
                Log("資料夾不存在，建立資料夾");
            }
+           ArramgeLog();
+       }
+       
+       /// <summary>
+       /// 20150604 整理Log檔案每月一號將上個月檔案整理成一個資料夾 #61
+       /// </summary>
+       private static void ArramgeLog()
+       {
+           if (DateTime.Now.Day == 1)
+           {
+               DateTime LastMonth = DateTime.Now.AddMonths(-1);
+               StringBuilder sb = new StringBuilder();
+               sb.Append(LastMonth.Year.ToString());
+               sb.Append(LastMonth.Month.ToString("00"));
+               string DirectotyPath = Path.Combine(ToolPath, sb.ToString());
+               if (!Directory.Exists(DirectotyPath))
+               {
+                   Directory.CreateDirectory(DirectotyPath);
+               }
+               DateTime Begin = new DateTime(LastMonth.Year, LastMonth.Month, 1);
+               DateTime End = Begin.AddMonths(1).AddDays(-1);
+               DateTime Time = Begin;
+               while (Time <= End)
+               {
+                   string FileName = string.Format("{0}-{1}-{2}.txt", Time.Year.ToString(), Time.Month.ToString("00"), Time.Day.ToString("00"));
+                   string ResourceFilePath = Path.Combine(ToolPath, FileName);
+                   string DestFilePath = Path.Combine(DirectotyPath, FileName);
+                   if (File.Exists(ResourceFilePath))
+                   {
+                       File.Move(ResourceFilePath, DestFilePath);
+                   }
+
+                   string FileNameError = string.Format("{0}-{1}-{2}-Error.txt", Time.Year.ToString(), Time.Month.ToString("00"), Time.Day.ToString("00"));
+                   string ResourceFilePathError = Path.Combine(ToolPath, FileNameError);
+                   string DestFilePathError = Path.Combine(DirectotyPath, FileNameError);
+                   if (File.Exists(ResourceFilePathError))
+                   {
+                       File.Move(ResourceFilePathError, DestFilePathError);
+                   }
+                   Time = Time.AddDays(1);
+               }
+           }
        }
 
 
