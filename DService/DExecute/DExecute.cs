@@ -82,8 +82,7 @@ namespace DExecute
                         CommTool.ToolLog.Log(NetString);
                         CommTool.ToolLog.Log("進行資料解析....");
                         DicParameters.Add("NetString", NetString);
-                        DAnalysis.DAnalysis analysis = new DAnalysis.DAnalysis(DicParameters);
-                        analysis.Start();
+                      
 
 
                         //Console.WriteLine("按下 [任意鍵] 將資料回傳至用戶端 !!");
