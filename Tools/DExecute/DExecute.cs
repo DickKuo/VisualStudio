@@ -81,9 +81,8 @@ namespace DExecute
                         NetString = Encoding.ASCII.GetString(myBufferBytes, 0, dataLength);
                         CommTool.ToolLog.Log(NetString);
                         CommTool.ToolLog.Log("進行資料解析....");
-                        DicParameters.Add("NetString", NetString);
-
-
+                        DAnalysis analysis = new DAnalysis();
+                        analysis.Start(NetString);
 
                         //Console.WriteLine("按下 [任意鍵] 將資料回傳至用戶端 !!");
                         //string str = Console.ReadLine();

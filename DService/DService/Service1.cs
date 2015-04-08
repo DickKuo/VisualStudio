@@ -9,6 +9,7 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Threading;
+using System.Configuration;
 
 
 namespace DService
@@ -33,9 +34,10 @@ namespace DService
 
         private void InitParamter()
         {
-            DicParameters.Add("LogPath", Settings1.Default.LogPath);
-            DicParameters.Add("IP", Settings1.Default.AppIP);
-            DicParameters.Add("Port", Settings1.Default.Port);
+            foreach (SettingsProperty PropertyName in Settings1.Default.Properties)
+            {
+                DicParameters.Add(PropertyName.Name, Settings1.Default.PropertyValues[PropertyName.Name].PropertyValue.ToString());
+            }                        
         }
 
 
