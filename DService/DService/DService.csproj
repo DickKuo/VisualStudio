@@ -38,8 +38,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Export\CommTool.dll</HintPath>
     </Reference>
-    <Reference Include="DExecute">
-      <HintPath>..\Export\DExecute.dll</HintPath>
+    <Reference Include="DExecute, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Tools\Export\DExecute.dll</HintPath>
     </Reference>
     <Reference Include="FileTool">
       <HintPath>..\Export\FileTool.dll</HintPath>
