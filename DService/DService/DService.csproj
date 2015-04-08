@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommTool, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Export\CommTool.dll</HintPath>
+    </Reference>
     <Reference Include="DExecute">
       <HintPath>..\Export\DExecute.dll</HintPath>
     </Reference>

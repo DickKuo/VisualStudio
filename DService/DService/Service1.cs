@@ -16,10 +16,11 @@ namespace DService
     public partial class Service1 : ServiceBase
     {
         private List<string> _timelist = new List<string>();
+        Dictionary<string, string> DicParameters = new Dictionary<string, string>();   //參數設定 
         public Service1()
         {
-            InitializeComponent();
-            FileTool.ToolLog.ToolPath = Settings1.Default.LogPath;
+            InitializeComponent();             
+            CommTool.ToolLog.ToolPath = Settings1.Default.LogPath;
             DateTime BaseTime =new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,0,0,0);
             DateTime FlagTime = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.AddDays(1).Day,0,0,0);
             int interval =Convert.ToInt32(Settings1.Default.Interval);
@@ -29,7 +30,14 @@ namespace DService
                 BaseTime = BaseTime.AddSeconds(GetTime() * interval);
             }
         }
-                
+
+        private void InitParamter()
+        {
+            DicParameters.Add("LogPath", Settings1.Default.LogPath);
+            DicParameters.Add("IP", Settings1.Default.AppIP);
+            DicParameters.Add("Port", Settings1.Default.Port);
+        }
+
 
         protected override void OnStart(string[] args)
         {
@@ -37,6 +45,8 @@ namespace DService
             DServerLog("服務啟動更新開始...");
             UpdateDll(Settings1.Default.UpDateGradPath);
             DServerLog("服務啟動更新結束...");
+            Thread t1 = new Thread(Lessner);
+            t1.Start();
             System.Timers.Timer time = new System.Timers.Timer();
             time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
             time.Interval = 1000;
@@ -46,19 +56,13 @@ namespace DService
         void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             string time = DateTime.Now.ToString("HH:mm:ss");
-            DExecute.DExecute execute = new DExecute.DExecute();
+            DExecute.DExecute execute = new DExecute.DExecute(DicParameters);
             if (DateTime.Now.ToString("HH:mm") == Settings1.Default.UpDateTime)
             {
                 DServerLog("更新開始");
                 UpdateDll(Settings1.Default.UpDateGradPath);
                 DServerLog("更新結束");
-            }
-
-            if (_timelist.Contains(time))
-            {
-               
-                execute.Start();
-            }
+            }           
         }
 
         protected override void OnStop()
@@ -66,6 +70,13 @@ namespace DService
             DServerLog("服務停止");            
         }
 
+
+        private  void Lessner()
+        {
+            DExecute.DExecute execute = new DExecute.DExecute(DicParameters);
+            execute.Start();
+        }
+        
         /// <summary>
         /// 20141219 add by Dick for 取得時間單位轉換
         /// </summary>
@@ -185,7 +196,7 @@ namespace DService
 
         public static void DServerLog(string Message)
         {
-            FileTool.ToolLog.Log(Message);
+             CommTool.ToolLog.Log(Message);          
         }
     }
 }

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}</ProjectGuid>
+    <ProjectGuid>{52F0EC3E-85FA-4CF2-A486-24F4C8BC6C3B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DExecute</RootNamespace>
-    <AssemblyName>DExecute</AssemblyName>
+    <RootNamespace>DAnalysis</RootNamespace>
+    <AssemblyName>DAnalysis</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,10 +35,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Export\CommTool.dll</HintPath>
     </Reference>
-    <Reference Include="DAnalysis, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Export\DAnalysis.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DExecute.cs" />
+    <Compile Include="DAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
