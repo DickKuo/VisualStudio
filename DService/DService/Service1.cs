@@ -20,29 +20,42 @@ namespace DService
         Dictionary<string, string> DicParameters = new Dictionary<string, string>();   //參數設定 
         public Service1()
         {
-            InitializeComponent();             
+            InitializeComponent();            
+        }
+
+        private void Init()
+        {
             CommTool.ToolLog.ToolPath = Settings1.Default.LogPath;
-            DateTime BaseTime =new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,0,0,0);
-            DateTime FlagTime = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.AddDays(1).Day,0,0,0);
-            int interval =Convert.ToInt32(Settings1.Default.Interval);
+            DateTime BaseTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
+            int interval = Convert.ToInt32(Settings1.Default.Interval);
             while (BaseTime <= FlagTime)
             {
                 _timelist.Add(BaseTime.ToString("HH:mm:ss"));
                 BaseTime = BaseTime.AddSeconds(GetTime() * interval);
             }
+            InitParamter();
         }
 
         private void InitParamter()
         {
-            foreach (SettingsProperty PropertyName in Settings1.Default.Properties)
+            try
             {
-                DicParameters.Add(PropertyName.Name, Settings1.Default.PropertyValues[PropertyName.Name].PropertyValue.ToString());
-            }                        
+                foreach (SettingsProperty PropertyName in Settings1.Default.Properties)
+                {
+                    DicParameters.Add(PropertyName.Name, Settings1.Default.PropertyValues[PropertyName.Name].PropertyValue.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                CommTool.ToolLog.Log(ex);
+            }
         }
 
 
         protected override void OnStart(string[] args)
         {
+            Init();
             DServerLog("服務啟動");
             DServerLog("服務啟動更新開始...");
             UpdateDll(Settings1.Default.UpDateGradPath);

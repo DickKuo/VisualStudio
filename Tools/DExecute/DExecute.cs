@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Net.Sockets;
+using CommTool;
+using DExecute;
+
 
 namespace DExecute
 {
@@ -23,33 +26,47 @@ namespace DExecute
 
         public virtual void Start()
         {
-            Lessner();
+            try
+            {
+                Lessner();
+            }
+            catch (Exception ex)
+            {
+                ToolLog.Log(ex);
+            }
         }
 
         private void InitParamter(Dictionary<string, string> Parameters)
         {
-            if (Parameters.ContainsKey("LogPath"))
+            try
             {
-                CommTool.ToolLog.ToolPath = Parameters["LogPath"];
+                if (Parameters.ContainsKey("LogPath"))
+                {
+                    CommTool.ToolLog.ToolPath = Parameters["LogPath"];
+                }
+                else
+                {
+                    CommTool.ToolLog.ToolPath = @"C:\SLog";
+                }
+                if (Parameters.ContainsKey("AppIP"))
+                {
+                    _ip = Parameters["AppIP"];
+                }
+                if (Parameters.ContainsKey("AppPort"))
+                {
+                    _port = Parameters["AppPort"];
+                }
             }
-            else
+            catch (Exception ex)
             {
-                CommTool.ToolLog.ToolPath = @"C:\SLog";
-            }
-            if (Parameters.ContainsKey("IP"))
-            {
-                _ip = Parameters["IP"];
-            }
-            if (Parameters.ContainsKey("Port"))
-            {
-                _port = Parameters["Port"];
+                CommTool.ToolLog.Log(ex);
             }
         }
 
         private void Lessner()
         {
             System.Net.IPAddress theIPAddress;
-            //建立 IPAddress 物件(本機)                      
+            //建立 IPAddress 物件(本機)                   
             theIPAddress = System.Net.IPAddress.Parse(IP);
             //Console.WriteLine(ConfigHelper.GetConfigValueByKey("IP").ToString());
             //Console.Read();
@@ -59,7 +76,7 @@ namespace DExecute
             //string CurrentDbSource = ConfigHelper.GetConfigValueByKey("CurrentDbSource").ToString();
 
             myTcpListener.Start(255);
-            CommTool.ToolLog.Log("通訊埠 等待用戶端連線...... !!");
+            ToolLog.Log("通訊埠 等待用戶端連線...... !!");
             do
             {
                 Socket mySocket = myTcpListener.AcceptSocket();
@@ -77,13 +94,9 @@ namespace DExecute
                         //取得用戶端寫入的資料
                         dataLength = mySocket.Receive(myBufferBytes);
                         //CommTool.ToolLog.Log(string.Format("接收到的資料長度 {0} \n ", dataLength.ToString()));
-                        CommTool.ToolLog.Log("取出用戶端寫入網路資料流的資料內容 :");
+                        ToolLog.Log("取出用戶端寫入網路資料流的資料內容 :");
                         NetString = Encoding.ASCII.GetString(myBufferBytes, 0, dataLength);
-                        CommTool.ToolLog.Log(NetString);
-                        CommTool.ToolLog.Log("進行資料解析....");
-                        DAnalysis analysis = new DAnalysis();
-                        analysis.Start(NetString);
-
+                        DoAnalysis(NetString);
                         //Console.WriteLine("按下 [任意鍵] 將資料回傳至用戶端 !!");
                         //string str = Console.ReadLine();
                         // ConfigHelper.GetConfigValueByKey("TimeLimte").ToString();
@@ -96,8 +109,7 @@ namespace DExecute
                 }
                 catch (Exception e)
                 {
-                    CommTool.ToolLog.Log(e.Message);
-                    //Log(e);
+                    ToolLog.Log(e.Message);                    
                 }
                 finally
                 {
@@ -106,7 +118,21 @@ namespace DExecute
             } while (true);
         }
 
-
+        private void DoAnalysis(string NetString)
+        {
+            ToolLog.Log(NetString);
+            ToolLog.Log("進行資料解析....");
+            DAnalysis analysis = new DAnalysis();
+            DAnalysis.StructAnalysisResult result = analysis.Start(NetString);          
+            if (result.Type == DAnalysis.AnalysisType.E)
+            {
+                ToolLog.Log(result.Result);
+            }
+            else
+            { 
+                
+            }
+        }
 
     }
 }

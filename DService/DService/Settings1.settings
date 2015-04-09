@@ -32,7 +32,7 @@
     <Setting Name="AppIP" Type="System.String" Scope="User">
       <Value Profile="(Default)">10.40.30.104</Value>
     </Setting>
-    <Setting Name="Port" Type="System.String" Scope="User">
+    <Setting Name="AppPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">8051</Value>
     </Setting>
   </Settings>

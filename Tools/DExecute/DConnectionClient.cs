@@ -26,8 +26,10 @@ namespace DExecute
                 _port =Convert.ToInt32( Paramenters["Port"]);
             }
         }
+
         NetworkStream myNetworkStream;
         TcpClient myTcpClient = new TcpClient();
+
         public string ConnectioinTest()
         {
             try

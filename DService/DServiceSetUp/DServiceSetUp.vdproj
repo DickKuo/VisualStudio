@@ -22,7 +22,7 @@
         "Entry"
         {
         "MsmKey" = "8:_118EC678D938A3CEDC15A6EEC77CBA9B"
-        "OwnerKey" = "8:_7F429EFFA699E8451450303E8C9DE7E1"
+        "OwnerKey" = "8:_F58AE5CFFE86BEA9215C7328778BE87F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,25 +33,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6A5855ADFFEBCB067F2094C34902B5D6"
-        "OwnerKey" = "8:_75B40A70942C4085A11BC08D2E8CAFB9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_75B40A70942C4085A11BC08D2E8CAFB9"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7F429EFFA699E8451450303E8C9DE7E1"
-        "OwnerKey" = "8:_2A7287D217C04146B5DFF716D7DBB396"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F096D8D81BA323A9B0696C2F498007FE"
+        "MsmKey" = "8:_F58AE5CFFE86BEA9215C7328778BE87F"
         "OwnerKey" = "8:_2A7287D217C04146B5DFF716D7DBB396"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -64,25 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_75B40A70942C4085A11BC08D2E8CAFB9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6A5855ADFFEBCB067F2094C34902B5D6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F096D8D81BA323A9B0696C2F498007FE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7F429EFFA699E8451450303E8C9DE7E1"
+        "OwnerKey" = "8:_F58AE5CFFE86BEA9215C7328778BE87F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -283,113 +247,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6A5855ADFFEBCB067F2094C34902B5D6"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CommTool, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_6A5855ADFFEBCB067F2094C34902B5D6"
-                    {
-                    "Name" = "8:CommTool.DLL"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:CommTool.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_976665387C714A7E91AA377B7CF4B879"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_75B40A70942C4085A11BC08D2E8CAFB9"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F58AE5CFFE86BEA9215C7328778BE87F"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:DExecute, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_75B40A70942C4085A11BC08D2E8CAFB9"
-                    {
-                    "Name" = "8:DExecute.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\..\\Tools\\Export\\DExecute.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_976665387C714A7E91AA377B7CF4B879"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7F429EFFA699E8451450303E8C9DE7E1"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DExecute, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_7F429EFFA699E8451450303E8C9DE7E1"
+                    "_F58AE5CFFE86BEA9215C7328778BE87F"
                     {
                     "Name" = "8:DExecute.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:DExecute.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_976665387C714A7E91AA377B7CF4B879"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F096D8D81BA323A9B0696C2F498007FE"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:FileTool, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_F096D8D81BA323A9B0696C2F498007FE"
-                    {
-                    "Name" = "8:FileTool.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:FileTool.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_976665387C714A7E91AA377B7CF4B879"
@@ -464,7 +335,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DServiceSetUp"
         "ProductCode" = "8:{31DAB50E-AF43-4BEF-A825-B26556536BA5}"
-        "PackageCode" = "8:{0370A339-1A33-4357-8B3C-B8DC26E23232}"
+        "PackageCode" = "8:{6352C013-41B9-4AA0-B2D7-89914702E295}"
         "UpgradeCode" = "8:{FDEAD4E8-D372-492C-8C7C-D8A36B018C1C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

@@ -23,26 +23,40 @@ namespace DExecute
 
         public virtual void Start()
         {
-            Lessner();
+            try
+            {
+                Lessner();
+            }
+            catch (Exception ex)
+            {
+                CommTool.ToolLog.Log(ex);
+            }
         }
 
         private void InitParamter(Dictionary<string,string>Parameters)
         {
-            if (Parameters.ContainsKey("LogPath"))
+            try
             {
-                CommTool.ToolLog.ToolPath = Parameters["LogPath"];
+                if (Parameters.ContainsKey("LogPath"))
+                {
+                    CommTool.ToolLog.ToolPath = Parameters["LogPath"];
+                }
+                else
+                {
+                    CommTool.ToolLog.ToolPath = @"C:\SLog";
+                }
+                if (Parameters.ContainsKey("IP"))
+                {
+                    _ip = Parameters["IP"];
+                }
+                if (Parameters.ContainsKey("Port"))
+                {
+                    _port = Parameters["Port"];
+                }
             }
-            else
+            catch (Exception ex)
             {
-                CommTool.ToolLog.ToolPath = @"C:\SLog";
-            }
-            if (Parameters.ContainsKey("IP"))
-            {
-                _ip = Parameters["IP"];
-            }
-            if (Parameters.ContainsKey("Port"))
-            {
-                _port = Parameters["Port"];
+                CommTool.ToolLog.Log(ex);
             }
         }
 

@@ -40,10 +40,7 @@
     </Reference>
     <Reference Include="DExecute, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Tools\Export\DExecute.dll</HintPath>
-    </Reference>
-    <Reference Include="FileTool">
-      <HintPath>..\Export\FileTool.dll</HintPath>
+      <HintPath>..\..\..\..\..\Dropbox\Export\DExecute.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />

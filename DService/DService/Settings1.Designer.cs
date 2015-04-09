@@ -134,12 +134,12 @@ namespace DService {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8051")]
-        public string Port {
+        public string AppPort {
             get {
-                return ((string)(this["Port"]));
+                return ((string)(this["AppPort"]));
             }
             set {
-                this["Port"] = value;
+                this["AppPort"] = value;
             }
         }
     }
