@@ -23,39 +23,51 @@ namespace DService {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\SLog")]
         public string LogPath {
             get {
                 return ((string)(this["LogPath"]));
             }
+            set {
+                this["LogPath"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public string Interval {
             get {
                 return ((string)(this["Interval"]));
             }
+            set {
+                this["Interval"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("M")]
         public string IntervalUnit {
             get {
                 return ((string)(this["IntervalUnit"]));
             }
+            set {
+                this["IntervalUnit"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Lazy")]
         public string UpDateGradPath {
             get {
                 return ((string)(this["UpDateGradPath"]));
+            }
+            set {
+                this["UpDateGradPath"] = value;
             }
         }
         
@@ -133,13 +145,49 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8051")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8055")]
         public string AppPort {
             get {
                 return ((string)(this["AppPort"]));
             }
             set {
                 this["AppPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://dickguo.net63.net/chat/test/")]
+        public string PostAddress {
+            get {
+                return ((string)(this["PostAddress"]));
+            }
+            set {
+                this["PostAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("[正妹]")]
+        public string Condition {
+            get {
+                return ((string)(this["Condition"]));
+            }
+            set {
+                this["Condition"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public string PushCount {
+            get {
+                return ((string)(this["PushCount"]));
+            }
+            set {
+                this["PushCount"] = value;
             }
         }
     }

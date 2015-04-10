@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Sockets;
+using System.Net;
 
 namespace DExecute
 {
@@ -42,5 +43,30 @@ namespace DExecute
                 return ex.Message;
             }
         }
+
+        public void Command(string CommandString)
+        {           
+            //將字串轉 byte 陣列，使用 ASCII 編碼
+            Byte[] myBytes = Encoding.ASCII.GetBytes(CommandString);
+            Console.WriteLine("建立網路資料流 !!");
+            //建立網路資料流
+            myNetworkStream = myTcpClient.GetStream();
+            Console.WriteLine("將字串寫入資料流　!!");
+            //將字串寫入資料流
+            string s = Dns.GetHostName();
+            IPAddress[] IPS = Dns.GetHostEntry(s).AddressList;
+            if (IPS.Length > 3)
+            {
+                //string serr = "CommandString";
+                myBytes = System.Text.Encoding.Default.GetBytes(CommandString);
+                myNetworkStream.Write(myBytes, 0, myBytes.Length);
+            }
+            else
+            {
+                myBytes = System.Text.Encoding.Default.GetBytes("無法擷取IP");
+                myNetworkStream.Write(myBytes, 0, myBytes.Length);
+            }
+        }
+
     }
 }

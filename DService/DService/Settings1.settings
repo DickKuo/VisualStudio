@@ -2,16 +2,16 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DService" GeneratedClassName="Settings1">
   <Profiles />
   <Settings>
-    <Setting Name="LogPath" Type="System.String" Scope="Application">
+    <Setting Name="LogPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\SLog</Value>
     </Setting>
-    <Setting Name="Interval" Type="System.String" Scope="Application">
+    <Setting Name="Interval" Type="System.String" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="IntervalUnit" Type="System.String" Scope="Application">
+    <Setting Name="IntervalUnit" Type="System.String" Scope="User">
       <Value Profile="(Default)">M</Value>
     </Setting>
-    <Setting Name="UpDateGradPath" Type="System.String" Scope="Application">
+    <Setting Name="UpDateGradPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Lazy</Value>
     </Setting>
     <Setting Name="UpDateTime" Type="System.String" Scope="User">
@@ -33,7 +33,16 @@
       <Value Profile="(Default)">10.40.30.104</Value>
     </Setting>
     <Setting Name="AppPort" Type="System.String" Scope="User">
-      <Value Profile="(Default)">8051</Value>
+      <Value Profile="(Default)">8055</Value>
+    </Setting>
+    <Setting Name="PostAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://dickguo.net63.net/chat/test/</Value>
+    </Setting>
+    <Setting Name="Condition" Type="System.String" Scope="User">
+      <Value Profile="(Default)">[正妹]</Value>
+    </Setting>
+    <Setting Name="PushCount" Type="System.String" Scope="User">
+      <Value Profile="(Default)">30</Value>
     </Setting>
   </Settings>
 </SettingsFile>

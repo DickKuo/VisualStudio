@@ -14,8 +14,11 @@ namespace DExecute
     {
         private string _ip;
         private string _port;
+        private string _logpath;
+        private string _postaddress;
         public string IP { get { return _ip; } }
         public string Port { get { return _port; } }
+
         Dictionary<string, string> DicParameters = new Dictionary<string, string>();
 
         public DExecute(Dictionary<string, string> Parameters)
@@ -42,12 +45,13 @@ namespace DExecute
             {
                 if (Parameters.ContainsKey("LogPath"))
                 {
-                    CommTool.ToolLog.ToolPath = Parameters["LogPath"];
+                    ToolLog.ToolPath = Parameters["LogPath"];
                 }
                 else
                 {
-                    CommTool.ToolLog.ToolPath = @"C:\SLog";
+                    ToolLog.ToolPath = @"C:\SLog";
                 }
+                _logpath = ToolLog.ToolPath;
                 if (Parameters.ContainsKey("AppIP"))
                 {
                     _ip = Parameters["AppIP"];
@@ -55,6 +59,10 @@ namespace DExecute
                 if (Parameters.ContainsKey("AppPort"))
                 {
                     _port = Parameters["AppPort"];
+                }
+                if (Parameters.ContainsKey("PostAddress"))
+                {
+                    _postaddress = Parameters["PostAddress"];
                 }
             }
             catch (Exception ex)
@@ -100,10 +108,10 @@ namespace DExecute
                         //Console.WriteLine("按下 [任意鍵] 將資料回傳至用戶端 !!");
                         //string str = Console.ReadLine();
                         // ConfigHelper.GetConfigValueByKey("TimeLimte").ToString();
-                        //myBufferBytes = System.Text.Encoding.Default.GetBytes(CurrentDbSource + "," + ti);
+                        myBufferBytes = System.Text.Encoding.Default.GetBytes("服務運行中，S 停止服務，R 重啟服務。");
 
                         //將接收到的資料回傳給用戶端
-                        // mySocket.Send(myBufferBytes, myBufferBytes.Length, 0);
+                         mySocket.Send(myBufferBytes, myBufferBytes.Length, 0);
 
                     }
                 }
@@ -120,6 +128,7 @@ namespace DExecute
 
         private void DoAnalysis(string NetString)
         {
+            WebInfo.WebInfo webinfo = new WebInfo.WebInfo(_logpath);
             ToolLog.Log(NetString);
             ToolLog.Log("進行資料解析....");
             DAnalysis analysis = new DAnalysis();
@@ -127,10 +136,20 @@ namespace DExecute
             if (result.Type == DAnalysis.AnalysisType.E)
             {
                 ToolLog.Log(result.Result);
+                return;
             }
-            else
+            if (result.Type == DAnalysis.AnalysisType.W)
+            {
+                ToolLog.Log("抓取網頁資料");
+                webinfo.GetBueatyDirtory(result.Result, "[正妹]", 0, _postaddress);
+            }
+            if (result.Type == DAnalysis.AnalysisType.R)
+            {  //重啟服務
+            
+            }
+            if (result.Type == DAnalysis.AnalysisType.S)
             { 
-                
+            
             }
         }
 
