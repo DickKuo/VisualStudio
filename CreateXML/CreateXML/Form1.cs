@@ -3381,8 +3381,15 @@ namespace CreateXML {
                 {
                     string[] arrary = str.Split(new string[] { "\t" }, StringSplitOptions.RemoveEmptyEntries);
                     DataRow dr = dt.NewRow();
-                    dr[0] = arrary[0];                     
-                    dr[1] = arrary[2];
+                    dr[0] = arrary[0];
+                    if (arrary.Length > 2)
+                    {
+                        dr[1] = arrary[2];
+                    }
+                    else
+                    {
+                        MessageBox.Show(string.Format("{0} 描述欄位不可為空。", dr[0]));
+                    }
                     dt.Rows.Add(dr);
                     dataGridView1.Rows[count].Cells["Type"].Value = ChangeType(arrary[1]);
                     count++;
