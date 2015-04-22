@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CommTool.Properties;
 
 namespace CommTool
-{
+{   
     public static class StringExtension
     {
         /// <summary>
@@ -63,5 +64,50 @@ namespace CommTool
             }
             return IsNull;
         }
+    }
+
+    public static class Initiator
+    {
+        private const string DefaulrLanguage = "1";
+
+        private static IServiceProvider _curentprovider;
+
+        public IServiceProvider curentprovider { get { return _curentprovider; } }
+
+
+
+        public static object GetSevice(Type ServiceType)
+        {
+            if (ServiceType == null)
+            {
+                throw new System.ArgumentNullException("ServiceType");
+            }
+            if (Initiator._curentprovider == null)
+            {
+                throw new ArgumentNullException(Resource.ProviderIsNull);
+            }
+            object service = Initiator._curentprovider.GetService(ServiceType);
+            if (service == null)
+            {
+                throw new DesignException(string.Format(Resources.FailGetService, serviceType.FullName));
+            }
+            return service;
+        }
+
+        public static T  GetSevice<T>(object ServiceName)        
+        {
+            if (Initiator._curentprovider == null)
+            {
+                throw new ArgumentNullException(Resource.ProviderIsNull);
+            }
+            object service = Initiator._curentprovider.GetService(typeof(T));
+            if (service == null)
+            {
+                throw new ArgumentNullException(string.Format(Resources.FailGetService, typeof(T).FullName));
+            }
+            return (T)((object)service);
+        }
+
+
     }
 }
