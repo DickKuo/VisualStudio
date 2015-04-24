@@ -109,6 +109,10 @@ namespace CommTool
         //}
 
 
+      
+    }
+
+    public static class CommTool {
         /// <summary>
         /// 20150108 add by Dick for 取得固定長度的字串 單位為Byte
         /// </summary>
