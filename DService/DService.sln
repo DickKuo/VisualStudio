@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DService", "DService\DService.csproj", "{1893C2BE-8ED6-4C75-8D61-10C044D3059A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DExecute", "DExecute\DExecute.csproj", "{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}"
-EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DServiceSetUp", "DServiceSetUp\DServiceSetUp.vdproj", "{5F1F1748-E51B-426C-8C30-03268E2266E1}"
 EndProject
 Global
@@ -27,16 +25,6 @@ Global
 		{1893C2BE-8ED6-4C75-8D61-10C044D3059A}.Release|Mixed Platforms.Build.0 = Release|x86
 		{1893C2BE-8ED6-4C75-8D61-10C044D3059A}.Release|x86.ActiveCfg = Release|x86
 		{1893C2BE-8ED6-4C75-8D61-10C044D3059A}.Release|x86.Build.0 = Release|x86
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}.Release|x86.ActiveCfg = Release|Any CPU
 		{5F1F1748-E51B-426C-8C30-03268E2266E1}.Debug|Any CPU.ActiveCfg = Debug
 		{5F1F1748-E51B-426C-8C30-03268E2266E1}.Debug|Mixed Platforms.ActiveCfg = Debug
 		{5F1F1748-E51B-426C-8C30-03268E2266E1}.Debug|x86.ActiveCfg = Debug
