@@ -122,7 +122,7 @@ namespace WebInfo
                     StringBuilder sb = new StringBuilder();
                     string line = string.Empty;
                     while ((line = secoend.ReadLine()) != null)
-                    {
+                    {                       
                         if (line.IndexOf("<span class=\"article-meta-value\">") != -1)
                         {
                             while ((line = secoend.ReadLine()) != null)
@@ -174,7 +174,10 @@ namespace WebInfo
                                 }
                                 #endregion
 
-
+                                if (line.IndexOf(" <span class=\"f3 hl\">") != -1)
+                                {
+                                    break;
+                                }
                                 sb.Append(line).Replace("--", "");
                             }
                             break;

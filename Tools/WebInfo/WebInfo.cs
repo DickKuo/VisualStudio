@@ -134,5 +134,33 @@ namespace WebInfo
                 }
             }
         }
+        /// <summary>
+        /// 20150410 add by Dick for 直接針對網址進行解析內容及傳輸。
+        /// 20150428 modified by Dick for 不需要過濾標題條件
+        /// </summary>
+        /// <param name="Url">指定網址</param>
+        /// <param name="PushCount">推文數量</param>
+        /// <param name="PostAdress">分析後傳送位址</param>
+        public void GetBueatyDirtory(string Url, int PushCount, string PostAdress)
+        {
+            List<SiteInfo> li = new List<SiteInfo>();
+            GetSite info = new GetSite(_pLogPath);
+            SiteInfo SiteInfo = info.GetInfo(Url);
+            if (SiteInfo.Title != null)
+            {
+                if (SiteInfo.PushList.Count > PushCount)
+                {                    
+                    SiteInfo.PushList.Clear();
+                    if (SiteInfo.Title.IndexOf("Re: ") == -1)
+                    {
+                        li.Add(SiteInfo);
+                        long length = POST(PostAdress, li);
+                        ToolLog.Log(string.Format("寫入紀錄 {0} ", SiteInfo.Title));
+                        ToolLog.Log("記錄結束");
+                        li.Clear();
+                    }
+                }
+            }
+        }
     }
 }
