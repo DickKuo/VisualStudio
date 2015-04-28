@@ -26,7 +26,7 @@ namespace CommTool
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
 
@@ -47,7 +47,7 @@ namespace CommTool
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
 
@@ -70,7 +70,7 @@ namespace CommTool
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
 
@@ -93,7 +93,7 @@ namespace CommTool
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
     }
