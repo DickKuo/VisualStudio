@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using WebInfo;
 
 namespace DExecute
 {
@@ -18,7 +19,8 @@ namespace DExecute
             W = 1,   //網頁
             E = 2,   //錯誤 
             R = 3,   //重開服務
-            S = 4,   //停止服務            
+            S = 4,   //停止服務
+            U = 5,   //更新
         }
                
         public StructAnalysisResult Start(string Query)
@@ -37,6 +39,9 @@ namespace DExecute
                         break;
                     case "s":
                         _analysisresult.Type = AnalysisType.S;
+                        break;
+                    case "u":
+                        _analysisresult.Type = AnalysisType.U;
                         break;
                 }
             }
@@ -66,6 +71,11 @@ namespace DExecute
             }
         }
 
+        /// <summary>
+        //  解析網頁資訊
+        /// </summary>
+        /// <param name="split"></param>
+        /// <param name="Re"></param>
         private void GetBueaty(string[] split, System.Text.RegularExpressions.Regex Re)
         {
             if (split.Length > 2)
@@ -74,7 +84,7 @@ namespace DExecute
                 if (M.Success)
                 {
                     _analysisresult.Type = AnalysisType.W;
-                    _analysisresult.Result = split[2];
+                    _analysisresult.Result = split[2];                    
                 }
                 else
                 {

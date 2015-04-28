@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using System.Net.Sockets;
 using CommTool;
+using System.Net.Sockets;
 using DExecute;
+using System.Text.RegularExpressions;
 
-namespace DExecute
+namespace ServerApplication
 {
-    public class DExecute
+    public class DExecuteX
     {
         private string _ip;
         private string _port;
@@ -20,7 +20,7 @@ namespace DExecute
 
         Dictionary<string, string> DicParameters = new Dictionary<string, string>();
 
-        public DExecute(Dictionary<string, string> Parameters)
+        public DExecuteX(Dictionary<string, string> Parameters)
         {
             InitParamter(Parameters);
             DicParameters = Parameters;
@@ -105,8 +105,7 @@ namespace DExecute
                         //myBufferBytes = System.Text.Encoding.Default.GetBytes("解析語法中請稍後....");
                         mySocket.Send(myBufferBytes, myBufferBytes.Length, 0);
                         //NetString = Encoding.ASCII.GetString(myBufferBytes, 0, dataLength);
-                        ToolLog.Log("String轉換Default");
-                        NetString = Encoding.Default.GetString(myBufferBytes, 0, dataLength);
+                        NetString = Encoding.ASCII.GetString(myBufferBytes, 0, dataLength);
                         DoAnalysis(NetString);
                         myBufferBytes = System.Text.Encoding.Default.GetBytes("解析完成。");
                         //Console.WriteLine("按下 [任意鍵] 將資料回傳至用戶端 !!");
@@ -115,13 +114,13 @@ namespace DExecute
                         myBufferBytes = System.Text.Encoding.Default.GetBytes("服務運行中，S 停止服務，R 重啟服務。");
 
                         //將接收到的資料回傳給用戶端
-                         mySocket.Send(myBufferBytes, myBufferBytes.Length, 0);
+                        mySocket.Send(myBufferBytes, myBufferBytes.Length, 0);
 
                     }
                 }
                 catch (Exception e)
                 {
-                    ToolLog.Log(e.Message);                    
+                    ToolLog.Log(e.Message);
                 }
                 finally
                 {
@@ -136,7 +135,7 @@ namespace DExecute
             ToolLog.Log(NetString);
             ToolLog.Log("進行資料解析....");
             DAnalysis analysis = new DAnalysis();
-            DAnalysis.StructAnalysisResult result = analysis.Start(NetString);          
+            DAnalysis.StructAnalysisResult result = analysis.Start(NetString);
             if (result.Type == DAnalysis.AnalysisType.E)
             {
                 ToolLog.Log(result.Result);
@@ -145,19 +144,21 @@ namespace DExecute
             if (result.Type == DAnalysis.AnalysisType.W)
             {
                 ToolLog.Log("抓取網頁資料");
-                webinfo.GetBueatyDirtory(result.Result,0, _postaddress);
+                webinfo.GetBueatyDirtory(result.Result, 0, _postaddress);
             }
             if (result.Type == DAnalysis.AnalysisType.R)
             {  //重啟服務
                 ToolLog.Log("重啟服務");
                 System.Diagnostics.Process.Start("net", "stop DService");
-                System.Diagnostics.Process.Start("net", "start DService");           
+                System.Diagnostics.Process.Start("net", "start DService");
             }
             if (result.Type == DAnalysis.AnalysisType.S)
-            { 
-            
+            {
+
             }
         }
 
     }
+
+
 }

@@ -61,7 +61,7 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Lazy")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Dick\\Dropbox\\Export")]
         public string UpDateGradPath {
             get {
                 return ((string)(this["UpDateGradPath"]));
