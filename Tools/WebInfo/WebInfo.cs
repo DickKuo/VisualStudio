@@ -67,7 +67,7 @@ namespace WebInfo
         /// <param name="Address"></param>
         /// <param name="SiteInfoList"></param>
         /// <returns></returns>
-        private long POST(string Address, List<SiteInfo> SiteInfoList)
+        public long POST(string Address, List<SiteInfo> SiteInfoList)
         {
             SiteInfo info = SiteInfoList[0];
             ToolLog.Log("Post 開始" + info.Title);

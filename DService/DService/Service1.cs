@@ -10,6 +10,8 @@ using System.IO;
 using System.Xml;
 using System.Threading;
 using System.Configuration;
+using WebInfo;
+using CommTool;
 
 
 namespace DService
@@ -77,7 +79,34 @@ namespace DService
                 DServerLog("更新開始");
                 UpdateDll(Settings1.Default.UpDateGradPath);
                 DServerLog("更新結束");
-            }           
+            }
+            GetPTTBueaty(time);
+        }
+
+        private void GetPTTBueaty(string time)
+        {
+            if (_timelist.Contains(time))
+            {
+                DServerLog("執行" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                string LogPath = Settings1.Default.LogPath;
+                GetSite site = new GetSite(LogPath);
+                string RecordXml = Path.Combine(LogPath,"Record.xml");
+                if (!File.Exists(RecordXml))
+                {
+                    XmlFile xml = new XmlFile();
+                    xml.CreateBaseXml(RecordXml, string.Empty, true);
+                }
+                XmlDocument doc = XmlFile.LoadXml(RecordXml);
+                XmlNode root = doc.SelectSingleNode("root");   
+                site.PostAddress = Convert.ToBoolean(Settings1.Default.IsTest)  ==true?  Settings1.Default.TestPostAddress :   site.PostAddress = Settings1.Default.PostAddress;
+                site.PushCount = Settings1.Default.PushCount;
+                site.Tag = Settings1.Default.StartTag;          
+                string Site = Settings1.Default.Theme;
+                SitePlus siteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + site.Tag + ".html");
+                DServerLog("取得表特列表" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                List<SiteInfo> SiteInfoList = new List<SiteInfo>();
+                site.Recursive(1150, siteplus, SiteInfoList, Site, "/bbs/" + Site + "/index", Settings1.Default.Condition, doc, root);
+            }
         }
 
         protected override void OnStop()

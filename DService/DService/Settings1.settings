@@ -36,12 +36,12 @@
       <Value Profile="(Default)">8055</Value>
     </Setting>
     <Setting Name="PostAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://dickguo.net63.net/chat/test/</Value>
+      <Value Profile="(Default)">http://dickguo.net63.net/chat/getInfo/</Value>
     </Setting>
     <Setting Name="Condition" Type="System.String" Scope="User">
       <Value Profile="(Default)">[正妹]</Value>
     </Setting>
-    <Setting Name="PushCount" Type="System.String" Scope="User">
+    <Setting Name="PushCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="DBSource" Type="System.String" Scope="User">
@@ -58,6 +58,18 @@
     </Setting>
     <Setting Name="DefaultLanguage" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Theme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Beauty</Value>
+    </Setting>
+    <Setting Name="TestPostAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://dickguo.net63.net/chat/test/</Value>
+    </Setting>
+    <Setting Name="IsTest" Type="System.String" Scope="User">
+      <Value Profile="(Default)">true</Value>
+    </Setting>
+    <Setting Name="StartTag" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1150</Value>
     </Setting>
   </Settings>
 </SettingsFile>

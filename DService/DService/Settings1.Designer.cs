@@ -157,7 +157,7 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://dickguo.net63.net/chat/test/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://dickguo.net63.net/chat/getInfo/")]
         public string PostAddress {
             get {
                 return ((string)(this["PostAddress"]));
@@ -182,9 +182,9 @@ namespace DService {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("30")]
-        public string PushCount {
+        public int PushCount {
             get {
-                return ((string)(this["PushCount"]));
+                return ((int)(this["PushCount"]));
             }
             set {
                 this["PushCount"] = value;
@@ -248,6 +248,54 @@ namespace DService {
             }
             set {
                 this["DefaultLanguage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Beauty")]
+        public string Theme {
+            get {
+                return ((string)(this["Theme"]));
+            }
+            set {
+                this["Theme"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://dickguo.net63.net/chat/test/")]
+        public string TestPostAddress {
+            get {
+                return ((string)(this["TestPostAddress"]));
+            }
+            set {
+                this["TestPostAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("true")]
+        public string IsTest {
+            get {
+                return ((string)(this["IsTest"]));
+            }
+            set {
+                this["IsTest"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1150")]
+        public int StartTag {
+            get {
+                return ((int)(this["StartTag"]));
+            }
+            set {
+                this["StartTag"] = value;
             }
         }
     }

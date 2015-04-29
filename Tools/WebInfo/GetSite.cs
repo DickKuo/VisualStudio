@@ -7,13 +7,35 @@ using System.IO;
 using System.Net;
 using CommTool;
 using System.Globalization;
+using System.Xml;
+using System.Threading;
 
 namespace WebInfo
 {
     public class GetSite
     {
         Dictionary<string, int> Month = new Dictionary<string, int>();
-       
+        const int _defaultCount = 30;
+        private int _pushcount = 0;
+        public int PushCount { get{
+            if (_pushcount == 0)
+            {
+                return _defaultCount;
+            }
+            else
+            {
+                return _pushcount;
+            }
+        }
+            set {
+                _pushcount = value;
+            }
+        }
+        public DateTime RecordTime { set; get; }
+        public static List<string> listold = new List<string>();
+        public string PostAddress { set; get; }
+        public int Tag { set; get; }
+
         public GetSite(string LogPath)
         {
             Month.Add("Jan", 1);
@@ -233,6 +255,78 @@ namespace WebInfo
             }
             return Info;
         }
+
+
+        /// <summary>
+        /// 記錄已經Post出去的資料
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="pTitle"></param>
+        private static void Record(XmlDocument doc, string pTitle)
+        {
+            XmlNode root = doc.SelectSingleNode("root");
+            XmlElement element = doc.CreateElement("Title");
+            element.InnerText = pTitle;
+            root.AppendChild(element);
+            doc.Save(ToolLog.ToolPath + "\\" + "Record.xml");
+        }
+
+
+        /// <summary>
+        /// 遞回所有頁面
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="pSiteplus"></param>
+        /// <param name="li"></param>
+        /// <param name="Formate"></param>       
+        public void Recursive(int index, SitePlus pSiteplus, List<SiteInfo> li, string Site, string Formate, string pCondition, XmlDocument doc, XmlNode root)
+        {
+            GetSite site = new GetSite(ToolLog.ToolPath);
+            foreach (string str in pSiteplus.Context)
+            {
+                SiteInfo info = site.GetInfo(@"https://www.ptt.cc" + str);
+                if (info.Title != null)
+                {
+                    if (info.Title.IndexOf(pCondition) != -1 && info.PushList.Count > PushCount)
+                    {
+                        info.PushList.Clear();
+                        if (info.Title.IndexOf("Re: ") == -1)
+                        {
+                            li.Add(info);
+                            if (!listold.Contains(info.Title.Trim()))
+                            {
+                                WebInfo webinfo = new WebInfo(ToolLog.ToolPath);
+                                long length = webinfo.POST(PostAddress, li);
+                                Thread.Sleep(1000);
+                                RecordTime = info.PostDate;
+                                listold.Add(info.Title.Trim());
+                                ToolLog.Log(string.Format("寫入紀錄 {0} ", info.Title));
+                                Record(doc, info.Title.Trim());
+                                ToolLog.Log("記錄結束");
+                            }
+                            li.Clear();
+                        }
+                    }
+                }
+            }
+            foreach (string str in pSiteplus.Index)
+            {
+                string temp = str.Replace(Formate, "").Replace(".html", "");
+                int result = 0;
+                if (int.TryParse(temp, out result))
+                {
+                    if (result > index)
+                    {
+                        Thread.Sleep(1000);
+                        Tag = result;
+                        pSiteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + result + ".html");
+                        Recursive(result, pSiteplus, li, Site, Formate, pCondition, doc, root);
+                    }
+                }
+            }
+        }
+
+
     }
 
     /// <summary>
