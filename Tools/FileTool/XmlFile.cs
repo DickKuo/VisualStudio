@@ -285,6 +285,19 @@ namespace CommTool
        /// <param name="pAppend">是否覆蓋</param>
         public virtual void CreateBaseXml(string pPath, string pContext, bool pAppend)
         {
+            if (pPath.Length > 0)
+            {
+                string[] spp = pPath.Split('\\');
+                StringBuilder dir = new StringBuilder();
+                for (int i = 0; i < spp.Length - 1; i++)
+                {
+                    dir.AppendFormat("{0}\\", spp[i]);
+                }
+                if (!Directory.Exists(dir.ToString()))
+                {
+                    Directory.CreateDirectory(dir.ToString());
+                }
+            }
             using (StreamWriter sw = new StreamWriter(pPath, pAppend))
             {
                 StringBuilder sb = new StringBuilder();
@@ -301,10 +314,22 @@ namespace CommTool
         /// 建立基本XML檔案
         /// </summary>
         /// <param name="pPath">儲存位置</param>
-        /// <param name="pContext">內容</param>
         /// <param name="pAppend">是否覆蓋</param>
         public static void CreateBaseXml(string pPath, bool pAppend)
         {
+            if (pPath.Length > 0)
+            {
+                string[] spp = pPath.Split('\\');
+                StringBuilder dir = new StringBuilder();
+                for (int i = 0; i < spp.Length - 1; i++)
+                {
+                    dir.AppendFormat("{0}\\", spp[i]);
+                }
+                if (!Directory.Exists(dir.ToString()))
+                {
+                    Directory.CreateDirectory(dir.ToString());
+                }
+            }
             using (StreamWriter sw = new StreamWriter(pPath, pAppend))
             {
                 StringBuilder sb = new StringBuilder();
