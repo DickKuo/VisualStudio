@@ -27,16 +27,17 @@ namespace DService
 
         private void Init()
         {
+            InitParamter();
             CommTool.ToolLog.ToolPath = Settings1.Default.LogPath;
             DateTime BaseTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-            DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
+            DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.AddDays(1).Day, 23, 59, 0);
             int interval = Convert.ToInt32(Settings1.Default.Interval);
             while (BaseTime <= FlagTime)
             {
                 _timelist.Add(BaseTime.ToString("HH:mm:ss"));
-                BaseTime = BaseTime.AddSeconds(GetTime() * interval);
-            }
-            InitParamter();
+                DServerLog(BaseTime.ToString("HH:mm:ss"));
+                BaseTime = BaseTime.AddSeconds(GetTime() * interval);                
+            }          
         }
 
         private void InitParamter()
@@ -45,12 +46,16 @@ namespace DService
             {
                 foreach (SettingsProperty PropertyName in Settings1.Default.Properties)
                 {
-                    DicParameters.Add(PropertyName.Name, Settings1.Default.PropertyValues[PropertyName.Name].PropertyValue.ToString());
+                    ToolLog.Log(string.Format( "初始化參數：{0}",PropertyName.Name));
+                    if (!DicParameters.ContainsKey(PropertyName.Name))
+                    {
+                        DicParameters.Add(PropertyName.Name, Settings1.Default.PropertyValues[PropertyName.Name].PropertyValue.ToString());
+                    }
                 }
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
 
@@ -74,7 +79,7 @@ namespace DService
         {
             string time = DateTime.Now.ToString("HH:mm:ss");
             DExecute.DExecute execute = new DExecute.DExecute(DicParameters);
-            if (DateTime.Now.ToString("HH:mm") == Settings1.Default.UpDateTime)
+            if (DateTime.Now.ToString("HH:mm:ss") == Settings1.Default.UpDateTime)
             {
                 DServerLog("更新開始");
                 UpdateDll(Settings1.Default.UpDateGradPath);
@@ -100,12 +105,22 @@ namespace DService
                 XmlNode root = doc.SelectSingleNode("root");   
                 site.PostAddress = Convert.ToBoolean(Settings1.Default.IsTest)  ==true?  Settings1.Default.TestPostAddress :   site.PostAddress = Settings1.Default.PostAddress;
                 site.PushCount = Settings1.Default.PushCount;
-                site.Tag = Settings1.Default.StartTag;          
+                int currentTag = Settings1.Default.StartTag;
+                if (currentTag <=Convert.ToInt32(  Settings1.Default.StartPoint))
+                {
+                    currentTag =Convert.ToInt32( Settings1.Default.StartPoint);
+                }
+                site.Tag = currentTag;
                 string Site = Settings1.Default.Theme;
                 SitePlus siteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + site.Tag + ".html");
                 DServerLog("取得表特列表" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
                 List<SiteInfo> SiteInfoList = new List<SiteInfo>();
-                site.Recursive(1150, siteplus, SiteInfoList, Site, "/bbs/" + Site + "/index", Settings1.Default.Condition, doc, root);
+                site.Recursive(ref currentTag, siteplus, SiteInfoList, Site, "/bbs/" + Site + "/index", Settings1.Default.Condition, doc, root);              
+                string xmlpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
+                XmlDocument Config = XmlFile.LoadXml(xmlpath);
+                XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", "StartTag"));
+                node.InnerText = currentTag.ToString();
+                Config.Save(xmlpath);
             }
         }
 
@@ -243,4 +258,7 @@ namespace DService
              CommTool.ToolLog.Log(Message);          
         }
     }
+
+   
+
 }

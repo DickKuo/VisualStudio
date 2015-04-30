@@ -279,12 +279,14 @@ namespace WebInfo
         /// <param name="pSiteplus"></param>
         /// <param name="li"></param>
         /// <param name="Formate"></param>       
-        public void Recursive(int index, SitePlus pSiteplus, List<SiteInfo> li, string Site, string Formate, string pCondition, XmlDocument doc, XmlNode root)
+        public void Recursive(ref int index, SitePlus pSiteplus, List<SiteInfo> li, string Site, string Formate, string pCondition, XmlDocument doc, XmlNode root)
         {
             GetSite site = new GetSite(ToolLog.ToolPath);
             foreach (string str in pSiteplus.Context)
             {
-                SiteInfo info = site.GetInfo(@"https://www.ptt.cc" + str);
+                string Url = @"https://www.ptt.cc" + str;
+                SiteInfo info = site.GetInfo(Url);
+
                 if (info.Title != null)
                 {
                     if (info.Title.IndexOf(pCondition) != -1 && info.PushList.Count > PushCount)
@@ -296,11 +298,13 @@ namespace WebInfo
                             if (!listold.Contains(info.Title.Trim()))
                             {
                                 WebInfo webinfo = new WebInfo(ToolLog.ToolPath);
+                                Console.WriteLine(info.Title);
                                 long length = webinfo.POST(PostAddress, li);
                                 Thread.Sleep(1000);
                                 RecordTime = info.PostDate;
                                 listold.Add(info.Title.Trim());
                                 ToolLog.Log(string.Format("寫入紀錄 {0} ", info.Title));
+                                ToolLog.Log(string.Format("Url ：  {0} ", Url));
                                 Record(doc, info.Title.Trim());
                                 ToolLog.Log("記錄結束");
                             }
@@ -320,7 +324,7 @@ namespace WebInfo
                         Thread.Sleep(1000);
                         Tag = result;
                         pSiteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + result + ".html");
-                        Recursive(result, pSiteplus, li, Site, Formate, pCondition, doc, root);
+                        Recursive(ref result, pSiteplus, li, Site, Formate, pCondition, doc, root);
                     }
                 }
             }

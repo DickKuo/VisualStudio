@@ -37,7 +37,7 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
         public string Interval {
             get {
                 return ((string)(this["Interval"]));
@@ -73,7 +73,7 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("18:30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("18:30:00")]
         public string UpDateTime {
             get {
                 return ((string)(this["UpDateTime"]));
@@ -289,13 +289,25 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1150")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int StartTag {
             get {
                 return ((int)(this["StartTag"]));
             }
             set {
                 this["StartTag"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1150")]
+        public string StartPoint {
+            get {
+                return ((string)(this["StartPoint"]));
+            }
+            set {
+                this["StartPoint"] = value;
             }
         }
     }

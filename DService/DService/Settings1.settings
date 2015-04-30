@@ -6,7 +6,7 @@
       <Value Profile="(Default)">C:\SLog</Value>
     </Setting>
     <Setting Name="Interval" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">15</Value>
     </Setting>
     <Setting Name="IntervalUnit" Type="System.String" Scope="User">
       <Value Profile="(Default)">M</Value>
@@ -15,7 +15,7 @@
       <Value Profile="(Default)">C:\Users\Dick\Dropbox\Export</Value>
     </Setting>
     <Setting Name="UpDateTime" Type="System.String" Scope="User">
-      <Value Profile="(Default)">18:30</Value>
+      <Value Profile="(Default)">18:30:00</Value>
     </Setting>
     <Setting Name="AppPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -69,6 +69,9 @@
       <Value Profile="(Default)">true</Value>
     </Setting>
     <Setting Name="StartTag" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="StartPoint" Type="System.String" Scope="User">
       <Value Profile="(Default)">1150</Value>
     </Setting>
   </Settings>

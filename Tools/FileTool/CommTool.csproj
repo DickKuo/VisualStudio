@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoTrigger.cs" />
     <Compile Include="Comm.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="Files.cs" />
