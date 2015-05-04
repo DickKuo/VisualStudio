@@ -26,8 +26,7 @@ namespace DService
         }
 
         private void Init()
-        {
-            InitParamter();
+        {          
             CommTool.ToolLog.ToolPath = Settings1.Default.LogPath;
             DateTime BaseTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.AddDays(1).Day, 23, 59, 0);
@@ -37,7 +36,8 @@ namespace DService
                 _timelist.Add(BaseTime.ToString("HH:mm:ss"));
                 DServerLog(BaseTime.ToString("HH:mm:ss"));
                 BaseTime = BaseTime.AddSeconds(GetTime() * interval);                
-            }          
+            }
+            InitParamter();
         }
 
         private void InitParamter()
@@ -47,10 +47,9 @@ namespace DService
                 foreach (SettingsProperty PropertyName in Settings1.Default.Properties)
                 {
                     ToolLog.Log(string.Format( "初始化參數：{0}",PropertyName.Name));
-                    if (!DicParameters.ContainsKey(PropertyName.Name))
-                    {
+                   
                         DicParameters.Add(PropertyName.Name, Settings1.Default.PropertyValues[PropertyName.Name].PropertyValue.ToString());
-                    }
+                  
                 }
             }
             catch (Exception ex)
@@ -78,7 +77,6 @@ namespace DService
         void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             string time = DateTime.Now.ToString("HH:mm:ss");
-            DExecute.DExecute execute = new DExecute.DExecute(DicParameters);
             if (DateTime.Now.ToString("HH:mm:ss") == Settings1.Default.UpDateTime)
             {
                 DServerLog("更新開始");
@@ -119,7 +117,7 @@ namespace DService
                 string xmlpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
                 XmlDocument Config = XmlFile.LoadXml(xmlpath);
                 XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", "StartTag"));
-                node.InnerText = currentTag.ToString();
+                node.InnerText = (currentTag-1).ToString();
                 Config.Save(xmlpath);
             }
         }

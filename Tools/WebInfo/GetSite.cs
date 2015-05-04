@@ -286,7 +286,7 @@ namespace WebInfo
             {
                 string Url = @"https://www.ptt.cc" + str;
                 SiteInfo info = site.GetInfo(Url);
-
+                Thread.Sleep(1000);
                 if (info.Title != null)
                 {
                     if (info.Title.IndexOf(pCondition) != -1 && info.PushList.Count > PushCount)
@@ -323,8 +323,9 @@ namespace WebInfo
                     {
                         Thread.Sleep(1000);
                         Tag = result;
+                        index = result;
                         pSiteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + result + ".html");
-                        Recursive(ref result, pSiteplus, li, Site, Formate, pCondition, doc, root);
+                        Recursive(ref index, pSiteplus, li, Site, Formate, pCondition, doc, root);
                     }
                 }
             }
