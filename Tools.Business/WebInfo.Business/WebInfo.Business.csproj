@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6D6F35AD-8E6D-44ED-BB1B-D8F1D6A175C7}</ProjectGuid>
+    <ProjectGuid>{A98476B3-301B-4F4E-A11C-AC930F5047E7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DExecute</RootNamespace>
-    <AssemblyName>DExecute</AssemblyName>
+    <RootNamespace>WebInfo.Business</RootNamespace>
+    <AssemblyName>WebInfo.Business</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\..\..\Dropbox\Export\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,23 +38,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Dropbox\Export\WebInfo.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAnalysis.cs" />
-    <Compile Include="DConnectionClient.cs" />
-    <Compile Include="DExecute.cs" />
+    <Compile Include="DataEntities\SiteInfo.cs" />
+    <Compile Include="DataEntities\SitePlus.cs" />
+    <Compile Include="Services\IGetSiteService.cs" />
+    <Compile Include="Services\IWebInfoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FileTool\CommTool.csproj">
-      <Project>{E9D26E84-C166-48CC-854E-99372DF4EB3C}</Project>
-      <Name>CommTool</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
