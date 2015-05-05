@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading;
 using WebInfo;
 using System.Xml;
-using CommTool;
 using System.IO;
+using CommTool;
+using WebInfo.Business.DataEntities;
 namespace ServerApplication
 {
     class Program
@@ -32,7 +33,7 @@ namespace ServerApplication
 
         private static void iInit()
         {
-            CommTool.ToolLog.ToolPath = @"C:\SLog\";
+            ToolLog.ToolPath = @"C:\SLog\";
             DateTime BaseTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);           
             DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.AddDays(1).Day, 23,59, 0);
          

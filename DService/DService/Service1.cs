@@ -12,6 +12,7 @@ using System.Threading;
 using System.Configuration;
 using WebInfo;
 using CommTool;
+using WebInfo.Business.DataEntities;
 
 
 namespace DService
