@@ -15,16 +15,16 @@ namespace ServerApplication
         static void Main(string[] args)
         {
             Console.WriteLine("服務啟動");
-            //Thread thread = new Thread(startthread);
-            //thread.Start();
-            //iInit();
+            Thread thread = new Thread(startthread);
+            thread.Start();
+            iInit();
 
 
 
             //DExecute.DAnalysis analysis = new DExecute.DAnalysis();
             // analysis.Start("aaaaaa");
-            GetPTTBueaty bueaty = new GetPTTBueaty();
-            bueaty.Execute("12:00");
+            //GetPTTBueaty bueaty = new GetPTTBueaty();
+            //bueaty.Execute("12:00");
             
 
             Console.Read();
@@ -50,7 +50,7 @@ namespace ServerApplication
         {
             Dictionary<string, string> Parameter = new Dictionary<string, string>();
             Parameter.Add("AppIP", "10.40.30.104");
-            Parameter.Add("AppPort", "8051");
+            Parameter.Add("AppPort", "9001");
             Parameter.Add("PostAddress", "http://dickguo.net63.net/chat/test/");
             DExecuteX exe = new DExecuteX(Parameter);
             exe.Start();

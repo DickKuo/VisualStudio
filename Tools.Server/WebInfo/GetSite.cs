@@ -201,10 +201,17 @@ namespace WebInfo
                                 }
                                 #endregion
 
+                                #region 簽名檔則跳開
                                 if (line.IndexOf(" <span class=\"f3 hl\">") != -1)
                                 {
                                     break;
                                 }
+
+                                if (line.IndexOf("--") != -1 && line.Length<3)
+                                {
+                                    break;
+                                }
+                                #endregion                               
                                 sb.Append(line).Replace("--", "");
                             }
                             break;
