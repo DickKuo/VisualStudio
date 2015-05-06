@@ -20,6 +20,7 @@ namespace DService
     public partial class Service1 : ServiceBase
     {
         private List<string> _timelist = new List<string>();
+        private bool IsRuning = false;
         Dictionary<string, string> DicParameters = new Dictionary<string, string>();   //參數設定 
         public Service1()
         {
@@ -89,8 +90,9 @@ namespace DService
 
         private void GetPTTBueaty(string time)
         {
-            if (_timelist.Contains(time))
+            if (_timelist.Contains(time) && !IsRuning)
             {
+                IsRuning = true;
                 DServerLog("執行" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
                 string LogPath = Settings1.Default.LogPath;
                 GetSite site = new GetSite(LogPath);
@@ -120,6 +122,7 @@ namespace DService
                 XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", "StartTag"));
                 node.InnerText = (currentTag-1).ToString();
                 Config.Save(xmlpath);
+                IsRuning = false;
             }
         }
 
