@@ -122,14 +122,15 @@ namespace DService
                     site.Recursive(ref currentTag, siteplus, SiteInfoList, Site, "/bbs/" + Site + "/index", Settings1.Default.Condition, doc, root);
                     string xmlpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
                     XmlDocument Config = XmlFile.LoadXml(xmlpath);
-                    XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", "StartTag"));                    
+                    XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", "StartTag"));
                     XmlNode child = node.ChildNodes[0];
-                    child.InnerText = (currentTag - 2).ToString();                   
+                    child.InnerText = (currentTag - 2).ToString();
                     Config.Save(xmlpath);
                     IsRuning = false;
                 }
                 catch (Exception ex)
                 {
+                    IsRuning = false;
                     DServerLog(ex.Message);
                 }
                 finally
