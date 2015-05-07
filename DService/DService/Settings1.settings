@@ -6,13 +6,13 @@
       <Value Profile="(Default)">C:\SLog</Value>
     </Setting>
     <Setting Name="Interval" Type="System.String" Scope="User">
-      <Value Profile="(Default)">15</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="IntervalUnit" Type="System.String" Scope="User">
       <Value Profile="(Default)">M</Value>
     </Setting>
     <Setting Name="UpDateGradPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Dick\Dropbox\Export</Value>
+      <Value Profile="(Default)">C:\DllCopy</Value>
     </Setting>
     <Setting Name="UpDateTime" Type="System.String" Scope="User">
       <Value Profile="(Default)">18:30:00</Value>
@@ -30,7 +30,7 @@
       <Value Profile="(Default)">1330</Value>
     </Setting>
     <Setting Name="AppIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">10.40.30.104</Value>
+      <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
     <Setting Name="AppPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">8055</Value>
@@ -73,6 +73,9 @@
     </Setting>
     <Setting Name="StartPoint" Type="System.String" Scope="User">
       <Value Profile="(Default)">1150</Value>
+    </Setting>
+    <Setting Name="ShortTimeFormate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">HH:mm:ss</Value>
     </Setting>
   </Settings>
 </SettingsFile>

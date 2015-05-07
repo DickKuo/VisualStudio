@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DExecute", "DExecute\DExecu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLHelper", "SQLHelper\SQLHelper.csproj", "{C64334ED-5B13-4D7B-B3AF-7AD6ABFA7FB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTriggerService", "AutoTriggerService\AutoTriggerService.csproj", "{331187D2-A7CC-4DB3-A2FE-41F6249FE427}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{C64334ED-5B13-4D7B-B3AF-7AD6ABFA7FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C64334ED-5B13-4D7B-B3AF-7AD6ABFA7FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C64334ED-5B13-4D7B-B3AF-7AD6ABFA7FB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{331187D2-A7CC-4DB3-A2FE-41F6249FE427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{331187D2-A7CC-4DB3-A2FE-41F6249FE427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{331187D2-A7CC-4DB3-A2FE-41F6249FE427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{331187D2-A7CC-4DB3-A2FE-41F6249FE427}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

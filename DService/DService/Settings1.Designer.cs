@@ -37,7 +37,7 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public string Interval {
             get {
                 return ((string)(this["Interval"]));
@@ -61,7 +61,7 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Dick\\Dropbox\\Export")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\DllCopy")]
         public string UpDateGradPath {
             get {
                 return ((string)(this["UpDateGradPath"]));
@@ -133,7 +133,7 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10.40.30.104")]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
         public string AppIP {
             get {
                 return ((string)(this["AppIP"]));
@@ -308,6 +308,18 @@ namespace DService {
             }
             set {
                 this["StartPoint"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("HH:mm:ss")]
+        public string ShortTimeFormate {
+            get {
+                return ((string)(this["ShortTimeFormate"]));
+            }
+            set {
+                this["ShortTimeFormate"] = value;
             }
         }
     }

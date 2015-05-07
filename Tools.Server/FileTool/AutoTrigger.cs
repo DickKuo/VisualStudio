@@ -80,4 +80,57 @@ namespace CommTool
         }
 
     }
+
+
+    public interface ITriggerService
+    {
+        /// <summary>
+        /// 執行自動觸發
+        /// </summary>
+        /// <param name="pCurrentTime"></param>
+        void Run(string pCurrentTime);
+    }
+
+    public  class TriggerService : ITriggerService
+    {
+
+        Dictionary<string, IAutoTrigger> _dicTriggers = new Dictionary<string, IAutoTrigger>();
+
+
+        public TriggerService()
+        {
+
+        }
+
+        public virtual TriggerService GetAutoTriggerService()
+        {
+            return new TriggerService();
+        }
+
+        /// <summary>
+        /// 加入自動觸發
+        /// </summary>
+        /// <param name="tigger"></param>
+        public void AddTriggers(IAutoTrigger tigger)
+        {
+            if (!_dicTriggers.ContainsKey(tigger.KeyName))
+            {
+                _dicTriggers.Add(tigger.KeyName, tigger);
+            }
+        }
+
+
+        /// <summary>
+        /// 執行自動觸發
+        /// </summary>
+        /// <param name="pCurrentTime">當前時間</param>
+        public void Run(string pCurrentTime)
+        {
+            Console.WriteLine("觸發:" + pCurrentTime);
+            foreach (IAutoTrigger tigger in _dicTriggers.Values)
+            {
+                tigger.Execute(pCurrentTime);
+            }
+        }
+    }
 }

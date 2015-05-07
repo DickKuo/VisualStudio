@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Dropbox\Export\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,8 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommTool">
-      <HintPath>..\..\..\..\..\Dropbox\Export\CommTool.dll</HintPath>
+    <Reference Include="CommTool.AutoTriggerService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.AutoTriggerService.dll</HintPath>
     </Reference>
     <Reference Include="CommTool.Business">
       <HintPath>..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>

@@ -28,15 +28,18 @@ namespace DService
         }
 
         private void Init()
-        {          
+        {
             CommTool.ToolLog.ToolPath = Settings1.Default.LogPath;
+            DServerLog("初始化時間");          
             DateTime BaseTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-            DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.AddDays(1).Day, 23, 59, 0);
+            DServerLog("起始時間:" + BaseTime.ToString(Settings1.Default.ShortTimeFormate));
+            DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+            DServerLog("終止時間:" + FlagTime.ToString(Settings1.Default.ShortTimeFormate));
             int interval = Convert.ToInt32(Settings1.Default.Interval);
             while (BaseTime <= FlagTime)
             {
-                _timelist.Add(BaseTime.ToString("HH:mm:ss"));
-                DServerLog(BaseTime.ToString("HH:mm:ss"));
+                _timelist.Add(BaseTime.ToString(Settings1.Default.ShortTimeFormate));
+                DServerLog(BaseTime.ToString(Settings1.Default.ShortTimeFormate));
                 BaseTime = BaseTime.AddSeconds(GetTime() * interval);                
             }
             InitParamter();
@@ -49,9 +52,7 @@ namespace DService
                 foreach (SettingsProperty PropertyName in Settings1.Default.Properties)
                 {
                     ToolLog.Log(string.Format( "初始化參數：{0}",PropertyName.Name));
-                   
-                        DicParameters.Add(PropertyName.Name, Settings1.Default.PropertyValues[PropertyName.Name].PropertyValue.ToString());
-                  
+                    DicParameters.Add(PropertyName.Name, Settings1.Default.PropertyValues[PropertyName.Name].PropertyValue.ToString());
                 }
             }
             catch (Exception ex)
@@ -63,8 +64,8 @@ namespace DService
 
         protected override void OnStart(string[] args)
         {
-            Init();
-            DServerLog("服務啟動");
+            Init();     
+            DServerLog("服務啟動");               
             DServerLog("服務啟動更新開始...");
             UpdateDll(Settings1.Default.UpDateGradPath);
             DServerLog("服務啟動更新結束...");
@@ -78,7 +79,7 @@ namespace DService
 
         void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            string time = DateTime.Now.ToString("HH:mm:ss");
+            string time = DateTime.Now.ToString(Settings1.Default.ShortTimeFormate);
             if (DateTime.Now.ToString("HH:mm:ss") == Settings1.Default.UpDateTime)
             {
                 DServerLog("更新開始");
@@ -92,37 +93,49 @@ namespace DService
         {
             if (_timelist.Contains(time) && !IsRuning)
             {
-                IsRuning = true;
-                DServerLog("執行" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                string LogPath = Settings1.Default.LogPath;
-                GetSite site = new GetSite(LogPath);
-                string RecordXml = Path.Combine(LogPath,"Record.xml");
-                if (!File.Exists(RecordXml))
+                try
                 {
-                    XmlFile xml = new XmlFile();
-                    xml.CreateBaseXml(RecordXml, string.Empty, true);
+                    IsRuning = true;
+                    DServerLog("執行" + DateTime.Now.ToString(Settings1.Default.TimeFormat));
+                    string LogPath = Settings1.Default.LogPath;
+                    GetSite site = new GetSite(LogPath);
+                    string RecordXml = Path.Combine(LogPath, "Record.xml");
+                    if (!File.Exists(RecordXml))
+                    {
+                        XmlFile xml = new XmlFile();
+                        xml.CreateBaseXml(RecordXml, string.Empty, true);
+                    }
+                    XmlDocument doc = XmlFile.LoadXml(RecordXml);
+                    XmlNode root = doc.SelectSingleNode("root");
+                    site.PostAddress = Convert.ToBoolean(Settings1.Default.IsTest) == true ? Settings1.Default.TestPostAddress : site.PostAddress = Settings1.Default.PostAddress;
+                    site.PushCount = Settings1.Default.PushCount;
+                    int currentTag = Settings1.Default.StartTag;
+                    if (currentTag <= Convert.ToInt32(Settings1.Default.StartPoint))
+                    {
+                        currentTag = Convert.ToInt32(Settings1.Default.StartPoint);
+                    }
+                    site.Tag = currentTag;
+                    string Site = Settings1.Default.Theme;
+                    SitePlus siteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + site.Tag + ".html");
+                    DServerLog("取得表特列表" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                    List<SiteInfo> SiteInfoList = new List<SiteInfo>();
+                    site.Recursive(ref currentTag, siteplus, SiteInfoList, Site, "/bbs/" + Site + "/index", Settings1.Default.Condition, doc, root);
+                    string xmlpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
+                    XmlDocument Config = XmlFile.LoadXml(xmlpath);
+                    XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", "StartTag"));                    
+                    XmlNode child = node.ChildNodes[0];
+                    child.InnerText = (currentTag - 2).ToString();                   
+                    Config.Save(xmlpath);
+                    IsRuning = false;
                 }
-                XmlDocument doc = XmlFile.LoadXml(RecordXml);
-                XmlNode root = doc.SelectSingleNode("root");   
-                site.PostAddress = Convert.ToBoolean(Settings1.Default.IsTest)  ==true?  Settings1.Default.TestPostAddress :   site.PostAddress = Settings1.Default.PostAddress;
-                site.PushCount = Settings1.Default.PushCount;
-                int currentTag = Settings1.Default.StartTag;
-                if (currentTag <=Convert.ToInt32(  Settings1.Default.StartPoint))
+                catch (Exception ex)
                 {
-                    currentTag =Convert.ToInt32( Settings1.Default.StartPoint);
+                    DServerLog(ex.Message);
                 }
-                site.Tag = currentTag;
-                string Site = Settings1.Default.Theme;
-                SitePlus siteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + site.Tag + ".html");
-                DServerLog("取得表特列表" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                List<SiteInfo> SiteInfoList = new List<SiteInfo>();
-                site.Recursive(ref currentTag, siteplus, SiteInfoList, Site, "/bbs/" + Site + "/index", Settings1.Default.Condition, doc, root);              
-                string xmlpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
-                XmlDocument Config = XmlFile.LoadXml(xmlpath);
-                XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", "StartTag"));
-                node.InnerText = (currentTag-1).ToString();
-                Config.Save(xmlpath);
-                IsRuning = false;
+                finally
+                {
+                    IsRuning = false;
+                }
             }
         }
 
