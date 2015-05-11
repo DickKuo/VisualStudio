@@ -358,6 +358,7 @@ namespace WebInfo
                         }
                     }
                 }
+                Thread.Sleep(1000);
             }
             foreach (string str in pSiteplus.Index)
             {

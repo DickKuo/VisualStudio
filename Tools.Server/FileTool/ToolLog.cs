@@ -15,8 +15,21 @@ namespace CommTool
       
        public ToolLog(string path)
        {
-           ToolPath = path;
+           ToolPath = path;           
        }
+
+       /// <summary>
+       /// 如果資料夾不存在的話，建立資料夾
+       /// </summary>
+       private static void CheckDirectoryIsExist()
+       {           
+           if (!Directory.Exists(_path))
+           {
+               Directory.CreateDirectory(_path);
+               Log("資料夾不存在，建立資料夾");
+           }
+       }
+
 
        public ToolLog() { }
 
@@ -28,44 +41,63 @@ namespace CommTool
 
        public static  void Log(Exception ex)
        {
-           Log(LogType.Error,"【"+ex.Message+"】  " +"【"+ex.StackTrace+"】" );           
+           CheckDirectoryIsExist();
+           StringBuilder message =new StringBuilder();
+           message.AppendFormat("【{0}】 【{1}】 ",ex.Message,ex.StackTrace);
+           Log(LogType.Error, message.ToString());
+           Console.WriteLine(message.ToString());
        }
 
        public static  void Log(System.Net.Mail.SmtpException ex)
        {
-           Log(LogType.Error,"【" + ex.Message + "】  " + "【" + ex.StackTrace + "】");   
+           CheckDirectoryIsExist();
+           StringBuilder message = new StringBuilder();
+           message.AppendFormat("【{0}】 【{1}】 ", ex.Message, ex.StackTrace);
+           Log(LogType.Error, message.ToString());
+           Console.WriteLine(message.ToString());
        }
 
 
        public static  void Log(string str)
        {
+           CheckDirectoryIsExist();
            DateTime dt = DateTime.Now;
-           string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString("yyyy-MM-dd") + ".txt";        
+           string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString("yyyy-MM-dd") + ".txt";
+           StringBuilder message = new StringBuilder();
            using (StreamWriter sw2 = new StreamWriter(TempPath,true))
-           {
-               sw2.Write("【" + dt.ToString("HH:mm:ss") + "】 " + " 【Normal】 " + str + "\r\n");
+           {              
+               message.AppendFormat("【{0}】 【Normal】 {1}", dt.ToString("HH:mm:ss"),str );
+               //sw2.Write("【" +  + " " + "" + + "\r\n");
+               sw2.Write(message.ToString());
                sw2.Close();
                sw2.Dispose();
-           }  
+           }
+           Console.WriteLine(message.ToString());
        }
 
        public static  void Log(LogType type, string str)
        {
+           CheckDirectoryIsExist();
            DateTime dt = DateTime.Now;           
            string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString("yyyy-MM-dd") + ".txt";
+           StringBuilder message = new StringBuilder();
            using (StreamWriter sw2 = new StreamWriter(TempPath, true))
            {
-               sw2.Write("【" + dt.ToString("HH:mm:ss") + "】 "+ typeconvert(type) + str + "\r\n");
+               message.AppendFormat("【{0}】 {1}{2}", dt.ToString("HH:mm:ss"), typeconvert(type), str);
+               //sw2.Write("【" + dt.ToString("HH:mm:ss") + "】 "+ typeconvert(type) + str + "\r\n");
+               sw2.Write(message.ToString());
                sw2.Close();
                sw2.Dispose();
            }
-
+           Console.WriteLine(message.ToString());
            if (type ==LogType.Error)
            {
+               StringBuilder ErrorMessage = new StringBuilder();
                TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString("yyyy-MM-dd") + "-Error.txt";
                using (StreamWriter sw2 = new StreamWriter(TempPath, true))
                {
-                   sw2.Write("【" + dt.ToString("HH:mm:ss") + "】 " + typeconvert(type) + str + "\r\n");
+                   //sw2.Write("【" + dt.ToString("HH:mm:ss") + "】 " + typeconvert(type) + str + "\r\n");
+                   ErrorMessage.AppendFormat("【{0}】 {1}{2}", dt.ToString("HH:mm:ss"), typeconvert(type), str);
                    sw2.Close();
                    sw2.Dispose();
                }

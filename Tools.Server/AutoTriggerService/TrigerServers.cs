@@ -73,52 +73,52 @@ namespace AutoTriggerService
         /// <param name="pCurrentTime"></param>
         public override void Execute(string pCurrentTime)
         {
-            if (_timelist.Contains(pCurrentTime) && !IsRuning)
-            {
-                try
-                {
-                    IsRuning = true;
-                    this.Log("執行" + DateTime.Now.ToString(Settings1.Default.TimeFormat));                   
-                    GetSite site = new GetSite(LogPath);
-                    string RecordXml = Path.Combine(LogPath, "Record.xml");
-                    if (!File.Exists(RecordXml))
-                    {
-                        XmlFile xml = new XmlFile();
-                        xml.CreateBaseXml(RecordXml, string.Empty, true);
-                    }
-                    XmlDocument doc = XmlFile.LoadXml(RecordXml);
-                    XmlNode root = doc.SelectSingleNode("root");
-                    site.PostAddress = Convert.ToBoolean(Settings1.Default.IsTest) == true ? Settings1.Default.TestPostAddress : site.PostAddress = Settings1.Default.PostAddress;
-                    site.PushCount = Settings1.Default.PushCount;
-                    int currentTag = Settings1.Default.StartTag;
-                    if (currentTag <= Convert.ToInt32(Settings1.Default.StartPoint))
-                    {
-                        currentTag = Convert.ToInt32(Settings1.Default.StartPoint);
-                    }
-                    site.Tag = currentTag;
-                    string Site = Settings1.Default.Theme;
-                    SitePlus siteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + site.Tag + ".html");
-                    DServerLog("取得表特列表" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                    List<SiteInfo> SiteInfoList = new List<SiteInfo>();
-                    site.Recursive(ref currentTag, siteplus, SiteInfoList, Site, "/bbs/" + Site + "/index", Settings1.Default.Condition, doc, root);
-                    string xmlpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
-                    XmlDocument Config = XmlFile.LoadXml(xmlpath);
-                    XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", "StartTag"));
-                    XmlNode child = node.ChildNodes[0];
-                    child.InnerText = (currentTag - 2).ToString();
-                    Config.Save(xmlpath);
-                    IsRuning = false;
-                }
-                catch (Exception ex)
-                {
-                    IsRuning = false;
-                    this.Log(ex.Message);
-                }
-                finally
-                {
-                    IsRuning = false;
-                }
-            }
+            //if (_timelist.Contains(pCurrentTime) && !IsRuning)
+            //{
+            //    try
+            //    {
+            //        IsRuning = true;
+            //        this.Log("執行" + DateTime.Now.ToString(Settings1.Default.TimeFormat));                   
+            //        GetSite site = new GetSite(LogPath);
+            //        string RecordXml = Path.Combine(LogPath, "Record.xml");
+            //        if (!File.Exists(RecordXml))
+            //        {
+            //            XmlFile xml = new XmlFile();
+            //            xml.CreateBaseXml(RecordXml, string.Empty, true);
+            //        }
+            //        XmlDocument doc = XmlFile.LoadXml(RecordXml);
+            //        XmlNode root = doc.SelectSingleNode("root");
+            //        site.PostAddress = Convert.ToBoolean(Settings1.Default.IsTest) == true ? Settings1.Default.TestPostAddress : site.PostAddress = Settings1.Default.PostAddress;
+            //        site.PushCount = Settings1.Default.PushCount;
+            //        int currentTag = Settings1.Default.StartTag;
+            //        if (currentTag <= Convert.ToInt32(Settings1.Default.StartPoint))
+            //        {
+            //            currentTag = Convert.ToInt32(Settings1.Default.StartPoint);
+            //        }
+            //        site.Tag = currentTag;
+            //        string Site = Settings1.Default.Theme;
+            //        SitePlus siteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + site.Tag + ".html");
+            //        DServerLog("取得表特列表" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+            //        List<SiteInfo> SiteInfoList = new List<SiteInfo>();
+            //        site.Recursive(ref currentTag, siteplus, SiteInfoList, Site, "/bbs/" + Site + "/index", Settings1.Default.Condition, doc, root);
+            //        string xmlpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
+            //        XmlDocument Config = XmlFile.LoadXml(xmlpath);
+            //        XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", "StartTag"));
+            //        XmlNode child = node.ChildNodes[0];
+            //        child.InnerText = (currentTag - 2).ToString();
+            //        Config.Save(xmlpath);
+            //        IsRuning = false;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        IsRuning = false;
+            //        this.Log(ex.Message);
+            //    }
+            //    finally
+            //    {
+            //        IsRuning = false;
+            //    }
+            //}
         }
 
     }
