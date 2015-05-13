@@ -3522,5 +3522,11 @@ namespace CreateXML {
 
             richTextBox1.Text = sw.ReadToEnd();
         }
+
+        private void 新增代碼組ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddCodeInfo CodeInfo = new AddCodeInfo();
+            CodeInfo.Show();
+        }
     }    
 }

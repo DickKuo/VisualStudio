@@ -42,9 +42,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Desktop\參數生成工具\CheckVersion.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Export\CommTool.dll</HintPath>
+    <Reference Include="CommTool.Business">
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="CommTool.Service">
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -66,6 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddCodeInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddCodeInfo.Designer.cs">
+      <DependentUpon>AddCodeInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="BaseDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +161,9 @@
     <Compile Include="SQLFilter.Designer.cs">
       <DependentUpon>SQLFilter.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AddCodeInfo.resx">
+      <DependentUpon>AddCodeInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BaseDialog.resx">
       <DependentUpon>BaseDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -228,6 +239,9 @@
       <Project>{F482A755-F320-4EAA-B722-6BD9182C4D37}</Project>
       <Name>MoveFile</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -52,6 +52,7 @@ this.生成ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 this.生成VirtualEntitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.生成VirtualServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.生成VirtualUIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+this.生成QuryViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.多語系ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.browseProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.英文ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,7 +124,7 @@ this.tabPage4 = new System.Windows.Forms.TabPage();
 this.tabIncrease = new System.Windows.Forms.TabPage();
 this.tabSub = new System.Windows.Forms.TabPage();
 this.label7 = new System.Windows.Forms.Label();
-this.生成QuryViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+this.新增代碼組ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 this.menuStrip1.SuspendLayout();
 this.MainGroup.SuspendLayout();
@@ -302,7 +303,7 @@ this.檔案ToolStripMenuItem.Text = "檔案";
 // 開啟新檔ToolStripMenuItem
 // 
 this.開啟新檔ToolStripMenuItem.Name = "開啟新檔ToolStripMenuItem";
-this.開啟新檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.開啟新檔ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 this.開啟新檔ToolStripMenuItem.Text = "開啟新檔";
 this.開啟新檔ToolStripMenuItem.Click += new System.EventHandler(this.開啟新檔ToolStripMenuItem_Click);
 // 
@@ -318,7 +319,7 @@ this.生成ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.Too
             this.生成VirtualUIToolStripMenuItem,
             this.生成QuryViewToolStripMenuItem});
 this.生成ToolStripMenuItem.Name = "生成ToolStripMenuItem";
-this.生成ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.生成ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 this.生成ToolStripMenuItem.Text = "生成";
 // 
 // 生成生成EntitiesToolStripMenuItem
@@ -370,6 +371,13 @@ this.生成VirtualUIToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 this.生成VirtualUIToolStripMenuItem.Text = "生成VirtualUI";
 this.生成VirtualUIToolStripMenuItem.Click += new System.EventHandler(this.生成VirtualUIToolStripMenuItem_Click);
 // 
+// 生成QuryViewToolStripMenuItem
+// 
+this.生成QuryViewToolStripMenuItem.Name = "生成QuryViewToolStripMenuItem";
+this.生成QuryViewToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+this.生成QuryViewToolStripMenuItem.Text = "生成QuryView";
+this.生成QuryViewToolStripMenuItem.Click += new System.EventHandler(this.生成QuryViewToolStripMenuItem_Click);
+// 
 // 多語系ToolStripMenuItem
 // 
 this.多語系ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -380,7 +388,7 @@ this.多語系ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.
             this.progNameToolStripMenuItem,
             this.uIToolStripMenuItem});
 this.多語系ToolStripMenuItem.Name = "多語系ToolStripMenuItem";
-this.多語系ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.多語系ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 this.多語系ToolStripMenuItem.Text = "多語系";
 // 
 // browseProjectToolStripMenuItem
@@ -588,14 +596,14 @@ this.簡中ToolStripMenuItem4.Click += new System.EventHandler(this.簡中ToolSt
 // 存檔ToolStripMenuItem
 // 
 this.存檔ToolStripMenuItem.Name = "存檔ToolStripMenuItem";
-this.存檔ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.存檔ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 this.存檔ToolStripMenuItem.Text = "存檔";
 this.存檔ToolStripMenuItem.Click += new System.EventHandler(this.存檔ToolStripMenuItem_Click);
 // 
 // 載入上次作業ToolStripMenuItem
 // 
 this.載入上次作業ToolStripMenuItem.Name = "載入上次作業ToolStripMenuItem";
-this.載入上次作業ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.載入上次作業ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 this.載入上次作業ToolStripMenuItem.Text = "載入上次作業";
 this.載入上次作業ToolStripMenuItem.Visible = false;
 // 
@@ -604,7 +612,7 @@ this.載入上次作業ToolStripMenuItem.Visible = false;
 this.導入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.導入必填欄位ToolStripMenuItem});
 this.導入ToolStripMenuItem.Name = "導入ToolStripMenuItem";
-this.導入ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.導入ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 this.導入ToolStripMenuItem.Text = "導入";
 // 
 // 導入必填欄位ToolStripMenuItem
@@ -617,7 +625,7 @@ this.導入必填欄位ToolStripMenuItem.Click += new System.EventHandler(this.�
 // 結束ToolStripMenuItem
 // 
 this.結束ToolStripMenuItem.Name = "結束ToolStripMenuItem";
-this.結束ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+this.結束ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 this.結束ToolStripMenuItem.Text = "結束";
 this.結束ToolStripMenuItem.Click += new System.EventHandler(this.結束ToolStripMenuItem_Click);
 // 
@@ -642,7 +650,8 @@ this.打包ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.Too
             this.個案打包ToolStripMenuItem,
             this.sQL過濾ToolStripMenuItem,
             this.queryView排序ToolStripMenuItem,
-            this.載入實體ToolStripMenuItem});
+            this.載入實體ToolStripMenuItem,
+            this.新增代碼組ToolStripMenuItem});
 this.打包ToolStripMenuItem.Name = "打包ToolStripMenuItem";
 this.打包ToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 this.打包ToolStripMenuItem.Text = "工具";
@@ -1022,12 +1031,12 @@ this.label7.Size = new System.Drawing.Size(56, 16);
 this.label7.TabIndex = 23;
 this.label7.Text = "label7";
 // 
-// 生成QuryViewToolStripMenuItem
+// 新增代碼組ToolStripMenuItem
 // 
-this.生成QuryViewToolStripMenuItem.Name = "生成QuryViewToolStripMenuItem";
-this.生成QuryViewToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-this.生成QuryViewToolStripMenuItem.Text = "生成QuryView";
-this.生成QuryViewToolStripMenuItem.Click += new System.EventHandler(this.生成QuryViewToolStripMenuItem_Click);
+this.新增代碼組ToolStripMenuItem.Name = "新增代碼組ToolStripMenuItem";
+this.新增代碼組ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+this.新增代碼組ToolStripMenuItem.Text = "新增代碼組";
+this.新增代碼組ToolStripMenuItem.Click += new System.EventHandler(this.新增代碼組ToolStripMenuItem_Click);
 // 
 // Form1
 // 
@@ -1162,6 +1171,7 @@ this.PerformLayout();
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ToolStripMenuItem 生成QuryViewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 新增代碼組ToolStripMenuItem;
     }
 }
 
