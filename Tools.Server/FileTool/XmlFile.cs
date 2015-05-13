@@ -176,6 +176,26 @@ namespace CommTool
         }
 
         /// <summary>
+        ///  加入多屬性節點
+        /// </summary>
+        /// <param name="NodeName">結點名稱</param>
+        /// <param name="Att">屬性</param>
+        /// <returns></returns>
+        [Description("新增節點，多屬性方法")]
+        public virtual void XmlAddNode(string Root,string NodeName, Dictionary<string, string> Att)
+        {
+            XmlDocument doc = XmlLoad();
+            XmlNode root = doc.SelectSingleNode(Root);
+            XmlElement element = doc.CreateElement(NodeName);
+            foreach (var key in Att)
+            {
+                element.SetAttribute(key.Key, key.Value);
+            }
+            root.AppendChild(element);
+            doc.Save(Path);
+        }
+
+        /// <summary>
         /// 刪除指定Node
         /// </summary>
         /// <param name="ID">NodeID</param>
