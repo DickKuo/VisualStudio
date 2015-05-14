@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using CommTool;
+using StandredImplement;
+
+namespace DStandardServer
+{
+    public class ServerImplement : TriggerService
+    {
+        public override TriggerService GetAutoTriggerService()
+        {
+            TriggerService trs = base.GetAutoTriggerService();
+            //trs.AddTriggers(new SampleService());  //Sample
+
+            trs.AddTriggers(new GetBueaty());  //Sample
+            return trs;
+        }
+    }
+}

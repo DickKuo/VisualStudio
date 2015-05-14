@@ -103,19 +103,12 @@ namespace WebInfo
                         DateTime date = DateTime.Now;
                     }
                 }
-                ToolLog.Log("length :" + length.ToString());
             }
             catch (WebException ex)
             {
-                ToolLog.Log(CommTool.LogType.Error, "POST失敗：" + ex.Message + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                Console.WriteLine("POST失敗：" + ex.Message + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                Console.WriteLine("length :" + length.ToString());
-                ToolLog.Log("length :" + length.ToString());
-            }
-            finally
-            {
-                ToolLog.Log("Post 結束" + info.Title);
-            }
+                ToolLog.Log(CommTool.LogType.Error, "POST失敗：" + ex.Message);
+                length =8055;
+            }            
             return length;
         }
 

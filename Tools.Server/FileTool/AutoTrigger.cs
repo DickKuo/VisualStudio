@@ -126,10 +126,17 @@ namespace CommTool
         /// <param name="pCurrentTime">當前時間</param>
         public void Run(string pCurrentTime)
         {
-            Console.WriteLine("觸發:" + pCurrentTime);
             foreach (IAutoTrigger tigger in _dicTriggers.Values)
             {
                 tigger.Execute(pCurrentTime);
+            }
+        }
+
+
+        public int Count
+        {
+            get {
+                return _dicTriggers.Count;
             }
         }
     }

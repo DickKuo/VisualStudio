@@ -1,104 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using WebInfo;
 using System.Xml;
-using System.IO;
 using CommTool;
+using WebInfo;
 using WebInfo.Business.DataEntities;
-using AutoTriggerService;
+using DStandardServer;
 
 namespace ServerApplication
 {
     class Program
     {
-
+        private static  TriggerService server = null;
+        private static  ConfigManager configmanage;
         static void Main(string[] args)
         {
+            string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
+            configmanage = new ConfigManager(configiPath);
             //Console.WriteLine("服務啟動");
-            //Thread thread = new Thread(startthread);
-            //thread.Start();
-            //iInit();
+            server = GetTriggerServices();
+            System.Timers.Timer t = new System.Timers.Timer(1000);
+            t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);   //到達時間的時候執行事件； 
+            t.AutoReset = true;//設置是執行一次（false）還是一直執行(true)； 
+            t.Enabled = true;//是否執行System.Timers.Timer.Elapsed事件； 
 
-            //DExecute.DAnalysis analysis = new DExecute.DAnalysis();
-            // analysis.Start("aaaaaa");
-            //GetPTTBueaty bueaty = new GetPTTBueaty();
-            //bueaty.Execute("12:00");
-            //
-            TriggerService server = GetTriggerServices();
-            server.Run(DateTime.Now.ToString());
-
+            //Lessner();
+            //Thread t1 = new Thread(Lessner);
+            //t1.Start();
+       
             Console.Read();
         }
+
+        static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            server.Run(DateTime.Now.ToString(configmanage.GetValue("ShortTimeFormat")));
+        }
+
+
+        private static void Lessner()
+        {
+            DExecute.DExecute execute = new DExecute.DExecute(configmanage.GetParamters());
+            execute.Start();
+        }
+
+
         private static List<string> _timelist = new List<string>();
 
 
         private static TriggerService GetTriggerServices()
         {
-            CaseTriggerStandard service = new CaseTriggerStandard();
+            ServerImplement service = new ServerImplement();
             return service.GetAutoTriggerService();
         }
-
-        
-        private static void iInit()
-        {
-            ToolLog.ToolPath = @"C:\SLog\";
-            DateTime BaseTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);           
-            DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.AddDays(1).Day, 23,59, 0);
-         
-            int interval = Convert.ToInt32(15);
-            while (BaseTime <= FlagTime)
-            {
-                _timelist.Add(BaseTime.ToString("HH:mm:ss"));
-                Console.WriteLine(BaseTime.ToString("HH:mm:ss"));
-                BaseTime = BaseTime.AddSeconds(GetTime() * interval);
-
-            }
-        }
-       static void startthread()
-        {
-            Dictionary<string, string> Parameter = new Dictionary<string, string>();
-            Parameter.Add("AppIP", "10.40.30.104");
-            Parameter.Add("AppPort", "9001");
-            Parameter.Add("PostAddress", "http://dickguo.net63.net/chat/test/");
-            DExecuteX exe = new DExecuteX(Parameter);
-            exe.Start();
-        }
-       public static void DServerLog(string Message)
-       {
-           CommTool.ToolLog.Log(Message);
-       }
-
-
-
-       /// <summary>
-       /// 20141219 add by Dick for 取得時間單位轉換
-       /// </summary>
-       /// <returns></returns>
-       private static int GetTime()
-       {
-           int Result = 0;
-           switch ("m")
-           {
-               case "s":
-                   Result = 1;
-                   break;
-               case "m":
-                   Result = 60;
-                   break;
-               case "h":
-                   Result = 3600;
-                   break;
-               default:
-
-                   break;
-           }
-           return Result;
-       }
-
     }
-
-
 }

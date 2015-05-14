@@ -37,7 +37,7 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public string Interval {
             get {
                 return ((string)(this["Interval"]));
@@ -314,12 +314,12 @@ namespace DService {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("HH:mm:ss")]
-        public string ShortTimeFormate {
+        public string ShortTimeFormat {
             get {
-                return ((string)(this["ShortTimeFormate"]));
+                return ((string)(this["ShortTimeFormat"]));
             }
             set {
-                this["ShortTimeFormate"] = value;
+                this["ShortTimeFormat"] = value;
             }
         }
     }

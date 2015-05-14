@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\Dropbox\Export\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Desktop\Black\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,14 +38,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.AutoTriggerService.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool.Business">
-      <HintPath>..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
+    <Reference Include="CommTool.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool.Service">
-      <HintPath>..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
+    <Reference Include="CommTool.Service, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="DExecute">
       <HintPath>..\..\..\..\..\Dropbox\Export\DExecute.dll</HintPath>
+    </Reference>
+    <Reference Include="StandredImplement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\StandredImplement.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

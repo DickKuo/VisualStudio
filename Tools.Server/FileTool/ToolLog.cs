@@ -66,7 +66,7 @@ namespace CommTool
            StringBuilder message = new StringBuilder();
            using (StreamWriter sw2 = new StreamWriter(TempPath,true))
            {              
-               message.AppendFormat("【{0}】 【Normal】 {1}", dt.ToString("HH:mm:ss"),str );
+               message.AppendFormat("【{0}】 【Normal】 {1}\r\n", dt.ToString("HH:mm:ss"),str );
                //sw2.Write("【" +  + " " + "" + + "\r\n");
                sw2.Write(message.ToString());
                sw2.Close();
@@ -83,7 +83,7 @@ namespace CommTool
            StringBuilder message = new StringBuilder();
            using (StreamWriter sw2 = new StreamWriter(TempPath, true))
            {
-               message.AppendFormat("【{0}】 {1}{2}", dt.ToString("HH:mm:ss"), typeconvert(type), str);
+               message.AppendFormat("【{0}】 {1}{2}\r\n", dt.ToString("HH:mm:ss"), typeconvert(type), str);
                //sw2.Write("【" + dt.ToString("HH:mm:ss") + "】 "+ typeconvert(type) + str + "\r\n");
                sw2.Write(message.ToString());
                sw2.Close();
@@ -97,7 +97,7 @@ namespace CommTool
                using (StreamWriter sw2 = new StreamWriter(TempPath, true))
                {
                    //sw2.Write("【" + dt.ToString("HH:mm:ss") + "】 " + typeconvert(type) + str + "\r\n");
-                   ErrorMessage.AppendFormat("【{0}】 {1}{2}", dt.ToString("HH:mm:ss"), typeconvert(type), str);
+                   ErrorMessage.AppendFormat("【{0}】 {1}{2}\r\n", dt.ToString("HH:mm:ss"), typeconvert(type), str);
                    sw2.Close();
                    sw2.Dispose();
                }

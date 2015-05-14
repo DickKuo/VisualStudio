@@ -26,6 +26,8 @@ namespace DExecute
             DicParameters = Parameters;
         }
 
+
+
         public virtual void Start()
         {
             try
@@ -59,9 +61,27 @@ namespace DExecute
                 {
                     _port = Parameters["AppPort"];
                 }
-                if (Parameters.ContainsKey("PostAddress"))
+                //if (Parameters.ContainsKey("PostAddress"))
+                //{
+                //    _postaddress = Parameters["PostAddress"];
+                //}
+                if (Parameters.ContainsKey("IsTest"))
                 {
                     _postaddress = Parameters["PostAddress"];
+                    if (Convert.ToBoolean(Parameters["IsTest"]))
+                    {
+                        if (Parameters.ContainsKey("TestPostAddress"))
+                        {
+                            _postaddress = Parameters["TestPostAddress"];
+                        }
+                    }
+                    else
+                    {
+                        if (Parameters.ContainsKey("PostAddress"))
+                        {
+                            _postaddress = Parameters["PostAddress"];
+                        }
+                    }
                 }
             }
             catch (Exception ex)

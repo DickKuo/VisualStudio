@@ -34,15 +34,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommTool.Business">
-      <HintPath>..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
+    <Reference Include="CommTool.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool.Service">
-      <HintPath>..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
+    <Reference Include="CommTool.Service, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="DExecute, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Dropbox\Export\DExecute.dll</HintPath>
+    </Reference>
+    <Reference Include="StandredImplement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\StandredImplement.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -54,11 +60,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebInfo">
-      <HintPath>..\..\..\..\..\Dropbox\Export\WebInfo.dll</HintPath>
+    <Reference Include="WebInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\WebInfo.dll</HintPath>
     </Reference>
-    <Reference Include="WebInfo.Business">
-      <HintPath>..\..\..\..\..\Dropbox\Export\WebInfo.Business.dll</HintPath>
+    <Reference Include="WebInfo.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\WebInfo.Business.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

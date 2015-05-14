@@ -6,7 +6,7 @@
       <Value Profile="(Default)">C:\SLog</Value>
     </Setting>
     <Setting Name="Interval" Type="System.String" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="IntervalUnit" Type="System.String" Scope="User">
       <Value Profile="(Default)">M</Value>
@@ -74,7 +74,7 @@
     <Setting Name="StartPoint" Type="System.String" Scope="User">
       <Value Profile="(Default)">1150</Value>
     </Setting>
-    <Setting Name="ShortTimeFormate" Type="System.String" Scope="User">
+    <Setting Name="ShortTimeFormat" Type="System.String" Scope="User">
       <Value Profile="(Default)">HH:mm:ss</Value>
     </Setting>
   </Settings>
