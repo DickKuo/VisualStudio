@@ -12,19 +12,32 @@ namespace CommTool
     public  class ConfigManager : IConfigManager
     {
         private Dictionary<string, string> _dicParameter;
+
+        private string _typeKey;
+
+        
         
         /// <summary>
         /// Config檔案路徑
         /// </summary>
         public string ConfigPath { set; get; }
 
+        /// <summary>
+        /// 應用程式名稱
+        /// </summary>
+        public string TypeKey { set { _typeKey = value; } get { return _typeKey; } }
 
-        public ConfigManager(string pPath)
+        /// <summary>
+        /// 建立結構
+        /// </summary>
+        /// <param name="pPath">Config路徑</param>
+        public ConfigManager(string pPath,string AppName)
         {
             ConfigPath = pPath;
             _dicParameter = new Dictionary<string, string>();
+            _typeKey = AppName;
             Init();
-        }
+        }        
 
         /// <summary>
         /// 初始化參數
@@ -34,7 +47,7 @@ namespace CommTool
             if (File.Exists(ConfigPath))
             {
                 XmlDocument doc = XmlFile.LoadXml(ConfigPath);
-                XmlNode nodelist = doc.SelectSingleNode("configuration/userSettings/DService.Settings1");
+                XmlNode nodelist = doc.SelectSingleNode(string.Format("configuration/userSettings/{0}.Settings1", _typeKey));
                 foreach (XmlNode node in nodelist)
                 {
                     string ParameterName = node.Attributes["name"].Value;
@@ -50,8 +63,7 @@ namespace CommTool
             {
                 ToolLog.Log("Config檔案不存在。");
             }
-        }
-
+        }    
 
         /// <summary>
         /// 取得參數的值
@@ -70,7 +82,8 @@ namespace CommTool
             }
         }
 
-
+           
+        
         /// <summary>
         /// 設定參數的值
         /// </summary>
@@ -79,7 +92,7 @@ namespace CommTool
         public void SetValue(string pParameter, string value)
         {
             XmlDocument Config = XmlFile.LoadXml(ConfigPath);
-            XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/DService.Settings1/setting[@name='{0}']", pParameter));
+            XmlNode node = Config.SelectSingleNode(string.Format("configuration/userSettings/{1}.Settings1/setting[@name='{0}']", pParameter,_typeKey));
             XmlNode child = node.ChildNodes[0];
             child.InnerText = value;
             Config.Save(ConfigPath);

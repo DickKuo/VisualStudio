@@ -820,7 +820,7 @@ namespace CreateXML {
         private void Init()
         {
             //Configuration coinf = new Configuration(,);
-            string value = ConfigurationManager.AppSettings["Language"];
+            //string value = ConfigurationManager.AppSettings["Language"];
             //string language = ConfigurationManager.AppSettings.Get("Language");   
             //switch (language)
             //{
@@ -835,6 +835,8 @@ namespace CreateXML {
             //        break;    
             //}
         }
+
+        
 
 
         public Form1()

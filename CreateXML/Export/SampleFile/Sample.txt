@@ -3,7 +3,7 @@
 //Http://www.Dcms.com.cn 
 // All rights reserved.
 //<author>author</author>
-//<createDate>XTestDate</createDate>
+//<createDate>date</createDate>
 //<description>description</description>
 //---------------------------------------------------------------- 
 using System;
@@ -188,7 +188,7 @@ namespace Dcms.HR.UI {
 		/// </summary>
 		public override string ModuleName {
 			get {
-				return ModuleNameProvider.TYPE_KEY;
+				return HumantrackManagerProvider.TYPE_KEY;
 			}
 		}
 

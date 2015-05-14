@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using CommTool;
+using System.Threading;
 
 
 namespace CreateXML
@@ -18,9 +20,27 @@ namespace CreateXML
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            string UpdateFilePath =AppDomain.CurrentDomain.BaseDirectory  + "AutoUpData.exe";
-            Process.Start(UpdateFilePath);
-            Application.Run(new Form1());                      
+            AutoUpdate();
+        }
+
+        /// <summary>
+        /// 自動更新程式
+        /// </summary>
+        private static void AutoUpdate()
+        {
+            string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CreateXML.exe.config");
+            ConfigManager configmanger = new ConfigManager(ConfigPath, "CreateXML");
+            if (!Convert.ToBoolean(configmanger.GetValue("IsUpdated")))
+            {
+                string UpdateFilePath = AppDomain.CurrentDomain.BaseDirectory + "AutoUpData.exe";
+                Process.Start(UpdateFilePath);
+            }
+            else
+            {
+                configmanger.SetValue("IsUpdated", "false");
+                Thread.Sleep(2000);
+                Application.Run(new Form1());    
+            }
         }
     }
 }
