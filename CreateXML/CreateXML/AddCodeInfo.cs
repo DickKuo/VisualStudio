@@ -230,7 +230,7 @@ namespace CreateXML
                         if (dv.Cells[1].Value != null)
                         {
                             XmlElement Infodata = doc.CreateElement("data");
-                            string InfoId = textBox2.Text + count.ToString("000");
+                            string InfoId = textBox2.Text+"_"+ count.ToString("000");
                             Infodata.SetAttribute("name", "CodeInfo_" + InfoId);
                             Infodata.SetAttribute("description", dv.Cells[0].Value.ToString());
                             StringBuilder InfoStrEN = new StringBuilder();
