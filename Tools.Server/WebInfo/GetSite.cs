@@ -18,7 +18,7 @@ namespace WebInfo
     public class GetSite : IGetSiteService
     {
         Dictionary<string, int> Month = new Dictionary<string, int>();
-        const int _defaultCount = 30;
+        private const int _defaultCount = 30;
         private int _pushcount = 0;
         public int PushCount { get{
             if (_pushcount == 0)
@@ -76,6 +76,7 @@ namespace WebInfo
             catch (Exception ex)
             {
                 ToolLog.Log(CommTool.LogType.Error, "抓取文章" + ex.Message);
+                ToolLog.Log(Url);
             }
             return reader;
         }
@@ -88,6 +89,7 @@ namespace WebInfo
         public SitePlus GetUrlList(string BaseUrl)
         {
             SitePlus siteplus = new SitePlus();
+            Console.WriteLine(BaseUrl);
             StreamReader reader = GetWebInfo(BaseUrl);
             if (reader != null)
             {
@@ -127,6 +129,8 @@ namespace WebInfo
         {
             SiteInfo Info = new SiteInfo();
             Info.Address = Url;
+            Console.WriteLine(Url);
+            ToolLog.Log(Url);
             StreamReader reader = this.GetWebInfo(Url);
             string str = string.Empty;
             if (reader != null)
@@ -332,7 +336,7 @@ namespace WebInfo
             {
                 string Url = @"https://www.ptt.cc" + str;
                 SiteInfo info = site.GetInfo(Url);
-                Thread.Sleep(1000);
+                Thread.Sleep(1500);
                 if (info.Title != null)
                 {
                     if (info.Title.IndexOf(pCondition) != -1 && info.PushList.Count > PushCount)
@@ -345,8 +349,29 @@ namespace WebInfo
                             {
                                 WebInfo webinfo = new WebInfo(ToolLog.ToolPath);
                                 Console.WriteLine(info.Title);
-                                long length = webinfo.POST(PostAddress, li);
-                                Thread.Sleep(1000);
+                                #region 20150513 加入功能 如果POST失敗則過5秒後在Post 次  如果10次都失敗則放棄
+                                long length = 0;
+                                int count = 0;
+                                bool Faill =false;
+                                do
+                                {
+                                    Thread.Sleep(5000);
+                                    length = webinfo.POST(PostAddress, li);
+                                    if (length == 8055)
+                                    {
+                                        Faill = true;
+                                    }
+                                    else
+                                    {
+                                        Faill = false;
+                                    }
+                                    if (count == 10)
+                                    {
+                                        Faill = false;
+                                    }
+                                    count++;                                    
+                                } while (Faill);
+                                #endregion   
                                 RecordTime = info.PostDate;
                                 listold.Add(info.Title.Trim());
                                 ToolLog.Log(string.Format("寫入紀錄 {0} ", info.Title));
@@ -358,7 +383,7 @@ namespace WebInfo
                         }
                     }
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(1500); //修改撈資料頻率
             }
             foreach (string str in pSiteplus.Index)
             {
@@ -368,7 +393,7 @@ namespace WebInfo
                 {
                     if (result > index)
                     {
-                        Thread.Sleep(1000);
+                        Thread.Sleep(1500);
                         Tag = result;
                         index = result;
                         pSiteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + result + ".html");
