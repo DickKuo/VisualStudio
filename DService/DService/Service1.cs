@@ -63,7 +63,7 @@ namespace DService
             time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
             time.Interval = 1000;
             time.Start();
-            configmanage = new ConfigManager(configiPath);            
+            configmanage = new ConfigManager(configiPath, "DService");            
             ToolLog.Log("服務啟動更新開始...");
             UpdateDll(Settings1.Default.UpDateGradPath);
             ToolLog.Log("服務啟動更新結束...");

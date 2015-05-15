@@ -57,8 +57,8 @@ namespace StandredImplement
         {           
             DateTime BaseTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 0);
-            string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config"); 
-            ConfigManager configmanage = new ConfigManager(configiPath);
+            string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
+            ConfigManager configmanage = new ConfigManager(configiPath, "DService");
             int interval = Convert.ToInt32(configmanage.GetValue("Interval"));
             ToolLog.ToolPath = configmanage.GetValue("LogPath");
             _shortFormat = configmanage.GetValue("ShortTimeFormat");
@@ -78,7 +78,7 @@ namespace StandredImplement
                 if (_timelist.Contains(Time))
                 {
                     string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
-                    ConfigManager configmanage = new ConfigManager(configiPath);
+                    ConfigManager configmanage = new ConfigManager(configiPath, "DService");
                     int currentTag = Convert.ToInt32(configmanage.GetValue("StartTag"));
                     if (currentTag <= Convert.ToInt32(configmanage.GetValue("StartPoint")))
                     {

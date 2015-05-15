@@ -19,7 +19,7 @@ namespace ServerApplication
         static void Main(string[] args)
         {
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
-            configmanage = new ConfigManager(configiPath);
+            configmanage = new ConfigManager(configiPath, "DService");
             //Console.WriteLine("服務啟動");
             server = GetTriggerServices();
             System.Timers.Timer t = new System.Timers.Timer(1000);
