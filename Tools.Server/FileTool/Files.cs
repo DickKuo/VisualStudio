@@ -5,10 +5,12 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Diagnostics;
+using ToolsBusiness.Services;
+
 
 namespace CommTool
 {
-    public class Files
+    public class Files : IFileService
     {
 
         /// <summary>
@@ -174,6 +176,31 @@ namespace CommTool
             catch (Exception ex)
             {
                ToolLog.Log(ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        ///  設定資料夾路徑底下檔案是否唯獨
+        /// </summary>
+        /// <param name="pFilePath">資料夾路徑</param>
+        /// <param name="IsReadOnly">是否唯獨 true:唯獨 ; false :不唯獨</param>
+        public void FileReadOnly(DirectoryInfo dirInfo, bool IsReadOnly)
+        {
+            foreach (FileInfo file in dirInfo.GetFiles())
+            {
+                if (IsReadOnly)
+                {
+                    file.Attributes = FileAttributes.ReadOnly;
+                }
+                else
+                {
+                    file.Attributes = FileAttributes.Normal;
+                }
+            }
+            foreach (DirectoryInfo subDir in dirInfo.GetDirectories())
+            {
+                FileReadOnly(subDir, IsReadOnly);
             }
         }
 

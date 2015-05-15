@@ -2684,6 +2684,9 @@ namespace CreateXML {
         {
             if (CB_SubModule.SelectedIndex != -1)
             {
+                Files Files = new Files();
+                DirectoryInfo dir = new DirectoryInfo(GetSettinhPath());
+                Files.FileReadOnly(dir.Parent, false);                
                 if (tabControlDetail.TabPages.Count <= 3)
                 {
                     SingleFile(); //單檔
@@ -2698,6 +2701,7 @@ namespace CreateXML {
                 MessageBox.Show("請選擇模組");
             }
         }
+
 
         /// <summary>
         /// 20141002 雙檔一鍵生成功能
@@ -2967,7 +2971,7 @@ namespace CreateXML {
         /// </summary>
         /// <returns></returns>
         private static string GetSettinhPath() {
-            XmlDocument doc = CommTool.XmlFile.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
+            XmlDocument doc = XmlFile.LoadXml(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "Path.xml");
             XmlNode root = doc.SelectSingleNode("root");
             string ProgamPath = string.Empty;
             foreach(XmlNode node in root.ChildNodes) {

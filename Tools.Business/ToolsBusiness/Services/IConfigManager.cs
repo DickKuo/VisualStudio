@@ -6,7 +6,8 @@ using System.Text;
 namespace ToolsBusiness.Services
 {
     public interface IConfigManager
-    {
+    {        
+
         /// <summary>
         /// 設定參數的值
         /// </summary>

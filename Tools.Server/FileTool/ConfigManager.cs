@@ -30,7 +30,8 @@ namespace CommTool
         /// <summary>
         /// 建立結構
         /// </summary>
-        /// <param name="pPath">Config路徑</param>
+        /// <param name="pPath">路徑</param>
+        /// <param name="AppName">應用程式名稱</param>
         public ConfigManager(string pPath,string AppName)
         {
             ConfigPath = pPath;
