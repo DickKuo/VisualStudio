@@ -8,7 +8,7 @@
     <ProjectGuid>{BFA6FCF6-947B-4CB9-9673-E89E0899F00A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ToolsBusiness</RootNamespace>
+    <RootNamespace>CommTool.Business</RootNamespace>
     <AssemblyName>CommTool.Business</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\Dropbox\Export\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Dropbox\Export\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,11 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataEntities\Comm.cs" />
+    <Compile Include="DataEntities\DataEntity.cs" />
+    <Compile Include="Metadata\MetadataInfoAttribute.cs" />
+    <Compile Include="Metadata\ReferencePropertyAttribute.cs" />
+    <Compile Include="Metadata\SimplePropertyAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ICode.cs" />
     <Compile Include="Services\ICommService.cs" />
+    <Compile Include="Services\ICompanyObject.cs" />
     <Compile Include="Services\IConfigManager.cs" />
     <Compile Include="Services\IFileService.cs" />
+    <Compile Include="Services\IFlag.cs" />
+    <Compile Include="Services\IModifyObject.cs" />
+    <Compile Include="Services\IName.cs" />
+    <Compile Include="Services\IOwnerObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

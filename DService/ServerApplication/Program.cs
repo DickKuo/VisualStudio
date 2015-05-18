@@ -9,6 +9,7 @@ using CommTool;
 using WebInfo;
 using WebInfo.Business.DataEntities;
 using DStandardServer;
+using DService.Business.Entities;
 
 namespace ServerApplication
 {
@@ -21,18 +22,32 @@ namespace ServerApplication
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
             configmanage = new ConfigManager(configiPath, "DService");
             //Console.WriteLine("服務啟動");
+
+
+            TestDataEntity TestData = new TestDataEntity();
+            TestData.ExtendedProperties = new System.Data.PropertyCollection();
+
+            TestData.ExtendedProperties.Add("ASS","VVVV");
+
+
+            #region 設定自動觸發
             server = GetTriggerServices();
             System.Timers.Timer t = new System.Timers.Timer(1000);
             t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);   //到達時間的時候執行事件； 
             t.AutoReset = true;//設置是執行一次（false）還是一直執行(true)； 
             t.Enabled = true;//是否執行System.Timers.Timer.Elapsed事件； 
-
-            //Lessner();
-            //Thread t1 = new Thread(Lessner);
-            //t1.Start();
+            #endregion
+            
+            #region  等候客戶端連線
+            Thread t1 = new Thread(Lessner);
+            t1.Start();
+            #endregion            
        
             Console.Read();
         }
+
+
+       
 
         static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {

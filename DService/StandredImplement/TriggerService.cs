@@ -65,7 +65,7 @@ namespace StandredImplement
             while (BaseTime <= FlagTime)
             {
                 _timelist.Add(BaseTime.ToString(_shortFormat));
-                ToolLog.Log(BaseTime.ToString(_shortFormat));
+                //ToolLog.Log(BaseTime.ToString(_shortFormat));
                 BaseTime = BaseTime.AddSeconds(GetTime(configmanage.GetValue("IntervalUnit")) * interval);
             }           
         }

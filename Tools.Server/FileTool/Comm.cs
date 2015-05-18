@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CommTool.Properties;
-using ToolsBusiness.Services;
+using CommTool.Business;
 
 
 namespace CommTool

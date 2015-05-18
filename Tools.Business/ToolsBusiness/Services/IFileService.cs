@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace ToolsBusiness.Services
+namespace CommTool.Business
 {
     public interface IFileService
     {

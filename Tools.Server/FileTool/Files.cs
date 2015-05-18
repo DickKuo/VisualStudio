@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Diagnostics;
-using ToolsBusiness.Services;
+using CommTool.Business;
 
 
 namespace CommTool
