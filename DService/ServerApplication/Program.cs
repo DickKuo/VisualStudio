@@ -10,6 +10,7 @@ using WebInfo;
 using WebInfo.Business.DataEntities;
 using DStandardServer;
 using DService.Business.Entities;
+using DService.Business.Services;
 
 namespace ServerApplication
 {
@@ -29,6 +30,12 @@ namespace ServerApplication
 
             TestData.ExtendedProperties.Add("ASS","VVVV");
 
+            AssemblyLoader  load =new AssemblyLoader();
+            CallService.CurrentServiceProvider = load;
+            load.Load();
+
+           ITestService Itest = CallService.GetService<ITestService>();
+           Itest.HelloWord();
 
             #region 設定自動觸發
             server = GetTriggerServices();

@@ -5,7 +5,9 @@ namespace CommTool.Business.Metadata
     [Serializable]
     public abstract class MetadataInfoAttribute :Attribute
     {
-        //protected MetadataInfoAttribute();
+        protected MetadataInfoAttribute() { 
+        
+        }
 
         public string Alias { get; set; }
         public string Description { get; set; }

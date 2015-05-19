@@ -59,14 +59,17 @@ namespace DService
             ToolLog.Log("服務啟動");
             Init();
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
-            System.Timers.Timer time = new System.Timers.Timer();
-            time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
-            time.Interval = 1000;
-            time.Start();
-            configmanage = new ConfigManager(configiPath, "DService");            
-            ToolLog.Log("服務啟動更新開始...");
-            UpdateDll(Settings1.Default.UpDateGradPath);
-            ToolLog.Log("服務啟動更新結束...");
+            System.Timers.Timer time = new System.Timers.Timer();            
+            configmanage = new ConfigManager(configiPath, "DService");
+            if (Convert.ToBoolean(configmanage.GetValue("IsAutoUpdate")))
+            {
+                ToolLog.Log("服務啟動更新開始...");
+                UpdateDll(Settings1.Default.UpDateGradPath);
+                ToolLog.Log("服務啟動更新結束...");
+                time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
+                time.Interval = 1000;
+                time.Start();
+            }
             Thread t1 = new Thread(Lessner);
             t1.Start();
             System.Timers.Timer time2 = new System.Timers.Timer();
@@ -83,13 +86,13 @@ namespace DService
 
         private void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            string time = DateTime.Now.ToString(configmanage.GetValue("ShortTimeFormat"));        
+            string time = DateTime.Now.ToString(configmanage.GetValue("ShortTimeFormat"));
             if (DateTime.Now.ToString(configmanage.GetValue("ShortTimeFormat")) == configmanage.GetValue("UpDateTime"))
-            {
-                ToolLog.Log("更新開始");
-                UpdateDll(Settings1.Default.UpDateGradPath);
-                ToolLog.Log("更新結束");
-            }     
+                {
+                    ToolLog.Log("更新開始");
+                    UpdateDll(Settings1.Default.UpDateGradPath);
+                    ToolLog.Log("更新結束");
+            }         
         }
 
 
@@ -114,7 +117,7 @@ namespace DService
        
 
         /// <summary>
-        /// 20141219 add by Dick for 更新檔案
+        /// 20141219 add by Dick for 更新DLL
         /// </summary>
         /// <param name="UpdatePath"></param>
         public virtual void UpdateDll(string UpdatePath)

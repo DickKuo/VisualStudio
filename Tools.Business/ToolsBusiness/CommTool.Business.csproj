@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataEntities\DataEntity.cs" />
+    <Compile Include="Metadata\AddinConfigItem.cs" />
     <Compile Include="Metadata\MetadataInfoAttribute.cs" />
     <Compile Include="Metadata\ReferencePropertyAttribute.cs" />
     <Compile Include="Metadata\SimplePropertyAttribute.cs" />
@@ -54,6 +55,9 @@
     <Compile Include="Services\IModifyObject.cs" />
     <Compile Include="Services\IName.cs" />
     <Compile Include="Services\IOwnerObject.cs" />
+    <Compile Include="Services\IServiceEntry.cs" />
+    <Compile Include="Services\IServiceNotification.cs" />
+    <Compile Include="Services\IServiceProviderAddin.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

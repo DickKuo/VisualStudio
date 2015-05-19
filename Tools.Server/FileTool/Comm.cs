@@ -68,50 +68,63 @@ namespace CommTool
         }
     }
 
-    public static class Initiator
+    public static class CallService
     {
-        private const string DefaulrLanguage = "1";
+        private static System.IServiceProvider _currentServiceProvider;
 
-        //private static IServiceProvider _curentprovider;
+        public static System.IServiceProvider CurrentServiceProvider {
+            get {
+                return CallService._currentServiceProvider;
+            }
+            set {
+                CallService._currentServiceProvider = value;
+            }
+        }
 
-        //public IServiceProvider curentprovider { get { return _curentprovider; } }
+        public static object GetService(System.Type serviceType)
+        {
+            if (serviceType == null)
+            {
+                throw new System.ArgumentNullException("serviceType");
+            }
+            if (CallService._currentServiceProvider == null)
+            {
+                ///錯誤信息先略過，未來再做定義
+                //throw new DesignException(Resources.CurrentServiceProvidertIsNull);
+            }
+            object service = CallService._currentServiceProvider.GetService(serviceType);
+            if (service == null)
+            {
+                ///錯誤信息先略過，未來再做定義
+                //throw new DesignException(string.Format(System.Resources.FailGetService, serviceType.FullName));
+            }
+            return service;
+        }
 
+        public static T GetService<T>()
+        {
+            if (CallService._currentServiceProvider == null)
+            {
+                ///錯誤信息先略過，未來再做定義
+                //throw new DesignException(Resources.CurrentServiceProvidertIsNull);
+            }
+            object service = CallService._currentServiceProvider.GetService(typeof(T));
+            if (service == null)
+            {
+                ///錯誤信息先略過，未來再做定義
+                //throw new DesignException(string.Format(Resources.FailGetService, typeof(T).FullName));
+            }
+            return (T)((object)service);
+        }
 
-
-        //public static object GetSevice(Type ServiceType)
-        //{
-        //    if (ServiceType == null)
-        //    {
-        //        throw new System.ArgumentNullException("ServiceType");
-        //    }
-        //    if (Initiator._curentprovider == null)
-        //    {
-        //        throw new ArgumentNullException(Resource.ProviderIsNull);
-        //    }
-        //    object service = Initiator._curentprovider.GetService(ServiceType);
-        //    if (service == null)
-        //    {
-        //        throw new DesignException(string.Format(Resources.FailGetService, serviceType.FullName));
-        //    }
-        //    return service;
-        //}
-
-        //public static T  GetSevice<T>(object ServiceName)        
-        //{
-        //    if (Initiator._curentprovider == null)
-        //    {
-        //        throw new ArgumentNullException(Resource.ProviderIsNull);
-        //    }
-        //    object service = Initiator._curentprovider.GetService(typeof(T));
-        //    if (service == null)
-        //    {
-        //        throw new ArgumentNullException(string.Format(Resources.FailGetService, typeof(T).FullName));
-        //    }
-        //    return (T)((object)service);
-        //}
-
-
-      
+        public static object GetServiceWithoutException(System.Type serviceType)
+        {
+            if (CallService._currentServiceProvider != null)
+            {
+                return CallService._currentServiceProvider.GetService(serviceType);
+            }
+            return null;
+        }
     }
 
     public static class CommTool 
@@ -177,4 +190,6 @@ namespace CommTool
         }
 
     }
+
+   
 }

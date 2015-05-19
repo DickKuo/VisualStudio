@@ -31,15 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommTool.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CommTool.Business, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Export\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assmblys.cs" />
     <Compile Include="AutoTrigger.cs" />
     <Compile Include="Comm.cs" />
     <Compile Include="ConfigManager.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="TCP.cs" />
     <Compile Include="ToolLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View.cs" />
     <Compile Include="XmlFile.cs" />
   </ItemGroup>
   <ItemGroup>

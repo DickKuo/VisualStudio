@@ -31,13 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommTool.AutoTriggerService">
+    <Reference Include="CommTool.AutoTriggerService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.AutoTriggerService.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool.Business">
+    <Reference Include="CommTool.Business, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool.Service">
+    <Reference Include="CommTool.Service, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="System" />
