@@ -34,5 +34,17 @@ namespace CreateXML.Properties {
                 this["Language"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsTestMode {
+            get {
+                return ((bool)(this["IsTestMode"]));
+            }
+            set {
+                this["IsTestMode"] = value;
+            }
+        }
     }
 }

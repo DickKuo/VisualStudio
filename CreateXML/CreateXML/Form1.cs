@@ -855,6 +855,9 @@ namespace CreateXML {
                 dt.Columns.Add("Order");
                 //20140818 add by Dick
                 dt.Columns.Add("UIOrder");
+                #region 20150521 add for Dick for 懶人工具 #58
+                dt.Columns.Add("KindName");
+                #endregion
                 RefereceTable.Columns.Add("Entity");
                 dataGridView1.DataSource = dt;
                 GridViewCellType(dataGridView1);
@@ -1240,9 +1243,12 @@ namespace CreateXML {
             dt.Columns.Add("Describe");
             dt.Columns.Add("ReferenceProperty");
             dt.Columns.Add("Necessary", typeof(bool));
-            dt.Columns.Add("Order");
+            dt.Columns.Add("Order");            
             //20140818 add by Dick 加入UI排位子順序
             dt.Columns.Add("UIOrder");
+            #region 20150521 add by Dick for 懶人工具 #58
+            dt.Columns.Add("KindName");            
+            #endregion
             if(!IsMain) {
                 dt.Columns.Add("Type");
             }
@@ -1288,10 +1294,8 @@ namespace CreateXML {
                 }
                 dr["Necessary"] = IsNecessary;
                 dt.Rows.Add(dr);
-            }
-          
+            }          
             GridView.DataSource = dt;
-           
             int count = 0;
             foreach (string str in li)
             {
@@ -1944,14 +1948,32 @@ namespace CreateXML {
             richTextBox1.Clear();
             richTextBox1.AppendText("<FieldMapping TargetEntity=\"" + tb_className.Text + "\" ParentEntity=\"\"> \r\n");
             foreach(DataGridViewRow dr in dataGridView1.Rows) {
-                if(dr.Cells["Parameter"].Value != null) {
+                if(dr.Cells["Parameter"].Value != null)
+                {
+                    #region 20150521 modified by Dick for 懶人工具 #58
                     bool bo = dr.Cells["Necessary"].Value.ToString() == "" ? false : Convert.ToBoolean(dr.Cells["Necessary"].Value);
-                    if(bo) {
-                        richTextBox1.AppendText("<Field Name=\"" + dr.Cells["Parameter"].Value + "\" EnName=\"" + dr.Cells["Parameter"].Value + "\" ScName=\"" + translateEncodingByWord(dr.Cells["Describe"].Value.ToString(), true).Trim() + "\" TcName=\"" + dr.Cells["Describe"].Value + "\" IsNotEmpty=\"true\" /> \r\n");
+                    //if (bo)
+                    //{
+                    //    richTextBox1.AppendText("<Field Name=\"" + dr.Cells["Parameter"].Value + "\" EnName=\"" + dr.Cells["Parameter"].Value + "\" ScName=\"" + translateEncodingByWord(dr.Cells["Describe"].Value.ToString(), true).Trim() + "\" TcName=\"" + dr.Cells["Describe"].Value + "\" IsNotEmpty=\"true\" /> \r\n");
+                    //}
+                    //else
+                    //{
+                    //    richTextBox1.AppendText("<Field Name=\"" + dr.Cells["Parameter"].Value + "\" EnName=\"" + dr.Cells["Parameter"].Value + "\" ScName=\"" + translateEncodingByWord(dr.Cells["Describe"].Value.ToString(), true).Trim() + "\" TcName=\"" + dr.Cells["Describe"].Value + "\"  /> \r\n");
+                    //}
+                    if (bo)
+                    {
+                        richTextBox1.AppendText("<Field Name=\"" + dr.Cells["Parameter"].Value + "\" EnName=\"" + dr.Cells["Parameter"].Value + "\" ScName=\"" + translateEncodingByWord(dr.Cells["Describe"].Value.ToString(), true).Trim() + "\" TcName=\"" + dr.Cells["Describe"].Value + "\" IsNotEmpty=\"true\" ");
                     }
-                    else {
-                        richTextBox1.AppendText("<Field Name=\"" + dr.Cells["Parameter"].Value + "\" EnName=\"" + dr.Cells["Parameter"].Value + "\" ScName=\"" + translateEncodingByWord(dr.Cells["Describe"].Value.ToString(), true).Trim() + "\" TcName=\"" + dr.Cells["Describe"].Value + "\"  /> \r\n");
+                    else
+                    {
+                        richTextBox1.AppendText("<Field Name=\"" + dr.Cells["Parameter"].Value + "\" EnName=\"" + dr.Cells["Parameter"].Value + "\" ScName=\"" + translateEncodingByWord(dr.Cells["Describe"].Value.ToString(), true).Trim() + "\" TcName=\"" + dr.Cells["Describe"].Value + "\" ");
                     }
+                    if (dr.Cells["ReferenceProperty"].Value.ToString().ToLower() == "codeinfo")
+                    {
+                        richTextBox1.AppendText(string.Format(" KindName=\"{0}\" ", dr.Cells["KindName"].Value));
+                    }
+                    #endregion                   
+                    richTextBox1.AppendText(" /> \r\n");
                 }
             }
             richTextBox1.AppendText(" </FieldMapping>");

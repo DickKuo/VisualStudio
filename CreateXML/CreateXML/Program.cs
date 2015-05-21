@@ -30,16 +30,23 @@ namespace CreateXML
         {
             string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CreateXML.exe.config");
             ConfigManager configmanger = new ConfigManager(ConfigPath, "CreateXML");
-            if (!Convert.ToBoolean(configmanger.GetValue("IsUpdated")))
+            if (!Convert.ToBoolean(configmanger.GetValue("IsTestMode")))
             {
-                string UpdateFilePath = AppDomain.CurrentDomain.BaseDirectory + "AutoUpData.exe";
-                Process.Start(UpdateFilePath);
+                if (!Convert.ToBoolean(configmanger.GetValue("IsUpdated")))
+                {
+                    string UpdateFilePath = AppDomain.CurrentDomain.BaseDirectory + "AutoUpData.exe";
+                    Process.Start(UpdateFilePath);
+                }
+                else
+                {
+                    configmanger.SetValue("IsUpdated", "false");
+                    Thread.Sleep(2000);
+                    Application.Run(new Form1());
+                }
             }
             else
             {
-                configmanger.SetValue("IsUpdated", "false");
-                Thread.Sleep(2000);
-                Application.Run(new Form1());    
+                Application.Run(new Form1());
             }
         }
     }
