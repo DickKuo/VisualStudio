@@ -12,6 +12,8 @@ using System.Threading;
 using WebInfo.Business.DataEntities;
 using WebInfo.Business;
 using WebInfo.Business.Services;
+using System.Security.Permissions;
+using System.Security;
 
 namespace WebInfo
 {
@@ -289,7 +291,20 @@ namespace WebInfo
             element.SetAttribute("Address", Address);
             element.SetAttribute("PushCount", PushCount);
             root.AppendChild(element);
-            doc.Save(ToolLog.ToolPath + "\\" + "Record.xml");
+            string recordpath =Path.Combine(ToolLog.ToolPath ,"Record.xml");
+            #region 20150520 加入檔案存取權限
+            FileIOPermission f2 = new FileIOPermission(PermissionState.None);
+            f2.AddPathList(FileIOPermissionAccess.Write | FileIOPermissionAccess.Read, recordpath);
+            try
+            {
+                f2.Demand();
+            }
+            catch (SecurityException s)
+            {
+                ToolLog.Log(s.Message);
+            }
+            #endregion
+            doc.Save(recordpath);
         }
 
 

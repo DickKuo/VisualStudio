@@ -445,6 +445,8 @@ namespace CommTool
 
         ~XmlFile()
         {
+
+            Console.WriteLine("11");
         }
     }
 

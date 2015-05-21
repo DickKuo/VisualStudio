@@ -5,13 +5,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Start", "DService\S
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DServiceSetUp", "DServiceSetUp\DServiceSetUp.vdproj", "{5F1F1748-E51B-426C-8C30-03268E2266E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerApplication", "ServerApplication\ServerApplication.csproj", "{4AFF9820-4DD5-4933-9EFD-80154383B12D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceApplication", "ServerApplication\ServiceApplication.csproj", "{4AFF9820-4DD5-4933-9EFD-80154383B12D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Business", "Business\Server.Business.csproj", "{69DBFD59-22F3-44D0-9116-991DA46920F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Business", "Business\Service.Business.csproj", "{69DBFD59-22F3-44D0-9116-991DA46920F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.BusinessImplement", "Implement\Server.BusinessImplement.csproj", "{3CCEBA89-722D-4156-8AD8-83F271289FE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.BusinessImplement", "Implement\Service.BusinessImplement.csproj", "{3CCEBA89-722D-4156-8AD8-83F271289FE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.StandredImplement", "StandredImplement\Service.StandredImplement.csproj", "{0470DFCD-9C9B-44C6-80C3-5F993E660015}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.UI", "Server.UI\Service.UI.csproj", "{FE627EB5-03CD-4788-B0F4-3E865654116D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,16 @@ Global
 		{0470DFCD-9C9B-44C6-80C3-5F993E660015}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0470DFCD-9C9B-44C6-80C3-5F993E660015}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0470DFCD-9C9B-44C6-80C3-5F993E660015}.Release|x86.ActiveCfg = Release|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FE627EB5-03CD-4788-B0F4-3E865654116D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

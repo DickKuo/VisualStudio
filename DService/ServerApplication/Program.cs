@@ -25,17 +25,17 @@ namespace ServerApplication
             //Console.WriteLine("服務啟動");
 
 
-            TestDataEntity TestData = new TestDataEntity();
-            TestData.ExtendedProperties = new System.Data.PropertyCollection();
+           // TestDataEntity TestData = new TestDataEntity();
+           // TestData.ExtendedProperties = new System.Data.PropertyCollection();
 
-            TestData.ExtendedProperties.Add("ASS","VVVV");
+           // TestData.ExtendedProperties.Add("ASS","VVVV");
 
-            AssemblyLoader  load =new AssemblyLoader();
-            CallService.CurrentServiceProvider = load;
-            load.Load();
+           // AssemblyLoader  load =new AssemblyLoader();
+           // CallService.CurrentServiceProvider = load;
+           // load.Load();
 
-           ITestService Itest = CallService.GetService<ITestService>();
-           Itest.HelloWord();
+           //ITestService Itest = CallService.GetService<ITestService>();
+           //Itest.HelloWord();
 
             #region 設定自動觸發
             server = GetTriggerServices();

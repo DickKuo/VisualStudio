@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\Desktop\Black\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Dropbox\Export\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -76,9 +76,9 @@
     <Content Include="ServiceRegister.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Business\Server.Business.csproj">
+    <ProjectReference Include="..\Business\Service.Business.csproj">
       <Project>{69DBFD59-22F3-44D0-9116-991DA46920F4}</Project>
-      <Name>Server.Business</Name>
+      <Name>Service.Business</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
