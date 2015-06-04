@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4AFF9820-4DD5-4933-9EFD-80154383B12D}</ProjectGuid>
+    <ProjectGuid>{0384C34C-AB1F-405F-B5A4-DBA81938677D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServerApplication</RootNamespace>
-    <AssemblyName>ServerApplication</AssemblyName>
+    <RootNamespace>UseTest</RootNamespace>
+    <AssemblyName>UseTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\Dropbox\Export\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,21 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommTool.AutoTriggerService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.AutoTriggerService.dll</HintPath>
-    </Reference>
-    <Reference Include="CommTool.Business, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
-    </Reference>
-    <Reference Include="CommTool.Service, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
-    </Reference>
-    <Reference Include="DExecute">
-      <HintPath>..\..\..\..\..\Dropbox\Export\DExecute.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,32 +41,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Dropbox\Export\WebInfo.dll</HintPath>
-    </Reference>
-    <Reference Include="WebInfo.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Dropbox\Export\WebInfo.Business.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DExecuteX.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RegisterEntities.xml" />
-    <Content Include="ServiceRegister.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Business\Service.Business.csproj">
-      <Project>{69DBFD59-22F3-44D0-9116-991DA46920F4}</Project>
-      <Name>Service.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StandredImplement\Service.StandredImplement.csproj">
-      <Project>{0470DFCD-9C9B-44C6-80C3-5F993E660015}</Project>
-      <Name>Service.StandredImplement</Name>
+    <ProjectReference Include="..\FileTool\CommTool.csproj">
+      <Project>{E9D26E84-C166-48CC-854E-99372DF4EB3C}</Project>
+      <Name>CommTool</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

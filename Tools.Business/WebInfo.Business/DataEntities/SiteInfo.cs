@@ -14,5 +14,7 @@ namespace WebInfo.Business.DataEntities
         public string Context { set; get; }
         public StringBuilder Push = new StringBuilder();
         public List<string> PushList = new List<string>();
+        public bool IsDuty = false;
+        public List<string> HissList = new List<string>();
     }
 }

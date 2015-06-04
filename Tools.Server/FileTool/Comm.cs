@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using CommTool.Properties;
 using CommTool.Business;
+using CommTool.Business.Services;
 
 
 namespace CommTool
-{   
-    public static class StringExtension
+{
+    public static class StringExtensioFAssemblyLoadern
     {
         /// <summary>
         /// 將GUID轉換成String 
@@ -127,6 +128,7 @@ namespace CommTool
         }
     }
 
+     [ServiceClass(typeof(ICommService), ServiceCreateType.Callback)]
     public static class CommTool 
     {
         /// <summary>
@@ -192,5 +194,86 @@ namespace CommTool
     }
 
 
-   
+    [System.AttributeUsage(System.AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    public sealed class ServiceClassAttribute : System.Attribute
+    {
+        private readonly System.Type _ServiceInterface;
+        private readonly ServiceCreateType _ServiceCreateType;
+        private readonly bool _enabled;
+        public ServiceCreateType ServiceCreateType
+        {
+            get
+            {
+                return this._ServiceCreateType;
+            }
+        }
+        public System.Type ServiceInterface
+        {
+            get
+            {
+                return this._ServiceInterface;
+            }
+        }
+        public bool Enabled
+        {
+            get
+            {
+                return this._enabled;
+            }
+        }
+        public ServiceClassAttribute(System.Type pServiceInterface, ServiceCreateType pServiceCreateType)
+        {
+            this._ServiceCreateType = pServiceCreateType;
+            this._ServiceInterface = pServiceInterface;
+            this._enabled = true;
+        }
+        public ServiceClassAttribute(bool pEnabled)
+        {
+            if (pEnabled)
+            {
+                throw new System.ArgumentOutOfRangeException("pEnabled", "pEnabled must is false.");
+            }
+            this._enabled = pEnabled;
+        }
+    }
+
+
+
+    internal class ServiceEntry : IServiceEntry
+    {
+        private System.Type _ServiceClass;
+        private System.Type _ServiceInterface;
+        private ServiceCreateType _ServiceCreateType;
+        public System.Type ServiceClass
+        {
+            get
+            {
+                return this._ServiceClass;
+            }
+        }
+        public ServiceCreateType ServiceCreateType
+        {
+            get
+            {
+                return this._ServiceCreateType;
+            }
+        }
+        public System.Type ServiceInterface
+        {
+            get
+            {
+                return this._ServiceInterface;
+            }
+        }
+        public ServiceEntry(System.Type pServiceInterface, System.Type pServiceClass, ServiceCreateType pServiceCreateType)
+        {
+            this._ServiceCreateType = pServiceCreateType;
+            this._ServiceClass = pServiceClass;
+            this._ServiceInterface = pServiceInterface;
+        }
+    }
+
+
+
+
 }

@@ -46,10 +46,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Dropbox\Export\DExecute.dll</HintPath>
     </Reference>
-    <Reference Include="StandredImplement, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Dropbox\Export\StandredImplement.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
@@ -106,6 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ServiceRegister.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StandredImplement\Service.StandredImplement.csproj">
+      <Project>{0470DFCD-9C9B-44C6-80C3-5F993E660015}</Project>
+      <Name>Service.StandredImplement</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

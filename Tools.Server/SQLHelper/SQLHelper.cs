@@ -142,5 +142,15 @@ namespace SQLHelper
         public string ColumnName;  //列名
         public bool IsDesc; //是否降序
     }
+
+    public interface ISQLMataRepair
+    {
+    
+    }
+
+    public class SqlMataData : ISQLMataRepair
+    { 
+    
+    }
     
 }

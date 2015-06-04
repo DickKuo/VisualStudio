@@ -47,6 +47,12 @@ namespace WebInfo.Business.Services
         /// <param name="root">跟索引</param>     
         void Recursive(ref int index, SitePlus pSiteplus, List<SiteInfo> li, string Site, string Formate, string pCondition, XmlDocument doc, XmlNode root);
 
-
+        ///// <summary>
+        ///// 工具集 #60
+        ///// 將miupix的圖片轉換成實際圖片位置
+        ///// </summary>
+        ///// <param name="Url">欲轉換網址</param>
+        ///// <returns></returns>
+        //string GetMiupixImg(string Url);
     }
 }

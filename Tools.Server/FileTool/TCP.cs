@@ -7,6 +7,7 @@ using System.Net.Sockets;
 
 namespace CommTool
 {
+    
     public class TCP
     {
         //宣告網路資料流變數

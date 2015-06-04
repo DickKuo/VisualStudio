@@ -154,6 +154,7 @@ namespace WebInfo
                     StreamReader secoend = new StreamReader(memory);
                     StringBuilder sb = new StringBuilder();
                     string line = string.Empty;
+                    List<string> ExistImage = new List<string>();
                     while ((line = secoend.ReadLine()) != null)
                     {                       
                         if (line.IndexOf("<span class=\"article-meta-value\">") != -1)
@@ -218,6 +219,28 @@ namespace WebInfo
                                     break;
                                 }
                                 #endregion                               
+                                
+                                #region 20150603 可以轉換miupix 網站的照片功能，將真正的Img 位址解析出來 #60
+
+                                if (line.IndexOf("http://miupix.cc/") != -1)
+                                {
+                                    matches = Regex.Matches(temp, "<a href=\"[^\"]+", RegexOptions.IgnoreCase);
+                                    StringBuilder ImageUrls = new StringBuilder();                                   
+                                    foreach (Match match in matches)
+                                    {
+                                        ImageUrls.AppendLine(this.GetMiupixImg(match.Value.Replace("<a href=\"", "")));
+                                    }
+                                    if (!ExistImage.Contains(ImageUrls.ToString()))
+                                    {
+                                        line = ImageUrls.ToString();
+                                        ExistImage.Add(ImageUrls.ToString());
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }                                   
+                                }
+                                #endregion
                                 sb.Append(line).Replace("--", "");
                             }
                             break;
@@ -367,7 +390,7 @@ namespace WebInfo
                                 #region 20150513 加入功能 如果POST失敗則過5秒後在Post 次  如果10次都失敗則放棄
                                 long length = 0;
                                 int count = 0;
-                                bool Faill =false;
+                                bool Faill = false;
                                 do
                                 {
                                     Thread.Sleep(5000);
@@ -384,8 +407,8 @@ namespace WebInfo
                                     {
                                         Faill = false;
                                     }
-                                    count++;                                    
-                                } while (Faill);
+                                    count++;
+                                } while (Faill);      
                                 #endregion   
                                 RecordTime = info.PostDate;
                                 listold.Add(info.Title.Trim());
@@ -416,6 +439,32 @@ namespace WebInfo
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 工具集 #60
+        /// 將miupix的圖片轉換成實際圖片位置
+        /// </summary>
+        /// <param name="Url">欲轉換網址</param>
+        /// <returns></returns>
+        public string GetMiupixImg(string Url)
+        {
+            StreamReader sq = this.GetWebInfo(Url);
+            string line = string.Empty;
+            string result = string.Empty;
+            while ((line = sq.ReadLine()) != null)
+            {
+                if (line.IndexOf("img src") != -1 && line.IndexOf("alt") != -1 && line.IndexOf("thumb") != -1)
+                {
+                    MatchCollection matches = Regex.Matches(line, "<img src=\"[^\"]+", RegexOptions.IgnoreCase);
+                    foreach (Match match in matches)
+                    {
+                        result = match.Value;
+                        result += "\" />";
+                    }
+                }
+            }
+            return result;
         }
 
 

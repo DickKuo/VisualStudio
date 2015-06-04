@@ -79,7 +79,7 @@ namespace DService
         }
 
         private  TriggerService GetTriggerServices()
-        {
+        {            
             ServerImplement service = new ServerImplement();
             return service.GetAutoTriggerService();            
         }

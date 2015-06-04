@@ -8,9 +8,11 @@ using System.Xml;
 using CommTool;
 using WebInfo;
 using WebInfo.Business.DataEntities;
-using DStandardServer;
 using DService.Business.Entities;
 using DService.Business.Services;
+using DStandardServer;
+using System.Runtime.Remoting.Channels;
+using System.Reflection;
 
 namespace ServerApplication
 {
@@ -23,20 +25,14 @@ namespace ServerApplication
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
             configmanage = new ConfigManager(configiPath, "DService");
             //Console.WriteLine("服務啟動");
-
-
-           // TestDataEntity TestData = new TestDataEntity();
-           // TestData.ExtendedProperties = new System.Data.PropertyCollection();
-
-           // TestData.ExtendedProperties.Add("ASS","VVVV");
-
-           // AssemblyLoader  load =new AssemblyLoader();
-           // CallService.CurrentServiceProvider = load;
-           // load.Load();
-
-           //ITestService Itest = CallService.GetService<ITestService>();
-           //Itest.HelloWord();
-
+            //Thread.Sleep(50000);
+            //AssemblyLoader load = new AssemblyLoader();
+            //CallService.CurrentServiceProvider = load;
+            //load.Load();
+            //Assembly ii =      Assembly.LoadFile(@"C:\Users\Dick\Desktop\Clinet\bin\Debug\WithoutRemote.dll");
+            //ITestService Itest = CallService.GetService<ITestService>();
+            //Itest.HelloWord();
+            //System.Type[] types = ii.GetTypes();
             #region 設定自動觸發
             server = GetTriggerServices();
             System.Timers.Timer t = new System.Timers.Timer(1000);
@@ -50,11 +46,12 @@ namespace ServerApplication
             t1.Start();
             #endregion            
        
+
             Console.Read();
         }
 
 
-       
+   
 
         static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {

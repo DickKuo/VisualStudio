@@ -20,11 +20,11 @@ namespace CommTool.Business.Services
             get;
         }
     }
-
     public enum ServiceCreateType
     {
         Instance,
         Callback,
         Startup
     }
+   
 }

@@ -11,6 +11,8 @@ using CommTool;
 using CommTool.Service;
 using CommTool.Business.Metadata;
 
+
+
 namespace CommTool
 {
     public class AssemblyLoader : DServiceContainer, IServiceNotification
@@ -38,7 +40,8 @@ namespace CommTool
             this.Load("Assemblys");
         }
         public void Load(string pSectionName)
-        {
+        {           
+
             if (!string.IsNullOrEmpty(pSectionName))
             {
                 System.Collections.Generic.IEnumerable<AddinConfigItem> enumerable = ConfigurationManager.GetSection(pSectionName) as System.Collections.Generic.IEnumerable<AddinConfigItem>;
@@ -48,8 +51,9 @@ namespace CommTool
                     foreach (AddinConfigItem current in enumerable)
                     {
                         try
-                        {
+                        {                            
                             this.Load(current.DllFile.Trim(), current.AddinClass.Trim());
+                            //this.Load(,,ServiceCreateType.Callback);
                         }
                         catch (System.Exception ex2)
                         {

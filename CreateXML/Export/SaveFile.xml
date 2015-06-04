@@ -577,4 +577,7 @@
     <Parameter Name="ConfirmGradeRuleId.Name" Type="string" Describe="核定等級" ReferenceProperty="" Order="13" UIOrder="" Necessary="" />
     <Parameter Name="Remark" Type="string" Describe="綜合評價" ReferenceProperty="" Order="14" UIOrder="" Necessary="" />
   </Class>
+  <Class ClassName="XOtherParameterSetting" Describle="其他參數配置" IAuditObject="False" DataEntity="True" INamedObject="False" IFlagObject="False" IOwnerObject="False" ICodeObject="False" IDataModifyObject="False" Collection="False" IsCase="False">
+    <Parameter Name="XIsAutoLeave" Type="Bool" Describe="是否自動寫入" ReferenceProperty="" Order="" UIOrder="" Necessary="" />
+  </Class>
 </root>
