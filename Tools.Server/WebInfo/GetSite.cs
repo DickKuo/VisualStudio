@@ -132,6 +132,17 @@ namespace WebInfo
             SiteInfo Info = new SiteInfo();
             Info.Address = Url;
             Console.WriteLine(Url);
+            #region 防止抓取其他網站的網址。除了ptt以外的網頁，目前都先略過僅先留下紀錄。 #62
+            //if (Url.IndexOf(@"https://www.ptt.cc") == -1)
+            //{
+            //    ToolLog.Log(LogType.Error, string.Format("非PTT網址{0}", Url));
+            //    return null;
+            //}
+            if (Url == @"http://www.mobile01.com/newsdetail.php?id=15611")
+            {
+                
+            }
+            #endregion            
             ToolLog.Log(Url);
             StreamReader reader = this.GetWebInfo(Url);
             string str = string.Empty;
@@ -224,7 +235,8 @@ namespace WebInfo
 
                                 if (line.IndexOf("http://miupix.cc/") != -1)
                                 {
-                                    matches = Regex.Matches(temp, "<a href=\"[^\"]+", RegexOptions.IgnoreCase);
+                                    //matches = Regex.Matches(temp, "<a href=\"[^\"]+", RegexOptions.IgnoreCase);
+                                    matches = Regex.Matches(temp, @"<a href=\""http://[a-zA-Z0-9\./_-]+", RegexOptions.IgnoreCase);
                                     StringBuilder ImageUrls = new StringBuilder();                                   
                                     foreach (Match match in matches)
                                     {
@@ -374,7 +386,7 @@ namespace WebInfo
             foreach (string str in pSiteplus.Context)
             {
                 string Url = @"https://www.ptt.cc" + str;
-                SiteInfo info = site.GetInfo(Url);
+                SiteInfo info = site.GetInfo(Url);               
                 Thread.Sleep(1500);
                 if (info.Title != null)
                 {
