@@ -321,7 +321,7 @@ namespace WebInfo
         private  string GetAnalysis( string context, string result)
         {
             StringBuilder sb = new StringBuilder();
-            if (result.IndexOf("http") == -1)
+            if (result.IndexOf("jpg") == -1)
             {
                 if (result.IndexOf("<a href") == -1)
                 {
