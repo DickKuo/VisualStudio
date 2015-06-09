@@ -123,7 +123,7 @@ namespace DExecute
                         //CommTool.ToolLog.Log(string.Format("接收到的資料長度 {0} \n ", dataLength.ToString()));
                         ToolLog.Log("取出用戶端寫入網路資料流的資料內容 :");
                         //myBufferBytes = System.Text.Encoding.Default.GetBytes("解析語法中請稍後....");
-                        mySocket.Send(myBufferBytes, myBufferBytes.Length, 0);
+                       // mySocket.Send(myBufferBytes, myBufferBytes.Length, 0);
                         //NetString = Encoding.ASCII.GetString(myBufferBytes, 0, dataLength);
                         ToolLog.Log("String轉換Default");
                         NetString = Encoding.Default.GetString(myBufferBytes, 0, dataLength);

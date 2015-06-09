@@ -60,6 +60,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="ServerProviderAddin.cs" />
     <Compile Include="TCP.cs" />
     <Compile Include="ToolLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

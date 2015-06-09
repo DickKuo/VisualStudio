@@ -34,6 +34,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Business">
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\Business.dll</HintPath>
+    </Reference>
+    <Reference Include="CommTool.Business, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="Implement">
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\Implement.dll</HintPath>
+    </Reference>
+    <Reference Include="Service.Business">
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\Service.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="Service.Implement">
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\Service.Implement.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

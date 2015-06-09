@@ -16,13 +16,17 @@ namespace CommTool
         TcpClient myTcpClient = new TcpClient();
         public static string CurrentDbConnection { set; get; }
 
+        private string _ip;
+
+        public string IP { get { return _ip; } }
+
         public void CommandToService(string pIP ,string pPort,string pCommand)
         {
             try
             {
                 TCP myNetworkClient = new TCP();
                 //myNetworkClient.myTcpClient ;
-
+                _ip = pIP;
                 myNetworkClient.myTcpClient.Connect(pIP, Convert.ToInt32(pPort));
                 myNetworkClient.WriteData(pCommand);
                 myNetworkClient.ReadData();
@@ -48,18 +52,18 @@ namespace CommTool
             myNetworkStream = myTcpClient.GetStream();
             //Console.WriteLine("將字串寫入資料流　!!");
             //將字串寫入資料流
-            string s = Dns.GetHostName();
-            IPAddress[] IPS = Dns.GetHostEntry(s).AddressList;
-            if (IPS.Length > 3)
-            {
-                myBytes = System.Text.Encoding.Default.GetBytes(pText);
-                myNetworkStream.Write(myBytes, 0, myBytes.Length);
-            }
-            else
-            {
-                myBytes = System.Text.Encoding.Default.GetBytes("無法擷取IP");
-                myNetworkStream.Write(myBytes, 0, myBytes.Length);
-            }
+            //string s = Dns.GetHostName();
+            //IPAddress[] IPS = Dns.GetHostEntry(IP).AddressList;
+            //if (IPS.Length > 3)
+            //{
+            //    myBytes = System.Text.Encoding.Default.GetBytes(pText);
+            //    myNetworkStream.Write(myBytes, 0, myBytes.Length);
+            //}
+            //else
+            //{
+            //    myBytes = System.Text.Encoding.Default.GetBytes("無法擷取IP");
+            myNetworkStream.Write(myBytes, 0, myBytes.Length);
+            //}
         }
 
         //讀取資料

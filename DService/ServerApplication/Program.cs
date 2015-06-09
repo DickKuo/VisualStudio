@@ -33,6 +33,12 @@ namespace ServerApplication
             //ITestService Itest = CallService.GetService<ITestService>();
             //Itest.HelloWord();
             //System.Type[] types = ii.GetTypes();
+            
+            #region 20150609加入顯示字樣 #63
+            Console.WriteLine(string.Format("ServerIP:{0}",configmanage.GetValue("AppIP")));
+            Console.WriteLine(string.Format("ServerPort:{0}",configmanage.GetValue("AppPort")));
+            #endregion
+
             #region 設定自動觸發
             server = GetTriggerServices();
             System.Timers.Timer t = new System.Timers.Timer(1000);
@@ -44,8 +50,7 @@ namespace ServerApplication
             #region  等候客戶端連線
             Thread t1 = new Thread(Lessner);
             t1.Start();
-            #endregion            
-       
+            #endregion                   
 
             Console.Read();
         }
