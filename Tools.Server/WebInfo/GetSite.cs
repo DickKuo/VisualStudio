@@ -158,6 +158,8 @@ namespace WebInfo
                 foreach (Match match in matches)
                 {
                     Info.Context = match.Value.Replace("\"", "'").Replace("</span></div>", "").Replace("<span class=\"f2\">", "").Replace("--", "");
+                    //20150609 #64
+                    Info.Context = GetAnalysis(temp, Info.Context);
                 }
                 if (Info.Context == null)
                 {
@@ -308,6 +310,51 @@ namespace WebInfo
                 }
             }
             return Info;
+        }
+
+        /// <summary>
+        /// 20150609 猜解PTT文章內容 #64
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private  string GetAnalysis( string context, string result)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (result.IndexOf("http") == -1)
+            {
+                if (result.IndexOf("<a href") == -1)
+                {
+                    string[] array = context.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    bool Into = false;
+                    foreach (string str in array)
+                    {
+                        if (str.IndexOf("class=\"article-meta-tag\">時間</span><span") != -1)
+                        {
+                            Into = true;
+                            continue;
+                        }
+                        if (str.IndexOf("class=\"f2\">※") != -1)
+                        {
+                            Into = false;
+                        }
+
+                        if (Into)
+                        {
+                            sb.AppendFormat("{0}\r\n", str);
+                        }
+                    }
+                    return sb.ToString();
+                }
+                else
+                {
+                    return result;
+                }
+            }
+            else
+            {
+                return result;
+            }          
         }
 
 
