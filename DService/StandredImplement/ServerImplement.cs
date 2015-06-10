@@ -14,7 +14,8 @@ namespace DStandardServer
             TriggerService trs = base.GetAutoTriggerService();
             //trs.AddTriggers(new SampleService());  //Sample
 
-            trs.AddTriggers(new GetBueaty());  //Sample
+            trs.AddTriggers(new GetBueaty());
+            trs.AddTriggers(new GetGoldTrigger()); 
             return trs;
         }
     }

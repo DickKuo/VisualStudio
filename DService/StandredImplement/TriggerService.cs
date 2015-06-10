@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CommTool;
 using System.ComponentModel;
 using System.Xml;
 using WebInfo;
 using System.IO;
 using WebInfo.Business.DataEntities;
+using DService.Business.Entities;
 
 namespace StandredImplement
 {
@@ -152,4 +151,91 @@ namespace StandredImplement
             return Result;
         }
     }
+
+
+    #region 20150610 抓取台灣銀行黃金存摺價位
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    public class GetGoldTrigger : AutoTrigger
+    {
+        BackgroundWorker _work;
+
+        public GetGoldTrigger()
+        {
+            _work = new BackgroundWorker();
+            _work.DoWork += new DoWorkEventHandler(work_DoWork);
+            _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
+        }
+
+        void work_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                Gold gold = GetGold();
+                if (gold != null)
+                {
+                    string record = Path.Combine(@"C:\GoldLog", "GoldRecord.xml");
+                    if (!File.Exists(record))
+                    {
+                        XmlFile.CreateBaseXml(record, true);
+                    }
+                    else
+                    {
+                        XmlDocument doc = XmlFile.LoadXml(record);
+                        XmlNode root = doc.SelectSingleNode("root");
+                        XmlElement Xmlrecord = doc.CreateElement("Record");
+                        Xmlrecord.SetAttribute("Time", DateTime.Now.ToString("yyyy/MM/dd"));
+                        Xmlrecord.SetAttribute("BankSell", gold.BankSell.ToString());
+                        Xmlrecord.SetAttribute("BankBuy", gold.BankBuy.ToString());
+                        root.AppendChild(Xmlrecord);
+                        doc.Save(record);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ToolLog.Log(ex.Message);
+            }
+        }
+
+        private  Gold  GetGold()
+        {
+            WebInfo.WebInfo web = new WebInfo.WebInfo(@"C:\GoldLog");
+            StreamReader sq = web.GetResponse("http://rate.bot.com.tw/Pages/Static/UIP005.zh-TW.htm");
+            string line = string.Empty;
+            line = sq.ReadToEnd();
+            string[] array = line.Split(new string[] { "<table" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] trs = array[8].Split(new string[] { "<tr" }, StringSplitOptions.RemoveEmptyEntries);
+            Gold gold = new Gold();
+            string[] selltd = trs[3].Split(new string[] { "<td" }, StringSplitOptions.RemoveEmptyEntries);
+            gold.BankSell =Convert.ToDecimal(selltd[selltd.Length - 1].Replace("</td></tr>", "").Replace("class=\"decimal\">", "").Trim());
+            string[] Buytd = trs[4].Split(new string[] { "<td" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] temp = Buytd[Buytd.Length - 1].Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            gold.BankBuy =Convert.ToDecimal(temp[0].Replace("</td></tr>", "").Replace("class=\"decimal\">", "").Trim());
+            return gold;
+        }
+
+        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 執行trigger 
+        /// </summary>
+        /// <param name="pCurrentTime"></param>
+        public override void Execute(string pCurrentTime)
+        {
+            if (pCurrentTime == "16:00:00")
+            {
+                if (!_work.IsBusy)
+                {
+                    _work.RunWorkerAsync();
+                }
+            }
+        }
+    }
+
+    #endregion
 }
