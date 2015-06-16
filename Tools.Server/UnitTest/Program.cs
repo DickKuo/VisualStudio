@@ -16,15 +16,15 @@ namespace UnitTest
     {
         static void Main(string[] args)
         {
-            StreamReader sw = new StreamReader(@"C:\Users\Dick\Desktop\新增資料夾\111.txt",Encoding.Default);
-            StringBuilder sb = new StringBuilder();
-            string  context = sw.ReadToEnd();
-            MatchCollection matches = Regex.Matches(context, "</span></div>[^\"]+<span class=\"f2\">", RegexOptions.Multiline);
-            foreach (Match match in matches)
-            {
-                string resul = match.Value;
-                GetAnalysis(sb, context, resul);
-            }
+            //StreamReader sw = new StreamReader(@"C:\Users\Dick\Desktop\新增資料夾\111.txt",Encoding.Default);
+            //StringBuilder sb = new StringBuilder();
+            //string  context = sw.ReadToEnd();
+            //MatchCollection matches = Regex.Matches(context, "</span></div>[^\"]+<span class=\"f2\">", RegexOptions.Multiline);
+            //foreach (Match match in matches)
+            //{
+            //    string resul = match.Value;
+            //    GetAnalysis(sb, context, resul);
+            //}
             //ToolLog.Log("");
             //System.Attribute attribute = null;
             //Assembly assembly = Assembly.LoadFrom(@"C:\Users\Dick\Desktop\Black\CommTool.Service.dll");
@@ -46,7 +46,7 @@ namespace UnitTest
           //        }
           //    }
           //}
-            string ttt = sb.ToString();
+            //string ttt = sb.ToString();
         }
 
         private static void GetAnalysis(StringBuilder sb, string context, string resul)

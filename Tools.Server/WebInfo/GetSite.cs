@@ -84,6 +84,40 @@ namespace WebInfo
         }
 
         /// <summary>
+        /// 抓取文章內容
+        /// 20150616 擴充可以選擇是否避免相關指定網頁以外的網址 工具集 #68  
+        /// </summary>
+        /// <param name="Url"></param>
+        /// <param name="IsAvoid">true 如果不是指定的網站類型則跳過</param>
+        /// <param name="PointUrl">指定網址類型</param>
+        /// <returns></returns>
+        public StreamReader GetWebInfo(string Url, bool IsAvoid , string PointUrl )
+        {
+            if (IsAvoid)
+            {
+                if (Url.IndexOf(PointUrl) == -1)
+                {
+                    return null;
+                }
+            }
+            StreamReader reader = null;
+            WebRequest myWebRequest = WebRequest.Create(Url);
+            myWebRequest.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)myWebRequest.GetResponse();
+                Stream DataStream = response.GetResponseStream();
+                reader = new StreamReader(DataStream, Encoding.UTF8);
+            }
+            catch (Exception ex)
+            {
+                ToolLog.Log(CommTool.LogType.Error, "抓取文章" + ex.Message);
+                ToolLog.Log(Url);
+            }
+            return reader;
+        }
+
+        /// <summary>
         /// 抓取PTT文章列表         
         /// </summary>
         /// <param name="BaseUrl">起始網址Url</param>
@@ -91,7 +125,7 @@ namespace WebInfo
         public SitePlus GetUrlList(string BaseUrl)
         {
             SitePlus siteplus = new SitePlus();
-            Console.WriteLine(BaseUrl);
+            Console.WriteLine(BaseUrl);            
             StreamReader reader = GetWebInfo(BaseUrl);
             if (reader != null)
             {
@@ -131,19 +165,8 @@ namespace WebInfo
         {
             SiteInfo Info = new SiteInfo();
             Info.Address = Url;
-            Console.WriteLine(Url);
-            #region 防止抓取其他網站的網址。除了ptt以外的網頁，目前都先略過僅先留下紀錄。 #62
-            //if (Url.IndexOf(@"https://www.ptt.cc") == -1)
-            //{
-            //    ToolLog.Log(LogType.Error, string.Format("非PTT網址{0}", Url));
-            //    return null;
-            //}
-            if (Url == @"http://www.mobile01.com/newsdetail.php?id=15611")
-            {
-                
-            }
-            #endregion            
-            ToolLog.Log(Url);
+            Console.WriteLine(Url);                    
+            ToolLog.Log(Url);           
             StreamReader reader = this.GetWebInfo(Url);
             string str = string.Empty;
             if (reader != null)
@@ -432,7 +455,7 @@ namespace WebInfo
             GetSite site = new GetSite(ToolLog.ToolPath);
             foreach (string str in pSiteplus.Context)
             {
-                string Url = @"https://www.ptt.cc" + str;
+                string Url = @"https://www.ptt.cc" + str; 
                 SiteInfo info = site.GetInfo(Url);               
                 Thread.Sleep(1500);
                 if (info.Title != null)
@@ -509,20 +532,28 @@ namespace WebInfo
         /// <returns></returns>
         public string GetMiupixImg(string Url)
         {
-            StreamReader sq = this.GetWebInfo(Url);
+            //20150616 工具集 #68  避掉相關網址
+            StreamReader sq = this.GetWebInfo(Url, true, "http://miupix.cc/");
             string line = string.Empty;
             string result = string.Empty;
-            while ((line = sq.ReadLine()) != null)
+            if (sq != null)
             {
-                if (line.IndexOf("img src") != -1 && line.IndexOf("alt") != -1 && line.IndexOf("thumb") != -1)
+                while ((line = sq.ReadLine()) != null)
                 {
-                    MatchCollection matches = Regex.Matches(line, "<img src=\"[^\"]+", RegexOptions.IgnoreCase);
-                    foreach (Match match in matches)
+                    if (line.IndexOf("img src") != -1 && line.IndexOf("alt") != -1 && line.IndexOf("thumb") != -1)
                     {
-                        result = match.Value;
-                        result += "\" />";
+                        MatchCollection matches = Regex.Matches(line, "<img src=\"[^\"]+", RegexOptions.IgnoreCase);
+                        foreach (Match match in matches)
+                        {
+                            result = match.Value;
+                            result += "\" />";
+                        }
                     }
                 }
+            }
+            else
+            {
+                ToolLog.Log(LogType.Exclude,Url);
             }
             return result;
         }

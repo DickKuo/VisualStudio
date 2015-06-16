@@ -17,7 +17,16 @@ namespace WebInfo.Business.Services
         /// <returns></returns>
         StreamReader GetWebInfo(string Url);
 
-
+        /// <summary>
+        /// 抓取文章內容
+        /// 20150616 擴充可以選擇是否避免相關指定網頁以外的網址 工具集 #62  
+        /// </summary>
+        /// <param name="Url"></param>
+        /// <param name="IsAvoid">true 如果不是指定的網站類型則跳過</param>
+        /// <param name="PointUrl">指定網址類型</param>
+        /// <returns></returns>
+        StreamReader GetWebInfo(string Url, bool IsAvoid = false, string PointUrl = "www.ptt.cc");
+                
         /// <summary>
         /// 抓取PTT文章列表         
         /// </summary>

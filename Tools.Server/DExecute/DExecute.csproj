@@ -38,10 +38,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Dropbox\Export\WebInfo.dll</HintPath>
-    </Reference>
     <Reference Include="WebInfo.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Dropbox\Export\WebInfo.Business.dll</HintPath>
@@ -57,6 +53,10 @@
     <ProjectReference Include="..\FileTool\CommTool.csproj">
       <Project>{E9D26E84-C166-48CC-854E-99372DF4EB3C}</Project>
       <Name>CommTool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebInfo\WebInfo.csproj">
+      <Project>{1505E3A0-9FF6-4B7D-9368-FD6C5502DB32}</Project>
+      <Name>WebInfo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
