@@ -163,6 +163,9 @@ namespace CommTool
                case LogType.Delete:
                   temp = " 【Delete】 ";
                   break;
+               case LogType.Exclude:   //工具集 #67   
+                  temp = " 【Exclude】 ";
+                  break;
            }
           return temp;
        }
@@ -177,7 +180,9 @@ namespace CommTool
       Error=0,
       Mail =1,
       Normal = 2,
-      Delete =3
+      Delete =3,
+      Exclude=4
+
     }
 
    public class ExcetionCollection 
