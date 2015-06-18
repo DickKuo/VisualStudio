@@ -1331,7 +1331,8 @@ namespace CreateXML {
                                 {
                                     XmlElement Program = doc.CreateElement("Program");
                                     Program.SetAttribute("Name", pEntityName + "Browse");
-                                    Program.SetAttribute("ActionSetting", pEntityName + "Action");
+                                    // 20150618 懶人工具 #69  統一修改為Actions
+                                    Program.SetAttribute("ActionSetting", pEntityName + "Actions");
                                     Program.SetAttribute("BusinessObject", pEntityName);
                                     Program.SetAttribute("Image", "TrainingType_16");
                                     Program.SetAttribute("UriAction", "Browse");
