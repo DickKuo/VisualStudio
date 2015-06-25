@@ -144,6 +144,12 @@
     <Compile Include="QandA.Designer.cs">
       <DependentUpon>QandA.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddSalaryKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddSalaryKey.Designer.cs">
+      <DependentUpon>AddSalaryKey.cs</DependentUpon>
+    </Compile>
     <Content Include="BicycleGreen.ico" />
     <Content Include="QQ截图20141210140128.ico" />
     <Content Include="SampleFile\Sample.txt">
@@ -220,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SQLFilter.resx">
       <DependentUpon>SQLFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddSalaryKey.resx">
+      <DependentUpon>AddSalaryKey.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

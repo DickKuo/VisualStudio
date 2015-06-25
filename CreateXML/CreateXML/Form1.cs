@@ -3556,5 +3556,11 @@ namespace CreateXML {
             AddCodeInfo CodeInfo = new AddCodeInfo();
             CodeInfo.Show();
         }
+
+        private void 新增薪資計算ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddSalaryKey SalaryKey = new AddSalaryKey();
+            SalaryKey.Show();
+        }
     }    
 }
