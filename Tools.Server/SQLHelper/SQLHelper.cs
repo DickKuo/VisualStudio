@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using CommTool.Business.Services;
 
 namespace SQLHelper
 {
-    public static class SHelper
+    public static class SHelper 
     {
         #region 變數宣告
         public static string _sqlconnection { set; get; }
@@ -51,6 +52,46 @@ namespace SQLHelper
             }
             return dt;
         }
+
+        public static string GetTableColumns(string pDBName,string pTableName)
+        {
+            StringBuilder result =new  StringBuilder();
+            string sql = string.Format(@"SELECT COLUMN_NAME
+                            FROM {0}.INFORMATION_SCHEMA.COLUMNS
+                            WHERE TABLE_NAME = N'{1}'", pDBName, pTableName);
+            DataTable dt = ExeDataTable(sql);
+            StringBuilder sb = new StringBuilder();
+            foreach (DataRow dr in dt.Rows)
+            {
+                sb.AppendLine(string.Format(",[{0}]", dr[0].ToString()));
+            }
+            if (sb.Length > 0)
+            {
+                result.AppendLine("Select ");
+                result.Append(sb.ToString().Remove(0,1));
+                result.AppendFormat(" From {0}",pTableName);
+            }
+            return result.ToString();
+        }
+
+        /// <summary>
+        /// 20150703 輸入SQl指令，回單一資料。
+        /// </summary>
+        /// <param name="pSqlString"></param>
+        /// <returns></returns>
+        public static  object ExeGetSingleResult(string pSqlString)
+        {
+            DataTable dt = ExeDataTable(pSqlString);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                return dt.Rows[0][0];
+            }
+            else
+            {
+                return default(object);
+            }
+        }
+
 
         /// <summary>
         /// 20150324 add by Dick for SQL執行使用Parameter 方式。
