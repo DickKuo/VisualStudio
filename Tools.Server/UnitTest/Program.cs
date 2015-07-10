@@ -47,6 +47,7 @@ namespace UnitTest
           //    }
           //}
             //string ttt = sb.ToString();
+            CommTool.ConfigManager ma = new ConfigManager(@"C:\HRSource\V5.1.6(Standard)\8101224567-世代流通資\Export\appSettings.config","",true);
         }
 
         private static void GetAnalysis(StringBuilder sb, string context, string resul)

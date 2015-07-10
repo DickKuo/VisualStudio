@@ -16,11 +16,15 @@ namespace DExecute
 
         public enum AnalysisType
         {
-            W = 1,   //網頁
-            E = 2,   //錯誤 
-            R = 3,   //重開服務
-            S = 4,   //停止服務
-            U = 5,   //更新
+            W = 1,     //網頁
+            E = 2,     //錯誤 
+            R = 3,     //重開服務
+            S = 4,     //停止服務
+            U = 5,     //更新
+            Select =6, //選取
+            Save=7,    //設定
+            Get =8,    //取得
+            Clear=9,   //清除
         }
                
         public StructAnalysisResult Start(string Query)
@@ -32,6 +36,7 @@ namespace DExecute
                 switch (split[0].ToLower())
                 {
                     case "w": // 網頁的解析 
+                        _analysisresult.Type = AnalysisType.W;
                         WebAnalysis(split);
                         break;
                     case "r":
@@ -43,6 +48,40 @@ namespace DExecute
                     case "u":
                         _analysisresult.Type = AnalysisType.U;
                         break;
+                    case "select":
+                        if (split.Length > 1)
+                        {
+                            switch (split[1].ToLower())
+                            {
+                                case "table":
+                                    if (split[2].Length > 2)
+                                    {
+                                        _analysisresult.Type = AnalysisType.Select;
+                                        _analysisresult.Result = SQLHelper.SHelper.GetTableColumns(split[2]);
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                    case "clear":
+                        _analysisresult.Type = AnalysisType.Clear;
+                        _analysisresult.Result = "clear";
+                        break;
+                    case "get":
+                        if (split.Length > 1)
+                        {
+                            switch (split[1].ToLower())
+                            {
+                                case "record":
+                                  
+                                break;
+                            }
+                        }
+                        break;
+                    default:
+                         _analysisresult.Type = AnalysisType.E;
+                         _analysisresult.Result = "目前不支援該指令";
+                        break;
                 }
             }
             else
@@ -52,6 +91,7 @@ namespace DExecute
             }
             return _analysisresult;
         }
+        
 
         /// <summary>
         /// 20150409 add by Dick for 解析網址

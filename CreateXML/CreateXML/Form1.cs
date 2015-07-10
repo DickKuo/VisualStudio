@@ -18,6 +18,7 @@ using System.Globalization;
 using System.Configuration;
 using CreateXML.Properties;
 using CommTool;
+using DExecute;
 
 namespace CreateXML {
     public partial class Form1 : Form {
@@ -36,7 +37,7 @@ namespace CreateXML {
         private int DetailTabNew = 0;    //20141002 add by Dick 明細ID
 
         public string Xmlpath {
-            get { return _xmlpath; }
+            get { return _xmlpath;  }
             set { _xmlpath = value; }
         }
 
@@ -46,6 +47,7 @@ namespace CreateXML {
             get { return _projectPath; }
             set { _projectPath = value; }
         }
+
 
         private static string _moduleName;//20150109 模組名稱 #14
         public static string ModuleProviderName { get {  return _moduleName; } }
@@ -834,6 +836,7 @@ namespace CreateXML {
             //        Properties.Resources.Culture = new CultureInfo("zh-CN");                
             //        break;    
             //}
+           
         }
 
         
@@ -966,6 +969,15 @@ namespace CreateXML {
                 #endregion
                 //20141226 add by Dick for 顯示當前設定位置 #9
                 label7.Text = "當前設定位置：" + GetSettinhPath();
+
+                #region 20150709 add for  懶人工具 #73
+                string configPath = Path.Combine(GetSettinhPath(), "appSettings.config");
+                ConfigManager mage = new ConfigManager(configPath, "CurrentDbSource", true);
+                SQLHelper.SHelper._sqlconnection = mage.GetValue("CurrentDbSource");
+                string[] sp = SQLHelper.SHelper._sqlconnection.Split(';');
+                SQLHelper.SHelper.DBIP = sp[0].Replace("Data Source=", "");
+                SQLHelper.SHelper.DBName = sp[1].Replace("Initial Catalog=", "");               
+                #endregion
             }
             catch (Exception ex)
             {
@@ -3562,5 +3574,38 @@ namespace CreateXML {
             AddSalaryKey SalaryKey = new AddSalaryKey();
             SalaryKey.Show();
         }
+
+        private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           if (e.KeyChar == 13)
+            {
+               StringReader sr = new StringReader(richTextBox1.Text);
+               string line =string.Empty;
+               string command = string.Empty;
+               while ((line = sr.ReadLine())!=null)
+               {
+                   command = line;
+               }
+               DExecute.DAnalysis asss = new DExecute.DAnalysis();
+               DAnalysis.StructAnalysisResult result = asss.Start(command);
+               richTextBox1.AppendText(result.Result);
+               richTextBox1.AppendText("\r\n");
+               if (result.Result == "clear")
+               {
+                   richTextBox1.Clear();
+               }
+            }
+        }
+
+     
+
+        // RB_Result.Text=    SQLHelper.SHelper.GetTableColumns(Rb_Command.Text.Trim());
+      
+
+        //private void 撈取Table欄位ToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    GetTableColumns item = new GetTableColumns();
+        //    item.Show();
+        //}     
     }    
 }

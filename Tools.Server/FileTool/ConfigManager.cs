@@ -32,13 +32,54 @@ namespace CommTool
         /// </summary>
         /// <param name="pPath">路徑</param>
         /// <param name="AppName">應用程式名稱</param>
-        public ConfigManager(string pPath,string AppName)
+        public ConfigManager(string pPath,string AppName,bool IsStandard=false)
         {
             ConfigPath = pPath;
             _dicParameter = new Dictionary<string, string>();
             _typeKey = AppName;
-            Init();
-        }        
+            if (!IsStandard)
+            {
+                Init();
+            }
+            else
+            {
+                Initkey();
+            }
+        }
+
+        
+        /// <summary>
+        /// 初始化參數
+        /// </summary>
+        private void Initkey()
+        {
+            if (File.Exists(ConfigPath))
+            {
+                XmlDocument doc = XmlFile.LoadXml(ConfigPath);
+                XmlNode nodelist = doc.SelectSingleNode(string.Format("appSettings", _typeKey));
+                foreach (XmlNode node in nodelist)
+                {
+                    try
+                    {
+                        string ParameterName = node.Attributes[0].Value;
+                        //XmlNode Child = node.FirstChild;
+                        //string value = Child.InnerText;
+                        if (!_dicParameter.ContainsKey(ParameterName))
+                        {
+                            _dicParameter.Add(ParameterName, node.Attributes[1].Value);
+                        }
+                    }
+                    catch { }
+
+                }
+            }
+            else
+            {
+                ToolLog.Log("Config檔案不存在。");
+            }
+        }    
+
+
 
         /// <summary>
         /// 初始化參數

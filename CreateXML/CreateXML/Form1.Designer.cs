@@ -93,6 +93,7 @@ this.sQL過濾ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.queryView排序ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.載入實體ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.新增代碼組ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+this.新增薪資計算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.一鍵生成ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.說明ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 this.cb_Collection = new System.Windows.Forms.CheckBox();
@@ -125,7 +126,6 @@ this.tabPage4 = new System.Windows.Forms.TabPage();
 this.tabIncrease = new System.Windows.Forms.TabPage();
 this.tabSub = new System.Windows.Forms.TabPage();
 this.label7 = new System.Windows.Forms.Label();
-this.新增薪資計算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 this.menuStrip1.SuspendLayout();
 this.MainGroup.SuspendLayout();
@@ -146,7 +146,7 @@ this.richTextBox1.Location = new System.Drawing.Point(6, 6);
 this.richTextBox1.Name = "richTextBox1";
 this.richTextBox1.Size = new System.Drawing.Size(981, 185);
 this.richTextBox1.TabIndex = 1;
-//this.richTextBox1.Text = global::CreateXML.SampleFile.Resource_zh_CHS.;
+this.richTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.richTextBox1_KeyPress);
 // 
 // dataGridView1
 // 
@@ -694,6 +694,13 @@ this.新增代碼組ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
 this.新增代碼組ToolStripMenuItem.Text = "新增代碼組";
 this.新增代碼組ToolStripMenuItem.Click += new System.EventHandler(this.新增代碼組ToolStripMenuItem_Click);
 // 
+// 新增薪資計算ToolStripMenuItem
+// 
+this.新增薪資計算ToolStripMenuItem.Name = "新增薪資計算ToolStripMenuItem";
+this.新增薪資計算ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+this.新增薪資計算ToolStripMenuItem.Text = "新增薪資計算";
+this.新增薪資計算ToolStripMenuItem.Click += new System.EventHandler(this.新增薪資計算ToolStripMenuItem_Click);
+// 
 // 一鍵生成ToolStripMenuItem
 // 
 this.一鍵生成ToolStripMenuItem.Name = "一鍵生成ToolStripMenuItem";
@@ -1039,13 +1046,6 @@ this.label7.Name = "label7";
 this.label7.Size = new System.Drawing.Size(56, 16);
 this.label7.TabIndex = 23;
 this.label7.Text = "label7";
-// 
-// 新增薪資計算ToolStripMenuItem
-// 
-this.新增薪資計算ToolStripMenuItem.Name = "新增薪資計算ToolStripMenuItem";
-this.新增薪資計算ToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-this.新增薪資計算ToolStripMenuItem.Text = "新增薪資計算";
-this.新增薪資計算ToolStripMenuItem.Click += new System.EventHandler(this.新增薪資計算ToolStripMenuItem_Click);
 // 
 // Form1
 // 

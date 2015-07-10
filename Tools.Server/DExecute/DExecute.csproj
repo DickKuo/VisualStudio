@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\Dropbox\Export\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Users\Dick\Dropbox\Export\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,6 +53,10 @@
     <ProjectReference Include="..\FileTool\CommTool.csproj">
       <Project>{E9D26E84-C166-48CC-854E-99372DF4EB3C}</Project>
       <Name>CommTool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLHelper\SQLHelper.csproj">
+      <Project>{C64334ED-5B13-4D7B-B3AF-7AD6ABFA7FB3}</Project>
+      <Name>SQLHelper</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebInfo\WebInfo.csproj">
       <Project>{1505E3A0-9FF6-4B7D-9368-FD6C5502DB32}</Project>

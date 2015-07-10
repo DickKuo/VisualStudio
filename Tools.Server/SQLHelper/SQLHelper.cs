@@ -12,6 +12,34 @@ namespace SQLHelper
     {
         #region 變數宣告
         public static string _sqlconnection { set; get; }
+        private static string _dbip;
+        private static string _dbname;
+        #endregion
+
+
+        #region public
+        public static string DBIP
+        {
+            set
+            {
+                _dbip = value;
+            }
+            get
+            {
+                return _dbip;
+            }
+        }
+        public static string DBName
+        {
+            set
+            {
+                _dbname = value;
+            }
+            get
+            {
+                return _dbname;
+            }
+        }
         #endregion
 
         #region 共用函式
@@ -53,12 +81,17 @@ namespace SQLHelper
             return dt;
         }
 
-        public static string GetTableColumns(string pDBName,string pTableName)
+        /// <summary>
+        /// 20150709 新增功能，撈取資料庫內Table 的所有欄位，返回String 型態。 #72
+        /// </summary>
+        /// <param name="pTableName"></param>
+        /// <returns></returns>
+        public static string GetTableColumns(string pTableName)
         {
             StringBuilder result =new  StringBuilder();
             string sql = string.Format(@"SELECT COLUMN_NAME
                             FROM {0}.INFORMATION_SCHEMA.COLUMNS
-                            WHERE TABLE_NAME = N'{1}'", pDBName, pTableName);
+                            WHERE TABLE_NAME = N'{1}'", DBName, pTableName);
             DataTable dt = ExeDataTable(sql);
             StringBuilder sb = new StringBuilder();
             foreach (DataRow dr in dt.Rows)
