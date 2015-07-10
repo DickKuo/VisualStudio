@@ -978,6 +978,8 @@ namespace CreateXML {
                 SQLHelper.SHelper.DBIP = sp[0].Replace("Data Source=", "");
                 SQLHelper.SHelper.DBName = sp[1].Replace("Initial Catalog=", "");               
                 #endregion
+                richTextBox1.Focus();
+
             }
             catch (Exception ex)
             {
@@ -3577,24 +3579,26 @@ namespace CreateXML {
 
         private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-           if (e.KeyChar == 13)
+            #region 20150710 add by #73
+            if (e.KeyChar == 13)
             {
-               StringReader sr = new StringReader(richTextBox1.Text);
-               string line =string.Empty;
-               string command = string.Empty;
-               while ((line = sr.ReadLine())!=null)
-               {
-                   command = line;
-               }
-               DExecute.DAnalysis asss = new DExecute.DAnalysis();
-               DAnalysis.StructAnalysisResult result = asss.Start(command);
-               richTextBox1.AppendText(result.Result);
-               richTextBox1.AppendText("\r\n");
-               if (result.Result == "clear")
-               {
-                   richTextBox1.Clear();
-               }
+                StringReader sr = new StringReader(richTextBox1.Text);
+                string line = string.Empty;
+                string command = string.Empty;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    command = line;
+                }
+                DExecute.DAnalysis asss = new DExecute.DAnalysis();
+                DAnalysis.StructAnalysisResult result = asss.Start(command);
+                richTextBox1.AppendText(result.Result);
+                richTextBox1.AppendText("\r\n");
+                if (result.Result == "clear")
+                {
+                    richTextBox1.Clear();
+                }
             }
+            #endregion           
         }
 
      

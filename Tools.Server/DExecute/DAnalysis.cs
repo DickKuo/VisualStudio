@@ -26,7 +26,12 @@ namespace DExecute
             Get =8,    //取得
             Clear=9,   //清除
         }
-               
+             
+        /// <summary>
+        /// 20150710 modifeid for #73
+        /// </summary>
+        /// <param name="Query"></param>
+        /// <returns></returns>
         public StructAnalysisResult Start(string Query)
         {
             string result = string.Empty;
@@ -61,6 +66,11 @@ namespace DExecute
                                     }
                                     break;
                             }
+                        }
+                        else
+                        {
+                            _analysisresult.Type = AnalysisType.E;
+                            _analysisresult.Result = "目前不支援該指令";
                         }
                         break;
                     case "clear":
