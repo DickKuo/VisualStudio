@@ -46,9 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Users\Dick\Dropbox\Export\CommTool.Business.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool.Service, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CommTool.Service, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Users\Dick\Dropbox\Export\CommTool.Service.dll</HintPath>
+      <HintPath>..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="DExecute">
       <HintPath>..\..\..\..\..\..\Users\Dick\Dropbox\Export\DExecute.dll</HintPath>

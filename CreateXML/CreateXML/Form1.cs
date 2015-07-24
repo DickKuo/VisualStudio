@@ -1010,7 +1010,7 @@ namespace CreateXML {
                         if (line.IndexOf("Dick") != -1)
                         {
                             RecordCode record = new RecordCode();
-                            record.CodeRecordId = Guid.NewGuid();
+                            record.RecordCodeId = Guid.NewGuid();
                             record.RecordDate = DateTime.Now;
                             string[] sp = fi.Split('\\');
                             if (sp.Length > 3)
@@ -1029,12 +1029,13 @@ namespace CreateXML {
                                 context.AppendLine(subline);
                             }
                             record.Context = context.ToString();
-                            record.Author = "Dick";
-                            li.Add(record);                         
+                            record.Author = "Dick";                            
+                            li.Add(record);
                         }
                     }
                 }
             }
+
             MyDelegate dl = new MyDelegate(MeDelegatePara);
             this.BeginInvoke(dl, "寫入紀錄開始...");
             string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CreateXML.exe.config");

@@ -8,11 +8,11 @@ using CommTool.Business;
 
 namespace CreateXML
 {
-    public class RecordCode : DataEntity
+    public class RecordCode :DataEntity
     {
         #region Private Member
         private System.String _typeKey = "RecordCode";
-        private System.Guid _codeRecordId;
+        private System.Guid _recordCodeId;
         private System.String _context;
         private System.DateTime _recordDate;
         private System.String _author;
@@ -37,17 +37,17 @@ namespace CreateXML
         ///
         /// </summary>
         [SimpleProperty(DbType = GeneralDbType.Guid)]
-        public System.Guid CodeRecordId
+        public System.Guid RecordCodeId
         {
             get
             {
-                return this._codeRecordId;
+                return this._recordCodeId;
             }
             set
             {
-                if ((_codeRecordId != value))
+                if ((_recordCodeId != value))
                 {
-                    this._codeRecordId = value;
+                    this._recordCodeId = value;
                 }
             }
         }
@@ -143,5 +143,44 @@ namespace CreateXML
         }
         #endregion 
 
+    }
+
+    public class TempC : DataEntity
+    {
+        private System.Guid _recordCodeId;
+        private System.String _context;
+        [SimpleProperty(DbType = GeneralDbType.Guid)]
+        public System.Guid RecordCodeId
+        {
+            get
+            {
+                return this._recordCodeId;
+            }
+            set
+            {
+                if ((_recordCodeId != value))
+                {
+                    this._recordCodeId = value;
+                }
+            }
+        }
+        /// <summary>
+        ///
+        /// </summary>
+        [SimpleProperty(DbType = GeneralDbType.String)]
+        public System.String Context
+        {
+            get
+            {
+                return this._context;
+            }
+            set
+            {
+                if ((_context != value))
+                {
+                    this._context = value;
+                }
+            }
+        }
     }
 }

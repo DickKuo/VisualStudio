@@ -32,7 +32,7 @@ namespace CommTool
             PropertyInfo property = base.GetType().GetProperty(pPropertyName);
             if (property != null)
             {
-                property.SetValue(this, pValue, null);
+                base.GetType().GetProperty(pPropertyName).SetValue(this, pValue, null);
             }
         }
 

@@ -9,6 +9,7 @@ using System.Reflection;
 using CommTool;
 using CommTool.Business.Services;
 using System.Text.RegularExpressions;
+using CommTool.Business.Metadata;
 
 namespace UnitTest
 {
@@ -47,6 +48,7 @@ namespace UnitTest
           //    }
           //}
             //string ttt = sb.ToString();
+
             CommTool.ConfigManager ma = new ConfigManager(@"C:\HRSource\V5.1.6(Standard)\8101224567-世代流通資\Export\appSettings.config","",true);
         }
 
@@ -91,4 +93,5 @@ namespace UnitTest
             }
         }
     }
+
 }
