@@ -839,12 +839,14 @@ namespace CreateXML {
            
         }
 
-        
+
 
 
         public Form1()
         {
             InitializeComponent();
+            richTextBox1.AllowDrop = true;
+            richTextBox1.DragDrop += new DragEventHandler(richTextBox1_DragDrop);
             ExcetionCollection collection = new ExcetionCollection();
             try
             {
@@ -976,7 +978,7 @@ namespace CreateXML {
                 SQLHelper.SHelper._sqlconnection = mage.GetValue("CurrentDbSource");
                 string[] sp = SQLHelper.SHelper._sqlconnection.Split(';');
                 SQLHelper.SHelper.DBIP = sp[0].Replace("Data Source=", "");
-                SQLHelper.SHelper.DBName = sp[1].Replace("Initial Catalog=", "");               
+                SQLHelper.SHelper.DBName = sp[1].Replace("Initial Catalog=", "");
                 #endregion
                 richTextBox1.Focus();
 
@@ -990,6 +992,138 @@ namespace CreateXML {
                 MessageBox.Show(collection.ShowException());
             }
         }
+
+        #region 20150724 add by Dick for 實作程式碼紀錄功能及批量儲存功能。  #74
+        void richTextBox1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            List<RecordCode> li = new List<RecordCode>();
+            foreach (string fi in files)
+            {
+                StreamReader SR = new StreamReader(fi);
+                string line = string.Empty;
+                while ((line = SR.ReadLine()) != null)
+                {
+                    if (line.IndexOf("#region") != -1)
+                    {
+                        if (line.IndexOf("Dick") != -1)
+                        {
+                            RecordCode record = new RecordCode();
+                            record.CodeRecordId = Guid.NewGuid();
+                            record.RecordDate = DateTime.Now;
+                            string[] sp = fi.Split('\\');
+                            if (sp.Length > 3)
+                            {
+                                record.Customer = sp[3];
+                                record.FileName = sp[sp.Length - 1];
+                            }
+                            StringBuilder context = new StringBuilder();
+                            string subline = string.Empty;
+                            while ((subline = SR.ReadLine()) != null)
+                            {
+                                if (subline.IndexOf("#endregion") != -1)
+                                {
+                                    break;
+                                }
+                                context.AppendLine(subline);
+                            }
+                            record.Context = context.ToString();
+                            record.Author = "Dick";                            
+                            li.Add(record);
+                        }
+                    }
+                }
+            }
+            Save(li.ToArray());
+        }
+        
+        public virtual void OnSaveBefore<T>(T obj)
+        {
+            //待實作必填欄位檢查功能....
+        }
+
+        public virtual void OnSaveBefore<T>(T[] obj)
+        {
+            //待實作必填欄位檢查功能....
+        }
+
+        public virtual System.Data.DataTable BeforeSaveTranslate<T>(T obj)
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+            foreach (PropertyInfo info in obj.GetType().GetProperties())
+            {
+                if (info.Name != "TypeKey")
+                {
+                    dt.Columns.Add(info.Name, info.PropertyType);
+                }
+                else
+                {
+                    dt.TableName = info.GetValue(obj, null).ToString();
+                }
+            }
+            DataRow row = dt.NewRow();
+            foreach (PropertyInfo info in obj.GetType().GetProperties())
+            {
+                if (info.Name != "TypeKey")
+                {
+                    row[info.Name] = info.GetValue(obj, null);
+                }
+            }
+            dt.Rows.Add(row);
+            return dt;
+        }
+
+        public virtual System.Data.DataTable BeforeSaveTranslate<T>(T[] obj)
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+            if (obj.Length > 0)
+            {
+                foreach (PropertyInfo info in obj[0].GetType().GetProperties())
+                {
+                    if (info.Name != "TypeKey")
+                    {
+                        dt.Columns.Add(info.Name, info.PropertyType);
+                    }
+                    else
+                    {
+                        dt.TableName = info.GetValue(obj[0], null).ToString();
+                    }
+                }
+
+                foreach (var Item in obj)
+                {
+                    DataRow row = dt.NewRow();
+                    foreach (PropertyInfo info in Item.GetType().GetProperties())
+                    {
+                        if (info.Name != "TypeKey")
+                        {
+                            row[info.Name] = info.GetValue(Item, null);
+                        }
+                    }
+                    dt.Rows.Add(row);
+                }
+            }
+            return dt;
+        }
+
+        public virtual void Save<T>(T obj)
+        {
+            OnSaveBefore(obj);
+            System.Data.DataTable dt = BeforeSaveTranslate(obj);
+            SQLHelper.SHelper.SqlBulkCopy(dt);
+        }
+
+        public virtual void Save<T>(T[] obj)
+        {
+            OnSaveBefore(obj);
+            System.Data.DataTable dt = BeforeSaveTranslate(obj);
+            SQLHelper.SHelper.SqlBulkCopy(dt);
+        }
+
+        #endregion
+
+       
+     
 
         /// <summary>
         /// 20150109 add by Dick for 加入模組轉換字典。  #14

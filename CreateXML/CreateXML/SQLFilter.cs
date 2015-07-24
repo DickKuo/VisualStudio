@@ -18,9 +18,10 @@ namespace CreateXML {
           richTextBox1.Text=  richTextBox1.Text.Replace(@"\r\n","").Replace("\"","");
 
           try {
-              SQL.SQL sq = new SQL.SQL(TBConnectstring.Text);
-              sq.CommandString = richTextBox1.Text;
-              dataGridView1.DataSource = sq.ExeRetrunDataTable();
+              //SQL.SQL sq = new SQL.SQL(TBConnectstring.Text);
+              //sq.CommandString = richTextBox1.Text;
+              //dataGridView1.DataSource = sq.ExeRetrunDataTable();
+              dataGridView1.DataSource = SQLHelper.SHelper.ExeDataTable(richTextBox1.Text);
           }
           catch(Exception ex) {
               MessageBox.Show(ex.ToString());

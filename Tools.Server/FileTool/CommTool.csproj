@@ -53,6 +53,7 @@
     <Compile Include="AutoTrigger.cs" />
     <Compile Include="Comm.cs" />
     <Compile Include="ConfigManager.cs" />
+    <Compile Include="DataEntity.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="Files.cs" />
     <Compile Include="Properties\Resource.Designer.cs">

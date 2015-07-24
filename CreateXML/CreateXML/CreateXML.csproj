@@ -56,12 +56,9 @@
     <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="SQL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SQLHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Dick\Desktop\參數生成工具\SQL.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLHelper">
-      <HintPath>..\..\..\..\..\..\Users\Dick\Dropbox\Export\SQLHelper.dll</HintPath>
+      <HintPath>..\..\..\..\Dropbox\Export\SQLHelper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -163,6 +160,7 @@
     <Content Include="SampleFile\Sample.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="RecordCode.cs" />
     <Compile Include="ShowMessage.cs">
       <SubType>Form</SubType>
     </Compile>

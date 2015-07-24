@@ -50,6 +50,7 @@
     <Compile Include="Services\ICommService.cs" />
     <Compile Include="Services\ICompanyObject.cs" />
     <Compile Include="Services\IConfigManager.cs" />
+    <Compile Include="Services\IDataEntity.cs" />
     <Compile Include="Services\IFileService.cs" />
     <Compile Include="Services\IFlag.cs" />
     <Compile Include="Services\IModifyObject.cs" />
