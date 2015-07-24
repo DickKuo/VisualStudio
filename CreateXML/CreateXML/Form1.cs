@@ -994,6 +994,7 @@ namespace CreateXML {
         }
 
         #region 20150724 add by Dick for 實作程式碼紀錄功能及批量儲存功能。  #74
+
         void richTextBox1_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -1028,13 +1029,22 @@ namespace CreateXML {
                                 context.AppendLine(subline);
                             }
                             record.Context = context.ToString();
-                            record.Author = "Dick";                            
-                            li.Add(record);
+                            record.Author = "Dick";
+                            li.Add(record);                         
                         }
                     }
                 }
             }
+            MyDelegate dl = new MyDelegate(MeDelegatePara);
+            this.BeginInvoke(dl, "寫入紀錄開始...");
+            string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CreateXML.exe.config");
+            ConfigManager configmanger = new ConfigManager(ConfigPath, "CreateXML");
+            string conn = configmanger.GetValue("BaseConncection");
+            string beforeconn = SQLHelper.SHelper._sqlconnection;
+            SQLHelper.SHelper._sqlconnection = conn;
             Save(li.ToArray());
+            SQLHelper.SHelper._sqlconnection = beforeconn;
+            this.BeginInvoke(dl, "寫入紀錄完成...");
         }
         
         public virtual void OnSaveBefore<T>(T obj)
@@ -1115,9 +1125,21 @@ namespace CreateXML {
 
         public virtual void Save<T>(T[] obj)
         {
-            OnSaveBefore(obj);
-            System.Data.DataTable dt = BeforeSaveTranslate(obj);
-            SQLHelper.SHelper.SqlBulkCopy(dt);
+            if (obj.Length > 0)
+            {
+                OnSaveBefore(obj);
+                System.Data.DataTable dt = BeforeSaveTranslate(obj);
+                RecordCode record = new RecordCode();
+                SQLHelper.SHelper.SqlBulkCopy(dt);
+            }
+        }
+
+        private delegate void MyDelegate(string pMessage);
+
+        private void MeDelegatePara(string pMessage)
+        {
+            richTextBox1.AppendText(pMessage);
+            richTextBox1.AppendText("\r\n");
         }
 
         #endregion

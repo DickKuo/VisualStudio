@@ -60,7 +60,7 @@ namespace CommTool.Business
             PropertyInfo protinfo = this.GetType().GetProperty(pPropertyName);
             if (protinfo!=null)
             {
-                protinfo.SetValue(pPropertyName, pValue,null);
+                protinfo.SetValue(pPropertyName, pValue);
             }
         }
 

@@ -230,9 +230,17 @@ namespace SQLHelper
                         //對應資料行
                         foreach(DataColumn dc in dt.Columns)                        
                         {
+                            switch( dc.ColumnName )
+                            {
+                                case "ExtendedProperties":
+                                case "Dirty":
+                                continue;
+                            }
                             sqlBC.ColumnMappings.Add(dc.ColumnName,dc.ColumnName);
                         }
                         //開始寫入
+                        dt.Columns.Remove("ExtendedProperties");
+                        dt.Columns.Remove("Dirty");
                         sqlBC.WriteToServer(dt);
                     }
                     scon.Dispose();
