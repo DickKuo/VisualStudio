@@ -997,55 +997,63 @@ namespace CreateXML {
 
         void richTextBox1_DragDrop(object sender, DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            List<RecordCode> li = new List<RecordCode>();
-            foreach (string fi in files)
+            try
             {
-                StreamReader SR = new StreamReader(fi);
-                string line = string.Empty;
-                while ((line = SR.ReadLine()) != null)
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                List<RecordCode> li = new List<RecordCode>();
+                foreach (string fi in files)
                 {
-                    if (line.IndexOf("#region") != -1)
+                    StreamReader SR = new StreamReader(fi);
+                    string line = string.Empty;
+                    while ((line = SR.ReadLine()) != null)
                     {
-                        if (line.IndexOf("Dick") != -1)
+                        if (line.IndexOf("#region") != -1)
                         {
-                            RecordCode record = new RecordCode();
-                            record.RecordCodeId = Guid.NewGuid();
-                            record.RecordDate = DateTime.Now;
-                            string[] sp = fi.Split('\\');
-                            if (sp.Length > 3)
+                            if (line.IndexOf("Dick") != -1)
                             {
-                                record.Customer = sp[3];
-                                record.FileName = sp[sp.Length - 1];
-                            }
-                            StringBuilder context = new StringBuilder();
-                            string subline = string.Empty;
-                            while ((subline = SR.ReadLine()) != null)
-                            {
-                                if (subline.IndexOf("#endregion") != -1)
+                                RecordCode record = new RecordCode();
+                                record.RecordCodeId = Guid.NewGuid();
+                                record.RecordDate = DateTime.Now;
+                                string[] sp = fi.Split('\\');
+                                if (sp.Length > 3)
                                 {
-                                    break;
+                                    record.Customer = sp[3];
+                                    record.FileName = sp[sp.Length - 1];
                                 }
-                                context.AppendLine(subline);
+                                StringBuilder context = new StringBuilder();
+                                string subline = string.Empty;
+                                while ((subline = SR.ReadLine()) != null)
+                                {
+                                    if (subline.IndexOf("#endregion") != -1)
+                                    {
+                                        break;
+                                    }
+                                    context.AppendLine(subline);
+                                }
+                                record.Context = context.ToString();
+                                record.Author = "Dick";
+                                li.Add(record);
                             }
-                            record.Context = context.ToString();
-                            record.Author = "Dick";                            
-                            li.Add(record);
                         }
                     }
                 }
-            }
 
-            MyDelegate dl = new MyDelegate(MeDelegatePara);
-            this.BeginInvoke(dl, "寫入紀錄開始...");
-            string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CreateXML.exe.config");
-            ConfigManager configmanger = new ConfigManager(ConfigPath, "CreateXML");
-            string conn = configmanger.GetValue("BaseConncection");
-            string beforeconn = SQLHelper.SHelper._sqlconnection;
-            SQLHelper.SHelper._sqlconnection = conn;
-            Save(li.ToArray());
-            SQLHelper.SHelper._sqlconnection = beforeconn;
-            this.BeginInvoke(dl, "寫入紀錄完成...");
+                MyDelegate dl = new MyDelegate(MeDelegatePara);
+                this.BeginInvoke(dl, "寫入紀錄開始...");
+                string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CreateXML.exe.config");
+                ConfigManager configmanger = new ConfigManager(ConfigPath, "CreateXML");
+                string conn = configmanger.GetValue("BaseConncection");
+                string beforeconn = SQLHelper.SHelper._sqlconnection;
+                SQLHelper.SHelper._sqlconnection = conn;
+                Save(li.ToArray());
+                SQLHelper.SHelper._sqlconnection = beforeconn;
+                this.BeginInvoke(dl, "寫入紀錄完成...");
+            }
+            catch (Exception ex)
+            {
+                MyDelegate dl = new MyDelegate(MeDelegatePara);
+                this.BeginInvoke(dl, ex.Message);
+            }
         }
         
         public virtual void OnSaveBefore<T>(T obj)
