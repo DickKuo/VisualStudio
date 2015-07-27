@@ -93,6 +93,10 @@ namespace CreateXML
                 DefaultDataForCasePath = Path.Combine(DefaultDataForCasePath, "Configuration");
                 DefaultDataForCasePath = Path.Combine(DefaultDataForCasePath, "DefaultData");
                 DefaultDataForCasePath = Path.Combine(DefaultDataForCasePath, "DefaultDataForCase.xml");
+                #region 20150727 add by Dick for #70
+                System.IO.FileInfo batchItemAttribute = new FileInfo(DefaultDataForCasePath);
+                batchItemAttribute.Attributes = FileAttributes.Normal;
+                #endregion              
                 if (File.Exists(DefaultDataForCasePath))
                 {
                     CheckNode(DefaultDataForCasePath);
