@@ -731,6 +731,7 @@ namespace CreateXML {
                                         case "guid":
                                             if(!string.IsNullOrEmpty(dr.Cells["ReferenceProperty"].Value.ToString())) {
                                                 control = ControlsSetting(EntityName, dr, control, "HRSelectControl");
+                                                control.Context += "           this.hRSelectControl" + dr.Cells["ReferenceProperty"].Value.ToString() + "Id.AutoDisplayText =true;";
                                                 control.Context += "           this.hRSelectControl"+dr.Cells["ReferenceProperty"].Value.ToString()+"Id.TypeKey =\"" + dr.Cells["ReferenceProperty"].Value.ToString() + "\";";
                                             }
                                             break;
