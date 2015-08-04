@@ -18,6 +18,8 @@ namespace CreateXML
         private System.String _author;
         private System.String _fileName;
         private System.String _customer;
+        private System.String _summary;
+
         #endregion
         #region Parameter
 
@@ -141,6 +143,26 @@ namespace CreateXML
                 }
             }
         }
+
+        /// <summary>
+        ///總結
+        /// </summary>
+        [SimpleProperty(DbType = GeneralDbType.String)]
+        public System.String Summary
+        {
+            get
+            {
+                return this._summary;
+            }
+            set
+            {
+                if ((_summary != value))
+                {
+                    this._summary = value;
+                }
+            }
+        }
+
         #endregion 
 
     }

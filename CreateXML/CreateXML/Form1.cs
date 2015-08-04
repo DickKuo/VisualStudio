@@ -1014,6 +1014,9 @@ namespace CreateXML {
                                 RecordCode record = new RecordCode();
                                 record.RecordCodeId = Guid.NewGuid();
                                 record.RecordDate = DateTime.Now;
+                                #region 20150804 modified by Dick 
+                                record.Summary = line.Replace("#region", "");
+                                #endregion                               
                                 string[] sp = fi.Split('\\');
                                 if (sp.Length > 3)
                                 {
