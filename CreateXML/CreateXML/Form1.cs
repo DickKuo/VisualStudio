@@ -2073,7 +2073,7 @@ namespace CreateXML {
                                 str.AppendLine("            vh.GreaterThan<decimal>(e.DataEntity,\"" + Parameter + "\" , 0, true);");
                                 break;
                             case "int32":
-                                str.AppendLine("            vh.GreaterThan<int>(e.DataEntity,\"" + Parameter + "\" , 0, true);n");
+                                str.AppendLine("            vh.GreaterThan<int>(e.DataEntity,\"" + Parameter + "\" , 0, true);");
                                 break;
                             case "datetime":
                                 str.AppendLine("            vh.DateTimeNotIsEmpty(e.DataEntity, \"" + Parameter + "\" );");
