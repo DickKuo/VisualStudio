@@ -1279,6 +1279,9 @@ namespace CreateXML {
                 ActionSetting.SetAttribute("Name", pEntityName + "Actions");
                 XmlElement Actions = doc.CreateElement("Actions");
                 ActionSetting.AppendChild(Actions);
+                XmlElement ActionVisible = doc.CreateElement("Action");
+                ActionVisible.SetAttribute("Name", "Visible");
+                ActionVisible.SetAttribute("DependencyAction", "Read");
                 XmlElement Action1 = doc.CreateElement("Action");
                 Action1.SetAttribute("Name", "Read");
                 XmlElement Action2 = doc.CreateElement("Action");
@@ -1287,6 +1290,7 @@ namespace CreateXML {
                 Action3.SetAttribute("Name", "Write");
                 XmlElement Action4 = doc.CreateElement("Action");
                 Action4.SetAttribute("Name", "Delete");
+                Actions.AppendChild(ActionVisible);
                 Actions.AppendChild(Action1);
                 Actions.AppendChild(Action2);
                 Actions.AppendChild(Action3);
