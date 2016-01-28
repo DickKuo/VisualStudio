@@ -73,6 +73,9 @@
     <Reference Include="CommTool.Service">
       <HintPath>C:\Users\Dick\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
+    <Reference Include="Menu Engineering, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
     <Reference Include="SQLHelper">
       <HintPath>C:\Users\Dick\Dropbox\Export\SQLHelper.dll</HintPath>
     </Reference>
@@ -93,20 +96,34 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>AppConfig.settings</DependentUpon>
     </Compile>
+    <Compile Include="Collections.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Collections.Designer.cs">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="MenuEngineeringDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MenuEngineeringDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLConntion.cs">
+    <Compile Include="SQLForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SQLConntion.Designer.cs">
-      <DependentUpon>SQLConntion.cs</DependentUpon>
+    <Compile Include="SQLForm.Designer.cs">
+      <DependentUpon>SQLForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Collections.resx">
+      <DependentUpon>Collections.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,8 +136,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SQLConntion.resx">
-      <DependentUpon>SQLConntion.cs</DependentUpon>
+    <EmbeddedResource Include="SQLForm.resx">
+      <DependentUpon>SQLForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -128,6 +145,17 @@
     <None Include="AppConfig.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>AppConfig.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="MenuEngineeringDataSet.xsc">
+      <DependentUpon>MenuEngineeringDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="MenuEngineeringDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MenuEngineeringDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="MenuEngineeringDataSet.xss">
+      <DependentUpon>MenuEngineeringDataSet.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

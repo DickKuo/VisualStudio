@@ -1,6 +1,6 @@
 ﻿namespace Menu_Engineering
 {
-    partial class SQLConntion
+    partial class SQLForm
     {
         /// <summary>
         /// Required designer variable.
@@ -93,7 +93,7 @@
             // 
             this.btConnection.Location = new System.Drawing.Point(148, 228);
             this.btConnection.Name = "btConnection";
-            this.btConnection.Size = new System.Drawing.Size(75, 23);
+            this.btConnection.Size = new System.Drawing.Size(103, 23);
             this.btConnection.TabIndex = 2;
             this.btConnection.Text = "連線測試";
             this.btConnection.UseVisualStyleBackColor = true;
