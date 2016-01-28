@@ -279,6 +279,61 @@ namespace Menu_Engineering
                 dataGridViewFood.DataSource = dtdetail;
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (dateTimePickerBegin.Value == DateTime.MinValue)
+            {
+                MessageBox.Show("開始日期不可為空");
+            }
+            else
+            {
+                if (dateTimePickerEnd.Value == DateTime.MinValue)
+                {
+                    MessageBox.Show("結束日期不可為空");
+                }
+                else
+                {
+                    if (dateTimePickerEnd.Value.Date < dateTimePickerBegin.Value.Date)
+                    {
+                        MessageBox.Show("結束日期不可小於開始日期");
+                    }
+                    else
+                    {                     
+
+                    }
+                }
+             }
+        }
+
+     
+
+
+        /// <summary>
+        /// 每日採購
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DatilyInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (dataGridView1.SelectedRows.Count > 0 && dataGridViewFood.SelectedRows.Count > 0)
+            {
+                string Id;
+                string FoodId;
+                GetDetail(out Id, out FoodId);
+
+                DatilyShopping shopping = new DatilyShopping(FoodId);
+                shopping.ShowDialog();
+                //if (coll.DialogResult == DialogResult.OK)
+                //    FreshDetail();
+            }
+            else
+            {
+                MessageBox.Show("未選擇資料列");
+            }
+           
+        }
        
     }
 }

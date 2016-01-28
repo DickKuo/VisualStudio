@@ -102,6 +102,12 @@
     <Compile Include="Collections.Designer.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="DatilyShopping.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatilyShopping.Designer.cs">
+      <DependentUpon>DatilyShopping.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +129,9 @@
     </Compile>
     <EmbeddedResource Include="Collections.resx">
       <DependentUpon>Collections.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatilyShopping.resx">
+      <DependentUpon>DatilyShopping.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
