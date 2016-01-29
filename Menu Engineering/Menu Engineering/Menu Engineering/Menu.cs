@@ -59,9 +59,12 @@ namespace Menu_Engineering
                 SHelper._sqlconnection = AppConfig.Default.BaseConncection.ToString();
 
                 DataTable dt = SHelper.ExeDataTable("Select top 1 * from Food");
-                CollectionsView();
+                
                 //AppDomain.CurrentDomain.SetData("BaseConncection", "Data Source=127.0.0.2;Initial Catalog=MenuEngineering;User Id=sa;Password=dcms;Application Name=DcmsHr");
                 //AppConfig.Default.BaseConncection = "Data Source=127.0.0.5;Initial Catalog=MenuEngineering;User Id=sa;Password=dcms;Application Name=DcmsHr"; 
+                CollectionsView();
+                BindingColl();
+
             }
             catch (Exception ex)
             {
@@ -69,6 +72,17 @@ namespace Menu_Engineering
             }           
            }
 
+        private void BindingColl()
+        {
+            string sql = string.Format("Select Name From Collections");
+            DataTable dt =SQLHelper.SHelper.ExeDataTable(sql);
+            cbCollections.ValueMember = "Name";
+            DataRow dr = dt.NewRow();
+            dr[0] = "請選擇";
+            dt.Rows.InsertAt(dr, 0);
+            cbCollections.DataSource = dt;
+            
+        }
 
         private void CollectionsView()
         {
@@ -215,6 +229,7 @@ namespace Menu_Engineering
             DataTable dt = SQLHelper.SHelper.ExeDataTableUseParameter("Select CollectionsId from Collections Where Name =@Name", dic);
             Id = string.Empty;
             Id = dt.Rows[0][0].ToString();
+            
 
             //Detail
             DataGridViewRow Detailview = dataGridViewFood.SelectedRows[0];
@@ -299,11 +314,44 @@ namespace Menu_Engineering
                         MessageBox.Show("結束日期不可小於開始日期");
                     }
                     else
-                    {                     
-
+                    {
+                        DatilyFresh();
                     }
                 }
              }
+        }
+
+        /// <summary>
+        /// 刷新每日資料
+        /// </summary>
+        private void DatilyFresh()
+        {
+            DataTable dt = new DataTable();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(@"Select 
+                        Food.Name ,
+                        Collections.Name AS CollName,
+                        Datily.Price, 
+                        Datily.Quantity,
+                        Datily.Day,
+                        Datily.Remark
+
+                        From Datily  
+                        Left Join Food  on  Datily.FoodId =Food.FoodId
+                        Left Join Collections  ON  Food.CollectionsId =Collections.CollectionsId 
+                        Where  Datily.Day between '{0}' AND '{1}' ", dateTimePickerBegin.Value.Date.ToString("yyyy/MM/dd"), dateTimePickerEnd.Value.Date.ToString("yyyy/MM/dd"));
+            if (cbCollections.SelectedIndex >= 1)
+            {
+                sb.AppendFormat(" AND Collections.Name=@Collections");
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("Collections", cbCollections.SelectedValue);
+                dt = SQLHelper.SHelper.ExeDataTableUseParameter(sb.ToString(), dic);
+            }
+            else
+            {
+                dt = SQLHelper.SHelper.ExeDataTable(sb.ToString());
+            }
+            dataGridViewDatily.DataSource = dt;
         }
 
      
@@ -316,14 +364,13 @@ namespace Menu_Engineering
         /// <param name="e"></param>
         private void DatilyInToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             if (dataGridView1.SelectedRows.Count > 0 && dataGridViewFood.SelectedRows.Count > 0)
             {
                 string Id;
                 string FoodId;
                 GetDetail(out Id, out FoodId);
 
-                DatilyShopping shopping = new DatilyShopping(FoodId);
+                DatilyShopping shopping = new DatilyShopping(FoodId,"Add");
                 shopping.ShowDialog();
                 //if (coll.DialogResult == DialogResult.OK)
                 //    FreshDetail();
@@ -334,6 +381,102 @@ namespace Menu_Engineering
             }
            
         }
+
+      
+
+
+        /// <summary>
+        /// 
+        /// 每日資料
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridViewDatily_MouseDown(object sender, MouseEventArgs e)
+        {
+              if (e.Button == MouseButtons.Right)
+            {
+                Point po = new Point(30, 50);
+                contextMenuStripDatily.Show(MousePosition);
+            }            
+        }
+
+
+
+        private void DatilyModifyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewDatily.SelectedRows.Count > 0)
+            {
+                DataTable dt = DatilyModifyGetId();
+                if (dt.Rows.Count > 0)
+                {
+                    string DatilyId = dt.Rows[0][0].ToString();
+                    string FoodId = dt.Rows[0][1].ToString();
+                    DatilyShopping Shopping = new DatilyShopping(FoodId, "Modify", DatilyId);
+                    Shopping.ShowDialog();
+                    DatilyFresh();
+                }
+            }
+            else
+            {
+                MessageBox.Show("未選擇資料列");
+            }
+        }
+
+        private DataTable DatilyModifyGetId()
+        {
+            DataGridViewRow view = dataGridViewDatily.SelectedRows[0];
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("Name", view.Cells[0].Value);
+            dic.Add("Collections", view.Cells[1].Value);
+            dic.Add("Datily", view.Cells[4].Value);
+            string sql = @"Select 
+                            Datily.DatilyId,
+                            Datily.FoodId
+                            From Datily  
+                            Left Join Food  on  Datily.FoodId =Food.FoodId
+                            Left Join Collections  ON  Food.CollectionsId =Collections.CollectionsId 
+
+                            Where Food.Name =@Name AND Collections.Name=@Collections
+                            AND Datily.Day =@Datily";
+            DataTable dt = SQLHelper.SHelper.ExeDataTableUseParameter(sql, dic);
+            return dt;
+        }
+
+        private void DatilyDeleteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewDatily.SelectedRows.Count > 0)
+            {
+                 DialogResult dialogResult = MessageBox.Show("確定要刪除此每日資料嗎?", "提示", MessageBoxButtons.YesNo);
+                 if (dialogResult == DialogResult.Yes)
+                 {
+                     DataTable dt = DatilyModifyGetId();
+                     if (dt.Rows.Count > 0)
+                     {
+                         string DatilyId = dt.Rows[0][0].ToString();
+                         try
+                         {
+                             string sql = string.Format("Delete Datily Where DatilyId ='{0}'", DatilyId);
+                             SQLHelper.SHelper.ExeNoQuery(sql);
+                             MessageBox.Show("刪除完成。");
+                         }
+                         catch (Exception ex)
+                         {
+                             MessageBox.Show("刪除失敗。");
+                         }
+                         finally
+                         {
+                             DatilyFresh();
+                         }
+                     }
+                 }
+            }
+            else
+            {
+                MessageBox.Show("未選擇資料列");
+            }
+        }
+
+     
        
     }
 }

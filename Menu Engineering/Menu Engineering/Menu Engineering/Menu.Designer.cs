@@ -56,6 +56,10 @@
             this.修改ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.刪除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.每日採購ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripDatily = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.修改ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.刪除ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbCollections = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.tabFood.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -69,6 +73,7 @@
             this.groupBox3.SuspendLayout();
             this.contextMenuStripCollections.SuspendLayout();
             this.contextMenuStripFood.SuspendLayout();
+            this.contextMenuStripDatily.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -214,11 +219,13 @@
             this.dataGridViewDatily.RowTemplate.Height = 27;
             this.dataGridViewDatily.Size = new System.Drawing.Size(799, 228);
             this.dataGridViewDatily.TabIndex = 0;
+            this.dataGridViewDatily.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridViewDatily_MouseDown);
             // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.cbCollections);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.dateTimePickerEnd);
             this.groupBox3.Controls.Add(this.label1);
@@ -228,11 +235,11 @@
             this.groupBox3.Size = new System.Drawing.Size(823, 62);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "日期區間";
+            this.groupBox3.Text = "查詢條件";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(671, 18);
+            this.button1.Location = new System.Drawing.Point(672, 24);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(93, 28);
             this.button1.TabIndex = 3;
@@ -242,7 +249,7 @@
             // 
             // dateTimePickerEnd
             // 
-            this.dateTimePickerEnd.Location = new System.Drawing.Point(416, 21);
+            this.dateTimePickerEnd.Location = new System.Drawing.Point(267, 21);
             this.dateTimePickerEnd.Name = "dateTimePickerEnd";
             this.dateTimePickerEnd.Size = new System.Drawing.Size(200, 25);
             this.dateTimePickerEnd.TabIndex = 2;
@@ -250,7 +257,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(365, 31);
+            this.label1.Location = new System.Drawing.Point(230, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(15, 15);
             this.label1.TabIndex = 1;
@@ -258,7 +265,7 @@
             // 
             // dateTimePickerBegin
             // 
-            this.dateTimePickerBegin.Location = new System.Drawing.Point(96, 24);
+            this.dateTimePickerBegin.Location = new System.Drawing.Point(7, 21);
             this.dateTimePickerBegin.Name = "dateTimePickerBegin";
             this.dateTimePickerBegin.Size = new System.Drawing.Size(200, 25);
             this.dateTimePickerBegin.TabIndex = 0;
@@ -341,6 +348,36 @@
             this.每日採購ToolStripMenuItem.Text = "每日採購";
             this.每日採購ToolStripMenuItem.Click += new System.EventHandler(this.DatilyInToolStripMenuItem_Click);
             // 
+            // contextMenuStripDatily
+            // 
+            this.contextMenuStripDatily.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.修改ToolStripMenuItem1,
+            this.刪除ToolStripMenuItem1});
+            this.contextMenuStripDatily.Name = "contextMenuStripDatily";
+            this.contextMenuStripDatily.Size = new System.Drawing.Size(109, 52);
+            // 
+            // 修改ToolStripMenuItem1
+            // 
+            this.修改ToolStripMenuItem1.Name = "修改ToolStripMenuItem1";
+            this.修改ToolStripMenuItem1.Size = new System.Drawing.Size(108, 24);
+            this.修改ToolStripMenuItem1.Text = "修改";
+            this.修改ToolStripMenuItem1.Click += new System.EventHandler(this.DatilyModifyToolStripMenuItem1_Click);
+            // 
+            // 刪除ToolStripMenuItem1
+            // 
+            this.刪除ToolStripMenuItem1.Name = "刪除ToolStripMenuItem1";
+            this.刪除ToolStripMenuItem1.Size = new System.Drawing.Size(108, 24);
+            this.刪除ToolStripMenuItem1.Text = "刪除";
+            this.刪除ToolStripMenuItem1.Click += new System.EventHandler(this.DatilyDeleteToolStripMenuItem1_Click);
+            // 
+            // cbCollections
+            // 
+            this.cbCollections.FormattingEnabled = true;
+            this.cbCollections.Location = new System.Drawing.Point(500, 25);
+            this.cbCollections.Name = "cbCollections";
+            this.cbCollections.Size = new System.Drawing.Size(121, 23);
+            this.cbCollections.TabIndex = 4;
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -366,6 +403,7 @@
             this.groupBox3.PerformLayout();
             this.contextMenuStripCollections.ResumeLayout(false);
             this.contextMenuStripFood.ResumeLayout(false);
+            this.contextMenuStripDatily.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -400,6 +438,10 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerBegin;
         private System.Windows.Forms.DataGridView dataGridViewDatily;
         private System.Windows.Forms.ToolStripMenuItem 每日採購ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripDatily;
+        private System.Windows.Forms.ToolStripMenuItem 修改ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 刪除ToolStripMenuItem1;
+        private System.Windows.Forms.ComboBox cbCollections;
     }
 }
 
