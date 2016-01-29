@@ -64,6 +64,7 @@ namespace Menu_Engineering
                 //AppConfig.Default.BaseConncection = "Data Source=127.0.0.5;Initial Catalog=MenuEngineering;User Id=sa;Password=dcms;Application Name=DcmsHr"; 
                 CollectionsView();
                 BindingColl();
+                FreshMenuCollection();
 
             }
             catch (Exception ex)
@@ -476,7 +477,83 @@ namespace Menu_Engineering
             }
         }
 
-     
+        private void dataGridViewMenuCollection_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point po = new Point(30, 50);
+                contextMenuStripMenuCollection.Show(MousePosition);
+            }   
+        }
+
+        private void MenuCollectionAddToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MenuCollection coll = new MenuCollection();
+            if (coll.ShowDialog() == DialogResult.OK)
+            {
+                FreshMenuCollection();
+            }            
+        }
+
+        /// <summary>
+        /// 刷新菜單瀏覽畫面
+        /// </summary>
+        private void FreshMenuCollection()
+        {
+            string sql = string.Format("Select Name,Remark from MenuCollections ");
+            dataGridViewMenuCollection.DataSource = SQLHelper.SHelper.ExeDataTable(sql);
+        }
+
+        private void MenuCollectionModifyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewMenuCollection.SelectedRows.Count > 0)
+            {
+                DataGridViewRow view = dataGridViewMenuCollection.SelectedRows[0];
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("Name", view.Cells[0].Value);
+                string sql = "Select MenuCollectionsId from MenuCollections where Name=@Name";
+                DataTable dt = SQLHelper.SHelper.ExeDataTableUseParameter(sql, dic);
+                if (dt.Rows.Count > 0)
+                {
+                    string MenuCollectionsId = dt.Rows[0][0].ToString();
+                    MenuCollection coll = new MenuCollection("Modify",MenuCollectionsId);
+                    if (coll.ShowDialog() == DialogResult.OK)
+                    {
+                        FreshMenuCollection();
+                    }  
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("未選擇資料列");
+            }
+        }
+
+
+        private void MenuCollectionDeleteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+            if (dataGridViewMenuCollection.SelectedRows.Count > 0)
+            {
+                DataGridViewRow view = dataGridViewMenuCollection.SelectedRows[0];
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("Name", view.Cells[0].Value);
+                string sql = "Select MenuCollectionsId from MenuCollections where Name=@Name";
+                DataTable dt = SQLHelper.SHelper.ExeDataTableUseParameter(sql, dic);
+                if (dt.Rows.Count > 0)
+                {
+                    string MenuCollectionsId = dt.Rows[0][0].ToString();
+
+                    DialogResult dialogResult = MessageBox.Show("確定要刪除此每日資料嗎?", "提示", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    { 
+                       //do something....
+                    }
+                }
+            }
+        }
+
        
     }
 }

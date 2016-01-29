@@ -42,11 +42,16 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dataGridViewDatily = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbCollections = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dateTimePickerEnd = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePickerBegin = new System.Windows.Forms.DateTimePicker();
             this.tabMenu = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.dataGridViewMenu = new System.Windows.Forms.DataGridView();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.dataGridViewMenuCollection = new System.Windows.Forms.DataGridView();
             this.contextMenuStripCollections = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +64,10 @@
             this.contextMenuStripDatily = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.修改ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.刪除ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.cbCollections = new System.Windows.Forms.ComboBox();
+            this.contextMenuStripMenuCollection = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.新增ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.修改ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.刪除ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabFood.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -71,9 +79,15 @@
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDatily)).BeginInit();
             this.groupBox3.SuspendLayout();
+            this.tabMenu.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMenu)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMenuCollection)).BeginInit();
             this.contextMenuStripCollections.SuspendLayout();
             this.contextMenuStripFood.SuspendLayout();
             this.contextMenuStripDatily.SuspendLayout();
+            this.contextMenuStripMenuCollection.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -210,12 +224,15 @@
             // 
             // dataGridViewDatily
             // 
+            this.dataGridViewDatily.AllowUserToAddRows = false;
+            this.dataGridViewDatily.AllowUserToDeleteRows = false;
             this.dataGridViewDatily.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewDatily.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewDatily.Location = new System.Drawing.Point(7, 25);
             this.dataGridViewDatily.Name = "dataGridViewDatily";
+            this.dataGridViewDatily.ReadOnly = true;
             this.dataGridViewDatily.RowTemplate.Height = 27;
             this.dataGridViewDatily.Size = new System.Drawing.Size(799, 228);
             this.dataGridViewDatily.TabIndex = 0;
@@ -236,6 +253,14 @@
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "查詢條件";
+            // 
+            // cbCollections
+            // 
+            this.cbCollections.FormattingEnabled = true;
+            this.cbCollections.Location = new System.Drawing.Point(500, 25);
+            this.cbCollections.Name = "cbCollections";
+            this.cbCollections.Size = new System.Drawing.Size(121, 23);
+            this.cbCollections.TabIndex = 4;
             // 
             // button1
             // 
@@ -272,6 +297,8 @@
             // 
             // tabMenu
             // 
+            this.tabMenu.Controls.Add(this.groupBox6);
+            this.tabMenu.Controls.Add(this.groupBox5);
             this.tabMenu.Location = new System.Drawing.Point(4, 25);
             this.tabMenu.Name = "tabMenu";
             this.tabMenu.Padding = new System.Windows.Forms.Padding(3);
@@ -279,6 +306,62 @@
             this.tabMenu.TabIndex = 1;
             this.tabMenu.Text = "菜單";
             this.tabMenu.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.dataGridViewMenu);
+            this.groupBox6.Location = new System.Drawing.Point(15, 184);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(830, 174);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "菜單";
+            // 
+            // dataGridViewMenu
+            // 
+            this.dataGridViewMenu.AllowUserToAddRows = false;
+            this.dataGridViewMenu.AllowUserToDeleteRows = false;
+            this.dataGridViewMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewMenu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMenu.Location = new System.Drawing.Point(16, 25);
+            this.dataGridViewMenu.Name = "dataGridViewMenu";
+            this.dataGridViewMenu.ReadOnly = true;
+            this.dataGridViewMenu.RowTemplate.Height = 27;
+            this.dataGridViewMenu.Size = new System.Drawing.Size(797, 132);
+            this.dataGridViewMenu.TabIndex = 0;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.dataGridViewMenuCollection);
+            this.groupBox5.Location = new System.Drawing.Point(15, 17);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(830, 161);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "菜單類別";
+            // 
+            // dataGridViewMenuCollection
+            // 
+            this.dataGridViewMenuCollection.AllowUserToAddRows = false;
+            this.dataGridViewMenuCollection.AllowUserToDeleteRows = false;
+            this.dataGridViewMenuCollection.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewMenuCollection.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMenuCollection.Location = new System.Drawing.Point(16, 18);
+            this.dataGridViewMenuCollection.Name = "dataGridViewMenuCollection";
+            this.dataGridViewMenuCollection.ReadOnly = true;
+            this.dataGridViewMenuCollection.RowTemplate.Height = 27;
+            this.dataGridViewMenuCollection.Size = new System.Drawing.Size(797, 134);
+            this.dataGridViewMenuCollection.TabIndex = 0;
+            this.dataGridViewMenuCollection.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridViewMenuCollection_MouseDown);
             // 
             // contextMenuStripCollections
             // 
@@ -370,13 +453,35 @@
             this.刪除ToolStripMenuItem1.Text = "刪除";
             this.刪除ToolStripMenuItem1.Click += new System.EventHandler(this.DatilyDeleteToolStripMenuItem1_Click);
             // 
-            // cbCollections
+            // contextMenuStripMenuCollection
             // 
-            this.cbCollections.FormattingEnabled = true;
-            this.cbCollections.Location = new System.Drawing.Point(500, 25);
-            this.cbCollections.Name = "cbCollections";
-            this.cbCollections.Size = new System.Drawing.Size(121, 23);
-            this.cbCollections.TabIndex = 4;
+            this.contextMenuStripMenuCollection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.新增ToolStripMenuItem1,
+            this.修改ToolStripMenuItem2,
+            this.刪除ToolStripMenuItem2});
+            this.contextMenuStripMenuCollection.Name = "contextMenuStripMenuCollection";
+            this.contextMenuStripMenuCollection.Size = new System.Drawing.Size(109, 76);
+            // 
+            // 新增ToolStripMenuItem1
+            // 
+            this.新增ToolStripMenuItem1.Name = "新增ToolStripMenuItem1";
+            this.新增ToolStripMenuItem1.Size = new System.Drawing.Size(108, 24);
+            this.新增ToolStripMenuItem1.Text = "新增";
+            this.新增ToolStripMenuItem1.Click += new System.EventHandler(this.MenuCollectionAddToolStripMenuItem1_Click);
+            // 
+            // 修改ToolStripMenuItem2
+            // 
+            this.修改ToolStripMenuItem2.Name = "修改ToolStripMenuItem2";
+            this.修改ToolStripMenuItem2.Size = new System.Drawing.Size(108, 24);
+            this.修改ToolStripMenuItem2.Text = "修改";
+            this.修改ToolStripMenuItem2.Click += new System.EventHandler(this.MenuCollectionModifyToolStripMenuItem1_Click);
+            // 
+            // 刪除ToolStripMenuItem2
+            // 
+            this.刪除ToolStripMenuItem2.Name = "刪除ToolStripMenuItem2";
+            this.刪除ToolStripMenuItem2.Size = new System.Drawing.Size(152, 24);
+            this.刪除ToolStripMenuItem2.Text = "刪除";
+            this.刪除ToolStripMenuItem2.Click += new System.EventHandler(this.MenuCollectionDeleteToolStripMenuItem1_Click);
             // 
             // Menu
             // 
@@ -401,9 +506,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDatily)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.tabMenu.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMenu)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMenuCollection)).EndInit();
             this.contextMenuStripCollections.ResumeLayout(false);
             this.contextMenuStripFood.ResumeLayout(false);
             this.contextMenuStripDatily.ResumeLayout(false);
+            this.contextMenuStripMenuCollection.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -442,6 +553,14 @@
         private System.Windows.Forms.ToolStripMenuItem 修改ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 刪除ToolStripMenuItem1;
         private System.Windows.Forms.ComboBox cbCollections;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.DataGridView dataGridViewMenu;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.DataGridView dataGridViewMenuCollection;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripMenuCollection;
+        private System.Windows.Forms.ToolStripMenuItem 新增ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 修改ToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem 刪除ToolStripMenuItem2;
     }
 }
 
