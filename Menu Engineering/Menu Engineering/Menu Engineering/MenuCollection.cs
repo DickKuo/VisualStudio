@@ -21,13 +21,17 @@ namespace Menu_Engineering
             PType = ptype;
             if (ptype == "Modify")
             {
-                string sql =string.Format("Select * from MenuCollections Where MenuCollectionsId ='{0}'", MenuCollectionId);
+                string sql = string.Format("Select * from MenuCollections Where MenuCollectionsId ='{0}'", MenuCollectionId);
                 DataTable dt = SQLHelper.SHelper.ExeDataTable(sql);
                 if (dt.Rows.Count > 0)
                 {
                     TbCollectionName.Text = dt.Rows[0][1].ToString();
                     richTextBox1.Text = dt.Rows[0][2].ToString();
                 }
+            }
+            else
+            {
+                MenuCollectionId = Guid.NewGuid().ToString();
             }
         }
 
@@ -48,8 +52,9 @@ namespace Menu_Engineering
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 try
                 {
-                     sql = string.Format("Select * from MenuCollections Where Name =@Name");
+                    sql = string.Format("Select * from MenuCollections Where Name =@Name AND MenuCollectionsId<>@MenuCollectionsId");
                             dic.Add("Name", TbCollectionName.Text);
+                            dic.Add("MenuCollectionsId", MenuCollectionId);                    
                             DataTable dt = SQLHelper.SHelper.ExeDataTableUseParameter(sql, dic);
                             if (dt.Rows.Count > 0)
                             {
@@ -63,7 +68,7 @@ namespace Menu_Engineering
                                         #region 新增
                                         dic.Clear();
                                         sql = string.Format(" Insert Into MenuCollections (MenuCollectionsId,Name,Remark)values(@MenuCollectionsId,@Name,@Remark)");
-                                        dic.Add("MenuCollectionsId", Guid.NewGuid());
+                                        dic.Add("MenuCollectionsId", MenuCollectionId);
                                         dic.Add("Name", TbCollectionName.Text);
                                         dic.Add("Remark", richTextBox1.Text);
                                         SQLHelper.SHelper.ExeNoQueryUseParameter(sql, dic);
@@ -80,14 +85,13 @@ namespace Menu_Engineering
                                         SQLHelper.SHelper.ExeNoQueryUseParameter(sql, dic);
                                         MessageBox.Show("修改成功。");
                                         #endregion
-
                                         break;
                                 }
                             }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("新增失敗。");
+                    MessageBox.Show("變更失敗。");
                 }
                 finally
                 {

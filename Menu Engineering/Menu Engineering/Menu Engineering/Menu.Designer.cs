@@ -68,6 +68,10 @@
             this.新增ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.修改ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.刪除ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.新增ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.修改ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.刪除ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabFood.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -88,6 +92,7 @@
             this.contextMenuStripFood.SuspendLayout();
             this.contextMenuStripDatily.SuspendLayout();
             this.contextMenuStripMenuCollection.SuspendLayout();
+            this.contextMenuStripMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -334,6 +339,7 @@
             this.dataGridViewMenu.RowTemplate.Height = 27;
             this.dataGridViewMenu.Size = new System.Drawing.Size(797, 132);
             this.dataGridViewMenu.TabIndex = 0;
+            this.dataGridViewMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridViewMenu_MouseDown);
             // 
             // groupBox5
             // 
@@ -479,9 +485,37 @@
             // 刪除ToolStripMenuItem2
             // 
             this.刪除ToolStripMenuItem2.Name = "刪除ToolStripMenuItem2";
-            this.刪除ToolStripMenuItem2.Size = new System.Drawing.Size(152, 24);
+            this.刪除ToolStripMenuItem2.Size = new System.Drawing.Size(108, 24);
             this.刪除ToolStripMenuItem2.Text = "刪除";
             this.刪除ToolStripMenuItem2.Click += new System.EventHandler(this.MenuCollectionDeleteToolStripMenuItem1_Click);
+            // 
+            // contextMenuStripMenu
+            // 
+            this.contextMenuStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.新增ToolStripMenuItem2,
+            this.修改ToolStripMenuItem3,
+            this.刪除ToolStripMenuItem3});
+            this.contextMenuStripMenu.Name = "contextMenuStripMenu";
+            this.contextMenuStripMenu.Size = new System.Drawing.Size(109, 76);
+            // 
+            // 新增ToolStripMenuItem2
+            // 
+            this.新增ToolStripMenuItem2.Name = "新增ToolStripMenuItem2";
+            this.新增ToolStripMenuItem2.Size = new System.Drawing.Size(108, 24);
+            this.新增ToolStripMenuItem2.Text = "新增";
+            this.新增ToolStripMenuItem2.Click += new System.EventHandler(this.MenuAddToolStripMenuItem2_Click);
+            // 
+            // 修改ToolStripMenuItem3
+            // 
+            this.修改ToolStripMenuItem3.Name = "修改ToolStripMenuItem3";
+            this.修改ToolStripMenuItem3.Size = new System.Drawing.Size(108, 24);
+            this.修改ToolStripMenuItem3.Text = "修改";
+            // 
+            // 刪除ToolStripMenuItem3
+            // 
+            this.刪除ToolStripMenuItem3.Name = "刪除ToolStripMenuItem3";
+            this.刪除ToolStripMenuItem3.Size = new System.Drawing.Size(108, 24);
+            this.刪除ToolStripMenuItem3.Text = "刪除";
             // 
             // Menu
             // 
@@ -515,6 +549,7 @@
             this.contextMenuStripFood.ResumeLayout(false);
             this.contextMenuStripDatily.ResumeLayout(false);
             this.contextMenuStripMenuCollection.ResumeLayout(false);
+            this.contextMenuStripMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -561,6 +596,10 @@
         private System.Windows.Forms.ToolStripMenuItem 新增ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 修改ToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem 刪除ToolStripMenuItem2;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripMenu;
+        private System.Windows.Forms.ToolStripMenuItem 新增ToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem 修改ToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem 刪除ToolStripMenuItem3;
     }
 }
 

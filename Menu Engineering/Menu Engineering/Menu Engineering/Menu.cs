@@ -10,6 +10,7 @@ using SQLHelper;
 using CommTool;
 using System.IO;
 using System.Security.Cryptography;
+using System.Data.SqlClient;
 
 namespace Menu_Engineering
 {
@@ -531,26 +532,103 @@ namespace Menu_Engineering
         }
 
 
+        /// <summary>
+        /// 刪除菜單類別
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuCollectionDeleteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
             if (dataGridViewMenuCollection.SelectedRows.Count > 0)
             {
-                DataGridViewRow view = dataGridViewMenuCollection.SelectedRows[0];
-                Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("Name", view.Cells[0].Value);
-                string sql = "Select MenuCollectionsId from MenuCollections where Name=@Name";
-                DataTable dt = SQLHelper.SHelper.ExeDataTableUseParameter(sql, dic);
-                if (dt.Rows.Count > 0)
+                try
                 {
-                    string MenuCollectionsId = dt.Rows[0][0].ToString();
-
-                    DialogResult dialogResult = MessageBox.Show("確定要刪除此每日資料嗎?", "提示", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    { 
-                       //do something....
-                    }
+                    string MenuCollectionsId = GetMenuCollectionId();
+                    Dictionary<string, object> dic = new Dictionary<string, object>() ;
+                    string sql;                    
+                        sql = "Select  Top 1 *  from Menu where MenuCollectionId =@MenuCollectionId";
+                        dic.Clear();
+                        dic.Add("MenuCollectionId", MenuCollectionsId);
+                        DataTable dtdetail = SQLHelper.SHelper.ExeDataTableUseParameter(sql, dic);
+                        if (dtdetail.Rows.Count > 0)
+                        {
+                            DialogResult dialogResult = MessageBox.Show("此菜單類別下已存在菜單，確定要連同菜單一併刪除嗎??", "提示", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                using (SqlConnection scon = new SqlConnection(SQLHelper.SHelper._sqlconnection))
+                                {
+                                    SqlCommand scm = new SqlCommand();
+                                    scm.Connection = scon;
+                                    SqlTransaction transaction = scon.BeginTransaction();
+                                    scm.Transaction = transaction;
+                                  
+                                }
+                                //do something....
+                            }
+                        }
+                        else
+                        {
+                            DialogResult dialogResult = MessageBox.Show("確定要刪除此菜單嗎?", "提示", MessageBoxButtons.YesNo);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                sql = "Delete MenuCollections Where MenuCollectionsId=@MenuCollectionsId";
+                                dic.Clear();
+                                dic.Add("MenuCollectionsId", MenuCollectionsId);
+                                SQLHelper.SHelper.ExeNoQueryUseParameter(sql, dic);
+                            }
+                        }
+                    
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("刪除失敗。");
+                }
+                finally
+                {
+                    MessageBox.Show("刪除完成。");
+                    FreshMenuCollection();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 取得選取的菜單類別
+        /// </summary>
+        /// <param name="dic"></param>
+        /// <returns></returns>
+        private string GetMenuCollectionId()
+        {
+            string sql = string.Empty;
+             string MenuCollectionsId =string.Empty;
+            DataGridViewRow view = dataGridViewMenuCollection.SelectedRows[0];
+            Dictionary<string, object>  dic = new Dictionary<string, object>();
+            dic.Add("Name", view.Cells[0].Value);
+            sql = "Select MenuCollectionsId from MenuCollections where Name=@Name";
+            DataTable dt = SQLHelper.SHelper.ExeDataTableUseParameter(sql, dic);
+            if (dt.Rows.Count > 0)
+            {
+                MenuCollectionsId = dt.Rows[0][0].ToString();                
+            }
+            return MenuCollectionsId;
+        }
+
+        private void dataGridViewMenu_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point po = new Point(30, 50);
+                contextMenuStripMenu.Show(MousePosition);
+            }   
+        }
+
+        private void MenuAddToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewMenuCollection.SelectedRows.Count > 0)
+            {
+                string CollectionId = GetMenuCollectionId();
+
+                MenuEdit edit = new MenuEdit();
+                edit.ShowDialog();
             }
         }
 
