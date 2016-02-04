@@ -11,10 +11,15 @@ namespace Menu_Engineering
 {
     public partial class MenuEdit : Form
     {
-        public MenuEdit()
+        public MenuEdit(OperatingType pType)
         {
             InitializeComponent();
+            PType = pType;
         }
+        private OperatingType PType;
+
+        private decimal TotalCost = 0;
+        public string CollectionId = string.Empty;
 
         private List<string> FoodList = new List<string>();
 
@@ -82,9 +87,23 @@ namespace Menu_Engineering
                         FoodList.Add(NewNode.ImageKey);
                         DataRow dr = dt.NewRow();
                         dr["Ingridients"] = NewNode.Text;
-                        dr["Cost"] = GetCost(NewNode.ImageKey);
-                        dt.Rows.Add(dr);
-                        dataGridView1.DataSource = dt;
+                        Quantity qu = new Quantity();
+                        qu.FoodName = NewNode.Text;
+                        if (qu.ShowDialog() == DialogResult.OK)
+                        {
+                            dr["Cost"] =Math.Round( GetCost(NewNode.ImageKey),2);
+                            TotalCost += Math.Round(GetCost(NewNode.ImageKey), 2);
+                            dr["Total Quantity(g/ml)"] = qu.Total;
+                            dr["Quantity used"] = qu.Used;
+                            dr["Quantity waste"] = qu.Total - qu.Used;
+                            if (qu.Total > 0)
+                            {
+                                dr["Yield"] = (Math.Round( (qu.Used / qu.Total) ,2)* 100).ToString() + "%";
+                            }
+                            dt.Rows.Add(dr);
+                            dataGridView1.DataSource = dt;
+                            TbCost.Text = TotalCost.ToString();
+                        }
                     }
                 }
             }
@@ -96,7 +115,7 @@ namespace Menu_Engineering
             DateTime End =DateTime.Now;
             DateTime Begin =DateTime.Now.AddMonths(-6);
             string sql = string.Format(@"
-                Select SUM(Price)/ COUNT(DatilyId)  as 'Aveger' from Datily  
+                Select Case When  SUM(Price)/ COUNT(DatilyId) =0 then 0 Else SUM(Price)/ COUNT(DatilyId)  End  as 'Aveger' from Datily  
                 Where FoodId=@FoodId AND Day between @Begin AND @End");
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("FoodId", Id);
@@ -104,12 +123,60 @@ namespace Menu_Engineering
             dic.Add("End", End.ToString("yyyy/MM/dd"));
             DataTable dt = SQLHelper.SHelper.ExeDataTableUseParameter(sql, dic);
             decimal result = 0;
-            if (dt.Rows.Count > 0)
+            if (dt.Rows.Count > 0 && dt!=null)
             {
-                result = Convert.ToDecimal(dt.Rows[0][0]);
+                decimal.TryParse(dt.Rows[0][0].ToString(), out result);
             }
             return result;
         }
 
+        private void TbCost_TextChanged(object sender, EventArgs e)
+        {
+            CaculeCost();
+        }
+
+        private void numericUpDownSalePrice_ValueChanged(object sender, EventArgs e)
+        {
+            CaculeCost();
+        }
+
+        private void CaculeCost()
+        {
+            decimal cost = 0;
+            decimal.TryParse(TbCost.Text, out cost);
+            textBox2.Text = (numericUpDownSalePrice.Value - cost).ToString();
+
+            TbPerce.Text = Math.Round(numericUpDownSalePrice.Value / Convert.ToDecimal(textBox2.Text), 2).ToString();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            if (PType == OperatingType.Add)
+            {
+                DatabaseInterFace Info = new Database();
+                Menus menus = new Menus();
+                menus.MenuId = Guid.NewGuid();
+                menus.MenuCollectionId = CollectionId;
+                menus.Name = rbName.Text;
+                menus.Photo =new byte[1];
+                menus.Remark = string.Empty;
+                menus.SalePrice = numericUpDownSalePrice.Value;
+                menus.NumberSold =   numericUpDownNumberSold.Value;
+                DataTable dt = dataGridView1.DataSource as DataTable;
+                dt.TableName = "MenuFood";
+                dt.Columns.Add("MenuId");
+                foreach (DataRow dr in dt.Rows)
+                {
+                    dr["MenuId"] = menus.MenuId.ToString();
+                }
+
+                Info.UpdateMenuFood(menus, dt);
+            }
+        }
+
+       
+       
     }
 }

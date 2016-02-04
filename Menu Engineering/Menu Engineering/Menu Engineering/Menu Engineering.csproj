@@ -76,7 +76,8 @@
     <Reference Include="Menu Engineering, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <ExecutableExtension>.exe</ExecutableExtension>
     </Reference>
-    <Reference Include="SQLHelper">
+    <Reference Include="SQLHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Dick\Dropbox\Export\SQLHelper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -102,6 +103,7 @@
     <Compile Include="Collections.Designer.cs">
       <DependentUpon>Collections.cs</DependentUpon>
     </Compile>
+    <Compile Include="Database.cs" />
     <Compile Include="DatilyShopping.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,14 +133,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MenuEngineeringDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Menus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quantity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Quantity.Designer.cs">
+      <DependentUpon>Quantity.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectFood.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SelectFood.Designer.cs">
       <DependentUpon>SelectFood.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setting.cs" />
     <Compile Include="SQLForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +179,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Quantity.resx">
+      <DependentUpon>Quantity.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SelectFood.resx">
       <DependentUpon>SelectFood.cs</DependentUpon>
     </EmbeddedResource>

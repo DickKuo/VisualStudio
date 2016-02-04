@@ -47,7 +47,7 @@ namespace Menu_Engineering
                         if (dt.Rows.Count > 0)
                         {
                             textBox1.Text = dt.Rows[0][2].ToString();
-                            richTextBox1.Text = dt.Rows[0][4].ToString();
+                            richTextBox1.Text = dt.Rows[0][3].ToString();
                         }
                     }
                     break;

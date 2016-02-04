@@ -555,14 +555,7 @@ namespace Menu_Engineering
                             DialogResult dialogResult = MessageBox.Show("此菜單類別下已存在菜單，確定要連同菜單一併刪除嗎??", "提示", MessageBoxButtons.YesNo);
                             if (dialogResult == DialogResult.Yes)
                             {
-                                using (SqlConnection scon = new SqlConnection(SQLHelper.SHelper._sqlconnection))
-                                {
-                                    SqlCommand scm = new SqlCommand();
-                                    scm.Connection = scon;
-                                    SqlTransaction transaction = scon.BeginTransaction();
-                                    scm.Transaction = transaction;
-                                  
-                                }
+                              
                                 //do something....
                             }
                         }
@@ -571,10 +564,8 @@ namespace Menu_Engineering
                             DialogResult dialogResult = MessageBox.Show("確定要刪除此菜單嗎?", "提示", MessageBoxButtons.YesNo);
                             if (dialogResult == DialogResult.Yes)
                             {
-                                sql = "Delete MenuCollections Where MenuCollectionsId=@MenuCollectionsId";
-                                dic.Clear();
-                                dic.Add("MenuCollectionsId", MenuCollectionsId);
-                                SQLHelper.SHelper.ExeNoQueryUseParameter(sql, dic);
+                                DatabaseInterFace Inf = new Database();
+                                Inf.DeleMenuCollection(MenuCollectionsId);
                             }
                         }
                     
@@ -627,7 +618,8 @@ namespace Menu_Engineering
             {
                 string CollectionId = GetMenuCollectionId();
 
-                MenuEdit edit = new MenuEdit();
+                MenuEdit edit = new MenuEdit(OperatingType.Add);
+                edit.CollectionId = CollectionId;
                 edit.ShowDialog();
             }
         }
