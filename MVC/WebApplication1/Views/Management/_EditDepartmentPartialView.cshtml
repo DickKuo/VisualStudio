@@ -1,0 +1,42 @@
+﻿@model WebApplication1.Models.DepartmentViewModels.DepartmentViewModel
+
+@{
+    ViewBag.Title = "_EditViewPartial";
+}
+
+
+@using (Ajax.BeginForm("EditDepAction", "Management", new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnSuccess = "OnEditResult"
+},
+new { Id = "Load_EditOK_Form" }
+))
+{
+    
+        <div class="page-header">
+            <h3>部門編輯</h3>
+        </div>
+        <table>
+            <tr>
+                <td>
+                    部門編號:
+                </td>
+                <td>
+                    @Html.TextBoxFor(M => M.Dep.DepNo, new { id = "EditForm_DepNo", @readonly = "true", @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    名稱：
+                </td>
+                <td>
+                    @Html.TextBoxFor(M => M.Dep.Name, new { id = "EditForm_DepName", @required = "required", @maxlength = "20", @class = "form-control" })
+                </td>
+                <td>
+                    <input type="submit" id="Edit_OK" value="修改" class="btn btn-default marg-around-10" />
+                </td>
+            </tr>
+        </table>
+
+}

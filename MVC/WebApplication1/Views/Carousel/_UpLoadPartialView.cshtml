@@ -1,0 +1,63 @@
+﻿@model  WebApplication1.Models.PhotoViewModels.FileUpLoadViewModel
+
+
+@{
+    //Layout = null;
+    ViewBag.Title = "Upload Page";
+}
+
+<script type="text/javascript">
+
+    function OnAjaxSuccesForEdit()
+    {
+        alert('success');
+    }
+</script>
+
+@using (Ajax.BeginForm("Index", "Carousel", new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnSuccess = "OnAjaxSuccesForEdit"
+
+},
+new { Id = "Load_EditOK_Form" }
+))
+
+{
+ <input type="file" value="選擇圖片" name="myFile12" onchange="UpLoadPhoto();" />
+}
+
+
+<div>
+    @using (Html.BeginForm("Index", "Carousel", FormMethod.Post, new { enctype = "multipart/form-data", name = "myForm" }))
+    {
+        <input type="hidden" value="" name="act" />
+
+
+        <input type="file" value="選擇圖片" name="myFile" onchange="UpLoadPhoto();" />
+        <table border="1">
+            @for (int i = 0; i < Model.PhotoFileNames.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <img src="@(Url.Content("~/UploadFiles/")+Model.PhotoFileNames[i])" width="300" height="200" />
+                        @*&nbsp;*@
+                        @Html.HiddenFor(M => M.PhotoFileNames[i])
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <hr />
+        <input type="submit" value="提交" onclick="postForm();" />
+    }
+
+
+</div>
+
+
+
+
+
+

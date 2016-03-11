@@ -1,0 +1,96 @@
+﻿@model WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+
+@{
+    ViewBag.Title = "_EditViewPartial";
+}
+
+<div class="page-header">
+    <h1>員工編輯</h1>
+</div>
+
+@using (Ajax.BeginForm("EditEmpAction", "Management", new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnSuccess = "OnEditEmpResult"
+},
+new { Id = "Load_EditOK_Form" }
+))
+{
+    <table>
+        <tr>
+            <td>
+                員工編號:
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Emp.EmpNo, new { id = "EditForm_EmpNo", @readonly = "true", @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                姓名：
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Emp.EmpFirstName, new { id = "EditForm_FirstName", @name = "name", @notNull = "姓名", @required = "required", @maxlength = "20", @class = "form-control noNull" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                姓氏：
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Emp.EmpLastName, new { id = "EditForm_EmpLastName", @required = "required", @name = "name", @notNull = "姓氏", @maxlength = "20", @class = "form-control noNull" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                電話:
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Emp.Tel, new { id = "EditForm_Tel", @required = "required", @maxlength = "20", @name = "name", @notNull = "電話", @class = "form-control noNull", @onkeyup = "return ValidateNumber($(this),value)" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                地址:
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Emp.Addr, new { id = "EditForm_Addr", @required = "required", @name = "name", @notNull = "地址", @maxlength = "50", @class = "form-control noNull" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label id="Lb_Emp_Extend">年資 </label>
+            </td>
+            <td>
+                <div id="Div_Extend">
+                    <input type="text" class="form-control" id="Input_Extend" required="required" onkeyup="return ValidateNumber($(this),value)">
+                </div>
+            </td>
+        </tr>
+        
+        <label class="radio-inline">
+            <input type="radio" name="group2" id="0" value="全職員工" onclick="OnRadio_FullTime()" readonly="readonly" checked="checked"> 全職員工
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="group2" id="1" value="臨時員工" onclick="OnRadio_PTime()" readonly="readonly"> 臨時員工
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="group2" id="2" value="駐點員工" onclick="OnRadio_Stagnation()" readonly="readonly"> 駐點員工
+        </label>
+
+        
+        <tr>
+            <td>
+                @*OnEmpAdd  用新增的功能改寫*@
+                <button type="button" id="Edit_OK" class="btn btn-default" onclick="OnEmpAdd('Edit')">確認</button>
+            </td>
+            <td>
+                <button type="button" id="Edit_Cancel" class="btn btn-default" onclick="OnAddCancel()">取消</button>
+            </td>
+        </tr>
+    </table>
+
+}
+
+
+

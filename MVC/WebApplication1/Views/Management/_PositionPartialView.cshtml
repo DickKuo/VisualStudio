@@ -1,0 +1,70 @@
+﻿
+@using Newtonsoft.Json;
+
+@model  WebApplication1.Models.PositionViewModels.PositionViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/Code/Emplyee.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+
+@Html.ActionLink("新增資料", "CreateView", "Department")
+<p></p>
+
+
+<div class="panel panel-default">
+
+    <div class="panel-heading">職位列表</div>
+
+    <table class="table">
+        <tr>
+            <th>
+                QA
+            </th>
+            <th>
+                RD
+            </th>
+            <th>
+                IT
+            </th>
+            <th>
+                HR
+            </th>
+        </tr>
+
+        @if (Model != null)
+        {
+            foreach (var item in Model.PositionList)
+            {
+                <tr id="Posi_@item.PositionNo">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RD)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HR))
+                    </td>
+                    <td>
+                        <input type="submit" value="編輯" onclick="EditButtonClick(@JsonConvert.SerializeObject(item))" />
+                    </td>
+
+                    <td>
+                        <input type="submit" value="刪除" onclick="OnEmpDeleteClick(@JsonConvert.SerializeObject(item))" />
+                    </td>
+
+                </tr>
+            }
+
+        }
+    </table>
+
+</div>

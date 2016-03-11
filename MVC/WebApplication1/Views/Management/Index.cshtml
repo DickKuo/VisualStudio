@@ -1,0 +1,31 @@
+﻿@using Newtonsoft.Json;
+
+@model  WebApplication1.Models.DepartmentViewModels.DepartmentViewModel
+
+@{
+    //Layout = null;
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/Code/Management.js"></script>
+<script src="~/Scripts/jquery-2.2.0.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/Code/Trade.js"></script>
+<script type="text/javascript">
+    $(document).ready(
+       $.ajax({
+           type: "POST",
+           url: "Management/LoadingDepartment",
+           success: function (Model) {              
+               $("#Div_Department").html(Model);
+           }
+       })
+        );
+
+</script>
+
+<div id="Div_Department" />
+@*<div  class="tab-pane active"> </div>*@

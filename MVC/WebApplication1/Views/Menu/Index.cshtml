@@ -1,0 +1,66 @@
+﻿@*@model WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel*@
+
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+
+                @if (WebApplication1.Code.MenuHelper.MenuHelper.GetSessionObj() != null)
+                {
+                    if (WebApplication1.Code.MenuHelper.MenuHelper.GetSessionObj().MenuList != null)
+                    {
+                        foreach (var item in WebApplication1.Code.MenuHelper.MenuHelper.GetSessionObj().MenuList)
+                        {
+
+                            if (item.MenuList != null)
+                            {
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"/>
+                                        @item.Name
+                                        <span class="caret"></span>
+                                        <ul class="dropdown-menu" role="menu">
+                                            @foreach (var detail in item.MenuList)
+                                            {
+                                                if (detail.Url != null)
+                                                {
+                                                    string[] sll = detail.Url.Split('/');
+                                                    if (sll.Length > 1)
+                                                    {
+                                                        <li>@Html.ActionLink(detail.Name, sll[1], sll[0])</li>
+                                                    }
+                                                }
+                                            }
+                                        </ul>
+
+                                </li>
+                            }
+                            else
+                            {
+                                if (item.Url != null)
+                                {
+                                    string[] sp = item.Url.Split('/');
+
+                                    if (sp.Length > 0)
+                                    {
+                                        <li>
+                                            @Html.ActionLink(item.Name, sp[1], sp[0])
+                                        </li>
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                <li>
+                    @Html.ActionLink("登出", "LogOut", "Login", new { @class = "col-md-offset-10 col-md-12" })
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</nav>

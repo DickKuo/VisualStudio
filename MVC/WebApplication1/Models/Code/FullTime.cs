@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace WebApplication1.Models.Code
+{
+    public class FullTime :Employee
+    {
+        /// <summary>年資</summary>
+        public decimal Years { set; get; }
+    }
+}

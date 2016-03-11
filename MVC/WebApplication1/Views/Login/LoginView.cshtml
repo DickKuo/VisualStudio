@@ -1,0 +1,51 @@
+﻿@model WebApplication1.Models.EmployeeMgrViewModels.SysAdminManagerViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/Code/Login.js"></script>
+
+
+
+@using (Html.BeginForm("LoginView", "Login", new { Id = "Load_Login_Form" }
+))
+{
+    <body>
+        <div class="container">
+            <form class="form-signin" role="form">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="form-group">
+                        <h1> 系統登入</h1>
+                    </div>
+                    <div class="form-group">
+                        <label for="InputAccount" class="sr-only">帳號</label>
+                        @Html.TextBoxFor(M => M.SysAd.User.UserName, new { id = "InputAccount", @required = "required", @class = "form-control", @placeholder = "帳號", @maxlength = "10" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPassword" class="sr-only">密碼</label>
+                        @Html.PasswordFor(M => M.SysAd.User.PassWord, new { id = "InputPassword", @required = "required", @class = "form-control", @placeholder = "密碼", @maxlength = "10" })
+                    </div>
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @Html.ValidationSummary()
+                        </div>
+                    }
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">登入</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script src="/Scripts/AssetsBS3/ie10-viewport-bug-workaround.js"></script>
+    </body>
+}
+
+

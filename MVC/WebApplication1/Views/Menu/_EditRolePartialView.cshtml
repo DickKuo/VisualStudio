@@ -1,0 +1,44 @@
+﻿
+@model  WebApplication1.Models.RoleViewModels.RoleViewModel
+@using Newtonsoft.Json
+
+
+@*class="container"*@
+
+<div class="col-md-12">
+    <div class="col-md-offset-10 col-md-12">
+        <button class="btn btn-lg btn-danger btn-group marg-around-10" hidden="hidden" id="Btn_Delete" onclick="OnDeleteRoleClick()" type="button">刪除</button>
+    </div>
+    <form class="form-signin" role="form">
+        <h2 id="Hr_Title" class="form-signin-heading">編輯</h2>
+        <hr />
+        @*<label for="inputNo" id="Lab_No" class="col-sm-4 control-label">編號:</label>
+        @Html.TextBoxFor(M => M.Role.RoleNo, new { id = "Role_No", @class = "form-control", placeholder = "No", @readonly = "readonly" })*@
+
+        <label for="inputEmail3" class="col-sm-4 control-label">名字:</label>
+        @Html.TextBoxFor(M => M.Role.Name, new { id = "Role_Name", @class = "form-control", placeholder = "Name" })
+              
+        @*<div class="form-group">
+            <div class="col-md-offset-4 col-md-10">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(M => M.Role.IsEnable, new { id = "Role_IsEnable" , })
+                        啟用
+                    </label>
+
+                </div>
+            </div>
+        </div>*@
+
+        <div class="col-md-offset-4 col-md-8">
+            <button class="btn btn-lg btn-primary btn-group " id="Btn_Edit" type="button" onclick="OnEditRoleAction()">修改</button>
+            <button class="btn btn-lg btn-primary btn-group " hidden="hidden" id="Btn_Add" type="button"  onclick="OnAddRoleAction()">新增</button>    
+        </div>
+        
+    </form>
+</div>
+
+<h2 id="Hr_Title" class="form-signin-heading">功能清單</h2>
+<hr />
+
+<div id="RolesMenuPartial" class=" col-md-12"></div>

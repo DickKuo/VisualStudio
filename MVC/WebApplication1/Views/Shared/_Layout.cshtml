@@ -1,0 +1,45 @@
+﻿@model WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-2.2.0.min.js"></script>
+    <script src="~/Scripts/Code/GlobalMethod.js"></script>
+</head>
+<body>
+
+    @RenderPage("~/Views/Menu/Index.cshtml")
+
+    @*@Html.MvcSiteMap().Menu("BootstrapMenuHelperModel",false)*@
+
+    @*@Html.MvcSiteMap().Menu(false, true, true)*@ 
+    @Html.MvcSiteMap().SiteMapPath()
+
+      <div class="container body-content">
+      
+          
+          
+       @RenderBody()
+      
+
+
+          <div class="navbar-fixed-bottom">          
+                  <div class="col-md-10">
+                      後台管理系統
+                  </div>
+                  <div class="col-md-2">
+                      版本號：1.0.0.1
+                  </div>
+          </div>
+
+    </div>
+        @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+        @RenderSection("scripts", required: false)
+</body>
+</html>

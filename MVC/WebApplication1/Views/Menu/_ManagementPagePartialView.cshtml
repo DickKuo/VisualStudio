@@ -1,0 +1,80 @@
+﻿@model  WebApplication1.Models.MenuManagmentViewModels.MenuViewModel
+@using Newtonsoft.Json
+
+@{
+    Layout = null;
+    ViewBag.Title = "View1";
+}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#BrowseTable tr').click(function (event) {
+
+            
+
+            var Data = {
+                MenuNo: $(this).attr('id'),
+                Name: jQuery.trim($(this).find("td:eq(1)").text()),
+                Url: jQuery.trim($(this).find("td:eq(2)").text())            
+            };
+            if ($(this).attr('id') != null) {
+                $("#ParentNo").val(Data.MenuNo);
+                OnEditMenuClick(Data);
+            }
+        });
+        HighLight();
+    });
+</script>
+
+
+<div class="col-md-6">
+
+    <h2>功能管理</h2>
+    <hr />
+    <h4>點擊下面列表欄位，以進行修改</h4>
+    <div id="ADDControl" class="col-md-offset-10">
+        <input type="submit" value="新增功能" class="btn btn-success marg-around-10" onclick="OnAddMenuclick()">
+    </div>
+
+    <input id="ParentNo" hidden="hidden" />
+
+    <div class="panel panel-default">
+        <div class=" panel-heading">功能列表</div>
+        <table class="table" id="BrowseTable">
+            <tr>               
+                <th>
+                    名稱:
+                </th>
+                <th>
+                    Url:
+                </th>
+            </tr>
+            @if (Model != null)
+            {
+                foreach (var Item in Model.MenuList)
+                {
+                    <tr id="@Item.MenuNo" title="點擊欄位進行編輯">                        
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.Name)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.Url)
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+
+    </div>
+</div>
+<script src="/Scripts/AssetsBS3/ie10-viewport-bug-workaround.js"></script>
+
+@*功能Partial區塊*@
+<div id="MeunPartial" class="col-md-6"></div>
+
+
+
+<div id="ChildPartial" class="col-md-6"></div>

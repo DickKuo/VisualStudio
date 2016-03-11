@@ -1,0 +1,42 @@
+﻿
+
+
+<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/Code/MenuManagment.js"></script>
+
+@{
+    //Layout = null;
+    ViewBag.Title = "UserManagement";
+}
+
+<script type="text/javascript">
+    $(document).ready(
+      OnMenuPageClick()
+        );
+
+</script>
+
+@*<div role="tabpanel" class="tab-pane active"> 
+  
+
+</div>*@
+
+<div id="Div_Menus" /> 
+
+@*<div role="tabpanel">*@
+    <!-- Nav tabs -->
+    @*<ul class="nav nav-tabs" role="tablist">*@
+        @*<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" onclick="OnMenuPageClick()">Menus</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" onclick="OnRolePageClick()" >Roles</a></li>*@
+        @*<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" onclick="OnUserPageClick()">Users</a></li>*@
+        @*<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab" onclick="OnPostitionClick()">Postition</a></li>*@
+    @*</ul>*@
+    <!-- Tab panes -->
+    @*<div class="tab-content">
+       
+        <div role="tabpanel" class="tab-pane" id="profile"><div id="Div_Roles" /> </div>*@
+        @*<div role="tabpanel" class="tab-pane" id="messages"><div id="Div_Users" /> </div>*@
+    @*</div>
+</div>*@
