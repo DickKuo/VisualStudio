@@ -24,9 +24,11 @@ new { Id = "Load_EditOK_Form" }
 ))
 
 {
- <input type="file" value="選擇圖片" name="myFile12" onchange="UpLoadPhoto();" />
+ <input type="file" value="選擇圖片" name="myFile12" class="col-md-offset-8" onchange="UpLoadPhoto();" />
 }
 
+<h2>上傳檔案</h2>
+<hr />
 
 <div>
     @using (Html.BeginForm("Index", "Carousel", FormMethod.Post, new { enctype = "multipart/form-data", name = "myForm" }))
@@ -40,9 +42,9 @@ new { Id = "Load_EditOK_Form" }
             {
                 <tr>
                     <td>
-                        <img src="@(Url.Content("~/UploadFiles/")+Model.PhotoFileNames[i])" width="300" height="200" />
+                        <img src="@(Url.Content("~/UploadFiles/")+Model.PhotoFileNames[i])" width="600" height="450" />
                         @*&nbsp;*@
-                        @Html.HiddenFor(M => M.PhotoFileNames[i])
+                   @*     @Html.HiddenFor(M => M.PhotoFileNames[i])*@
                     </td>
                 </tr>
             }
@@ -50,7 +52,7 @@ new { Id = "Load_EditOK_Form" }
         </table>
 
         <hr />
-        <input type="submit" value="提交" onclick="postForm();" />
+        <input type="submit" value="提交" onclick="postForm();" class="btn btn-success" />
     }
 
 

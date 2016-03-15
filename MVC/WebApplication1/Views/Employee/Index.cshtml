@@ -7,13 +7,16 @@
 }
 <script src="~/Scripts/jquery-2.2.0.min.js"></script>
 <script src="~/Scripts/Code/Emplyee.js"></script>
-@*<h2></h2>*@
-@Html.ActionLink("新增資料", "CreateView", "Employee")
+
+
+<h2>員工管理</h2>
+
+<hr />
+@*@Html("", "CreateView", "Employee", new { @Class = "col-md-offset-10" })*@
+<input type="submit" class="btn btn-success col-md-offset-11" value="新增資料">  
 <p></p>
 
-
-<div class="panel panel-default">
-
+<div class="panel panel-default">   
     <div class="panel-heading">員工列表</div>
     <table class="table">
         <tr>

@@ -6,25 +6,37 @@
     ViewBag.Title = "CashFlow";
 }
 
-<script src="~/Scripts/jquery-2.2.0.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@*<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
 <script src="~/Scripts/Code/Emplyee.js"></script>
 <script src="~/Scripts/Code/Trade.js"></script>
 <script src="~/Scripts/Code/ResultCode.js"></script>
 <script src="~/Scripts/Code/CashFlow.js"></script>
-@Styles.Render("~/Content/css")
+@*@Styles.Render("~/Content/css")*@
 
 
 <div id="SelectEmpNo" hidden="hidden" ></div>
 <div id="SelectEmpName"></div>
+<script src="~/Scripts/Code/GlobalMethod.js"></script>
 
-<div id="BrowseView">  
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        TableHighLight("CashTable")
+
+    });
+</script>
+
+<div id="BrowseView" >  
+    <h2>金流商
+    </h2>
+    <hr />
       <div id="tr_id" hidden ="hidden">1212</div>
     <div class="panel panel-default">
 
         <div class="panel-heading">金流員工</div>
 
-        <table class="table" id="BrowseTable">
+        <table class="table" id="CashTable">
             <tr>
                 <th>
                     編號:

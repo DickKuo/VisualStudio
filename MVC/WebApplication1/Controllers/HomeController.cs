@@ -80,5 +80,8 @@ namespace WebApplication1.Controllers
             return PartialView("_CarouselPartialView", Model);
         }
 
+
+       
+
     }
 }

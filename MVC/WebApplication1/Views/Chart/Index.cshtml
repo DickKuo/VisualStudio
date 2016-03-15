@@ -1,0 +1,215 @@
+﻿@model WebApplication1.Models.ChartViewModels.ChartViewMode
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://dl.dropboxusercontent.com/u/86701580/mypersonalcdn/renda/renda-icon-font.css">
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://cdn.hcharts.cn/highcharts/modules/exporting.js"></script>
+
+
+<script src="~/Scripts/Code/Chart.js"></script>
+@*<script src="~/Scripts/bootstrap.min.js"></script>*@
+<script type="text/javascript">
+    var Chart;
+    $(document).ready(function () {
+
+
+
+        SetDatePicker();
+        GetToDay();
+
+        Chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'line'
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: []
+            },
+            yAxis: {
+                title: {
+                    text: '幣值'
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: '日圓',
+                data: []
+            }]
+        });
+
+        $('.btn-group .btn').on("click", function () {
+            $("#Radio_Select").val($(this).attr('id'));
+
+        })
+
+        //$('.btn-group3 .btn').on("click", function () {
+        //   alert($(this).attr('id'));
+        //})
+
+
+    });
+
+
+
+
+</script>
+
+
+<h2>美元兌換報表</h2>
+<hr />
+
+
+@using (Ajax.BeginForm("CreateDate", "Chart", new AjaxOptions
+{
+
+    HttpMethod = "Post",
+    OnSuccess = "OnSuccc"
+
+},
+new { id = "Load_Form" }
+
+))
+{
+
+
+    <div>
+        <h4>選擇主要幣別</h4>
+        <hr />
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary" id="0">
+                <input type="radio">美元
+            </label>
+            <label class="btn btn-primary" id="1">
+                <input type="radio">日元
+            </label>
+            <label class="btn btn-primary" id="2">
+                <input type="radio">人民幣
+            </label>
+            <label class="btn btn-primary" id="3">
+                <input type="radio">新台幣
+            </label>
+            <label class="btn btn-primary" id="4">
+                <input type="radio">港元
+            </label>
+            <label class="btn btn-primary" id="5">
+                <input type="radio">歐元
+            </label>
+            <label class="btn btn-primary" id="6">
+                <input type="radio">泰銖
+            </label>
+            <label class="btn btn-primary" id="7">
+                <input type="radio">韓元
+            </label>
+            <label class="btn btn-primary" id="8">
+                <input type="radio">英鎊
+            </label>
+            <label class="btn btn-primary" id="9">
+                <input type="radio">新加坡元
+            </label>
+
+
+            @*<button type="button" class="btn btn-primary" id="0">美元</button>
+                <button type="button" class="btn btn-primary" id="1">日元</button>
+                <button type="button" class="btn btn-primary" id="2">人民幣</button>
+                <button type="button" class="btn btn-primary" id="3">新台幣</button>
+                <button type="button" class="btn btn-primary" id="4">港元</button>
+                <button type="button" class="btn btn-primary" id="5">歐元</button>
+                <button type="button" class="btn btn-primary" id="6">泰銖</button>
+                <button type="button" class="btn btn-primary" id="7">韓元</button>
+                <button type="button" class="btn btn-primary" id="8">英鎊</button>
+                <button type="button" class="btn btn-primary" id="9">新加坡元</button>*@
+        </div>
+
+        <input type="text" hidden="hidden" id="Radio_Select" />
+    </div>
+
+
+    <div>
+        <h4>選擇兌換幣別</h4>
+        <hr />
+
+        <div class="btn-group3" data-toggle="buttons-checkbox">
+            <button type="button" class="btn btn-default" id="0">美元</button>
+            <button type="button" class="btn btn-default" id="1">日元</button>
+            <button type="button" class="btn btn-default" id="2">人民幣</button>
+            <button type="button" class="btn btn-default" id="3">新台幣</button>
+            <button type="button" class="btn btn-default" id="4">港元</button>
+            <button type="button" class="btn btn-default" id="5">歐元</button>
+            <button type="button" class="btn btn-default" id="6">泰銖</button>
+            <button type="button" class="btn btn-default" id="7">韓元</button>
+            <button type="button" class="btn btn-default" id="8">英鎊</button>
+            <button type="button" class="btn btn-default" id="9">新加坡元</button>
+        </div>
+    </div>
+
+
+    <h4>日期查詢</h4>
+    <hr />
+    <div class="marg-around-10">
+
+        <div class="btn-group1" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" onchange="LastMonth()" checked> 上個月
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off" onchange="LastWeek()"> 上週
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off" onchange="GetToDay()"> 今日
+            </label>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="col-md-4">
+        <label for="BeginDatePicker" id="Child_Lab_No" class="col-sm-4 control-label">開始日期</label>
+        @Html.TextBoxFor(M => M.BeginDate, new { id = "BeginDatePicker", @required = "required", @class = "form-control noNull" })
+        @*  <input type="text" id="BeginDatePicker" />*@
+    </div>
+
+
+    <div class="col-md-4">
+        <label for="EndDatePicker" id="Child_Lab_No" class="col-sm-4 control-label">結束日期</label>
+        @Html.TextBoxFor(M => M.EndDate, new { id = "EndDatePicker", @required = "required", @class = "form-control noNull" })
+        @*  <input type="text" id="EndDatePicker" />*@
+    </div>
+
+    <div class="col-md-4">
+        <p></p>
+        @*<input type="submit" class="btn btn-default" value="查詢">*@
+
+        <button type="button" class="btn btn-default" onclick="Search()">查詢</button>
+    </div>
+
+    @*</div>
+
+        </div>*@
+}
+
+<div id="container" style="min-width:700px;height:400px"></div>
+
+

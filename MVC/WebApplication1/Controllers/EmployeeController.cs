@@ -279,5 +279,14 @@ namespace WebApplication1.Controllers
         } //end DeleteAction
 
 
+
+        public ActionResult GoToIndexAction(EmployeeMgrViewModels.EmployeeManamgerViewModel Model)
+        {
+       
+            return RedirectToAction("Index");
+        }
+
+
+      
     }
 }

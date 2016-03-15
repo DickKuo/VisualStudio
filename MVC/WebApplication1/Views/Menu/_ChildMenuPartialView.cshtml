@@ -2,7 +2,7 @@
 @using Newtonsoft.Json
 
 @{
-    Layout = null;
+    //Layout = null;
     ViewBag.Title = "View1";
 }
 
@@ -18,9 +18,10 @@
     <h2>子功能清單</h2>
     <hr />
     @*<h4>點擊下面列表欄位，以進行修改</h4>*@
-    <div id="Bt_ChildAdd" class="col-md-10 ">
-        <input type="submit" value="新增功能" onclick="OnChildAddMenuclick()" class="btn btn-success marg-around-10 ">
-    </div>
+          <div id="Bt_ChildAdd" class="marg-around-10">
+            <input type="submit" value="新增功能" onclick="OnChildAddMenuclick()" class="btn btn-success">
+        </div>
+  
 
     <div class="panel panel-default">
         <div class="panel-heading">Menu列表</div>
@@ -35,8 +36,8 @@
                 <th>
                     Url:
                 </th>
-                <th>編輯</th>
-                <th>刪除</th>
+                @*<th>編輯</th>
+                <th>刪除</th>*@
             </tr>
             @if (Model != null)
             {

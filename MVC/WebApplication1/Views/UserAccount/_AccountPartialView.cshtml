@@ -6,8 +6,9 @@
     <h2>帳號管理</h2>
     <hr />    
 
-    <div id="ADDControl" class="col-md-offset-10"><input type="submit" value="新增帳號" class="btn btn-success" onclick="OnAddClick()"></div>
-
+    <div id="ADDControl" > 
+        <input type="submit" id="btn_Account_Add" value="新增帳號" class="btn btn-success col-md-offset-11" onclick="OnAddClick()"> </div>
+    <p></p>
     <div class="panel panel-default">
         <div class="panel-heading">帳號列表</div>
         <table class="table" id="BrowseTable">
@@ -37,7 +38,9 @@
                             @Html.DisplayFor(modelItem => Item.Email)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => Item.RegistrationDate)
+                         
+                         @Html.DisplayFor(modelItem => Item.RegistrationDate)
+                           
                         </td>
 
                         <td>

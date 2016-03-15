@@ -1,28 +1,55 @@
 ﻿@model WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
 @using Newtonsoft.Json           
 
+  
+
 @{
     //Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "IndexByAjax";
 }
 
 
 
-<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+@*<script src="~/Scripts/jquery-2.2.0.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@Styles.Render("~/Content/css")*@
+
 <script src="~/Scripts/Code/Emplyee.js"></script>
 <script src="~/Scripts/Code/Trade.js"></script>
 <script src="~/Scripts/Code/ResultCode.js"></script>
-
-@Styles.Render("~/Content/css")
-
-
+<script src="~/Scripts/Code/GlobalMethod.js"></script>
 <div id="SelectEmpNo" hidden="hidden" ></div>
 <div id="SelectEmpName"></div>
 
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        TableHighLightAndRowSelected("BrowseTable");
+    });
+</script>
+
+
+
+
 @*員工列表的Div*@
 <div id="BrowseView">  
-    <div id="ADDControl"><input type="submit" value="新增" onclick="OnAddClick()"></div>  
+    
+  
+    
+
+    <h2> 員工管理</h2>
+    <hr />
+
+
+    
+    <div id="ADDControl">        
+        <input type="submit" class="btn btn-success col-md-offset-11" value="新增" onclick="OnAddClick()">  
+    </div>  
+    
+    <p></p>
       <div id="tr_id" hidden ="hidden">1212</div>
     <div class="panel panel-default">
 

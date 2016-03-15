@@ -61,3 +61,26 @@ function ValidateNumber(e, pnumber) {
     }
     return false;
 }// end ValidateNumber
+
+
+
+
+//-----------------------------------------------------------------------------
+//飛出特效Alert
+//----------------------------------------------------------------------------
+function FadAlert(Message) {
+    $("#Alert_Body").html(Message);
+    $("#bt_diloag").click();
+}
+
+
+//-----------------------------------------------------------------------------
+//飛出特效Comfirm
+//----------------------------------------------------------------------------
+function FadComfirm(Message, Data) {
+    $("#Comfirm_Body").html(Message);
+    $("#Delete_Data").html(Data);
+    $("#Delete_Data").hide();
+    $("#bt_comfirm").click();
+}
+

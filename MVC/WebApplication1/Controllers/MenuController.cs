@@ -28,7 +28,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-           return View();
+            return View();
         }
 
         
@@ -46,7 +46,7 @@ namespace WebApplication1.Controllers
         }
 
 
-        public ActionResult EditPartialView()
+        public ActionResult EditPartialView(MenuManagmentViewModels.MenuViewModel Model)
         {
             return PartialView("_EditMenuPartialView");
         }
@@ -55,6 +55,7 @@ namespace WebApplication1.Controllers
         {
             return PartialView("_ChildEditMenuPartialView");
         }
+
 
         /// <summary>功能列清單---上層節點</summary>
         /// <returns></returns>
@@ -116,7 +117,6 @@ namespace WebApplication1.Controllers
             ApiOperation Oper = Init(Obj);
             WebApi Api = new WebApi();
             string temp = Api.ApiOperation(Oper);
-
             ApiOperation Result = JsonConvert.DeserializeObject<ApiOperation>(temp);
             Menu _Menu = JsonConvert.DeserializeObject<Menu>(Result.obj.ToString());
             Model.MainMenu = _Menu;
@@ -156,7 +156,10 @@ namespace WebApplication1.Controllers
             //return PartialView("_EditMenuPartialView");
         }
 
-                
+          
+        /// <summary>刪除功能清單</summary>
+        /// <param name="Model"></param>
+        /// <returns></returns>
         public ActionResult DeleteMothd(MenuManagmentViewModels.MenuViewModel Model)
         {
             Operation Obj = new Operation();
@@ -203,8 +206,6 @@ namespace WebApplication1.Controllers
             Operation Obj = new Operation();
             Obj.Method = OperationMethod.Method.Add;
             Obj.Entity = Entities.EntitiesList.Role;
-
-
             Obj.Obj = Model.Role;
             ApiOperation Oper = Init(Obj);
             WebApi Api = new WebApi();
@@ -213,27 +214,7 @@ namespace WebApplication1.Controllers
             if (Result.Obj != null)
             {
                 Role _Role = JsonConvert.DeserializeObject<Role>(Result.Obj.ToString());
-            }
-            //RolesMenu Roles = new RolesMenu();
-            //string[] sp = Model.JsonString.Split(',');
-            //if (sp.Length > 0)
-            //{             
-            //    Roles.RoleID = _Role.RoleID;
-            //    foreach (string str in sp)
-            //    {
-            //        if (!string.IsNullOrEmpty(str))
-            //        {
-            //            Roles.MenuNoList.Add(str);
-            //        }
-            //    }              
-            //}
-
-            //Obj.Method = OperationMethod.Method.Add;
-            //Obj.Entity = Entities.EntitiesList.RolesMenu;
-            //Obj.Obj = Roles;
-            //Oper = Init(Obj);
-            //ReslutString = Api.ApiOperation(Oper);
-
+            }           
             return PartialView("_EditRolePartialView");
         }
 
@@ -265,7 +246,7 @@ namespace WebApplication1.Controllers
             Obj.Obj = Model.Role;
             ApiOperation Oper = Init(Obj);
             string ReslutString = Api.ApiOperation(Oper);
-            Operation Result = JsonConvert.DeserializeObject<Operation>(ReslutString);           
+            Operation Result = JsonConvert.DeserializeObject<Operation>(ReslutString);          
 
             return PartialView("_EditRolePartialView");
         }
@@ -336,10 +317,10 @@ namespace WebApplication1.Controllers
                     }
                 }
                 #endregion
-
             }
-
             return PartialView("_RolesMenuPartialView", ViewModel);
         }
+
+
     }
 }

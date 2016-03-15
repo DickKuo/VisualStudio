@@ -1,0 +1,65 @@
+﻿
+
+<script type="text/javascript">
+    $(document).ready(function () {    
+        $("#bt_diloag").hide();
+        $("#bt_comfirm").hide();
+    });
+
+
+</script>
+
+
+<button type="button" id="bt_diloag" class="btn btn-default col-md-offset-9" hidden="hidden" data-toggle="modal" data-target="#myModal"></button>
+<button type="button" id="bt_comfirm" class="btn btn-default col-md-offset-9" hidden="hidden" data-toggle="modal" data-target="#Comfirm_Delete_Message"></button>
+
+
+
+@*提示訊息面板*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-label="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4> 提示訊息</h4>
+                <hr />
+                <div class="modal-body" id="Alert_Body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> 確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*刪除提示面板*@
+<div class="modal fade" id="Comfirm_Delete_Message" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4>刪除警告</h4>
+                <hr />
+                <div class="modal-body" id="Comfirm_Body">
+                    15565645645645645646s
+                </div>
+
+                <div id="Delete_Data">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" onclick="ToDelete()" class="btn btn-default" data-dismiss="modal">確定</button>
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

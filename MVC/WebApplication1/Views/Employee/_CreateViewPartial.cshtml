@@ -5,61 +5,73 @@
     ViewBag.Title = "Create";
 }
 
-<h2>新增</h2>
+
 
 
 @using (Ajax.BeginForm("AddAction", "Employee", new AjaxOptions
 {
     HttpMethod = "Post",
-  
+
     OnSuccess = "OnAddResult"
 
 },
 new { Id = "Load_AddOK_Form" }
 ))
 {
-    <table class="table">
+    <h2>新增</h2>
+    <hr />
+    <table >
         <tr>
             <td>
-                FirstName :
+                名字 :
             </td>
-            <td>          
-                @Html.TextBoxFor(M => M.Emp.EmpFirstName, new { id = "ADDForm_FirstName", @required = "required" })             
+            <td>
+                <div class="form-group ">
+                    <label for="ADDForm_FirstName" class="col-sm-2 control-label"></label>
+                    @Html.TextBoxFor(M => M.Emp.EmpFirstName, new { id = "ADDForm_FirstName", @required = "required", @class = "form-control" })
+                </div>
             </td>
         </tr>
         <tr>
             <td>
-                LastName :
+                姓 :
             </td>
-
-            <td>        
-                @Html.TextBoxFor(M => M.Emp.EmpLastName, new { id = "ADDForm_EmpLastName", @required = "required" })  
+            <td>
+                <div class="form-group ">
+                    <label for="ADDForm_EmpLastName" class="col-sm-2 control-label"></label>
+                    @Html.TextBoxFor(M => M.Emp.EmpLastName, new { id = "ADDForm_EmpLastName", @required = "required", @class = "form-control" })
+                </div>
             </td>
         </tr>
         <tr>
             <td>
-                Tel :
+                電話 :
             </td>
             <td>
-                @Html.TextBoxFor(M => M.Emp.Tel, new { id = "ADDForm_Tel", @required = "required" })
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Address :
-            </td>
-            <td>
-                 @Html.TextBoxFor(M => M.Emp.Addr, new { id = "ADDForm_Addr", @required = "required" })
+                <div class="form-group ">
+                    <label for="ADDForm_Tel" class="col-sm-2 control-label"></label>
+                    @Html.TextBoxFor(M => M.Emp.Tel, new { id = "ADDForm_Tel", @required = "required", @class = "form-control" })
+                </div>
             </td>
         </tr>
         <tr>
             <td>
-                <input type="submit" class="btn btn-default" value="確認" />
+                地址 :
             </td>
             <td>
-                <input type="submit" class="btn btn-default" value="取消" onclick="OnAddCancel()" />
+                <div class="form-group ">
+                    <label for="ADDForm_Addr" class="col-sm-2 control-label"></label>
+                    @Html.TextBoxFor(M => M.Emp.Addr, new { id = "ADDForm_Addr", @required = "required", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" class="btn btn-primary marg-around-10" value="確認" />
+            </td>
+            <td>
+                <input type="submit" class="btn btn-default marg-around-10" value="取消" onclick="OnAddCancel()" />
             </td>
         </tr>
     </table>
-    
 }

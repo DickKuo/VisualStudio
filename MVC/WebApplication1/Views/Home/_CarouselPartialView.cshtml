@@ -12,7 +12,7 @@
 
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
-    <ol class="carousel-indicators">
+    <ol class="carousel-indicators col-md-4">
         @if (Model != null)
         {
             int first = 0;
@@ -33,33 +33,34 @@
 
     </ol>
     <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
 
-        @if (Model != null)
-        {
-            int first = 0;
+        <div class="carousel-inner" role="listbox">
 
-            foreach (var item in Model.PhotoList)
+            @if (Model != null)
             {
-                if (first == 0)
-                {
-                    <div class="item active">
-                        @*@string path=@item.ImageNo+"."+@item.AttachedFileName*@
-                        <img src="ftp://127.0.0.1/path" alt="...">                  
-                    </div>
-                }
-                else
-                {
-                    <div class="item">
-                        @*@string path=@item.ImageNo+"."+@item.AttachedFileName*@
-                        <img src="ftp://127.0.0.1/path" alt="...">
-                        
-                    </div>
-                }
-                first++;
-            }
-        }
+                int first = 0;
 
+                foreach (var item in Model.PhotoList)
+                {
+                    if (first == 0)
+                    {
+                        <div class="item active">
+                            @*@string path=@item.ImageNo+"."+@item.AttachedFileName*@
+                            <img src="/FileLoad/GETFilePath?image=@item.ImageNo&extend=@item.AttachedFileName" alt="...">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            @*@string path=@item.ImageNo+"."+@item.AttachedFileName*@
+                            <img src="/FileLoad/GETFilePath?image=@item.ImageNo&extend=@item.AttachedFileName" alt="...">
+
+                        </div>
+                    }
+                    first++;
+                }
+            }
+ 
 
 
 

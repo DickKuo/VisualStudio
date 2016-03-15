@@ -60,7 +60,7 @@ function OnAddCancel()
 function OnAddResult(ItemData)
 {
     if (ItemData != null) {
-        alert("新增成功");
+        FadAlert("新增成功");
         $("#BrowseTable tr:last").after("<tr Id=Emp_" + ItemData.EmpNo + "><td>" + ItemData.EmpNo + "</td><td>" + ItemData.EmpFirstName + "</td>" +
             "<td>" + ItemData.EmpLastName + "</td>" + " <td>" + ItemData.Tel + "</td> <td>" + ItemData.Addr + "</td> " +
             " <td> <input type='submit' value='編輯' onclick='OnEditClick(" + JSON.stringify(ItemData) + ")'  /> " +
@@ -68,7 +68,7 @@ function OnAddResult(ItemData)
         LoadView();
     }
     else {
-        alert("新增失敗。");
+        FadAlert("新增失敗。");
     }
 }// end OnAddResult
 
@@ -129,7 +129,7 @@ function OnAjaxSuccesForEdit(ItemData) {
         }
     }
     else {
-        alert("編輯失敗。");
+        FadAlert("編輯失敗。");
     }
 }//end OnAjaxSuccesForEdit
 
@@ -166,11 +166,11 @@ function OnDeleteClick(ItemData)
 //-------------------------------------------------------------------------------------
 function DeleteResult(ItemData) {
     if (ItemData != '0') {
-        alert("刪除成功。");
+        FadAlert("刪除成功。");
         $("tr[id=" + ItemData.EmpNoIdGet + "]").remove();
     }
     else {
-        alert("刪除失敗。");
+        FadAlert("刪除失敗。");
     }
 }// end DeleteResult
 
@@ -221,3 +221,5 @@ function OnCashClick(ItemData) {
         }
     });
 }
+
+

@@ -3,7 +3,7 @@
 @using Newtonsoft.Json
 
 @{
-    Layout = null;
+    //Layout = null;
     ViewBag.Title = "View1";
 }
 
@@ -15,42 +15,38 @@
     });
 </script>
 
+<h2>角色管理</h2>
+<hr />
+<h4>點擊下面列表欄位，以進行修改</h4>
+<div class="marg-around-10">
+    <div id="ADDControl" ><input type="submit" value="新增角色" class="btn btn-success col-md-offset-4" onclick="OnRoleAddClick()"></div>
+</div>
 
-<div class="panel panel-default col-md-5">
-    <h2>角色管理</h2>
-    <hr />
-    <h4>點擊下面列表欄位，以進行修改</h4>
-    <div id="ADDControl" class="col-md-offset-10"><input type="submit" value="新增角色" class="btn btn-primary"  onclick="OnRoleAddClick()"></div>
+
+<div class="panel panel-default col-md-5">  
+   
 
     <input id="RoleNO" type="text" hidden="hidden" />
                
     <div class="panel-heading">角色列表</div>
     <table class="table" id="RoleTable">
         <tr>
-            @*<th>
-                編號:
-            </th>*@
+           
             <th>
                 名稱:
             </th>
-            @*<th>
-                啟用:
-            </th>*@
+          
         </tr>
         @if (Model != null)
         {
             foreach (var Item in Model.RoleList)
             {
                 <tr id="@Item.RoleNo" title="點擊欄位進行設定">
-                    @*<td>
-                        @Html.DisplayFor(modelItem => Item.RoleNo)
-                    </td>*@
+                   
                     <td>
                         @Html.DisplayFor(modelItem => Item.Name)
                     </td>
-                    @*<td id="Item_@Item.IsEnable">
-                        @Html.DisplayFor(modelItem => Item.IsEnable)
-                    </td>*@
+                   
                 </tr>
             }
         }

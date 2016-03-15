@@ -178,8 +178,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\AuthorityManagementController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\FileLoadController.cs" />
+    <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\UserAccountController.cs" />
+    <Compile Include="Models\ChartViewModels.cs" />
+    <Compile Include="Models\Code\Currencies.cs" />
     <Compile Include="Models\Code\JsonObj.cs" />
     <Compile Include="Models\Code\Menu.cs" />
     <Compile Include="Code\DAO\MenuApi.cs" />
@@ -257,7 +261,15 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\Chart\highcharts-3d.js" />
+    <Content Include="Scripts\Chart\highcharts-3d.src.js" />
+    <Content Include="Scripts\Chart\highcharts-more.js" />
+    <Content Include="Scripts\Chart\highcharts-more.src.js" />
+    <Content Include="Scripts\Chart\highcharts.js" />
+    <Content Include="Scripts\Chart\highcharts.src.js" />
     <Content Include="Scripts\Code\Carousel.js" />
+    <Content Include="Scripts\Code\Chart.js" />
+    <Content Include="Scripts\Code\FileLoading.js" />
     <Content Include="Scripts\Code\GlobalMethod.js" />
     <Content Include="Scripts\Code\Management.js" />
     <Content Include="Scripts\Code\MenuManagment.js" />
@@ -265,6 +277,31 @@
     <Content Include="Scripts\Code\Emplyee.js" />
     <Content Include="Scripts\Code\ResultCode.js" />
     <Content Include="Scripts\Code\UserAccount.js" />
+    <Content Include="Scripts\fancybox\blank.gif" />
+    <Content Include="Scripts\fancybox\fancybox-x.png" />
+    <Content Include="Scripts\fancybox\fancybox-y.png" />
+    <Content Include="Scripts\fancybox\fancybox.png" />
+    <Content Include="Scripts\fancybox\fancy_close.png" />
+    <Content Include="Scripts\fancybox\fancy_loading.png" />
+    <Content Include="Scripts\fancybox\fancy_nav_left.png" />
+    <Content Include="Scripts\fancybox\fancy_nav_right.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_e.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_n.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_ne.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_nw.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_s.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_se.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_sw.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_w.png" />
+    <Content Include="Scripts\fancybox\fancy_title_left.png" />
+    <Content Include="Scripts\fancybox\fancy_title_main.png" />
+    <Content Include="Scripts\fancybox\fancy_title_over.png" />
+    <Content Include="Scripts\fancybox\fancy_title_right.png" />
+    <Content Include="Scripts\fancybox\jquery.easing-1.3.pack.js" />
+    <Content Include="Scripts\fancybox\jquery.fancybox-1.3.4.css" />
+    <Content Include="Scripts\fancybox\jquery.fancybox-1.3.4.js" />
+    <Content Include="Scripts\fancybox\jquery.fancybox-1.3.4.pack.js" />
+    <Content Include="Scripts\fancybox\jquery.mousewheel-3.0.4.pack.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-2.2.0.min.map" />
@@ -276,6 +313,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\popImage\images\close.png" />
+    <Content Include="Scripts\popImage\jquery.popImage.js" />
+    <Content Include="Scripts\popImage\jquery.popImage.mini.js" />
+    <Content Include="Scripts\popImage\css\popImage.css" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -323,7 +364,6 @@
     <Content Include="Views\Employee\_CreateViewPartial.cshtml" />
     <Content Include="Views\Employee\_EditViewPartial.cshtml" />
     <Content Include="Views\Employee\_CaseFlowViewPartial.cshtml" />
-    <Content Include="Views\Menu\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
@@ -361,11 +401,16 @@
     <Content Include="Views\Menu\_ChildMenuPartialView.cshtml" />
     <Content Include="Views\Menu\_ChildEditMenuPartialView.cshtml" />
     <Content Include="Views\Management\_AllEmployeePartialView.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\BootstrapMenuHelperMode.cshtml" />
+    <Content Include="Views\Global\AlertPartialView.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Chart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\Bootstrap3\" />
     <Folder Include="Views\BaseLogin\" />
+    <Folder Include="Views\Rss\" />
     <Folder Include="Views\Trade\" />
   </ItemGroup>
   <ItemGroup>

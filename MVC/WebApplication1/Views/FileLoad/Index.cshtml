@@ -1,82 +1,56 @@
-﻿
-@model   WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+﻿@model   WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
 
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home Page";
 }
-<script src="~/Scripts/jquery-2.2.0.min.js"></script>
 
-@Styles.Render("~/Content/css")
+<script src="~/Scripts/Code/FileLoading.js"></script>
 
 <script type="text/javascript">
-    var IsCheckImageeType = true;  //是否檢查圖片副檔名
-    var IsCheckImageWidth = true;   //是否檢查圖片寬度
-    var IsCheckImageHeight = true; //是否檢查圖片高度
-    var IsCheckImageSize = true;   //是否檢查圖片檔案大小
 
-    var ImageSizeLimit = 100;   //上傳上限，單位:byte
-    var ImageWidthLimit = 1200;    //圖片寬度上限
-    var ImageHeightLimit = 1000;   //圖片高度上限
+         $(document).ready(function () {
 
-
-    function checkImage() {
-        if (IsCheckImageWidth && this.width > ImageWidthLimit) {
-            showMessage('寬度', 'px', this.width, ImageWidthLimit);
-        } else if (IsCheckImageHeight && this.height > ImageHeightLimit) {
-            showMessage('高度', 'px', this.height, ImageHeightLimit);
-        } else if (IsCheckImageSize && this.fileSize > ImageSizeLimit) {
-            showMessage('檔案大小', 'kb', this.fileSize / 1000, ImageSizeLimit / 1000);
-        } else {
-            $("form[name='myForm']").submit();
-        }
-    }
+             FileUpLoad();
+    });
+    
+ 
+  
+   </script>
 
 
-    function showMessage(kind, unit, real, limit) {
-        var msg = "您所選擇的圖片kind為 real unit\n超過了上傳上限 limit unit\n不允許上傳！"
-        alert(msg.replace(/kind/, kind).replace(/unit/g, unit).replace(/real/, real).replace(/limit/, limit));
-    }
-
-
-    function UpLoadPhoto() {
-        $("input[name='act']").attr("value", "upload");
-        checkImage();
-        //$("form[name='myForm']").submit();
-    }
-
-
-    function postForm() {
-        $("input[name='act']").attr("value", "post");
-    }
-</script>
-
-
-<div>
-    @using (Html.BeginForm("Index", "FileLoad", FormMethod.Post, new { enctype = "multipart/form-data", name = "myForm" }))
-    {
+@using (Html.BeginForm("Index", "FileLoad", FormMethod.Post, new { enctype = "multipart/form-data", name = "myForm" }))
+{
+    <h2>上傳檔案</h2>
+    <hr />
+    <div>
         <input type="hidden" value="" name="act" />
-
-
-        <input type="file" value="選擇圖片" name="myFile" onchange="UpLoadPhoto();" />
-        <table border="1">
+        <input type="file" value="選擇圖片" name="myFile"  id="Image" accept="image/*" />
+        <table border="1" id="UploadTable">
             @for (int i = 0; i < Model.PhotoFileNames.Count; i++)
             {
                 <tr>
                     <td>
-                        <img src="@(Url.Content("~/UploadFiles/")+Model.PhotoFileNames[i])" width="300" height="200" />
-                       
+                        <img src="@(Url.Content("~/UploadFiles/")+Model.PhotoFileNames[i])" width="500" height="350" id="ImageList"/>
+
                         @Html.HiddenFor(M => M.PhotoFileNames[i])
                     </td>
                 </tr>
             }
 
         </table>
-        @Html.TextAreaFor(M => M.ImageRemark, new { id = "ImageRemark" })
+        <br />
+        檔案說明:      @Html.TextAreaFor(M => M.ImageRemark, new { id = "ImageRemark" , @required = "required"})
         <hr />
-        <input type="submit" value="提交" onclick="postForm();" />
-    }
+        
+        <div class="col-md-2">
+            <input type="submit" value="提交" onclick="postForm();" class="btn btn-success marg-around-10" />
+        </div>
+    </div>
+}
+    <input type="button" value="返回" class="btn btn-default marg-around-10" onclick="javascript: location.href = 'Carousel'" />
 
 
-</div>
+
+

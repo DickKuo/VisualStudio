@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -18,6 +19,7 @@ namespace WebApplication1.Models.Code
         public string Email { set; get; }
 
         /// <summary>註冊日期</summary>
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime RegistrationDate { set; get; }
 
         /// <summary>是否啟用</summary>

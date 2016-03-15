@@ -138,32 +138,42 @@ function OnChildMenuEditClick() {
 //新增功能---執行新增功能
 //-------------------------------------------------------------
 function OnAddAction()
-{       
-    var Menu = {
-        "MenuNo": GetNewNo(),
-        "Url": $("#Menu_Url").val(),
-        "Name": $("#Menu_Name").val(),
-        "ParentNo": "",
-        "IsEnable": true,
-        "MenuOrder": 1,
-        "MenuList": null
-    };
-    $.ajax({
-        type: "POST",
-        url: "AddMethod",
-        data: {
-            "JsonString": JSON.stringify(Menu)
-        },
-        success: function (Model) {
-            $("#MeunPartial").html(Model);
-            $("#Btn_Add").hide();   
-            $("#BrowseTable tr:last").after("<tr Id=Menu_" + Menu.MenuNo + " title='點擊欄位進行編輯' ><td>" + Menu.MenuNo + "</td>" +
-           "<td>" + Menu.Name + "</td>" + "<td>" + Menu.Url + "</td>" + 
-            "</tr>");
-            BrowseTableInit();
-            alert('新增完成。');
+{
+    if (!$("#Menu_Name").val()) {
+        FadAlert("名稱不能為空");
+    }
+    else {
+        if (!$("#Menu_Url").val()) {
+            FadAlert("Url不能為空");
         }
-    });
+        else {
+            var Menu = {
+                "MenuNo": GetNewNo(),
+                "Url": $("#Menu_Url").val(),
+                "Name": $("#Menu_Name").val(),
+                "ParentNo": "",
+                "IsEnable": true,
+                "MenuOrder": 1,
+                "MenuList": null
+            };
+            $.ajax({
+                type: "POST",
+                url: "AddMethod",
+                data: {
+                    "JsonString": JSON.stringify(Menu)
+                },
+                success: function (Model) {
+                    $("#MeunPartial").html(Model);
+                    $("#Btn_Add").hide();
+                    $("#BrowseTable tr:last").after("<tr Id=Menu_" + Menu.MenuNo + " title='點擊欄位進行編輯' >"+
+                   "<td>" + Menu.Name + "</td>" + "<td>" + Menu.Url + "</td>" +
+                    "</tr>");
+                    BrowseTableInit();                                    
+                    FadAlert('新增完成。');
+                }
+            });
+        }
+    }
 }//end OnAddAction
 
 
@@ -220,7 +230,7 @@ function OnChildDeleteMenuClick(ItemData) {
                     $("tr[id=ChildMenu_" + ItemData.MenuNo + "] ").remove();                    
                 }
                 else {
-                    alert("刪除失敗。");
+                    FadAlert("刪除失敗。");
                 }
             }
         });
@@ -254,13 +264,13 @@ function GetNewNo()
 //編輯功能選單--預設帶值
 //-------------------------------------------------------------
 function OnEditMenuClick(ItemData)
-{
+{    
     $.ajax({
         type: "POST",
         url: "EditPartialView",
         data:ItemData,
         success: function (Model) {
-            $("#MeunPartial").html(Model);
+            $("#MeunPartial").html(Model);    
             $("#Menu_Name").val(ItemData.Name);
             $("#Menu_Url").val(ItemData.Url);
             $("#Menu_ParentNo").val(ItemData.ParentNo);
@@ -326,42 +336,47 @@ function OnMenuEditClick()
 //刪除功能選單
 //-------------------------------------------------------------
 function OnDeleteMenuClick()
-{   
-    if (confirm("確定要刪除嗎?")) {
-        if ($('#ChildTable tr').length > 1)
-        {
-            alert('有子功能，無法刪除');
-        }
-        else
-        {
-            var Menu = {
-                "MenuNo": $("#Menu_No").val(),
-                "Url": $("#Menu_Url").val(),
-                "Name": $("#Menu_Name").val(),
-                "ParentNo": $("#Menu_ParentNo").val(),
-                "IsEnable": $("#Menu_IsEnable").is(":checked"),
-                "MenuOrder": 1,
-                "MenuList": null
-            };
-            $.ajax({
-                type: "POST",
-                url: "DeleteMothd",
-                data: {
-                    "JsonString": JSON.stringify(Menu)
-                },
-                success: function (Model) {
-                    $("#MeunPartial").html(null);
-                    if (Model != null) {
-                        $("tr[id=Menu_" + Menu.MenuNo + "] ").remove();
-                    }
-                    else {
-                        alert("刪除失敗。");
-                    }
-                }
-            });
-        }
+{
+    if ($('#ChildTable tr').length > 1) {
+        FadAlert('有子功能，無法刪除');
+    }
+    else {
+        FadComfirm("確定要刪除嗎??");
     }
 }//end OnDeleteMenuClick
+
+
+//-----------------------------------------------------------------------------------
+//部門刪除-----確認刪除
+//-------------------------------------------------------------------------------------
+function ToDelete()
+{
+    var Menu = {
+        "MenuNo": $("#Menu_No").val(),
+        "Url": $("#Menu_Url").val(),
+        "Name": $("#Menu_Name").val(),
+        "ParentNo": $("#Menu_ParentNo").val(),
+        "IsEnable": $("#Menu_IsEnable").is(":checked"),
+        "MenuOrder": 1,
+        "MenuList": null
+    };
+    $.ajax({
+        type: "POST",
+        url: "DeleteMothd",
+        data: {
+            "JsonString": JSON.stringify(Menu)
+        },
+        success: function (Model) {
+            $("#MeunPartial").html(null);
+            if (Model != null) {
+                $("tr[id=" + Menu.MenuNo + "] ").remove();
+            }
+            else {
+                FadAlert("刪除失敗。");
+            }
+        }
+    });
+}
 
 
 //--------------------------------------------------------------
@@ -464,7 +479,7 @@ function OnUserPageClick() {
     //        $("#Div_Menus").html(Model);
     //    }
     //});
-    alert('施工中');
+    FadAlert('施工中');
 }//end OnUserPageClick
 
 
@@ -569,7 +584,7 @@ function OnAddRoleAction()
               "<td>" + Data.Name + "</td>" +              
               "</tr>");
             RoleInitSetting();
-            alert('新增完成。');
+            FadAlert('新增完成。');
         }
     });
 } //end OnAddRoleAction
@@ -598,6 +613,7 @@ function SelectAllCheckbox()
 //-------------------------------------------------------------
 function OnDeleteRoleClick()
 {
+   
     if (confirm("確定要刪除嗎?")) {
         var Data = {
             RoleNo: $("#RoleNO").val(),
@@ -657,7 +673,7 @@ function OnEditRoleAction()
             //  "<td>" + Data.Name + "</td>" +
             //  "</tr>");
             //RoleInitSetting()
-            alert('修改完成。');
+            FadAlert('修改完成。');
         }
     });
 

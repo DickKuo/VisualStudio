@@ -52,3 +52,12 @@ input[type="checkbox"].input-validation-error {
 .row-selected {
     background-color:#deb887;
 }
+
+
+.marg-top-30 {
+    margin-top :30px;
+}
+
+.footerbackground {
+    background-color:#228b22;
+}

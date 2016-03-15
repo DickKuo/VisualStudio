@@ -2,7 +2,7 @@
 @using Newtonsoft.Json
 
 @{
-    Layout = null;
+    //Layout = null;
     ViewBag.Title = "View1";
 }
 
@@ -10,14 +10,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#bt_diloag").hide();
         $('#BrowseTable tr').click(function (event) {
-
-            
-
             var Data = {
                 MenuNo: $(this).attr('id'),
-                Name: jQuery.trim($(this).find("td:eq(1)").text()),
-                Url: jQuery.trim($(this).find("td:eq(2)").text())            
+                Name: jQuery.trim($(this).find("td:eq(0)").text()),
+                Url: jQuery.trim($(this).find("td:eq(1)").text())            
             };
             if ($(this).attr('id') != null) {
                 $("#ParentNo").val(Data.MenuNo);
@@ -27,7 +25,7 @@
         HighLight();
     });
 </script>
-
+<script src="~/Scripts/Code/GlobalMethod.js"></script>
 
 <div class="col-md-6">
 
@@ -35,8 +33,9 @@
     <hr />
     <h4>點擊下面列表欄位，以進行修改</h4>
     <div id="ADDControl" class="col-md-offset-10">
-        <input type="submit" value="新增功能" class="btn btn-success marg-around-10" onclick="OnAddMenuclick()">
+        <input type="submit" value="新增功能" class="btn btn-success " onclick="OnAddMenuclick()">
     </div>
+    <p></p>
 
     <input id="ParentNo" hidden="hidden" />
 
@@ -78,3 +77,24 @@
 
 
 <div id="ChildPartial" class="col-md-6"></div>
+
+
+
+<button type="button" id="bt_diloag" class="btn btn-success col-md-offset-9" hidden="hidden" data-toggle="modal" data-target="#myModal">TEST</button>
+
+@*提示訊息面板*@
+<div class="modal fade top:50%" id="myModal" tabindex="-1" role="dialog" aria-label="myModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4> 提示訊息</h4>
+                <div class="modal-body" id="Alert_Body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> 確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

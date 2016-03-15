@@ -8,22 +8,30 @@
 @using (Ajax.BeginForm("EditDepAction", "Management", new AjaxOptions
 {
     HttpMethod = "Post",
+    OnBegin="CheckNull",
     OnSuccess = "OnEditResult"
 },
 new { Id = "Load_EditOK_Form" }
 ))
 {
-    
-        <div class="page-header">
-            <h3>部門編輯</h3>
-        </div>
+
+    <div >
+
+
+        <h2>部門編輯</h2>
+        <hr />
         <table>
             <tr>
                 <td>
                     部門編號:
                 </td>
                 <td>
-                    @Html.TextBoxFor(M => M.Dep.DepNo, new { id = "EditForm_DepNo", @readonly = "true", @class = "form-control" })
+                    <h3>
+                        <label id="EditForm_DepNo"></label>
+                    </h3>
+
+                        @Html.HiddenFor(M => M.Dep.DepNo, new { id = "EditForm_DepNoHid", @readonly = "true", @class = "form-control" })
+                   
                 </td>
             </tr>
             <tr>
@@ -38,5 +46,5 @@ new { Id = "Load_EditOK_Form" }
                 </td>
             </tr>
         </table>
-
+    </div>
 }

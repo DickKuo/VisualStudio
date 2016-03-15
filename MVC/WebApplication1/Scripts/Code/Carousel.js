@@ -31,7 +31,7 @@ function DeleteDepResult(ItemData) {
         $("tr[id=Photo_" + ItemData.ImageNo + "]").remove();
     }
     else {
-        alert("刪除失敗。");
+        FadAlert("刪除失敗。");
     }
 }
 

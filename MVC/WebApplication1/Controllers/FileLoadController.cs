@@ -21,6 +21,12 @@ namespace WebApplication1.Controllers
         private const string ApiAction = "Uploading";
 
 
+        private class Default {
+            public const string LogPath = @"D:\Logs\myLog.txt";
+            public const string UploadPath = "~/UpLoadFiles/";
+        }
+
+
         public ActionResult Index()
         {
             //WebApplication1.Models.PhotoViewModels.FileUpLoadViewModel Mode = new WebApplication1.Models.PhotoViewModels.FileUpLoadViewModel();
@@ -57,7 +63,7 @@ namespace WebApplication1.Controllers
         /// <param name="Model"></param>
         private void LogWrite(WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel Model)
         {
-            using (FileStream fs = new FileStream(@"D:\Logs\myLog.txt", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            using (FileStream fs = new FileStream(Default.LogPath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             {
                 WebApi Api = new WebApi();
 
@@ -65,7 +71,7 @@ namespace WebApplication1.Controllers
                 foreach (string strPhotoFileName in Model.PhotoFileNames)
                 {
                     sw.WriteLine(strPhotoFileName);
-                    string strFilePath = Server.MapPath("~/UpLoadFiles/" + strPhotoFileName);
+                    string strFilePath = Server.MapPath(Default.UploadPath + strPhotoFileName);
                     string DestFilePath =FtpPath+Path.DirectorySeparatorChar+strPhotoFileName;
                     System.IO.File.Move(strFilePath, DestFilePath);
 
@@ -110,13 +116,32 @@ namespace WebApplication1.Controllers
         {
             if (MyFile != null && MyFile.ContentLength > 0)
             {
+                
                 string strFileName = Guid.NewGuid().ToString() + Path.GetExtension(MyFile.FileName);
-                string strFilePath = Server.MapPath("~/UpLoadFiles/" + strFileName);
+                string strFilePath = Server.MapPath(Default.UploadPath + strFileName);
                 MyFile.SaveAs(strFilePath);
                 Model.PhotoFileNames.Add(strFileName);
             }
         }
 
-      
+
+        /// <summary>轉換檔案路徑</summary>
+        /// <param name="image"></param>
+        /// <param name="extend"></param>
+        /// <returns></returns>
+        public ActionResult GETFilePath(string image,string extend)
+        {
+            string path =FtpPath+Path.DirectorySeparatorChar+ image + "." + extend;
+            byte[] by;
+            using(FileStream fs=new FileStream(path,FileMode.Open)){
+
+                BinaryReader br = new BinaryReader(fs);
+                by = br.ReadBytes((int )fs.Length);
+            }
+            return File(path,"imge/jpeg");
+        }
+
     }
+
+
 }

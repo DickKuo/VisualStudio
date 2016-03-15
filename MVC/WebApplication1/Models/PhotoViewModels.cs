@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using WebApplication1.Code;
@@ -17,6 +18,8 @@ namespace WebApplication1.Models
             public List<Photo> PhotoList { set; get; }
 
             public string PhotoJson { set; get; }
+
+          
         }
 
 

@@ -7,15 +7,6 @@ function EmpListShow() {
 }
 
 
-//-----------------------------------------------------------------------------
-//飛出特效Alert
-//----------------------------------------------------------------------------
-function FadAlert(Message)
-{
-    $("#Alert_Body").html(Message);
-    $("#bt_diloag").click();
-}
-
 
 function FadComfirm(Message,Data)
 {
@@ -99,6 +90,7 @@ function OnDepAddClick() {
         success: function (Model) {
             $("#Partial_Dep").html(Model);
             $("#Partail_DepsEmp").html(null);
+            $("#Query_Panel").hide();
         }
     });
 }//end OnDepAddClick
@@ -139,7 +131,7 @@ function OnAddResult(ItemData) {
 function OnAddEmpCancel()
 {
     var ItemData = {
-        DepNo: $("#EditForm_DepNo"),
+        DepNo: jQuery.trim( $("#EditForm_DepNo")),
         DepName: $("#EditForm_DepName")
     };
 
@@ -160,7 +152,8 @@ function OnDepEditClick(ItemData) {
         url: "Management/EditDepartmentView",
         success: function (Model) {
             $("#Partial_Dep").html(Model);
-            $("#EditForm_DepNo").val(ItemData.DepNo);
+            $("#EditForm_DepNo").html(ItemData.DepNo);
+            $("#EditForm_DepNoHid").val(ItemData.DepNo);
             $("#EditForm_DepName").val(ItemData.Name);  
             $("#Query_Panel").show();
             $.ajax({
@@ -170,7 +163,7 @@ function OnDepEditClick(ItemData) {
                    "Dep": ItemData},
                 success: function (Model) {
                     $("#Partail_DepsEmp").html(Model);
-                    $("#Partail_DepsEmp").addClass("col-md-8");
+                    $("#Partail_DepsEmp").addClass("col-md-6");                    
                 }
             });
         }
@@ -373,7 +366,7 @@ function OnDepQueryClick() {
 //查詢面板 --查詢按鈕
 //-----------------------------------------------------------------------------
 function Search_Emp() {
-    var Data = { DepNo: $("#EditForm_DepNo").val() };
+    var Data = { DepNo: jQuery.trim( $("#EditForm_DepNo").html()) };
     $.ajax({
         type: "POST",
         url: "Management/GetDepartmentEmnpsAction",
@@ -408,7 +401,7 @@ function OnEmpAdd(Type) {
     }
     if (Message == "") {
         var ItemData = {
-            "DepNo": $("#EditForm_DepNo").val(),
+            "DepNo": jQuery.trim( $("#EditForm_DepNo").html()),
             "EmpNo": $("#EditForm_EmpNo").val(),
             "EmpFirstName": $("#EditForm_FirstName").val(),
             "EmpLastName": $("#EditForm_EmpLastName").val(),
@@ -449,7 +442,7 @@ function OnEmpSelect_OK()
     });
 
     var Data = {
-        DepNo: $("#EditForm_DepNo").val()
+        DepNo: jQuery.trim( $("#EditForm_DepNo").html())
     };
 
     $.ajax({
@@ -479,7 +472,7 @@ function OnDepDeleteEmpClick()
         }
     });
     var Data = {
-        DepNo: $("#EditForm_DepNo").val()
+        DepNo: jQuery.trim( $("#EditForm_DepNo").html())
     };
     
     if (ids != "") {
@@ -498,5 +491,6 @@ function OnDepDeleteEmpClick()
         FadAlert('請選擇員工。');
     }
 }
+
 
 

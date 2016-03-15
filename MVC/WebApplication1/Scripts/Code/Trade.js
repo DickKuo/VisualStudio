@@ -16,11 +16,11 @@ function OnAddMoney(ItemData) {
             var code = new ResultCode();
             if (code.Sucess == TradeInfo.ApiResultCode)
             {
-                alert('加金額成功');
+                FadAlert('加金額成功');
             }
             else
             {
-                alert('加金額失敗');
+                FadAlert('加金額失敗');
             }
         }
     });    
@@ -43,10 +43,10 @@ function OnReduceMoney() {
         success: function (TradeInfo) {
             var code = new ResultCode();
             if (code.Sucess == TradeInfo.ApiResultCode) {
-                alert('減金額成功');
+                FadAlert('減金額成功');
             }
             else {
-                alert('減金額失敗');
+                FadAlert('減金額失敗');
             }
         }
     });

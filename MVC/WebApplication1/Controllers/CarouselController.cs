@@ -12,6 +12,7 @@ using WebApplication1.Models;
 using WebRoutingTest.Models.Code;
 using System.IO;
 using WebApplication1.Models.Code;
+using System.Drawing;
 
 namespace WebApplication1.Controllers
 {
@@ -19,7 +20,7 @@ namespace WebApplication1.Controllers
     {
 
         private const string FtpPath = @"D:\Images";
-        private string Url = System.Web.Configuration.WebConfigurationManager.AppSettings["ApiUrl"].ToString();
+        private string WebUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["ApiUrl"].ToString();
         private const string ApiController = "Carousel";
         private const string ApiAction = "Uploading";
 
@@ -48,9 +49,13 @@ namespace WebApplication1.Controllers
             foreach (var Item in Result.ObjList)
             {
                 Photo photo = JsonConvert.DeserializeObject<Photo>(Item.ToString());
+                string imagePath = Path.Combine(FtpPath, photo.ImageNo + "." + photo.AttachedFileName);
+
 
                 Model.PhotoList.Add(photo);
             }
+          
+
             return PartialView("_PhotoListPartialView", Model);
         }
 
@@ -61,7 +66,7 @@ namespace WebApplication1.Controllers
         private ApiOperation Init(Operation Obj)
         {
             ApiOperation Oper = new ApiOperation();
-            string _url = string.Format("{0}/{1}/{2}", Url, ApiController, ApiAction);
+            string _url = string.Format("{0}/{1}/{2}", WebUrl, ApiController, ApiAction);
             Oper.Uri = _url;
             Oper.Methode = HttpMethod.Post;
             Oper.obj = Obj;

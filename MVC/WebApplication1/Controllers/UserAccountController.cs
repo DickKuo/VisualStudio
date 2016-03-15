@@ -22,6 +22,9 @@ namespace WebApplication1.Controllers
         }
 
 
+        /// <summary>載入使用者清單</summary>
+        /// <param name="Model"></param>
+        /// <returns></returns>
         public ActionResult LoadingAccountPartialView(UserAccountViewModels.UserAccountViewModel Model)
         {
             Operation Obj = new Operation();
@@ -62,6 +65,9 @@ namespace WebApplication1.Controllers
             return PartialView("_EditPartialView");
         }
 
+
+        /// <summary>列出可選擇的角色</summary>
+        /// <param name="Model"></param>
         private void GetRoleSelectItem(UserAccountViewModels.UserAccountViewModel Model)
         {
             WebApi Api = new WebApi();
@@ -100,7 +106,9 @@ namespace WebApplication1.Controllers
         }
 
 
-
+        /// <summary>新增帳號</summary>
+        /// <param name="Model"></param>
+        /// <returns></returns>
         public ActionResult AddAction(UserAccountViewModels.UserAccountViewModel Model)
         {
             WebApi Api = new WebApi();
@@ -116,7 +124,9 @@ namespace WebApplication1.Controllers
         }
         
 
-
+        /// <summary>編輯使用者帳號</summary>
+        /// <param name="Model"></param>
+        /// <returns></returns>
         public ActionResult EditAction(UserAccountViewModels.UserAccountViewModel Model)
         {
             WebApi Api = new WebApi();
@@ -132,7 +142,9 @@ namespace WebApplication1.Controllers
         }
 
 
-
+        /// <summary>刪除使用者帳號</summary>
+        /// <param name="Model"></param>
+        /// <returns></returns>
         public ActionResult DeleteMothd(UserAccountViewModels.UserAccountViewModel Model)
         {
             User User = JsonConvert.DeserializeObject<User>(Model.JsonString);
@@ -143,10 +155,11 @@ namespace WebApplication1.Controllers
             Obj.Obj = User;
             ApiOperation Oper = Api.Init(Obj);
             string ReslutString = Api.ApiOperation(Oper);
-            Operation Result = JsonConvert.DeserializeObject<Operation>(ReslutString);
-         
+            Operation Result = JsonConvert.DeserializeObject<Operation>(ReslutString);         
             return Json(User);
         }
+
+
 
     }
 }
