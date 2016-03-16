@@ -12,7 +12,7 @@ function FileUpLoad()
         name = file.name; //name=檔案名稱
         size = file.size; //size=檔案大小
         type = file.type; //type=檔案型態
-        alert(file.size);
+        
         if (file.size > 100000) { //假如檔案大小超過300KB (300000/1024)
             CheckOK = false;
             alert("圖片上限100KB!!"); //顯示警告!!
@@ -30,7 +30,7 @@ function FileUpLoad()
             $("form[name='myForm']").submit();
         }
     });
-}
+}//end FileUpLoad
 
 
 //-----------------------------------------------------------------------------------
@@ -38,4 +38,4 @@ function FileUpLoad()
 //-------------------------------------------------------------------------------------
 function postForm() {
     $("input[name='act']").attr("value", "post");
-}
+}//end postForm

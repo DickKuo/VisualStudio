@@ -1,29 +1,19 @@
 ﻿@using Newtonsoft.Json
 @model  WebApplication1.Models.PhotoViewModels.PhotoViewModel
 
-
 <script src="~/Scripts/popImage/jquery.popImage.mini.js"></script>
 
-
-
 <script type="text/javascript">
-
     $(document).ready(function () {
         TableHighLight("PhotoTable");
         $("a.image_gall").popImage();
-
         $("#link_group a").popImage({ "tagName": "rel" });
-    });
-
-
-
-
+    });    
 </script>
 
 <div id="div_PhotoTable">
     <h2>輪播圖管理</h2>
     <hr />
-
     <div >
         <button type="button" id="ImageAddButton" class="btn btn-success col-md-offset-11" onclick="LoadingUpLoadPage()">上傳檔案</button>
     </div>
@@ -32,37 +22,19 @@
         <div class="panel-heading">輪播圖列表</div>
         <div id="link_group">
             <table class="table" id="PhotoTable">
-                <tr>
-                    @*<th>
-                        編號
-                    </th>*@
+                <tr>                    
                     <th>
                         說明
-                    </th>
-                    @*<th>
-                        附檔名
-                    </th>*@
+                    </th>                 
                 </tr>
                 @if (Model != null)
                 {
                     foreach (var item in Model.PhotoList)
                     {
-                        <tr id="Photo_@item.ImageNo">
-                            @*<td>
-                                @Html.DisplayFor(modelItem => item.ImageNo)
-                            </td>*@
-                            <td>
-                              @*  @Html.DisplayFor(modelItem => item.Remark)*@
-                              @*  <a href="javascript:void(0)" rel="http://skygq.com/demo/jquery.popImage/images/31.jpg">@item.Remark</a>*@
-                               @* <a href="javascript:void(0)" rel="file://D:/Images/@string.Format("{0}.{1}",item.ImageNo,item.AttachedFileName)">@item.Remark</a>*@
-                                                             
-                              
-                                <a href=" javascript:void(0)" rel="/FileLoad/GETFilePath?image=@item.ImageNo&extend=@item.AttachedFileName">@item.Remark</a>
-                                
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.AttachedFileName)
-                            </td>
+                        <tr id="Photo_@item.ImageNo">                         
+                            <td>   
+                                <a href=" javascript:void(0)" rel="/FileLoad/GETFilePath?image=@item.ImageNo&extend=@item.AttachedFileName">@item.Remark</a>                                
+                            </td>                          
                             <td>
                                 <div>
                                     <input type="submit" value="刪除" class="btn btn-danger col-md-offset-10" onclick="OnPhotoDeleteClick(@JsonConvert.SerializeObject(item))" />

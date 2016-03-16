@@ -138,7 +138,7 @@ namespace WebApplication1.Controllers
                 BinaryReader br = new BinaryReader(fs);
                 by = br.ReadBytes((int )fs.Length);
             }
-            return File(path,"imge/jpeg");
+            return File(path, "imge/" + extend);
         }
 
     }
