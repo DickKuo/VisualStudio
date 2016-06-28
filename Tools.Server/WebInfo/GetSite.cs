@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
@@ -10,7 +9,6 @@ using System.Globalization;
 using System.Xml;
 using System.Threading;
 using WebInfo.Business.DataEntities;
-using WebInfo.Business;
 using WebInfo.Business.Services;
 using System.Security.Permissions;
 using System.Security;
@@ -19,6 +17,21 @@ namespace WebInfo
 {
     public class GetSite : IGetSiteService
     {
+        private class Default {
+            public const string GetContext = "抓取文章";
+            public const string Attributes_href = "href";
+            public const string TimeFormat = "yyyy/MM/dd HH:mm:ss";
+            public const int Second = 1000;
+        }
+
+        private class HtmlStartTag {
+            public const string Title = "<title>";
+        }
+
+        private class HtmlEndTag {
+            public const string Title = "</title>";
+        }
+
         Dictionary<string, int> Month = new Dictionary<string, int>();
         private const int _defaultCount = 30;
         private int _pushcount = 0;
@@ -59,9 +72,7 @@ namespace WebInfo
             listold = GetRecord();        
         }
 
-        /// <summary>
-        /// 抓取文章內容
-        /// </summary>
+        /// <summary>抓取文章內容 </summary>
         /// <param name="Url">Url</param>
         /// <returns></returns>
         public StreamReader GetWebInfo(string Url)
@@ -77,15 +88,13 @@ namespace WebInfo
             }
             catch (Exception ex)
             {
-                ToolLog.Log(CommTool.LogType.Error, "抓取文章" + ex.Message);
+                ToolLog.Log(CommTool.LogType.Error, Default .GetContext+ ex.Message);
                 ToolLog.Log(Url);
             }
             return reader;
         }
 
-        /// <summary>
-        /// 抓取文章內容
-        /// 20150616 擴充可以選擇是否避免相關指定網頁以外的網址 工具集 #68  
+        /// <summary> 抓取文章內容  20150616 擴充可以選擇是否避免相關指定網頁以外的網址 工具集 #68  
         /// </summary>
         /// <param name="Url"></param>
         /// <param name="IsAvoid">true 如果不是指定的網站類型則跳過</param>
@@ -111,15 +120,13 @@ namespace WebInfo
             }
             catch (Exception ex)
             {
-                ToolLog.Log(CommTool.LogType.Error, "抓取文章" + ex.Message);
+                ToolLog.Log(CommTool.LogType.Error, Default.GetContext + ex.Message);
                 ToolLog.Log(Url);
             }
             return reader;
         }
 
-        /// <summary>
-        /// 抓取PTT文章列表         
-        /// </summary>
+        /// <summary> 抓取PTT文章列表     </summary>
         /// <param name="BaseUrl">起始網址Url</param>
         /// <returns></returns>
         public SitePlus GetUrlList(string BaseUrl)
@@ -137,8 +144,8 @@ namespace WebInfo
                         MatchCollection matches = Regex.Matches(str, "href=\"[^\"]+\"", RegexOptions.IgnoreCase);
                         foreach (Match match in matches)
                         {
-                            string temp = match.Value.Trim().Replace("href=", "");
-                            temp = temp.Replace("\"", "");
+                            string temp = match.Value.Trim().Replace("href=", string.Empty);
+                            temp = temp.Replace("\"", string.Empty);
                             if (temp.IndexOf("index") != -1)
                             {
                                 siteplus.Index.Add(temp);
@@ -155,9 +162,7 @@ namespace WebInfo
         }
 
 
-        /// <summary>
-        /// 20150410 針對網址解析
-        /// 解析表特版文章內容。
+        /// <summary> 20150410 針對網址解析 解析表特版文章內容。
         /// </summary>
         /// <param name="Url">Url</param>
         /// <returns></returns>
@@ -172,15 +177,15 @@ namespace WebInfo
             if (reader != null)
             {
                 string temp = reader.ReadToEnd();
-                MatchCollection matches = Regex.Matches(temp, "<title>[^\"]+</title>", RegexOptions.IgnoreCase);
+                MatchCollection matches = Regex.Matches(temp, string.Format("{0}[^\"]+{1}",HtmlStartTag.Title,HtmlEndTag.Title)  , RegexOptions.IgnoreCase);
                 foreach (Match match in matches)
                 {
-                    Info.Title = match.Value.Replace("\"", "'").Replace("</title>", "").Replace("<title>", "").Replace("--", "");
+                    Info.Title = match.Value.Replace("\"", "'").Replace(HtmlEndTag.Title, string.Empty).Replace(HtmlStartTag.Title, string.Empty).Replace("--", string.Empty);
                 }
                 matches = Regex.Matches(temp, "</span></div>[^\"]+<span class=\"f2\">", RegexOptions.IgnoreCase);
                 foreach (Match match in matches)
                 {
-                    Info.Context = match.Value.Replace("\"", "'").Replace("</span></div>", "").Replace("<span class=\"f2\">", "").Replace("--", "");
+                    Info.Context = match.Value.Replace("\"", "'").Replace("</span></div>", string.Empty).Replace("<span class=\"f2\">", string.Empty).Replace("--", string.Empty);
                     //20150609 #64
                     Info.Context = GetAnalysis(temp, Info.Context);
                 }
@@ -214,7 +219,7 @@ namespace WebInfo
                                 #endregion
 
                                 #region 轉youtube 網址
-                                if (line.ToLower().Replace(".", "").Trim().IndexOf("youtube") != -1)
+                                if (line.ToLower().Replace(".", string.Empty).Trim().IndexOf("youtube") != -1)
                                 {
                                     matches = Regex.Matches(line, "https://www.youtube.com[^\"]+", RegexOptions.IgnoreCase);
                                     if (matches.Count > 0)
@@ -239,7 +244,7 @@ namespace WebInfo
                                 matches = Regex.Matches(line, "src=\"[^\"]+", RegexOptions.IgnoreCase);
                                 foreach (Match match in matches)
                                 {
-                                    string href = match.Value.Replace("src=\"", "");
+                                    string href = match.Value.Replace("src=\"", string.Empty);
                                     line = line.Replace(".jpg\"", ".jpg\" data-original='" + href + "\" class='lazy'");
                                 }
                                 #endregion
@@ -265,7 +270,7 @@ namespace WebInfo
                                     StringBuilder ImageUrls = new StringBuilder();                                   
                                     foreach (Match match in matches)
                                     {
-                                        ImageUrls.Append(this.GetMiupixImg(match.Value.Replace("<a href=\"", "")));
+                                        ImageUrls.Append(this.GetMiupixImg(match.Value.Replace("<a href=\"", string.Empty)));
                                         ImageUrls.Append("\r\n");
                                     }
                                     if (!ExistImage.Contains(ImageUrls.ToString()))
@@ -279,7 +284,7 @@ namespace WebInfo
                                     }                                   
                                 }
                                 #endregion
-                                sb.Append(line).Replace("--", "");
+                                sb.Append(line).Replace("--", string.Empty);
                             }
                             break;
                         }
@@ -290,7 +295,7 @@ namespace WebInfo
                 foreach (Match match in matches)
                 {
                     //Wed Jul 23 16:41:02 2014
-                    string s = match.Value.Replace("時間</span><span class=\"article-meta-value\">", "").Replace("</span></div>", "");
+                    string s = match.Value.Replace("時間</span><span class=\"article-meta-value\">", string.Empty).Replace("</span></div>",string.Empty);
                     string[] spl = s.Split(' ');
                     if (spl.Length > 4)
                     {
@@ -315,7 +320,7 @@ namespace WebInfo
                 matches = Regex.Matches(temp, "作者</span><span class=\"article-meta-value\">[^\"]+</span></div>", RegexOptions.IgnoreCase);
                 foreach (Match match in matches)
                 {
-                    Info.Author = match.Value.Replace("\"", "'").Replace("作者</span><span class=\"article-meta-value\">", "").Replace("</span></div>", "").Replace("--", "");
+                    Info.Author = match.Value.Replace("\"", "'").Replace("作者</span><span class=\"article-meta-value\">", "").Replace("</span></div>", string.Empty).Replace("--", string.Empty);
                 }
 
                 matches = Regex.Matches(temp, "<span class=\"hl push-tag\">[^\"]+</span>", RegexOptions.IgnoreCase);
@@ -335,9 +340,7 @@ namespace WebInfo
             return Info;
         }
 
-        /// <summary>
-        /// 20150609 猜解PTT文章內容 #64
-        /// </summary>
+        /// <summary> 20150609 猜解PTT文章內容 #64 </summary>
         /// <param name="context"></param>
         /// <param name="result"></param>
         /// <returns></returns>
@@ -381,9 +384,7 @@ namespace WebInfo
         }
 
 
-        /// <summary>
-        /// 20150505 modified 加入其他屬性
-        /// </summary>
+        /// <summary>20150505 modified 加入其他屬性</summary>
         /// <param name="doc">Record_Doc</param>
         /// <param name="pTitle">文章開頭</param>
         /// <param name="Address">網址</param>
@@ -393,7 +394,7 @@ namespace WebInfo
             XmlNode root = doc.SelectSingleNode("root");
             XmlElement element = doc.CreateElement("Title");
             element.InnerText = pTitle;
-            element.SetAttribute("Time", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+            element.SetAttribute("Time", DateTime.Now.ToString(Default.TimeFormat));
             element.SetAttribute("Address", Address);
             element.SetAttribute("PushCount", PushCount);
             root.AppendChild(element);
@@ -414,9 +415,7 @@ namespace WebInfo
         }
 
 
-        /// <summary>
-        /// 20150505 add by Dick for 初始化已存在的紀錄
-        /// </summary>
+        /// <summary>20150505 add by Dick for 初始化已存在的紀錄</summary>
         private static List<string> GetRecord()
         {
             List<string> result = new List<string>();
@@ -439,9 +438,7 @@ namespace WebInfo
 
 
 
-        /// <summary>
-        /// 遞回所有頁面
-        /// </summary>
+        /// <summary>遞回所有頁面 </summary>
         /// <param name="index">起始索引列</param>
         /// <param name="pSiteplus">輔助類</param>
         /// <param name="li">Post列</param>
@@ -476,7 +473,7 @@ namespace WebInfo
                                 bool Faill = false;
                                 do
                                 {
-                                    Thread.Sleep(5000);
+                                    Thread.Sleep(Default.Second*5);
                                     length = webinfo.POST(PostAddress, li);
                                     if (length == 8055)
                                     {
@@ -508,7 +505,7 @@ namespace WebInfo
             }
             foreach (string str in pSiteplus.Index)
             {
-                string temp = str.Replace(Formate, "").Replace(".html", "");
+                string temp = str.Replace(Formate, string.Empty).Replace(".html",string.Empty);
                 int result = 0;
                 if (int.TryParse(temp, out result))
                 {
@@ -524,9 +521,7 @@ namespace WebInfo
             }
         }
 
-        /// <summary>
-        /// 工具集 #60
-        /// 將miupix的圖片轉換成實際圖片位置
+        /// <summary>工具集 #60 將miupix的圖片轉換成實際圖片位置
         /// </summary>
         /// <param name="Url">欲轉換網址</param>
         /// <returns></returns>
@@ -557,7 +552,5 @@ namespace WebInfo
             }
             return result;
         }
-
-
     } 
 }

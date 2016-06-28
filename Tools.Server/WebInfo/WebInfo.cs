@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using System.Net;
@@ -13,8 +12,16 @@ namespace WebInfo
 {
     public class WebInfo : IWebInfoService
     {
-        private string _pLogPath;
+        private class Default {
+            public const string RecordEnd = "記錄結束";
+            public const string RecordFormat = "寫入紀錄 {0} ";
+            public const string Re = "Re: ";
+            public const string PostError = "POST失敗：";
+            public const int Zero = 0;
+            public const int FirstItem = 0;
+        }
 
+        private string _pLogPath;
 
         public WebInfo(string pLogPath)
         {
@@ -23,9 +30,7 @@ namespace WebInfo
         }
 
 
-        /// <summary>
-        /// 抓取網頁資訊
-        /// </summary>
+        /// <summary> 抓取網頁資訊</summary>
         /// <param name="pUrl">網址</param>
         /// <returns></returns>
         public StreamReader GetResponse(string pUrl)
@@ -39,9 +44,7 @@ namespace WebInfo
         }
 
 
-        /// <summary>
-        /// 抓取網頁資訊To String
-        /// </summary>
+        /// <summary> 抓取網頁資訊To String </summary>
         /// <param name="pUrl">網址</param>
         /// <returns></returns>
         public virtual string GetStringResponse(string pUrl)
@@ -64,19 +67,17 @@ namespace WebInfo
         }
         
 
-        /// <summary>
-        /// Post功能
-        /// </summary>
+        /// <summary> Post功能</summary>
         /// <param name="Address">網址</param>
         /// <param name="SiteInfoList">文章列</param>
         /// <returns></returns>
         public long POST(string Address, List<SiteInfo> SiteInfoList)
         {
-            long length = 0;
+            long length = Default.Zero;
             SiteInfo info = new SiteInfo();
-            if (SiteInfoList.Count > 0)
+            if (SiteInfoList.Count > Default.Zero)
             {
-               info =  SiteInfoList[0];
+               info =  SiteInfoList[Default.FirstItem];
             }
             try
             {
@@ -89,7 +90,7 @@ namespace WebInfo
                 request.ContentLength = byteArray.Length;
                 using (Stream dataStream = request.GetRequestStream())
                 {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Write(byteArray, Default.Zero, byteArray.Length);
                 }
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
@@ -106,16 +107,14 @@ namespace WebInfo
             }
             catch (WebException ex)
             {
-                ToolLog.Log(CommTool.LogType.Error, "POST失敗：" + ex.Message);
+                ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);
                 length =8055;
             }            
             return length;
         }
 
 
-        /// <summary>
-        /// 20150410 add by Dick for 直接針對網址進行解析內容及傳輸。
-        /// </summary>
+        /// <summary>20150410 add by Dick for 直接針對網址進行解析內容及傳輸。 </summary>
         /// <param name="Url">指定網址</param>
         /// <param name="pCondition">標題限制必須包含字串</param>
         /// <param name="PushCount">推文數量</param>
@@ -130,12 +129,12 @@ namespace WebInfo
                 if (SiteInfo.Title.IndexOf(pCondition) != -1 && SiteInfo.PushList.Count > PushCount)
                 {
                     SiteInfo.PushList.Clear();
-                    if (SiteInfo.Title.IndexOf("Re: ") == -1)
+                    if (SiteInfo.Title.IndexOf(Default.Re) == -1)
                     {
                         li.Add(SiteInfo);
                         long length = POST(PostAdress, li);
-                        ToolLog.Log(string.Format("寫入紀錄 {0} ", SiteInfo.Title));
-                        ToolLog.Log("記錄結束");
+                        ToolLog.Log(string.Format(Default.RecordFormat, SiteInfo.Title));
+                        ToolLog.Log(Default.RecordEnd);
                         li.Clear();
                     }
                 }
@@ -160,12 +159,12 @@ namespace WebInfo
                 if (SiteInfo.PushList.Count > PushCount)
                 {                    
                     SiteInfo.PushList.Clear();
-                    if (SiteInfo.Title.IndexOf("Re: ") == -1)
+                    if (SiteInfo.Title.IndexOf(Default.Re) == -1)
                     {
                         li.Add(SiteInfo);
                         long length = POST(PostAdress, li);
-                        ToolLog.Log(string.Format("寫入紀錄 {0} ", SiteInfo.Title));
-                        ToolLog.Log("記錄結束");
+                        ToolLog.Log(string.Format(Default.RecordFormat, SiteInfo.Title));
+                        ToolLog.Log(Default.RecordEnd);
                         li.Clear();
                     }
                 }
