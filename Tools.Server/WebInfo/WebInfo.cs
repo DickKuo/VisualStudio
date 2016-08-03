@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using CommTool;
 using WebInfo.Business.DataEntities;
 using WebInfo.Business;
+using System.Xml;
 
 namespace WebInfo
 {
@@ -19,6 +20,9 @@ namespace WebInfo
             public const string PostError = "POST失敗：";
             public const int Zero = 0;
             public const int FirstItem = 0;
+            public const string Post = "Post";
+            public const string Get = "Get";
+            public const string ContentType = "text/xml; encoding='utf-8'";
         }
 
         private string _pLogPath;
@@ -171,6 +175,31 @@ namespace WebInfo
             }
         }
 
+
+        /// <summary>PostHttp資料給指定位置</summary>
+        /// <param name="Data"></param>
+        /// <param name="Url"></param>
+        /// <returns></returns>
+        public string HttpPostMethod(string Data, string Url)
+        {
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Data);
+            var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
+            request.Method = Default.Post;
+            request.ContentType = Default.ContentType;
+            request.ContentLength = bytes.Length;
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(bytes, 0, bytes.Length);
+            requestStream.Close();
+            HttpWebResponse response;
+            response = (HttpWebResponse)request.GetResponse();
+            string responseStr = string.Empty;
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Stream responseStream = response.GetResponseStream();
+                responseStr = new StreamReader(responseStream).ReadToEnd();
+            }
+            return responseStr;
+        }
 
     }
 }
