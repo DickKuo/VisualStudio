@@ -170,7 +170,7 @@ namespace WebInfo
         {
             SiteInfo Info = new SiteInfo();
             Info.Address = Url;
-            Console.WriteLine(Url);                    
+            Console.WriteLine(Url);           
             ToolLog.Log(Url);           
             StreamReader reader = this.GetWebInfo(Url);
             string str = string.Empty;
@@ -312,7 +312,15 @@ namespace WebInfo
                             sptime = spl[4].Split(':');
                             if (sptime.Length > 2)
                             {
-                                Info.PostDate = new DateTime(Convert.ToInt32(spl[5]), month, Convert.ToInt32(spl[3]), Convert.ToInt32(sptime[0]), Convert.ToInt32(sptime[1]), Convert.ToInt32(sptime[2]));
+                                int year = 0;
+                                if (spl.Length > 5)
+                                {
+                                    int.TryParse(spl[5], out year);
+                                }
+                                else {
+                                    year = DateTime.Now.Year;
+                                }
+                                Info.PostDate = new DateTime(year, month, Convert.ToInt32(spl[3]), Convert.ToInt32(sptime[0]), Convert.ToInt32(sptime[1]), Convert.ToInt32(sptime[2]));
                             }
                         }
                     }
