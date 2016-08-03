@@ -8,34 +8,27 @@ using System.Reflection;
 
 namespace CommTool
 {
-    public class DataEntity :IDataEntity
+    public class DataEntity : IDataEntity
     {
 
         //public string TypeKey { get; }
-
-        public  ExcetionCollection Excections {  get;  set; }
+        public ExcetionCollection Excections { get; set; }
 
         public PropertyCollection ExtendedProperties { set; get; }
 
-        public object GetPropertyValue(string pPropertyName)
-        {
+        public object GetPropertyValue(string pPropertyName) {
             PropertyInfo property = base.GetType().GetProperty(pPropertyName);
-            if (property != null)
-            {
+            if (property != null) {
                 return property.GetValue(this, null);
             }
             return null;
         }
 
-        public void SetPropertyValue(string pPropertyName, object pValue)
-        {
+        public void SetPropertyValue(string pPropertyName, object pValue) {
             PropertyInfo property = base.GetType().GetProperty(pPropertyName);
-            if (property != null)
-            {
+            if (property != null) {
                 base.GetType().GetProperty(pPropertyName).SetValue(this, pValue, null);
             }
         }
-
-
     }
 }

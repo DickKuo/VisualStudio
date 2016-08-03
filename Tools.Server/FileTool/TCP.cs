@@ -7,7 +7,7 @@ using System.Net.Sockets;
 
 namespace CommTool
 {
-    
+
     public class TCP
     {
         //宣告網路資料流變數
@@ -20,55 +20,28 @@ namespace CommTool
 
         public string IP { get { return _ip; } }
 
-        public void CommandToService(string pIP ,string pPort,string pCommand)
-        {
-            try
-            {
+        public void CommandToService(string pIP, string pPort, string pCommand) {
+            try {
                 TCP myNetworkClient = new TCP();
-                //myNetworkClient.myTcpClient ;
                 _ip = pIP;
                 myNetworkClient.myTcpClient.Connect(pIP, Convert.ToInt32(pPort));
                 myNetworkClient.WriteData(pCommand);
                 myNetworkClient.ReadData();
-                //CurrentDbConnection = myNetworkClient.ReadData();
-
-                //MessageBox.Show("連線成功 !!");
             }
-            catch (Exception ex)
-            {
-
-                //MessageBox.Show(ex.Message);
+            catch (Exception ex) {
             }
         }
-        //寫入資料
-        void WriteData(string pText)
-        {
-            //String strTest = "this is a test string !!";
-            //將字串轉 byte 陣列，使用 ASCII 編碼
-            //Byte[] myBytes = Encoding.ASCII.GetBytes(pText);
-            Byte[] myBytes = System.Text.Encoding.Default.GetBytes(pText);
-            //Console.WriteLine("建立網路資料流 !!");
-            //建立網路資料流
-            myNetworkStream = myTcpClient.GetStream();
-            //Console.WriteLine("將字串寫入資料流　!!");
-            //將字串寫入資料流
-            //string s = Dns.GetHostName();
-            //IPAddress[] IPS = Dns.GetHostEntry(IP).AddressList;
-            //if (IPS.Length > 3)
-            //{
-            //    myBytes = System.Text.Encoding.Default.GetBytes(pText);
-            //    myNetworkStream.Write(myBytes, 0, myBytes.Length);
-            //}
-            //else
-            //{
-            //    myBytes = System.Text.Encoding.Default.GetBytes("無法擷取IP");
-            myNetworkStream.Write(myBytes, 0, myBytes.Length);
-            //}
+
+        /// <summary>寫入資料</summary>
+        /// <param name="pText"></param>
+        private void WriteData(string pText) {
+            Byte[] myBytes = System.Text.Encoding.Default.GetBytes(pText);        
+            myNetworkStream = myTcpClient.GetStream();           
+            myNetworkStream.Write(myBytes, 0, myBytes.Length);        
         }
 
-        //讀取資料
-        void ReadData()
-        {
+        /// <summary>讀取資料</summary>
+        private void ReadData() {
             //Console.WriteLine("從網路資料流讀取資料 !!");
             //從網路資料流讀取資料
             int bufferSize = myTcpClient.ReceiveBufferSize;

@@ -16,10 +16,8 @@ namespace CommTool
         /// </summary>
         /// <param name="pID"></param>
         /// <returns></returns>
-        public static string ConvertToString(this System.Guid pID)
-        {
-            if (pID.Equals(System.Guid.Empty))
-            {
+        public static string ConvertToString(this System.Guid pID) {
+            if (pID.Equals(System.Guid.Empty)) {
                 return string.Empty;
             }
             return pID.ToString("D");
@@ -30,10 +28,8 @@ namespace CommTool
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static Guid ConvertToGuid(this String str)
-        {
-            if (string.IsNullOrEmpty(str))
-            {
+        public static Guid ConvertToGuid(this String str) {
+            if (string.IsNullOrEmpty(str)) {
                 return System.Guid.Empty;
             }
             System.Guid empty = System.Guid.Empty;
@@ -46,8 +42,7 @@ namespace CommTool
         /// </summary>
         /// <param name="pValue"></param>
         /// <returns></returns>
-        public static bool IsNullOrEmpty(this object pValue)
-        {
+        public static bool IsNullOrEmpty(this object pValue) {
             return pValue == null || (pValue is System.Guid && System.Guid.Empty.Equals(pValue)) || (pValue is string && (string.Empty.Equals(pValue) || pValue.Equals(System.Guid.Empty.ToString())));
         }
 
@@ -58,12 +53,10 @@ namespace CommTool
         /// <param name="pCoumnName"></param>
         /// <param name="pError"></param>
         /// <returns></returns>
-        public static bool IsNullOrEmpty(this object pValue,string pCoumnName ,StringBuilder pError)
-        {
-            bool  IsNull = pValue == null || (pValue is System.Guid && System.Guid.Empty.Equals(pValue)) || (pValue is string && (string.Empty.Equals(pValue) || pValue.Equals(System.Guid.Empty.ToString())));
-            if (!IsNull)
-            {
-                pError.AppendFormat("欄位'{0}'不可為空。",pCoumnName);
+        public static bool IsNullOrEmpty(this object pValue, string pCoumnName, StringBuilder pError) {
+            bool IsNull = pValue == null || (pValue is System.Guid && System.Guid.Empty.Equals(pValue)) || (pValue is string && (string.Empty.Equals(pValue) || pValue.Equals(System.Guid.Empty.ToString())));
+            if (!IsNull) {
+                pError.AppendFormat("欄位'{0}'不可為空。", pCoumnName);
             }
             return IsNull;
         }
@@ -82,107 +75,84 @@ namespace CommTool
             }
         }
 
-        public static object GetService(System.Type serviceType)
-        {
-            if (serviceType == null)
-            {
+        public static object GetService(System.Type serviceType) {
+            if (serviceType == null) {
                 throw new System.ArgumentNullException("serviceType");
             }
-            if (CallService._currentServiceProvider == null)
-            {
+            if (CallService._currentServiceProvider == null) {
                 ///錯誤信息先略過，未來再做定義
                 //throw new DesignException(Resources.CurrentServiceProvidertIsNull);
             }
             object service = CallService._currentServiceProvider.GetService(serviceType);
-            if (service == null)
-            {
+            if (service == null) {
                 ///錯誤信息先略過，未來再做定義
                 //throw new DesignException(string.Format(System.Resources.FailGetService, serviceType.FullName));
             }
             return service;
         }
 
-        public static T GetService<T>()
-        {
-            if (CallService._currentServiceProvider == null)
-            {
+        public static T GetService<T>() {
+            if (CallService._currentServiceProvider == null) {
                 ///錯誤信息先略過，未來再做定義
                 //throw new DesignException(Resources.CurrentServiceProvidertIsNull);
             }
             object service = CallService._currentServiceProvider.GetService(typeof(T));
-            if (service == null)
-            {
+            if (service == null) {
                 ///錯誤信息先略過，未來再做定義
                 //throw new DesignException(string.Format(Resources.FailGetService, typeof(T).FullName));
             }
             return (T)((object)service);
         }
 
-        public static object GetServiceWithoutException(System.Type serviceType)
-        {
-            if (CallService._currentServiceProvider != null)
-            {
+        public static object GetServiceWithoutException(System.Type serviceType) {
+            if (CallService._currentServiceProvider != null) {
                 return CallService._currentServiceProvider.GetService(serviceType);
             }
             return null;
         }
     }
 
-     [ServiceClass(typeof(ICommService), ServiceCreateType.Callback)]
-    public static class CommTool 
+    [ServiceClass(typeof(ICommService), ServiceCreateType.Callback)]
+    public static class CommTool
     {
-        /// <summary>
-        /// 20150108 add by Dick for 取得固定長度的字串 單位為Byte
-        /// </summary>
+        /// <summary>20150108 add by Dick for 取得固定長度的字串 單位為Byte</summary>
         /// <param name="pString">輸入字串</param>
         /// <param name="pLen">取值長度</param>
         /// <param name="IsLeft">預設true從左算起;false為從右算起</param>
         /// <param name="AddChar">字串長度不足時，補足字元</param>
         /// <returns></returns>
-        private static string GetLenString(string pString, int pLen, bool IsLeft = true, char AddChar = ' ')
-        {
-            if (IsLeft)
-            {
+        private static string GetLenString(string pString, int pLen, bool IsLeft = true, char AddChar = ' ') {
+            if (IsLeft) {
                 pString = pString.PadRight(pLen, AddChar);
             }
-            else
-            {
+            else {
                 pString = pString.PadLeft(pLen, AddChar);
             }
             string hopestring = string.Empty;  //希望取得的字串
             string spp = string.Empty;
             int byteLength;
-            if (IsLeft)
-            {
-                for (int i = 0; i <= pString.Length; i++)
-                {
+            if (IsLeft) {
+                for (int i = 0; i <= pString.Length; i++) {
                     spp = pString.Substring(0, i);
                     byteLength = System.Text.Encoding.Default.GetBytes(spp).Length;
-                    if (byteLength <= pLen)
-                    { hopestring = spp; }
-                    else
-                    {
+                    if (byteLength <= pLen) { hopestring = spp; }
+                    else {
                         hopestring = pString.Substring(0, i - 1);
                         break;
                     }
                 }
             }
-            else
-            {
+            else {
                 int getcount = 1;
-                for (int i = pString.Length - 1; i >= 0; i--)
-                {
+                for (int i = pString.Length - 1; i >= 0; i--) {
                     spp = pString.Substring(i, getcount);
                     byteLength = System.Text.Encoding.Default.GetBytes(spp).Length;
-                    if (byteLength <= pLen)
-                    { hopestring = spp; }
-                    else
-                    {
+                    if (byteLength <= pLen) { hopestring = spp; }
+                    else {
                         hopestring = pString.Substring(i, getcount);
                         break;
                     }
-                    if (byteLength == pLen)
-                    {
+                    if (byteLength == pLen) {
                         break;
                     }
                     getcount++;
@@ -200,37 +170,28 @@ namespace CommTool
         private readonly System.Type _ServiceInterface;
         private readonly ServiceCreateType _ServiceCreateType;
         private readonly bool _enabled;
-        public ServiceCreateType ServiceCreateType
-        {
-            get
-            {
+        public ServiceCreateType ServiceCreateType {
+            get {
                 return this._ServiceCreateType;
             }
         }
-        public System.Type ServiceInterface
-        {
-            get
-            {
+        public System.Type ServiceInterface {
+            get {
                 return this._ServiceInterface;
             }
         }
-        public bool Enabled
-        {
-            get
-            {
+        public bool Enabled {
+            get {
                 return this._enabled;
             }
         }
-        public ServiceClassAttribute(System.Type pServiceInterface, ServiceCreateType pServiceCreateType)
-        {
+        public ServiceClassAttribute(System.Type pServiceInterface, ServiceCreateType pServiceCreateType) {
             this._ServiceCreateType = pServiceCreateType;
             this._ServiceInterface = pServiceInterface;
             this._enabled = true;
         }
-        public ServiceClassAttribute(bool pEnabled)
-        {
-            if (pEnabled)
-            {
+        public ServiceClassAttribute(bool pEnabled) {
+            if (pEnabled) {
                 throw new System.ArgumentOutOfRangeException("pEnabled", "pEnabled must is false.");
             }
             this._enabled = pEnabled;
@@ -244,29 +205,22 @@ namespace CommTool
         private System.Type _ServiceClass;
         private System.Type _ServiceInterface;
         private ServiceCreateType _ServiceCreateType;
-        public System.Type ServiceClass
-        {
-            get
-            {
+        public System.Type ServiceClass {
+            get {
                 return this._ServiceClass;
             }
         }
-        public ServiceCreateType ServiceCreateType
-        {
-            get
-            {
+        public ServiceCreateType ServiceCreateType {
+            get {
                 return this._ServiceCreateType;
             }
         }
-        public System.Type ServiceInterface
-        {
-            get
-            {
+        public System.Type ServiceInterface {
+            get {
                 return this._ServiceInterface;
             }
         }
-        public ServiceEntry(System.Type pServiceInterface, System.Type pServiceClass, ServiceCreateType pServiceCreateType)
-        {
+        public ServiceEntry(System.Type pServiceInterface, System.Type pServiceClass, ServiceCreateType pServiceCreateType) {
             this._ServiceCreateType = pServiceCreateType;
             this._ServiceClass = pServiceClass;
             this._ServiceInterface = pServiceInterface;
