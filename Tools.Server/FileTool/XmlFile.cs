@@ -6,12 +6,12 @@ using System.Xml;
 using System.ComponentModel;
 using System.IO;
 
-namespace CommTool
-{
-    public class XmlFile
-    {
+namespace CommTool {
+    public class XmlFile {
         private class Default {
-            public const string Root = "root";
+            public const string ok = "ok";
+            public const string XmlNodeId = "XmlNode ID：";
+            public const char Dot = ',';
         }
 
         #region 私有屬性
@@ -39,7 +39,7 @@ namespace CommTool
             }
         }
         #endregion
-        
+
         #region 建構函式
         public XmlFile() {
         }
@@ -56,10 +56,9 @@ namespace CommTool
         /// <returns></returns>
         public virtual XmlDocument XmlLoad() {
             XmlDocument doc = new XmlDocument();
-            System.IO.StreamReader sr = new System.IO.StreamReader(_path);
-            doc.Load(sr);
-            sr.Close();
-            sr.Dispose();
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(_path)) {
+                doc.Load(sr);
+            }
             return doc;
         }
 
@@ -68,10 +67,9 @@ namespace CommTool
         /// <returns></returns>
         public static XmlDocument LoadXml(string pPath) {
             XmlDocument doc = new XmlDocument();
-            System.IO.StreamReader sr = new System.IO.StreamReader(pPath);
-            doc.Load(sr);
-            sr.Close();
-            sr.Dispose();
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(pPath)) {
+                doc.Load(sr);
+            }
             return doc;
         }
 
@@ -81,7 +79,7 @@ namespace CommTool
         public virtual List<string> XmlLoadList(string Att) {
             List<string> li = new List<string>();
             XmlDocument doc = XmlLoad();
-            XmlNode root = doc.SelectSingleNode(Default.Root);
+            XmlNode root = doc.SelectSingleNode(BaseConst.Root);
             foreach (XmlNode child in root.ChildNodes) {
                 li.Add(child.Attributes[Att].Value);
             }
@@ -93,9 +91,9 @@ namespace CommTool
         public virtual List<string> XmlLoadList() {
             List<string> li = new List<string>();
             XmlDocument doc = XmlLoad();
-            XmlNode root = doc.SelectSingleNode(Default.Root);
+            XmlNode root = doc.SelectSingleNode(BaseConst.Root);
             foreach (XmlNode child in root.ChildNodes) {
-                li.Add(child.Attributes[0].Value);
+                li.Add(child.Attributes[BaseConst.ArrayFirstItem].Value);
             }
             return li;
         }
@@ -107,7 +105,7 @@ namespace CommTool
         /// <returns></returns>
         public virtual void XmlAddNode(string NodeName, string Att, string value) {
             XmlDocument doc = XmlLoad();
-            XmlNode root = doc.SelectSingleNode(Default.Root);
+            XmlNode root = doc.SelectSingleNode(BaseConst.Root);
             XmlElement element = doc.CreateElement(NodeName);
             element.SetAttribute(Att, value);
             root.AppendChild(element);
@@ -136,7 +134,7 @@ namespace CommTool
         [Description("新增節點，多屬性方法")]
         public virtual void XmlAddNode(string NodeName, Dictionary<string, string> Att) {
             XmlDocument doc = XmlLoad();
-            XmlNode root = doc.SelectSingleNode(Default.Root);
+            XmlNode root = doc.SelectSingleNode(BaseConst.Root);
             XmlElement element = doc.CreateElement(NodeName);
             foreach (var key in Att) {
                 element.SetAttribute(key.Key, key.Value);
@@ -166,13 +164,13 @@ namespace CommTool
         public virtual string XmlDeleteNode(string ID) {
             try {
                 XmlDocument doc = XmlLoad();
-                XmlNode root = doc.SelectSingleNode(Default.Root);
+                XmlNode root = doc.SelectSingleNode(BaseConst.Root);
                 XmlNode element = doc.GetElementById(ID);
                 root.RemoveChild(element);
                 doc.Save(Path);
                 ToolLog tools = new ToolLog();
-                ToolLog.Log(LogType.Delete, "XmlNode ID：" + ID);
-                return "ok";
+                ToolLog.Log(LogType.Delete, Default.XmlNodeId + ID);
+                return Default.ok;
             }
             catch (Exception ex) {
                 ToolLog tools = new ToolLog();
@@ -186,18 +184,18 @@ namespace CommTool
         public virtual string XmlDeleteNode(List<string> li) {
             try {
                 XmlDocument doc = XmlLoad();
-                XmlNode root = doc.SelectSingleNode(Default.Root);
+                XmlNode root = doc.SelectSingleNode(BaseConst.Root);
                 StringBuilder SB = new StringBuilder();
                 foreach (string str in li) {
                     XmlNode element = doc.GetElementById(str);
                     SB.Append(str);
-                    SB.Append(",");
+                    SB.Append(BaseConst.Dot);
                     root.RemoveChild(element);
                 }
                 doc.Save(Path);
                 ToolLog tools = new ToolLog();
-                ToolLog.Log(LogType.Delete, "XmlNode ID：" + SB.ToString().Substring(0, SB.Length - 2));
-                return "ok";
+                ToolLog.Log(LogType.Delete, Default.XmlNodeId + SB.ToString().Substring(0, SB.Length - 2));
+                return Default.ok;
             }
             catch (Exception ex) {
                 ToolLog tools = new ToolLog();
@@ -210,18 +208,18 @@ namespace CommTool
         /// <param name="ID">NodeID</param>
         public virtual void XmlDeleteNodeArry(string arry) {
             XmlDocument doc = XmlLoad();
-            XmlNode root = doc.SelectSingleNode(Default.Root);
-            string[] li = arry.Split(',');
+            XmlNode root = doc.SelectSingleNode(BaseConst.Root);
+            string[] li = arry.Split(Default.Dot);
             StringBuilder SB = new StringBuilder();
             foreach (string str in li) {
                 XmlNode element = doc.GetElementById(str);
                 SB.Append(str);
-                SB.Append(",");
+                SB.Append(BaseConst.Dot);
                 root.RemoveChild(element);
             }
             doc.Save(Path);
             ToolLog tools = new ToolLog();
-            ToolLog.Log(LogType.Delete, "XmlNode ID：" + SB.ToString().Substring(0, SB.Length - 2));
+            ToolLog.Log(LogType.Delete, Default.XmlNodeId + SB.ToString().Substring(0, SB.Length - 2));
         }
 
         /// <summary>檢查節點是否存在</summary>
@@ -237,7 +235,6 @@ namespace CommTool
                 }
             }
             catch { }
-
             return IsExist;
         }
 
@@ -246,7 +243,7 @@ namespace CommTool
         /// <param name="pContext">內容</param>
         /// <param name="pAppend">是否覆蓋</param>
         public virtual void CreateBaseXml(string pPath, string pContext, bool pAppend) {
-            if (pPath.Length > 0) {
+            if (pPath.Length > BaseConst.ArrayMinItems) {
                 string[] spp = pPath.Split('\\');
                 StringBuilder dir = new StringBuilder();
                 for (int i = 0; i < spp.Length - 1; i++) {
@@ -271,7 +268,7 @@ namespace CommTool
         /// <param name="pPath">儲存位置</param>
         /// <param name="pAppend">是否覆蓋</param>
         public static void CreateBaseXml(string pPath, bool pAppend) {
-            if (pPath.Length > 0) {
+            if (pPath.Length > BaseConst.ArrayMinItems) {
                 string[] spp = pPath.Split('\\');
                 StringBuilder dir = new StringBuilder();
                 for (int i = 0; i < spp.Length - 1; i++) {
@@ -289,7 +286,8 @@ namespace CommTool
                 sw.Write(sb.ToString());
                 sw.Close();
             }
-        }        
+        }
+
 
         public static String ReOrderMethod(string pInput, bool pKeepId) {
             string ThisPath = AppDomain.CurrentDomain.BaseDirectory + "\\Old.xml";
@@ -328,6 +326,7 @@ namespace CommTool
             return NewString.ToString();
         }
 
+
         public static String NewOrderMethod(string pInput) {
             string NewXmlPath = AppDomain.CurrentDomain.BaseDirectory + "\\" + "New.xml";
             XmlFile xmlfile = new XmlFile();
@@ -353,14 +352,10 @@ namespace CommTool
             NodeBuilder.Append("</QueryViewColumns> \r\n");
             return NodeBuilder.ToString();
         }
-
-
         #endregion
 
         ~XmlFile() {
             Console.WriteLine("11");
         }
-
     }
-
 }

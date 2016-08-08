@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Assmblys.cs" />
     <Compile Include="AutoTrigger.cs" />
+    <Compile Include="BaseClass.cs" />
     <Compile Include="Comm.cs" />
     <Compile Include="ConfigManager.cs" />
     <Compile Include="DataEntity.cs" />

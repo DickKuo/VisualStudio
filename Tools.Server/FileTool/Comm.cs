@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using CommTool.Properties;
 using CommTool.Business;
 using CommTool.Business.Services;
+using Microsoft.Win32;
 
 
 namespace CommTool
@@ -199,7 +197,6 @@ namespace CommTool
     }
 
 
-
     internal class ServiceEntry : IServiceEntry
     {
         private System.Type _ServiceClass;
@@ -228,6 +225,24 @@ namespace CommTool
     }
 
 
+    /// <summary>註冊檔物件</summary>
+    public static class ObjectUtility {
+        private const string CC_HKEY_PATH3 = ".DEFAULT\\SOFTWARE\\DICK\\Server";
+        public const string LocalTempPath = "~/temp/";
 
+        /// <summary>抓取註冊檔資訊</summary>
+        /// <param name="KeyName"></param>
+        /// <param name="KeyValue"></param>
+        public static void ReadRegistry(string KeyName, ref object KeyValue) {
+            KeyValue = 1;
+            try {
+                RegistryKey RegistryKeyObj = Registry.Users.OpenSubKey(CC_HKEY_PATH3, false);
+                KeyValue = RegistryKeyObj.GetValue(KeyName, 1);
+            }
+            catch (Exception ex) {
+                throw new Exception(ex.Message);
+            }
+        }
+    }
 
 }

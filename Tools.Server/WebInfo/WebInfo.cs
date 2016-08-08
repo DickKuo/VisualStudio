@@ -32,8 +32,30 @@ namespace WebInfo
             ToolLog.ToolPath = pLogPath;
             _pLogPath = pLogPath;
         }
-
-
+        
+        /// <summary>PostHttp資料給指定位置</summary>
+        /// <param name="Data"></param>
+        /// <param name="Url"></param>
+        /// <returns></returns>
+        public string HttpPostMethod(string Data, string Url) {
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Data);
+            var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
+            request.Method = Default.Post;
+            request.ContentType = Default.ContentType;
+            request.ContentLength = bytes.Length;
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(bytes, 0, bytes.Length);
+            requestStream.Close();
+            HttpWebResponse response;
+            response = (HttpWebResponse)request.GetResponse();
+            string responseStr = string.Empty;
+            if (response.StatusCode == HttpStatusCode.OK) {
+                Stream responseStream = response.GetResponseStream();
+                responseStr = new StreamReader(responseStream).ReadToEnd();
+            }
+            return responseStr;
+        }
+        
         /// <summary> 抓取網頁資訊</summary>
         /// <param name="pUrl">網址</param>
         /// <returns></returns>
@@ -61,8 +83,7 @@ namespace WebInfo
             return result;
         }
 
-
-        /// <summary> Post功能</summary>
+        /// <summary>Post功能</summary>
         /// <param name="Address">網址</param>
         /// <param name="SiteInfoList">文章列</param>
         /// <returns></returns>
@@ -101,8 +122,8 @@ namespace WebInfo
             return length;
         }
 
-
-        /// <summary>20150410 add by Dick for 直接針對網址進行解析內容及傳輸。 </summary>
+        /// <summary>直接針對網址進行解析內容及傳輸</summary>
+        /// 20150410 add by Dick for 直接針對網址進行解析內容及傳輸。
         /// <param name="Url">指定網址</param>
         /// <param name="pCondition">標題限制必須包含字串</param>
         /// <param name="PushCount">推文數量</param>
@@ -125,11 +146,9 @@ namespace WebInfo
             }
         }
 
-
-        /// <summary>
+        /// <summary>直接針對網址進行解析內容及傳輸</summary>
         /// 20150410 add by Dick for 直接針對網址進行解析內容及傳輸。
         /// 20150428 modified by Dick for 不需要過濾標題條件
-        /// </summary>
         /// <param name="Url">指定網址</param>
         /// <param name="PushCount">推文數量</param>
         /// <param name="PostAdress">分析後傳送位址</param>
@@ -149,30 +168,6 @@ namespace WebInfo
                     }
                 }
             }
-        }
-
-
-        /// <summary>PostHttp資料給指定位置</summary>
-        /// <param name="Data"></param>
-        /// <param name="Url"></param>
-        /// <returns></returns>
-        public string HttpPostMethod(string Data, string Url) {
-            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Data);
-            var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
-            request.Method = Default.Post;
-            request.ContentType = Default.ContentType;
-            request.ContentLength = bytes.Length;
-            Stream requestStream = request.GetRequestStream();
-            requestStream.Write(bytes, 0, bytes.Length);
-            requestStream.Close();
-            HttpWebResponse response;
-            response = (HttpWebResponse)request.GetResponse();
-            string responseStr = string.Empty;
-            if (response.StatusCode == HttpStatusCode.OK) {
-                Stream responseStream = response.GetResponseStream();
-                responseStr = new StreamReader(responseStream).ReadToEnd();
-            }
-            return responseStr;
         }
 
     }

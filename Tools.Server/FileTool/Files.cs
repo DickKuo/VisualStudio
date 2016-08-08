@@ -12,6 +12,11 @@ namespace CommTool
 {
     public class Files : IFileService
     {
+        private class Default { 
+            public const string Version = "Version";
+            public const string FileTool = "FileTool.dll";
+        }
+
         /// <summary>20141226 直接寫入檔案方法</summary>
         /// <param name="sb">內容</param>
         /// <param name="SaveFile">存檔位置</param>
@@ -83,21 +88,21 @@ namespace CommTool
                 }
                 DirectoryInfo RemoveDir = new DirectoryInfo(UpdatePath);
                 foreach (FileInfo FiInfo in RemoveDir.GetFiles()) {
-                    if (FiInfo.Name.Equals("FileTool.dll")) {
+                    if (FiInfo.Name.Equals(Default.FileTool)) {
                         continue;
                     }
                     if (!LocalFileList.Contains(FiInfo.Name)) {
                         File.Copy(FiInfo.FullName, AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name, true);
                     }
                     else {
-                        if (FiInfo.Extension.Equals(".xml")) {
+                        if (FiInfo.Extension.Equals(BaseConst.XmlFile)) {
                             try {
                                 XmlDocument SourceDoc = XmlFile.LoadXml(FiInfo.FullName);
-                                XmlNode root = SourceDoc.SelectSingleNode("root");
+                                XmlNode root = SourceDoc.SelectSingleNode(BaseConst.Root);
                                 XmlDocument DeInfo = XmlFile.LoadXml(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name);
-                                XmlNode deroot = DeInfo.SelectSingleNode("root");
+                                XmlNode deroot = DeInfo.SelectSingleNode(BaseConst.Root);
                                 if (root != null && deroot != null) {
-                                    if (!root.Attributes["Version"].Value.Equals(deroot.Attributes["Version"].Value)) {
+                                    if (!root.Attributes[Default.Version].Value.Equals(deroot.Attributes[Default.Version].Value)) {
                                         try {
                                             File.Copy(FiInfo.FullName, AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name, true);
                                         }

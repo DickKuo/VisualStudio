@@ -12,24 +12,23 @@ namespace AutoTriggerService
 {
     public class TrigerSample : AutoTrigger
     {
-
         public override void Execute(string pCurrentTime)
         {
             throw new NotImplementedException();
-        }
-        
+        }        
     }
     
-
-
     public class GetPTTBueaty : AutoTrigger
     {
         private static List<string> _timelist = new List<string>();
         private bool IsRuning = false;
 
-        /// <summary>
-        /// 建立結構
-        /// </summary>
+        private class Default {
+            public const string TimeFormat = "HH:mm:ss";
+        }
+
+
+        /// <summary>建立結構 </summary>
         public GetPTTBueaty()
         {
             DateTime BaseTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
@@ -37,14 +36,13 @@ namespace AutoTriggerService
             int interval = Convert.ToInt32(15);
             while (BaseTime <= FlagTime)
             {
-                _timelist.Add(BaseTime.ToString("HH:mm:ss"));
-                Console.WriteLine(BaseTime.ToString("HH:mm:ss"));
+                _timelist.Add(BaseTime.ToString(Default.TimeFormat));
+                Console.WriteLine(BaseTime.ToString(Default.TimeFormat));
                 BaseTime = BaseTime.AddSeconds(GetTime() * interval);
             }
         }
-        /// <summary>
-        /// 20141219 add by Dick for 取得時間單位轉換
-        /// </summary>
+
+        /// <summary>20141219 add by Dick for 取得時間單位轉換</summary>
         /// <returns></returns>
         private static int GetTime()
         {
@@ -67,12 +65,11 @@ namespace AutoTriggerService
             return Result;
         }
 
-        /// <summary>
-        ///  執行抓網頁111
-        /// </summary>
+        /// <summary>執行抓網頁</summary>
         /// <param name="pCurrentTime"></param>
-        public override void Execute(string pCurrentTime)
-        {
+        public override void Execute(string pCurrentTime) {
+
+            #region 功能已注解
             //if (_timelist.Contains(pCurrentTime) && !IsRuning)
             //{
             //    try
@@ -119,6 +116,8 @@ namespace AutoTriggerService
             //        IsRuning = false;
             //    }
             //}
+            #endregion
+
         }
 
     }

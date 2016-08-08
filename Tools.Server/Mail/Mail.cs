@@ -8,10 +8,15 @@ namespace Mail
 {
     public class Mail
     {
+        private class Default {
+            public const string SystemMailAccount = "erpbank.dick@gmail.com";
+        }
+
         private string _logPath=@"D:\Log";
 
         private string _account="erpbank.dick";
-        private string _password = "erp59107";
+
+        private string _password = "*****";
 
         public string PassWord {
             set {
@@ -61,7 +66,7 @@ namespace Mail
             //msg.Bcc.Add("d@yahoo.com");//密件副本
 
             //3個參數分別是發件人地址（可以隨便寫），發件人姓名，編碼
-            msg.From = new MailAddress("erpbank.dick@gmail.com", "Dick股神系統", System.Text.Encoding.UTF8);
+            msg.From = new MailAddress(Default.SystemMailAccount, "Dick股神系統", System.Text.Encoding.UTF8);
 
             msg.Subject = subject;//郵件標題 
             msg.SubjectEncoding = System.Text.Encoding.UTF8;//郵件標題編碼 
@@ -78,7 +83,7 @@ namespace Mail
                 //設定你的帳號密碼
 
                 //Gmial 的 smtp 使用 SSL
-                MySmtp.Credentials = new System.Net.NetworkCredential("erpbank.dick@gmail.com", "erp59107");
+                MySmtp.Credentials = new System.Net.NetworkCredential(Default.SystemMailAccount, _password);
 
                 MySmtp.EnableSsl = true;
                 //發送Email

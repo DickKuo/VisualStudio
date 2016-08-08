@@ -13,31 +13,35 @@ using WebInfo.Business.Services;
 using System.Security.Permissions;
 using System.Security;
 
-namespace WebInfo
-{
-    public class GetSite : IGetSiteService
-    {
-        private class Default
-        {
+namespace WebInfo {
+    public class GetSite : IGetSiteService {
+        private class Default {
             public const string GetContext = "抓取文章";
             public const string Attributes_href = "href";
             public const string TimeFormat = "yyyy/MM/dd HH:mm:ss";
             public const int Second = 1000;
+            public const string HtmlExtend = ".html";
+            public const string Href = "href=";
+            public const string DoubleNegativeSymbol = "--";
+            public const string index = "index";
+            public const string Quote = "\"";
+            public const string SingleQuote = "'";
         }
 
-        private class HtmlStartTag
-        {
+        private class HtmlStartTag {
             public const string Title = "<title>";
         }
 
-        private class HtmlEndTag
-        {
+        private class HtmlEndTag {
             public const string Title = "</title>";
         }
 
         Dictionary<string, int> Month = new Dictionary<string, int>();
+
         private const int _defaultCount = 30;
+
         private int _pushcount = 0;
+
         public int PushCount {
             get {
                 if (_pushcount == 0) {
@@ -51,9 +55,13 @@ namespace WebInfo
                 _pushcount = value;
             }
         }
+
         public DateTime RecordTime { set; get; }
+
         public static List<string> listold = new List<string>();
+
         public string PostAddress { set; get; }
+
         public int Tag { set; get; }
 
         public GetSite(string LogPath) {
@@ -128,12 +136,12 @@ namespace WebInfo
             if (reader != null) {
                 string str = string.Empty;
                 while ((str = reader.ReadLine()) != null) {
-                    if (str.IndexOf("href=") != -1 && str.IndexOf(".html") != -1 && str.IndexOf("bbs") != -1) {
+                    if (str.IndexOf(Default.Href) != -1 && str.IndexOf(Default.HtmlExtend) != -1 && str.IndexOf("bbs") != -1) {
                         MatchCollection matches = Regex.Matches(str, "href=\"[^\"]+\"", RegexOptions.IgnoreCase);
                         foreach (Match match in matches) {
-                            string temp = match.Value.Trim().Replace("href=", string.Empty);
-                            temp = temp.Replace("\"", string.Empty);
-                            if (temp.IndexOf("index") != -1) {
+                            string temp = match.Value.Trim().Replace(Default.Href, string.Empty);
+                            temp = temp.Replace(Default.Quote, string.Empty);
+                            if (temp.IndexOf(Default.index) != -1) {
                                 siteplus.Index.Add(temp);
                             }
                             else {
@@ -145,7 +153,6 @@ namespace WebInfo
             }
             return siteplus;
         }
-
 
         /// <summary> 20150410 針對網址解析 解析表特版文章內容。
         /// </summary>
@@ -162,11 +169,11 @@ namespace WebInfo
                 string temp = reader.ReadToEnd();
                 MatchCollection matches = Regex.Matches(temp, string.Format("{0}[^\"]+{1}", HtmlStartTag.Title, HtmlEndTag.Title), RegexOptions.IgnoreCase);
                 foreach (Match match in matches) {
-                    Info.Title = match.Value.Replace("\"", "'").Replace(HtmlEndTag.Title, string.Empty).Replace(HtmlStartTag.Title, string.Empty).Replace("--", string.Empty);
+                    Info.Title = match.Value.Replace(Default.Quote,Default.SingleQuote).Replace(HtmlEndTag.Title, string.Empty).Replace(HtmlStartTag.Title, string.Empty).Replace(Default.DoubleNegativeSymbol, string.Empty);
                 }
                 matches = Regex.Matches(temp, "</span></div>[^\"]+<span class=\"f2\">", RegexOptions.IgnoreCase);
                 foreach (Match match in matches) {
-                    Info.Context = match.Value.Replace("\"", "'").Replace("</span></div>", string.Empty).Replace("<span class=\"f2\">", string.Empty).Replace("--", string.Empty);
+                    Info.Context = match.Value.Replace(Default.Quote, Default.SingleQuote).Replace("</span></div>", string.Empty).Replace("<span class=\"f2\">", string.Empty).Replace(Default.DoubleNegativeSymbol, string.Empty);
                     //20150609 #64
                     Info.Context = GetAnalysis(temp, Info.Context);
                 }
@@ -222,7 +229,7 @@ namespace WebInfo
                                     break;
                                 }
 
-                                if (line.IndexOf("--") != -1 && line.Length < 3) {
+                                if (line.IndexOf(Default.DoubleNegativeSymbol) != -1 && line.Length < 3) {
                                     break;
                                 }
                                 #endregion
@@ -246,12 +253,12 @@ namespace WebInfo
                                     }
                                 }
                                 #endregion
-                                sb.Append(line).Replace("--", string.Empty);
+                                sb.Append(line).Replace(Default.DoubleNegativeSymbol, string.Empty);
                             }
                             break;
                         }
                     }
-                    Info.Context = sb.ToString().Replace("\"", "'");
+                    Info.Context = sb.ToString().Replace(Default.Quote,Default.SingleQuote);
                 }
                 matches = Regex.Matches(temp, "時間</span><span class=\"article-meta-value\">[^\"]+</span></div>", RegexOptions.IgnoreCase);
                 foreach (Match match in matches) {
@@ -283,7 +290,7 @@ namespace WebInfo
                 }
                 matches = Regex.Matches(temp, "作者</span><span class=\"article-meta-value\">[^\"]+</span></div>", RegexOptions.IgnoreCase);
                 foreach (Match match in matches) {
-                    Info.Author = match.Value.Replace("\"", "'").Replace("作者</span><span class=\"article-meta-value\">", "").Replace("</span></div>", string.Empty).Replace("--", string.Empty);
+                    Info.Author = match.Value.Replace(Default.Quote,Default.SingleQuote).Replace("作者</span><span class=\"article-meta-value\">", string.Empty).Replace("</span></div>", string.Empty).Replace(Default.DoubleNegativeSymbol, string.Empty);
                 }
 
                 matches = Regex.Matches(temp, "<span class=\"hl push-tag\">[^\"]+</span>", RegexOptions.IgnoreCase);
@@ -293,7 +300,7 @@ namespace WebInfo
                 foreach (Match match in matches) {
                     if (matches.Count > count && matchesId.Count > count && matchescontent.Count > count) {
                         string matchstr = match.Value + matchesId[count] + matchescontent[count];
-                        Info.PushList.Add(matchstr.Replace("\"", "'"));
+                        Info.PushList.Add(matchstr.Replace(Default.Quote, Default.SingleQuote));
                     }
                     count++;
                 }
@@ -437,14 +444,14 @@ namespace WebInfo
                 Thread.Sleep(1500); //修改撈資料頻率
             }
             foreach (string str in pSiteplus.Index) {
-                string temp = str.Replace(Formate, string.Empty).Replace(".html", string.Empty);
+                string temp = str.Replace(Formate, string.Empty).Replace(Default.HtmlExtend, string.Empty);
                 int result = 0;
                 if (int.TryParse(temp, out result)) {
                     if (result > index) {
                         Thread.Sleep(1500);
                         Tag = result;
                         index = result;
-                        pSiteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + "/index" + result + ".html");
+                        pSiteplus = site.GetUrlList("https://www.ptt.cc/bbs/" + Site + Path.DirectorySeparatorChar + Default.index + result + Default.HtmlExtend);
                         Recursive(ref index, pSiteplus, li, Site, Formate, pCondition, doc, root);
                     }
                 }
@@ -476,5 +483,6 @@ namespace WebInfo
             }
             return result;
         }
+
     }
 }

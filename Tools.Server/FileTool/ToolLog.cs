@@ -11,11 +11,9 @@ namespace CommTool
 {
     public class ToolLog
     {
-        private class Default {
-            public const string DateFormat = "yyyy-MM-dd";
-            public const string TimeFormat = "HH:mm:ss";
-            public const string FileExtend = ".txt";
+        private class Default {     
             public const string ErrorFile = "_Error.txt";
+            public const string MonthAndDateStringFormat = "00";
         }
 
         private static string _path = @"C:\Log";
@@ -39,7 +37,7 @@ namespace CommTool
                 DateTime LastMonth = DateTime.Now.AddMonths(-1);
                 StringBuilder sb = new StringBuilder();
                 sb.Append(LastMonth.Year.ToString());
-                sb.Append(LastMonth.Month.ToString("00"));
+                sb.Append(LastMonth.Month.ToString(Default.MonthAndDateStringFormat));
                 string DirectotyPath = Path.Combine(ToolPath, sb.ToString());
                 if (!Directory.Exists(DirectotyPath)) {
                     Directory.CreateDirectory(DirectotyPath);
@@ -48,14 +46,13 @@ namespace CommTool
                 DateTime End = Begin.AddMonths(1).AddDays(-1);
                 DateTime Time = Begin;
                 while (Time <= End) {
-                    string FileName = string.Format("{0}-{1}-{2}.txt", Time.Year.ToString(), Time.Month.ToString("00"), Time.Day.ToString("00"));
+                    string FileName = string.Format("{0}-{1}-{2}.txt", Time.Year.ToString(), Time.Month.ToString(Default.MonthAndDateStringFormat), Time.Day.ToString(Default.MonthAndDateStringFormat));
                     string ResourceFilePath = Path.Combine(ToolPath, FileName);
                     string DestFilePath = Path.Combine(DirectotyPath, FileName);
                     if (File.Exists(ResourceFilePath)) {
                         File.Move(ResourceFilePath, DestFilePath);
                     }
-
-                    string FileNameError = string.Format("{0}-{1}-{2}-Error.txt", Time.Year.ToString(), Time.Month.ToString("00"), Time.Day.ToString("00"));
+                    string FileNameError = string.Format("{0}-{1}-{2}-Error.txt", Time.Year.ToString(), Time.Month.ToString(Default.MonthAndDateStringFormat), Time.Day.ToString(Default.MonthAndDateStringFormat));
                     string ResourceFilePathError = Path.Combine(ToolPath, FileNameError);
                     string DestFilePathError = Path.Combine(DirectotyPath, FileNameError);
                     if (File.Exists(ResourceFilePathError)) {
@@ -92,11 +89,10 @@ namespace CommTool
         public static void Log(string str) {
             CheckDirectoryIsExist();
             DateTime dt = DateTime.Now;
-            string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(Default.DateFormat) + Default.FileExtend;
+            string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(BaseConst.DateFormat) + BaseConst.TxtFile;
             StringBuilder message = new StringBuilder();
             using (StreamWriter sw2 = new StreamWriter(TempPath, true)) {
-                message.AppendFormat("【{0}】 【Normal】 {1}\r\n", dt.ToString(Default.TimeFormat), str);
-                //sw2.Write("【" +  + " " + "" + + "\r\n");
+                message.AppendFormat("【{0}】 【Normal】 {1}\r\n", dt.ToString(BaseConst.TimeFormat), str);
                 sw2.Write(message.ToString());
                 sw2.Close();
                 sw2.Dispose();
@@ -107,10 +103,10 @@ namespace CommTool
         public static void Log(LogType type, string str) {
             CheckDirectoryIsExist();
             DateTime dt = DateTime.Now;
-            string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(Default.DateFormat) + Default.FileExtend;
+            string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(BaseConst.DateFormat) + BaseConst.TxtFile;
             StringBuilder message = new StringBuilder();
             using (StreamWriter sw2 = new StreamWriter(TempPath, true)) {
-                message.AppendFormat("【{0}】 {1}{2}\r\n", dt.ToString(Default.TimeFormat), typeconvert(type), str);
+                message.AppendFormat("【{0}】 {1}{2}\r\n", dt.ToString(BaseConst.TimeFormat), typeconvert(type), str);
                 sw2.Write(message.ToString());
                 sw2.Close();
                 sw2.Dispose();
@@ -118,9 +114,9 @@ namespace CommTool
             Console.WriteLine(message.ToString());
             if (type == LogType.Error) {
                 StringBuilder ErrorMessage = new StringBuilder();
-                TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(Default.DateFormat) + Default.ErrorFile;
+                TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(BaseConst.DateFormat) + Default.ErrorFile;
                 using (StreamWriter sw2 = new StreamWriter(TempPath, true)) {
-                    ErrorMessage.AppendFormat("【{0}】 {1}{2}\r\n", dt.ToString(Default.TimeFormat), typeconvert(type), str);
+                    ErrorMessage.AppendFormat("【{0}】 {1}{2}\r\n", dt.ToString(BaseConst.TimeFormat), typeconvert(type), str);
                     sw2.Close();
                     sw2.Dispose();
                 }
@@ -163,6 +159,7 @@ namespace CommTool
         Exclude = 4
 
     }
+
 
     public class ExcetionCollection
     {

@@ -9,7 +9,7 @@ namespace CommTool
 {
 
     public class TCP
-    {
+    { 
         //宣告網路資料流變數
         NetworkStream myNetworkStream;
         //宣告 Tcp 用戶端物件
@@ -49,7 +49,22 @@ namespace CommTool
             myNetworkStream.Read(myBufferBytes, 0, bufferSize);
             //取得資料並且解碼文字
             CurrentDbConnection = Encoding.ASCII.GetString(myBufferBytes, 0, bufferSize).Replace("\0", string.Empty);
-
         }
+
+        /// <summary>取得伺服器IP</summary>
+        /// <returns></returns>
+        public static string GetServerIP() {
+            string ReturnIP = BaseConst.LocalHostIP;
+            string HostName = System.Net.Dns.GetHostName();
+            System.Net.IPHostEntry IPHostInf = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+            foreach (System.Net.IPAddress IPAddress in IPHostInf.AddressList) {
+                if(IPAddress.AddressFamily ==System.Net.Sockets.AddressFamily.InterNetwork){
+                    ReturnIP = IPAddress.ToString();
+                    break;
+                }
+            }
+            return ReturnIP;
+        }
+        
     }
 }

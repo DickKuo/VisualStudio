@@ -15,19 +15,13 @@ namespace CommTool
 
         private string _typeKey;
         
-        /// <summary>
-        /// Config檔案路徑
-        /// </summary>
+        /// <summary>Config檔案路徑</summary>
         public string ConfigPath { set; get; }
 
-        /// <summary>
-        /// 應用程式名稱
-        /// </summary>
+        /// <summary>應用程式名稱</summary>
         public string TypeKey { set { _typeKey = value; } get { return _typeKey; } }
 
-        /// <summary>
-        /// 建立結構
-        /// </summary>
+        /// <summary>建立結構</summary>
         /// <param name="pPath">路徑</param>
         /// <param name="AppName">應用程式名稱</param>
         public ConfigManager(string pPath, string AppName, bool IsStandard = false) {
@@ -42,9 +36,7 @@ namespace CommTool
             }
         }
 
-        /// <summary>
-        /// 初始化參數
-        /// </summary>
+        /// <summary>初始化參數</summary>
         private void Initkey() {
             if (File.Exists(ConfigPath)) {
                 XmlDocument doc = XmlFile.LoadXml(ConfigPath);

@@ -13,6 +13,7 @@ namespace CommTool
     public class ExcelHelper
     {        
         private bool isHDR = true;
+
         public bool IsHDR {
             get {
                 return isHDR;
@@ -21,7 +22,6 @@ namespace CommTool
                 isHDR = value;
             }
         }
-
 
         /// <summary>20150130 Excel連線字串</summary>
         /// <param name="pExcelFilePath"></param>
@@ -51,7 +51,6 @@ namespace CommTool
             }
             return connStr;
         }
-
 
         public List<string> GetSheetsNameByOpenXml(string filePath) {
             List<string> sheetNames = new List<string>();

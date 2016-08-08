@@ -20,14 +20,21 @@ namespace CommTool
         /// <summary>寫Log紀錄</summary>
         /// <param name="ex"></param>
         void Log(object ex);
-
     }
 
     public abstract class AutoTrigger : IAutoTrigger
     {
         private const string _defaultLogPath = @"C:\SLog";  //預設Log位置
+
         private string _logpaht;
 
+        public class Default
+        {
+            public const string DateTimeFormat = "yyyy/MM/dd";
+            public const string Root = "root";
+            public const string Record = "Record";
+        }
+        
         /// <summary>Log路徑</summary>
         public string LogPath {
             set {
@@ -62,7 +69,6 @@ namespace CommTool
 
     }
 
-
     public interface ITriggerService
     {
         /// <summary>執行自動觸發</summary>
@@ -72,9 +78,8 @@ namespace CommTool
 
     public class TriggerService : ITriggerService
     {
-
         Dictionary<string, IAutoTrigger> _dicTriggers = new Dictionary<string, IAutoTrigger>();
-        
+
         public TriggerService() {
         }
 
@@ -97,10 +102,10 @@ namespace CommTool
                 tigger.Execute(pCurrentTime);
             }
         }
-        
+
         public int Count {
             get {
-                return _dicTriggers.Count;           
+                return _dicTriggers.Count;
             }
         }
 

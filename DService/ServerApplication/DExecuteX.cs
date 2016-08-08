@@ -20,58 +20,45 @@ namespace ServerApplication
 
         Dictionary<string, string> DicParameters = new Dictionary<string, string>();
 
-        public DExecuteX(Dictionary<string, string> Parameters)
-        {
+        public DExecuteX(Dictionary<string, string> Parameters) {
             InitParamter(Parameters);
             DicParameters = Parameters;
         }
 
-        public virtual void Start()
-        {
-            try
-            {
+        public virtual void Start() {
+            try {
                 Lessner();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 ToolLog.Log(ex);
             }
         }
 
-        private void InitParamter(Dictionary<string, string> Parameters)
-        {
-            try
-            {
-                if (Parameters.ContainsKey("LogPath"))
-                {
+        private void InitParamter(Dictionary<string, string> Parameters) {
+            try {
+                if (Parameters.ContainsKey("LogPath")) {
                     ToolLog.ToolPath = Parameters["LogPath"];
                 }
-                else
-                {
+                else {
                     ToolLog.ToolPath = @"C:\SLog";
                 }
                 _logpath = ToolLog.ToolPath;
-                if (Parameters.ContainsKey("AppIP"))
-                {
+                if (Parameters.ContainsKey("AppIP")) {
                     _ip = Parameters["AppIP"];
                 }
-                if (Parameters.ContainsKey("AppPort"))
-                {
+                if (Parameters.ContainsKey("AppPort")) {
                     _port = Parameters["AppPort"];
                 }
-                if (Parameters.ContainsKey("PostAddress"))
-                {
+                if (Parameters.ContainsKey("PostAddress")) {
                     _postaddress = Parameters["PostAddress"];
                 }
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
             }
         }
 
-        private void Lessner()
-        {
+        private void Lessner() {
             System.Net.IPAddress theIPAddress;
             //建立 IPAddress 物件(本機)                   
             theIPAddress = System.Net.IPAddress.Parse(IP);
@@ -84,15 +71,12 @@ namespace ServerApplication
 
             myTcpListener.Start(255);
             ToolLog.Log("通訊埠 等待用戶端連線...... !!");
-            do
-            {
+            do {
                 Socket mySocket = myTcpListener.AcceptSocket();
-                try
-                {
+                try {
                     //偵測是否有來自用戶端的連線要求，若是
                     //用戶端請求連線成功，就會秀出訊息。
-                    if (mySocket.Connected)
-                    {
+                    if (mySocket.Connected) {
                         //Task task = new Task(new Action());
                         string NetString = string.Empty;
                         int dataLength;
@@ -118,42 +102,35 @@ namespace ServerApplication
 
                     }
                 }
-                catch (Exception e)
-                {
+                catch (Exception e) {
                     ToolLog.Log(e.Message);
                 }
-                finally
-                {
+                finally {
                     mySocket.Close();
                 }
             } while (true);
         }
 
-        private void DoAnalysis(string NetString)
-        {
+        private void DoAnalysis(string NetString) {
             WebInfo.WebInfo webinfo = new WebInfo.WebInfo(_logpath);
             ToolLog.Log(NetString);
             ToolLog.Log("進行資料解析....");
             DAnalysis analysis = new DAnalysis();
             DAnalysis.StructAnalysisResult result = analysis.Start(NetString);
-            if (result.Type == DAnalysis.AnalysisType.E)
-            {
+            if (result.Type == DAnalysis.AnalysisType.E) {
                 ToolLog.Log(result.Result);
                 return;
             }
-            if (result.Type == DAnalysis.AnalysisType.W)
-            {
+            if (result.Type == DAnalysis.AnalysisType.W) {
                 ToolLog.Log("抓取網頁資料");
                 webinfo.GetBueatyDirtory(result.Result, 0, _postaddress);
             }
-            if (result.Type == DAnalysis.AnalysisType.R)
-            {  //重啟服務
+            if (result.Type == DAnalysis.AnalysisType.R) {  //重啟服務
                 ToolLog.Log("重啟服務");
                 System.Diagnostics.Process.Start("net", "stop DService");
                 System.Diagnostics.Process.Start("net", "start DService");
             }
-            if (result.Type == DAnalysis.AnalysisType.S)
-            {
+            if (result.Type == DAnalysis.AnalysisType.S) {
 
             }
         }
