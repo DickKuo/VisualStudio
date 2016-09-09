@@ -84,6 +84,7 @@ namespace WebInfo
         }
 
         /// <summary>Post功能</summary>
+        /// 20160909 加入紀錄POST的JSON資料 By Dick 
         /// <param name="Address">網址</param>
         /// <param name="SiteInfoList">文章列</param>
         /// <returns></returns>
@@ -94,7 +95,7 @@ namespace WebInfo
                 info = SiteInfoList[Default.FirstItem];
             }
             try {
-                ToolLog.Log("Post 開始" + info.Title);
+                ToolLog.Log("Post Start" + info.Title);
                 string strJson = "SiteInfoList=" + JsonConvert.SerializeObject(SiteInfoList, Newtonsoft.Json.Formatting.Indented);
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Address);
                 request.ContentType = "application/x-www-form-urlencoded";
@@ -114,6 +115,7 @@ namespace WebInfo
                         DateTime date = DateTime.Now;
                     }
                 }
+                ToolLog.Record(strJson);
             }
             catch (WebException ex) {
                 ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);
@@ -121,6 +123,7 @@ namespace WebInfo
             }
             return length;
         }
+         
 
         /// <summary>直接針對網址進行解析內容及傳輸</summary>
         /// 20150410 add by Dick for 直接針對網址進行解析內容及傳輸。

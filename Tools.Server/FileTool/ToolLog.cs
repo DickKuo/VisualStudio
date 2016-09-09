@@ -14,10 +14,16 @@ namespace CommTool
         private class Default {     
             public const string ErrorFile = "_Error.txt";
             public const string MonthAndDateStringFormat = "00";
+            public const string MessageFormat = "【{0}】 {1}{2}\r\n";
+            public const string Record = "_Record";
+            public const string FileNameFormat = "{0}-{1}-{2}";
+            public const string BasePath = @"C:\Log";
         }
 
-        private static string _path = @"C:\Log";
+        private static string _path = Default.BasePath;
 
+        /// <summary>建構子</summary>
+        /// <param name="path"></param>
         public ToolLog(string path) {
             ToolPath = path;
         }
@@ -31,7 +37,10 @@ namespace CommTool
             ArramgeLog();
         }
 
-        /// <summary> 20150604 整理Log檔案每月一號將上個月檔案整理成一個資料夾 #61 </summary>
+        /// <summary>檔案每月一號將上個月檔案整理成一個資料夾 
+        /// 20150604 整理Log檔案每月一號將上個月檔案整理成一個資料夾 #61 
+        /// 20160909 整理資料夾改成共用Function  by Dick  #61 
+        /// </summary>
         private static void ArramgeLog() {
             if (DateTime.Now.Day == 1) {
                 DateTime LastMonth = DateTime.Now.AddMonths(-1);
@@ -46,20 +55,25 @@ namespace CommTool
                 DateTime End = Begin.AddMonths(1).AddDays(-1);
                 DateTime Time = Begin;
                 while (Time <= End) {
-                    string FileName = string.Format("{0}-{1}-{2}.txt", Time.Year.ToString(), Time.Month.ToString(Default.MonthAndDateStringFormat), Time.Day.ToString(Default.MonthAndDateStringFormat));
-                    string ResourceFilePath = Path.Combine(ToolPath, FileName);
-                    string DestFilePath = Path.Combine(DirectotyPath, FileName);
-                    if (File.Exists(ResourceFilePath)) {
-                        File.Move(ResourceFilePath, DestFilePath);
-                    }
-                    string FileNameError = string.Format("{0}-{1}-{2}-Error.txt", Time.Year.ToString(), Time.Month.ToString(Default.MonthAndDateStringFormat), Time.Day.ToString(Default.MonthAndDateStringFormat));
-                    string ResourceFilePathError = Path.Combine(ToolPath, FileNameError);
-                    string DestFilePathError = Path.Combine(DirectotyPath, FileNameError);
-                    if (File.Exists(ResourceFilePathError)) {
-                        File.Move(ResourceFilePathError, DestFilePathError);
-                    }
+                    MoveFile(DirectotyPath, Time, BaseConst.TxtFile);
+                    MoveFile(DirectotyPath, Time, Default.ErrorFile);
+                    MoveFile(DirectotyPath, Time, Default.Record + BaseConst.TxtFile);
                     Time = Time.AddDays(1);
                 }
+            }
+        }
+
+        /// <summary>搬移紀錄檔</summary>
+        /// 20160909 紀錄檔案歸檔 by Dick #61 
+        /// <param name="DirectotyPath"></param>
+        /// <param name="Time"></param>
+        /// <param name="MoveFileName"></param>
+        private static void MoveFile(string DirectotyPath, DateTime Time,string MoveFileName) {
+            string FileName = string.Format(Default.FileNameFormat + MoveFileName, Time.Year.ToString(), Time.Month.ToString(Default.MonthAndDateStringFormat), Time.Day.ToString(Default.MonthAndDateStringFormat));
+            string ResourceFilePath = Path.Combine(ToolPath, FileName);
+            string DestFilePath = Path.Combine(DirectotyPath, FileName);
+            if (File.Exists(ResourceFilePath)) {
+                File.Move(ResourceFilePath, DestFilePath);
             }
         }
 
@@ -100,13 +114,26 @@ namespace CommTool
             Console.WriteLine(message.ToString());
         }
 
+        /// <summary>紀錄抓取的JSON格式資料</summary>
+        /// 20160909 加入新功能  By Dick 
+        /// <param name="RecordString"></param>
+        public static void Record(string RecordString) {
+            DateTime dt = DateTime.Now;
+            string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(BaseConst.DateFormat) + Default.Record + BaseConst.TxtFile;           
+            using (StreamWriter SW = new StreamWriter(TempPath, true))
+            {
+                SW.WriteLine(RecordString);
+            }
+            Console.WriteLine(RecordString);
+        }
+
         public static void Log(LogType type, string str) {
             CheckDirectoryIsExist();
             DateTime dt = DateTime.Now;
             string TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(BaseConst.DateFormat) + BaseConst.TxtFile;
             StringBuilder message = new StringBuilder();
             using (StreamWriter sw2 = new StreamWriter(TempPath, true)) {
-                message.AppendFormat("【{0}】 {1}{2}\r\n", dt.ToString(BaseConst.TimeFormat), typeconvert(type), str);
+                message.AppendFormat(Default.MessageFormat, dt.ToString(BaseConst.TimeFormat), typeconvert(type), str);
                 sw2.Write(message.ToString());
                 sw2.Close();
                 sw2.Dispose();
@@ -116,14 +143,13 @@ namespace CommTool
                 StringBuilder ErrorMessage = new StringBuilder();
                 TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(BaseConst.DateFormat) + Default.ErrorFile;
                 using (StreamWriter sw2 = new StreamWriter(TempPath, true)) {
-                    ErrorMessage.AppendFormat("【{0}】 {1}{2}\r\n", dt.ToString(BaseConst.TimeFormat), typeconvert(type), str);
+                    ErrorMessage.AppendFormat(Default.MessageFormat, dt.ToString(BaseConst.TimeFormat), typeconvert(type), str);
                     sw2.Close();
                     sw2.Dispose();
                 }
             }
         }
-
-
+        
         private static string typeconvert(LogType type) {
             string temp = string.Empty;
             switch (type) {
@@ -157,9 +183,7 @@ namespace CommTool
         Normal = 2,
         Delete = 3,
         Exclude = 4
-
     }
-
 
     public class ExcetionCollection
     {
@@ -189,29 +213,24 @@ namespace CommTool
             return Error.ToString();
         }
 
-
         public int Count {
             get {
                 return ExcetionCollectionList.Count;
             }
         }
 
-
         public void Clear() {
             ExcetionCollectionList.Clear();
         }
-
 
         public bool IsReadOnly {
             get { return isRO; }
         }
 
-
         public bool Remove(Exception item) {
+
             bool result = false;
 
-            // Iterate the inner collection to 
-            // find the box to be removed.
             for (int i = 0; i < ExcetionCollectionList.Count; i++) {
                 Exception Ex = (Exception)ExcetionCollectionList[i];
                 if (Ex.Message.Equals(item.Message)) {
@@ -221,8 +240,7 @@ namespace CommTool
                 }
             }
             return result;
-        }
-        
+        }        
         
         public bool Contains(Exception item, EqualityComparer<Exception> comp) {
             bool found = false;

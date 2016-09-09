@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace MoveFile
 {
     public class Move
     {
+        private class Default {
+            public const string CPath = @"C:\Share\";
+            public const string CHS = "zh-CHS";
+            public const string CHT = "zh-CHT";
+        }
 
         /// <summary>List 移動檔案</summary>
         /// <param name="pStart"></param>
@@ -17,36 +20,36 @@ namespace MoveFile
         /// <returns></returns>
         public virtual string MoveEachFile(string pStart, string pDestination, List<string> pli, string pType) {
             try {
-                if (!Directory.Exists(@"C:\Share\" + pDestination)) {
-                    Directory.CreateDirectory(@"C:\Share\" + pDestination);
+                if (!Directory.Exists(Default.CPath + pDestination)) {
+                    Directory.CreateDirectory(Default.CPath + pDestination);
                 }
                 foreach (string str in pli) {
-                    if (File.Exists(pStart + "\\" + str)) {
-                        File.Copy(pStart + "\\" + str, @"C:\Share\" + pDestination + "\\" + str);
+                    if (File.Exists(pStart + Path.DirectorySeparatorChar + str)) {
+                        File.Copy(pStart + Path.DirectorySeparatorChar + str, Default.CPath + pDestination + Path.DirectorySeparatorChar + str);
                     }
                 }
                 switch (pType.ToLower()) {
                     case "client":
-                        if (!Directory.Exists(@"C:\Share\" + pDestination + "\\zh-CHS")) {
-                            Directory.CreateDirectory(@"C:\Share\" + pDestination + "\\zh-CHS");
+                        if (!Directory.Exists(Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHS)) {
+                            Directory.CreateDirectory(Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHS);
                         }
-                        File.Copy(pStart + "\\zh-CHS" + "\\" + "Dcms.HR.UI.CaseUI.resources.dll", @"C:\Share\" + pDestination + "\\zh-CHS" + "\\" + "Dcms.HR.UI.CaseUI.resources.dll");
+                        File.Copy(pStart + Path.DirectorySeparatorChar + Default.CHS + Path.DirectorySeparatorChar + "Dcms.HR.UI.CaseUI.resources.dll", Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHS + Path.DirectorySeparatorChar + "Dcms.HR.UI.CaseUI.resources.dll");
 
-                        if (!Directory.Exists(@"C:\Share\" + pDestination + "\\zh-CHT")) {
-                            Directory.CreateDirectory(@"C:\Share\" + pDestination + "\\zh-CHT");
+                        if (!Directory.Exists(Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHT)) {
+                            Directory.CreateDirectory(Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHT);
                         }
-                        File.Copy(pStart + "\\zh-CHT" + "\\" + "Dcms.HR.UI.CaseUI.resources.dll", @"C:\Share\" + pDestination + "\\zh-CHT" + "\\" + "Dcms.HR.UI.CaseUI.resources.dll");
+                        File.Copy(pStart + Path.DirectorySeparatorChar + Default.CHT + Path.DirectorySeparatorChar + "Dcms.HR.UI.CaseUI.resources.dll", Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHT + Path.DirectorySeparatorChar + "Dcms.HR.UI.CaseUI.resources.dll");
                         break;
                     case "server":
-                        if (!Directory.Exists(@"C:\Share\" + pDestination + "\\zh-CHS")) {
-                            Directory.CreateDirectory(@"C:\Share\" + pDestination + "\\zh-CHS");
+                        if (!Directory.Exists(Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHS)) {
+                            Directory.CreateDirectory(Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHS);
                         }
-                        File.Copy(pStart + "\\zh-CHS" + "\\" + "DigiWin.HR.CaseBusinessImplement.resources.dll", @"C:\Share\" + pDestination + "\\zh-CHS" + "\\" + "DigiWin.HR.CaseBusinessImplement.resources.dll");
+                        File.Copy(pStart + Path.DirectorySeparatorChar + Default.CHS + Path.DirectorySeparatorChar + "DigiWin.HR.CaseBusinessImplement.resources.dll", Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHS + Path.DirectorySeparatorChar + "DigiWin.HR.CaseBusinessImplement.resources.dll");
 
-                        if (!Directory.Exists(@"C:\Share\" + pDestination + "\\zh-CHT")) {
-                            Directory.CreateDirectory(@"C:\Share\" + pDestination + "\\zh-CHT");
+                        if (!Directory.Exists(Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHT)) {
+                            Directory.CreateDirectory(Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHT);
                         }
-                        File.Copy(pStart + "\\zh-CHT" + "\\" + "DigiWin.HR.CaseBusinessImplement.resources.dll", @"C:\Share\" + pDestination + "\\zh-CHT" + "\\" + "DigiWin.HR.CaseBusinessImplement.resources.dll");
+                        File.Copy(pStart + Path.DirectorySeparatorChar + Default.CHT + Path.DirectorySeparatorChar + "DigiWin.HR.CaseBusinessImplement.resources.dll", Default.CPath + pDestination + Path.DirectorySeparatorChar + Default.CHT + Path.DirectorySeparatorChar + "DigiWin.HR.CaseBusinessImplement.resources.dll");
                         break;
                 }
                 return "完成";
@@ -63,10 +66,10 @@ namespace MoveFile
         /// <returns></returns>
         public virtual string MoveEachFile(string pStart, string pDestination, string pName) {
             try {
-                if (!Directory.Exists(@"C:\Share\" + pDestination)) {
-                    Directory.CreateDirectory(@"C:\Share\" + pDestination);
+                if (!Directory.Exists(Default.CPath + pDestination)) {
+                    Directory.CreateDirectory(Default.CPath + pDestination);
                 }
-                File.Copy(pStart + "\\" + pName, @"C:\Share\" + pDestination + "\\" + pName);
+                File.Copy(pStart + Path.DirectorySeparatorChar + pName, Default.CPath + pDestination + Path.DirectorySeparatorChar + pName);
                 return string.Empty;
             }
             catch (Exception ex) {
@@ -76,13 +79,15 @@ namespace MoveFile
 
         #region
 
-
+        /// <summary>移動檔案</summary>
+        /// <param name="SourcePath"></param>
+        /// <param name="DestinationPath"></param>
+        /// <param name="flag"></param>
         public virtual void RecurrceMove(string SourcePath, string DestinationPath, bool flag) {
             DirectoryInfo srcDirectory = new DirectoryInfo(SourcePath);
             DestinationPath = DestinationPath + Path.DirectorySeparatorChar + srcDirectory.Name;
             CopyDirectory(SourcePath, DestinationPath, flag);
         }
-
 
         private void CopyDirectory(string SourceFolder, string DestinationFolder, bool flag) {
             if (Directory.Exists(SourceFolder) == true) {

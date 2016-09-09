@@ -7,13 +7,14 @@ using System.Net.Sockets;
 
 namespace CommTool
 {
-
     public class TCP
     { 
         //宣告網路資料流變數
         NetworkStream myNetworkStream;
+
         //宣告 Tcp 用戶端物件
         TcpClient myTcpClient = new TcpClient();
+
         public static string CurrentDbConnection { set; get; }
 
         private string _ip;
@@ -64,7 +65,6 @@ namespace CommTool
                 }
             }
             return ReturnIP;
-        }
-        
+        }        
     }
 }

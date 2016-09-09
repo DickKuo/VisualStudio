@@ -10,8 +10,6 @@ namespace CommTool
 {
     public class DataEntity : IDataEntity
     {
-
-        //public string TypeKey { get; }
         public ExcetionCollection Excections { get; set; }
 
         public PropertyCollection ExtendedProperties { set; get; }

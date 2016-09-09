@@ -66,7 +66,6 @@ namespace CommTool
         public virtual void Log(object ex) {
             ToolLog.Log(ex.ToString());
         }
-
     }
 
     public interface ITriggerService
@@ -108,6 +107,5 @@ namespace CommTool
                 return _dicTriggers.Count;
             }
         }
-
     }
 }

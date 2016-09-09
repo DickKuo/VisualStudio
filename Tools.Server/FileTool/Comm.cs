@@ -9,9 +9,7 @@ namespace CommTool
 {
     public static class StringExtensioFAssemblyLoadern
     {
-        /// <summary>
-        /// 將GUID轉換成String 
-        /// </summary>
+        /// <summary>將GUID轉換成String</summary>
         /// <param name="pID"></param>
         /// <returns></returns>
         public static string ConvertToString(this System.Guid pID) {
@@ -21,9 +19,7 @@ namespace CommTool
             return pID.ToString("D");
         }
 
-        /// <summary>
-        /// 將String轉換成GUID
-        /// </summary>
+        /// <summary>將String轉換成GUID</summary>
         /// <param name="str"></param>
         /// <returns></returns>
         public static Guid ConvertToGuid(this String str) {
@@ -35,18 +31,14 @@ namespace CommTool
             return empty;
         }
 
-        /// <summary>
-        /// 檢查是否為空值或是Null。
-        /// </summary>
+        /// <summary>檢查是否為空值或是Null</summary>
         /// <param name="pValue"></param>
         /// <returns></returns>
         public static bool IsNullOrEmpty(this object pValue) {
             return pValue == null || (pValue is System.Guid && System.Guid.Empty.Equals(pValue)) || (pValue is string && (string.Empty.Equals(pValue) || pValue.Equals(System.Guid.Empty.ToString())));
         }
 
-        /// <summary>
-        /// 檢查是否為空值或Null帶入欄位及錯誤訊息。        
-        /// </summary>
+        /// <summary> 檢查是否為空值或Null帶入欄位及錯誤訊息</summary>
         /// <param name="pValue"></param>
         /// <param name="pCoumnName"></param>
         /// <param name="pError"></param>
@@ -113,7 +105,8 @@ namespace CommTool
     [ServiceClass(typeof(ICommService), ServiceCreateType.Callback)]
     public static class CommTool
     {
-        /// <summary>20150108 add by Dick for 取得固定長度的字串 單位為Byte</summary>
+        /// <summary>取得固定長度的字串 單位為Byte</summary>
+        /// 20150108 add by Dick 
         /// <param name="pString">輸入字串</param>
         /// <param name="pLen">取值長度</param>
         /// <param name="IsLeft">預設true從左算起;false為從右算起</param>
@@ -158,7 +151,6 @@ namespace CommTool
             }
             return hopestring;
         }
-
     }
 
 
@@ -166,28 +158,35 @@ namespace CommTool
     public sealed class ServiceClassAttribute : System.Attribute
     {
         private readonly System.Type _ServiceInterface;
+
         private readonly ServiceCreateType _ServiceCreateType;
+
         private readonly bool _enabled;
+
         public ServiceCreateType ServiceCreateType {
             get {
                 return this._ServiceCreateType;
             }
         }
+
         public System.Type ServiceInterface {
             get {
                 return this._ServiceInterface;
             }
         }
+
         public bool Enabled {
             get {
                 return this._enabled;
             }
         }
+
         public ServiceClassAttribute(System.Type pServiceInterface, ServiceCreateType pServiceCreateType) {
             this._ServiceCreateType = pServiceCreateType;
             this._ServiceInterface = pServiceInterface;
             this._enabled = true;
         }
+
         public ServiceClassAttribute(bool pEnabled) {
             if (pEnabled) {
                 throw new System.ArgumentOutOfRangeException("pEnabled", "pEnabled must is false.");
@@ -200,23 +199,29 @@ namespace CommTool
     internal class ServiceEntry : IServiceEntry
     {
         private System.Type _ServiceClass;
+
         private System.Type _ServiceInterface;
+
         private ServiceCreateType _ServiceCreateType;
+
         public System.Type ServiceClass {
             get {
                 return this._ServiceClass;
             }
         }
+
         public ServiceCreateType ServiceCreateType {
             get {
                 return this._ServiceCreateType;
             }
         }
+
         public System.Type ServiceInterface {
             get {
                 return this._ServiceInterface;
             }
         }
+
         public ServiceEntry(System.Type pServiceInterface, System.Type pServiceClass, ServiceCreateType pServiceCreateType) {
             this._ServiceCreateType = pServiceCreateType;
             this._ServiceClass = pServiceClass;

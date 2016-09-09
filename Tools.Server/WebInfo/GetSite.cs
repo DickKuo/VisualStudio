@@ -15,6 +15,7 @@ using System.Security;
 
 namespace WebInfo {
     public class GetSite : IGetSiteService {
+
         private class Default {
             public const string GetContext = "抓取文章";
             public const string Attributes_href = "href";
@@ -26,6 +27,9 @@ namespace WebInfo {
             public const string index = "index";
             public const string Quote = "\"";
             public const string SingleQuote = "'";
+            public const string Record = "Record.xml";
+            public const string Root = "root";
+            public const string bbs = "bbs";
         }
 
         private class HtmlStartTag {
@@ -136,7 +140,7 @@ namespace WebInfo {
             if (reader != null) {
                 string str = string.Empty;
                 while ((str = reader.ReadLine()) != null) {
-                    if (str.IndexOf(Default.Href) != -1 && str.IndexOf(Default.HtmlExtend) != -1 && str.IndexOf("bbs") != -1) {
+                    if (str.IndexOf(Default.Href) != -1 && str.IndexOf(Default.HtmlExtend) != -1 && str.IndexOf(Default.bbs) != -1) {
                         MatchCollection matches = Regex.Matches(str, "href=\"[^\"]+\"", RegexOptions.IgnoreCase);
                         foreach (Match match in matches) {
                             string temp = match.Value.Trim().Replace(Default.Href, string.Empty);
@@ -342,21 +346,20 @@ namespace WebInfo {
             }
         }
 
-
         /// <summary>20150505 modified 加入其他屬性</summary>
         /// <param name="doc">Record_Doc</param>
         /// <param name="pTitle">文章開頭</param>
         /// <param name="Address">網址</param>
         /// <param name="PushCount">推文數</param>
         private static void Record(XmlDocument doc, string pTitle, string Address, string PushCount) {
-            XmlNode root = doc.SelectSingleNode("root");
+            XmlNode root = doc.SelectSingleNode(Default.Root);
             XmlElement element = doc.CreateElement("Title");
             element.InnerText = pTitle;
             element.SetAttribute("Time", DateTime.Now.ToString(Default.TimeFormat));
             element.SetAttribute("Address", Address);
             element.SetAttribute("PushCount", PushCount);
             root.AppendChild(element);
-            string recordpath = Path.Combine(ToolLog.ToolPath, "Record.xml");
+            string recordpath = Path.Combine(ToolLog.ToolPath, Default.Record);
             #region 20150520 加入檔案存取權限
             FileIOPermission f2 = new FileIOPermission(PermissionState.None);
             f2.AddPathList(FileIOPermissionAccess.Write | FileIOPermissionAccess.Read, recordpath);
@@ -369,15 +372,14 @@ namespace WebInfo {
             #endregion
             doc.Save(recordpath);
         }
-
-
+        
         /// <summary>20150505 add by Dick for 初始化已存在的紀錄</summary>
         private static List<string> GetRecord() {
             List<string> result = new List<string>();
-            string RecordFilePath = Path.Combine(ToolLog.ToolPath, "Record.xml");
+            string RecordFilePath = Path.Combine(ToolLog.ToolPath, Default.Record );
             if (File.Exists(RecordFilePath)) {
                 XmlDocument doc = XmlFile.LoadXml(RecordFilePath);
-                XmlNode root = doc.SelectSingleNode("root");
+                XmlNode root = doc.SelectSingleNode(Default.Root);
                 foreach (XmlNode node in root.ChildNodes) {
                     string value = node.InnerText;
                     if (!result.Contains(value)) {

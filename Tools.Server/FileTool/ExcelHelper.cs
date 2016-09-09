@@ -28,11 +28,17 @@ namespace CommTool
         /// <param name="isAdditional"></param>
         /// <returns></returns>
         private string GetConnectString(string pExcelFilePath, bool isAdditional) {
+
             string connStr = string.Empty;
+
             bool isOccupied = false;
+
             string msg = string.Empty;
+
             bool IsInstalled = true;
+
             connStr = "Provider = Microsoft.ACE.OLEDB.12.0 ; Data Source =" + pExcelFilePath + string.Format(";Extended Properties=\"Excel 12.0;HDR={0};IMEX=1\";", IsHDR ? "YES" : "No");
+           
             try {
                 using (OleDbConnection con = new OleDbConnection(connStr)) {
                     con.Open();
@@ -59,7 +65,5 @@ namespace CommTool
             pStream.Dispose();
             return sheetNames;
         }
-
-
     }
 }

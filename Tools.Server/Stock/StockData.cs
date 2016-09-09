@@ -21,12 +21,12 @@ namespace Stock {
         private Stock _stock;
 
         #region  Parameter
-
         public string StockNum {
             set {
                 _stockNum = value;
             }
         }
+
         public string URL {
             set {
                 _url = value;
@@ -43,6 +43,7 @@ namespace Stock {
             dic[Default.sqlconnection] = Default.SqlConnectionString;
             SQLHelper.SHelper.InitSHelper(dic);
         }
+
         public StockData() { }
 
         #region public mothed
@@ -77,14 +78,7 @@ namespace Stock {
             }
             catch (Exception ex) {
                 #region  20150324 modifed 修改維新的方式撰寫SQL
-                string sql = string.Format(@"insert into ErrorLog values({0},{1},{2},{3})", "001", ex.Message, DateTime.Now, this._stock.StockNum);
-                //SQL.SQL sql = new SQL.SQL(ConnetionString);
-                //sql.CommandString = "insert into ErrorLog values(@ErrorType,@ErrorMessage,@ErrorTime,@ErrorStockNum)";
-                //sql.AddParameter("@ErrorType", "001");
-                //sql.AddParameter("@ErrorMessage", ex.Message);
-                //sql.AddParameter("@ErrorTime", DateTime.Now);
-                //sql.AddParameter("@ErrorStockNum", this._stock.StockNum);
-                //sql.ExeNotRetun();
+                string sql = string.Format(@"insert into ErrorLog values({0},{1},{2},{3})", "001", ex.Message, DateTime.Now, this._stock.StockNum); 
                 SQLHelper.SHelper.ExeNoQuery(sql);
                 #endregion
             }
@@ -93,21 +87,7 @@ namespace Stock {
 
         public void SetkData(string ConnetionString) {
             if (this._stock.IsSucess) {
-                #region  20150324 modifed 修改維新的方式撰寫SQL
-                //SQL.SQL sql = new SQL.SQL(ConnetionString);
-                //sql.CommandString = "Insert into StockData values(@StockNum, GetDate(),@Price,@BuyPrice, @SellPrice, @Change, @Quantity, @YesterDay, @Start,@Highest,@Lowest)";
-                //sql.AddParameter("@StockNum", this._stock.StockNum);
-                ////sql.AddParameter("@StockTime", this._stock.StockTime);
-                //sql.AddParameter("@Price", this._stock.Price);
-                //sql.AddParameter("@BuyPrice", this._stock.BuyPrice);
-                //sql.AddParameter("@SellPrice", this._stock.SellPrice);
-                //sql.AddParameter("@Change", this._stock.Change);
-                //sql.AddParameter("@Quantity", this._stock.Quantity);
-                //sql.AddParameter("@YesterDay", this._stock.Yesterday);
-                //sql.AddParameter("@Start", this._stock.Start);
-                //sql.AddParameter("@Highest", this._stock.Highest);
-                //sql.AddParameter("@Lowest", this._stock.Lowest);
-                //sql.ExeNotRetun();
+                #region  20150324 modifed 修改維新的方式撰寫SQL 
                 string sql = string.Format(@"Insert into StockData values({0}, {1},{2},{3}, {4},{5}, {6}, {7}, {8},{9},{10})", this._stock.StockNum,
                     this._stock.StockTime, this._stock.Price, this._stock.BuyPrice, this._stock.SellPrice, this._stock.Change, this._stock.Quantity,
                    this._stock.Yesterday, this._stock.Start, this._stock.Highest, this._stock.Lowest);
@@ -146,11 +126,8 @@ namespace Stock {
                 for (int i = 3; i < arry.Length; i++) {
                     string[] parry = Regex.Split(arry[i], "td", RegexOptions.IgnoreCase);
                     if (parry.Length > 8) {
-
                         sb.Append(parry[5].Replace("bgcolor=\"#FFFAE8\">", string.Empty).Replace("</", string.Empty).Replace("height=\"25\"", string.Empty).Trim());
-
                         sb.Append(parry[7].Replace("align=\"center\">", string.Empty).Replace("</", string.Empty));
-
                         sb.Append(",");
                     }
                 }
@@ -162,34 +139,14 @@ namespace Stock {
                 return "error";
             }
         }
+
         private void pRefreshList(string pCode) {
             this.StockNum = pCode;
             this.URL = "http://tw.stock.yahoo.com/d/s/company_";
             string temp = this.RefreshStockList();
             if (temp != "error") {
                 string[] arry = temp.Split(',');
-                #region  20150324 modifed by Dick for 修改維新的方式撰寫SQL
-                #region old
-                //SQL.SQL sql = new SQL.SQL("");
-                //sql.CommandString = "select count(*) from StockList where StockNum=@StockNum and EPS1=@EPS1 and EPS2=@EPS2 and EPS3 =@EPS3 and EPS4 =@EPS4 ";
-                //sql.AddParameter("@StockNum", pCode);
-                //sql.AddParameter("@EPS1", arry[1]);
-                //sql.AddParameter("@EPS2", arry[2]);
-                //sql.AddParameter("@EPS3", arry[3]);
-                //sql.AddParameter("@EPS4", arry[4]);
-                //if (Convert.ToInt32(sql.ExeRetrunScalary()) == 0)
-                //{
-                //    sql.CommandString = "Insert into  StockList values(@StockNum,@StockName,@EPS1,@EPS2,@EPS3,@EPS4,@Date) ";
-                //    sql.AddParameter("@StockNum", pCode);
-                //    sql.AddParameter("@StockName", arry[0]);
-                //    sql.AddParameter("@EPS1", arry[1]);
-                //    sql.AddParameter("@EPS2", arry[2]);
-                //    sql.AddParameter("@EPS3", arry[3]);
-                //    sql.AddParameter("@EPS4", arry[4]);
-                //    sql.AddParameter("@Date", DateTime.Now.Date);
-                //    sql.ExeNotRetun();
-                //}              
-                #endregion
+                #region  20150324 modifed by Dick for 修改維新的方式撰寫SQL       
                 string sql = string.Format(@"select count(*) from StockList where StockNum={0} and EPS1={1} and EPS2={2} and EPS3 ={3} and EPS4 ={4} ", pCode, arry[1], arry[2], arry[3], arry[4]);
                 DataTable dt = SQLHelper.SHelper.ExeDataTable(sql);
                 if (dt != null && dt.Rows.Count > 0) {
@@ -208,12 +165,6 @@ namespace Stock {
         /// <returns></returns>
         public string TraceEPS() {
             #region  20150324 modifed by Dick for 修改維新的方式撰寫SQL
-
-            #region Old
-            //SQL.SQL sql = new SQL.SQL("Data Source=.;Initial Catalog=Stock;User Id=sa;Password=dsc;");
-            //sql.CommandString = "Select StockNum,StockName,EPS1,EPS2,EPS3,EPS4 from StockList Group by StockNum,StockName,EPS1,EPS2,EPS3,EPS4";
-            //DataTable dt = sql.ExeRetrunDataTable();
-            #endregion
             DataTable dt = SQLHelper.SHelper.ExeDataTable("Select StockNum,StockName,EPS1,EPS2,EPS3,EPS4 from StockList Group by StockNum,StockName,EPS1,EPS2,EPS3,EPS4");
             StringBuilder sb = new StringBuilder();
             if (dt != null) {
@@ -242,7 +193,6 @@ namespace Stock {
             return sb.ToString();
         }
 
-
         private string EPSSplit(string eps) {
             int start = eps.IndexOf("季");
             int end = eps.IndexOf("元");
@@ -255,8 +205,6 @@ namespace Stock {
                 return "0";
             }
         }
-
         #endregion
-
     }
 }

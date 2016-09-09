@@ -50,6 +50,10 @@
     <Reference Include="Service.Implement">
       <HintPath>..\..\..\..\..\..\Dropbox\Export\Service.Implement.dll</HintPath>
     </Reference>
+    <Reference Include="SQLHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Dropbox\Export\SQLHelper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

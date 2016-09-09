@@ -7,6 +7,5 @@ namespace CommTool
 {
     //public class ServerProviderAddin:IServiceProvider
     //{
-
     //}
 }

@@ -13,6 +13,7 @@ namespace CommTool {
         public const string DateFormat = "yyyy-MM-dd";
         public const string TimeFormat = "HH:mm:ss";
         public const string Dot = ",";
+        public const string BaseLogPath = "";
         public const int MinItems = 0;
 
         public const int ArrayMinItems = 0;

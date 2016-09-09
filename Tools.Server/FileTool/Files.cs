@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml;
 using System.Diagnostics;
 using CommTool.Business;
+using System.Runtime.InteropServices;
 
 
 namespace CommTool
@@ -15,9 +15,11 @@ namespace CommTool
         private class Default { 
             public const string Version = "Version";
             public const string FileTool = "FileTool.dll";
+            public const string kernel32 = "kernel32";
         }
 
-        /// <summary>20141226 直接寫入檔案方法</summary>
+        /// <summary>直接寫入檔案方法</summary>
+        /// 20141226 add by Dick
         /// <param name="sb">內容</param>
         /// <param name="SaveFile">存檔位置</param>
         public static void WritFile(StringBuilder sb, string SaveFile) {
@@ -32,7 +34,8 @@ namespace CommTool
             }
         }
 
-        /// <summary> 20141226 直接寫入檔案方法 </summary>
+        /// <summary>直接寫入檔案方法 </summary>
+        ///  20141226 add by Dick
         /// <param name="sb">內容</param>
         /// <param name="SaveFile">存檔位置</param>
         public static void WritFile(StringBuilder sb, string SaveFile, bool pAppend) {
@@ -47,7 +50,8 @@ namespace CommTool
             }
         }
 
-        /// <summary> 20141226 直接寫入檔案方法</summary>
+        /// <summary>直接寫入檔案方法</summary>
+        ///  20141226 add by Dick
         /// <param name="pContent">內容</param>
         /// <param name="SaveFile">存檔位置</param>
         public static void WritFile(string pContent, string SaveFile) {
@@ -62,7 +66,8 @@ namespace CommTool
             }
         }        
 
-        /// <summary> 20141226 直接寫入檔案方法 </summary>
+        /// <summary>直接寫入檔案方法 </summary>
+        ///  20141226 add by Dick 
         /// <param name="sb">內容</param>
         /// <param name="SaveFile">存檔位置</param>
         public static void WritFile(string pContent, string SaveFile, bool pAppend) {
@@ -77,7 +82,8 @@ namespace CommTool
             }
         }
 
-        /// <summary>20141219 add by Dick for 更新檔案</summary>
+        /// <summary>更新檔案</summary>
+        /// 20141219 add by Dick 
         /// <param name="UpdatePath"></param>
         public virtual void UpdateDll(string UpdatePath) {
             try {
@@ -135,7 +141,7 @@ namespace CommTool
 
         /// <summary>設定資料夾路徑底下檔案是否唯獨 </summary>
         /// <param name="pFilePath">資料夾路徑</param>
-        /// <param name="IsReadOnly">是否唯獨 true:唯獨 ; false :不唯獨</param>
+        /// <param name="IsReadOnly">是否唯獨 true:唯獨 ; false :不唯獨</param>     
         public void FileReadOnly(DirectoryInfo dirInfo, bool IsReadOnly) {
             foreach (FileInfo file in dirInfo.GetFiles()) {
                 if (IsReadOnly) {
@@ -150,5 +156,32 @@ namespace CommTool
             }
         }
         
+        /// <summary>寫入ini檔案</summary>
+        /// 20160808 加入方法 by Dick
+        /// <param name="Section"></param>
+        /// <param name="Key"></param>
+        /// <param name="Value"></param>
+        /// <param name="SaveFile"></param>
+        public static void WriteIniFile(string Section, string Key, string Value, string SaveFile) {
+            WritePrivateProfileString(Section, Key, Value, SaveFile);
+        }
+
+        /// <summary>讀取ini檔案</summary>
+        /// 20160808 加入方法 by Dick
+        /// <param name="Section"></param>
+        /// <param name="Key"></param>
+        /// <param name="SaveFile"></param>
+        /// <returns></returns>
+        public static string ReadIniFile(string Section, string Key, string SaveFile) {
+            StringBuilder temp = new StringBuilder(255);
+            int i = GetPrivateProfileString(Section, Key, string.Empty, temp, 255, SaveFile);
+            return temp.ToString();
+        }
+
+        [DllImport(Default.kernel32, CharSet = CharSet.Unicode)]
+        private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
+
+        [DllImport(Default.kernel32, CharSet = CharSet.Unicode)]
+        private static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal,int size, string filePath);
     }
 }

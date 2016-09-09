@@ -11,6 +11,10 @@ namespace CommTool
 {
     public class ConfigManager : IConfigManager
     {
+        private class Default {
+            public const string name = "name";
+        }
+
         private Dictionary<string, string> _dicParameter;
 
         private string _typeKey;
@@ -65,7 +69,7 @@ namespace CommTool
                 XmlDocument doc = XmlFile.LoadXml(ConfigPath);
                 XmlNode nodelist = doc.SelectSingleNode(string.Format("configuration/userSettings/{0}.Settings1", _typeKey));
                 foreach (XmlNode node in nodelist) {
-                    string ParameterName = node.Attributes["name"].Value;
+                    string ParameterName = node.Attributes[Default.name].Value;
                     XmlNode Child = node.FirstChild;
                     string value = Child.InnerText;
                     if (!_dicParameter.ContainsKey(ParameterName)) {

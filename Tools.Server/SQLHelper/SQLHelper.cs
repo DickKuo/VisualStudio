@@ -4,26 +4,26 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace SQLHelper
-{
-    public static class SHelper
-    {
+namespace SQLHelper {
+    public static class SHelper {
         private class Default {
             public const string sqlconnection = "sqlconnection";
             public const string ExtendedProperties = "ExtendedProperties";
             public const string Dirty = "Dirty";
             public const int FirstItem = 0;
+            public const string ConnectionFormat = "Data Source=.;Initial Catalog={0};User Id={1};Password={2};";
         }
-
-        #region 變數宣告
-
+              
         public static string _sqlconnection { set; get; }
-        private static string _dbip;
-        private static string _dbname;
-        #endregion
-        
-        #region public
 
+        private static string _dbip;
+
+        private static string _dbname;
+
+        private static string _password;
+
+        private static string _username;
+   
         public static string DBIP {
             set {
                 _dbip = value;
@@ -32,6 +32,7 @@ namespace SQLHelper
                 return _dbip;
             }
         }
+
         public static string DBName {
             set {
                 _dbname = value;
@@ -41,11 +42,20 @@ namespace SQLHelper
             }
         }
 
-        #endregion
+        public static string UserName {
+            set {
+                _username = value;
+            }
+        }
 
-        #region 共用函式
-
-        /// <summary>20150324 建構子</summary>
+        public static string PassWord {
+            set {
+                _password = value;
+            }
+        }         
+              
+        /// <summary>建構子</summary>
+        /// 20150324 add by Dick
         /// <param name="DicSetting"></param>
         public static void InitSHelper(Dictionary<string, string> DicSetting) {
             if (DicSetting.ContainsKey(Default.sqlconnection)) {
@@ -53,7 +63,37 @@ namespace SQLHelper
             }
         }
 
-        /// <summary>20150324 執行SQL語法 回傳DataTable</summary>
+        /// <summary>建立連線字串</summary>
+        /// 20160808 add by Dick
+        public static void NewConnectionString() {
+            _sqlconnection = string.Format(Default.ConnectionFormat,DBName,_username,_password);
+        }
+
+        /// <summary>建立連線字串</summary>
+        /// 20160808 add by Dick
+        /// <param name="DbName"></param>
+        /// <param name="UserName"></param>
+        /// <param name="PassWord"></param>
+        public static void NewConnectionString(string DbName,string UserName,string PassWord) {
+            _sqlconnection = string.Format(Default.ConnectionFormat, DbName, UserName, PassWord);
+        }
+
+        /// <summary>設定連線字串</summary>
+        /// 20160808 add by Dick
+        /// <param name="SqlConnectionString"></param>
+        public static void SetConnectionString(string SqlConnectionString) {
+            _sqlconnection = SqlConnectionString;
+        }
+
+        /// <summary>回傳連線字串</summary>
+        /// 20160808 add by Dick
+        /// <returns></returns>
+        public static string GetConnectionString() {
+            return _sqlconnection;
+        }
+
+        /// <summary>執行SQL語法 回傳DataTable</summary>
+        /// 20150324 add by Dick
         /// <param name="SqlSrting">輸入SQL指令</param>
         /// <returns>回傳撈取資料</returns>
         public static DataTable ExeDataTable(string SqlSrting) {
@@ -72,7 +112,8 @@ namespace SQLHelper
             return dt;
         }
 
-        /// <summary>20150709 新增功能，撈取資料庫內Table 的所有欄位，返回String 型態。 #72</summary>
+        /// <summary>撈取資料庫內Table 的所有欄位，返回String 型態。 #72</summary>
+        /// 20150709 add by Dick
         /// <param name="pTableName"></param>
         /// <returns></returns>
         public static string GetTableColumns(string pTableName) {
@@ -93,7 +134,8 @@ namespace SQLHelper
             return result.ToString();
         }
 
-        /// <summary>20150703 輸入SQl指令，回單一資料。</summary>
+        /// <summary>輸入SQl指令，回單一資料</summary>
+        /// 20150703 add by Dick 
         /// <param name="pSqlString"></param>
         /// <returns></returns>
         public static object ExeGetSingleResult(string pSqlString) {
@@ -106,7 +148,8 @@ namespace SQLHelper
             }
         }
 
-        /// <summary>20150324 add by Dick for SQL執行使用Parameter 方式。</summary>
+        /// <summary>SQL執行使用Parameter 方式</summary>
+        /// 20150324 add by Dick 
         /// <param name="SqlSrting"></param>
         /// <param name="DicParameters"></param>
         /// <returns></returns>
@@ -145,7 +188,8 @@ namespace SQLHelper
             }
         }
 
-        /// <summary>20150324 add by Dick for SQL執行使用Parameter 方式。</summary>
+        /// <summary>SQL執行使用Parameter 方式</summary>
+        /// 20150324 add by Dick 
         /// <param name="SqlSrting"></param>
         /// <param name="DicParameters"></param>
         /// <returns></returns>
@@ -165,7 +209,8 @@ namespace SQLHelper
             }
         }
 
-        /// <summary>20150724 add by Dick for #75  批量新增功能。</summary>
+        /// <summary>批量新增功能</summary>
+        /// 20150724 add by Dick for #75  
         /// <param name="dt"></param>
         public static void SqlBulkCopy(DataTable dt) {
             try {
@@ -202,14 +247,12 @@ namespace SQLHelper
                 throw new Exception(ex.Message);
             }
         }
-
-        #endregion
     }
-        
-    public  class UseStoreProcedure
-    {
+
+    public class UseStoreProcedure {
         //private  Dictionary<string, object>  _parameters    = new Dictionary<string,object>();
         private List<string> _OutParameter = new List<string>();
+
         SqlCommand Scmd = null;
 
         /// <summary>連線字串</summary>
@@ -234,14 +277,14 @@ namespace SQLHelper
             }
         }
         private string _LastCommandString = string.Empty;
-        
+
         public List<string> OutParameterValues = new List<string>();
-        
-        /// <summary>執行預存部傳回值</summary>
+
+        /// <summary>執行預存不傳回值</summary>
         /// <param name="StoreProcedureName"></param>
         public void ExeProcedureNotQuery(string StoreProcedureName) {
             SqlConnection con;
-            ExeInit(StoreProcedureName, out con);         
+            ExeInit(StoreProcedureName, out con);
             try {
                 con.Open();
                 Scmd.ExecuteNonQuery();
@@ -265,7 +308,7 @@ namespace SQLHelper
             }
         }
 
-        /// <summary> </summary>
+        /// <summary>執行預存有傳回值</summary>
         /// <param name="StoreProcedureName"></param>
         /// <param name="OutParameter"></param>
         /// <returns></returns>
@@ -301,9 +344,7 @@ namespace SQLHelper
         /// <returns></returns>
         public DataTable ExeProcedureGetDataTable(string StoreProcedureName) {
             SqlConnection con;
-
             ExeInit(StoreProcedureName, out con);
-            //SetParameter(scmd);
             DataTable dt = new DataTable();
             try {
                 con.Open();
@@ -328,7 +369,7 @@ namespace SQLHelper
             }
             return dt;
         }
-        
+
         private void ExeInit(string StoreProcedureName, out SqlConnection con) {
             if (Scmd == null) {
                 Scmd = new SqlCommand();
@@ -341,7 +382,7 @@ namespace SQLHelper
             CommandResult = string.Empty;
             _LastCommandString = Scmd.CommandText;
         }
-                
+
         /// <summary>加入參數</summary>
         /// <param name="parameterName">參數名稱</param>
         /// <param name="value">參數值</param>
@@ -354,41 +395,27 @@ namespace SQLHelper
                 _OutParameter.Add(parameterName);
             }
         }
-
-        // /// <summary>
-        // /// 設定已加入的參數進去
-        // /// </summary>
-        // /// <param name="scmd"></param>
-        //private void SetParameter(SqlCommand scmd)
-        //{
-        //    foreach (var item in _parameters)
-        //    {               
-        //        scmd.Parameters.Add(item.Key,item.Value);
-        //    }
-        //}
-        
     }
 
-    public class SqlParameters
-    {
+    public class SqlParameters {
         public string ParameterName { set; get; }
         public object Value { set; get; }
         public System.Data.SqlDbType Type { set; get; }
         public int Length { set; get; }
         public System.Data.ParameterDirection ParamDirection { set; get; }
-
     }
 
-    public class MessageType
-    {
+    public class MessageType {
         public const string LogInFail = "Login Failed";
+
         public const string LoginSucess = "Login Sucess";
+
         public const string Parameter = "Parameter Add Error";
-        public const string Sucess = "Store Procedure Execute Sucess";       
+
+        public const string Sucess = "Store Procedure Execute Sucess";
     }
 
-    public struct iIndex
-    {
+    public struct iIndex {
         public string Name;  //索引名
         public bool IsUnique;  //是否唯一
         public bool IsClustered;  //是否聚集索引
@@ -396,12 +423,10 @@ namespace SQLHelper
         public bool IsDesc; //是否降序
     }
 
-    public interface ISQLMataRepair
-    {
+    public interface ISQLMataRepair {
     }
 
-    public class SqlMataData : ISQLMataRepair
-    {
+    public class SqlMataData : ISQLMataRepair {
     }
 
 }

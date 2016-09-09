@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Stock
-{
-    public class StockModule
-    {
-
+namespace Stock {
+    public class StockModule {
     }
 }

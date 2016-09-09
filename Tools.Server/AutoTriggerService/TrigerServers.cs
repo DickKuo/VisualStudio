@@ -21,13 +21,13 @@ namespace AutoTriggerService
     public class GetPTTBueaty : AutoTrigger
     {
         private static List<string> _timelist = new List<string>();
+
         private bool IsRuning = false;
 
         private class Default {
             public const string TimeFormat = "HH:mm:ss";
         }
-
-
+        
         /// <summary>建立結構 </summary>
         public GetPTTBueaty()
         {
@@ -68,7 +68,6 @@ namespace AutoTriggerService
         /// <summary>執行抓網頁</summary>
         /// <param name="pCurrentTime"></param>
         public override void Execute(string pCurrentTime) {
-
             #region 功能已注解
             //if (_timelist.Contains(pCurrentTime) && !IsRuning)
             //{
@@ -117,7 +116,6 @@ namespace AutoTriggerService
             //    }
             //}
             #endregion
-
         }
 
     }

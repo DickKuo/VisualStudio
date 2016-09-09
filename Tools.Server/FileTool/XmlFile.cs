@@ -13,14 +13,13 @@ namespace CommTool {
             public const string XmlNodeId = "XmlNode ID：";
             public const char Dot = ',';
         }
-
         #region 私有屬性
         private string _path;
+
         private string _result;
         #endregion
 
         #region 屬性
-
         public string Path {
             set {
                 _path = value;
@@ -111,8 +110,11 @@ namespace CommTool {
             root.AppendChild(element);
             doc.Save(Path);
         }
-
-
+        
+        /// <summary>取得依照名字取的節點</summary>
+        /// <param name="proot"></param>
+        /// <param name="Node"></param>
+        /// <returns></returns>
         public virtual XmlNode GetNodeByName(string proot, string Node) {
             XmlDocument doc = XmlLoad();
             XmlNode root = doc.SelectSingleNode(proot);
@@ -287,8 +289,7 @@ namespace CommTool {
                 sw.Close();
             }
         }
-
-
+        
         public static String ReOrderMethod(string pInput, bool pKeepId) {
             string ThisPath = AppDomain.CurrentDomain.BaseDirectory + "\\Old.xml";
             XmlFile xmlfile = new XmlFile();
@@ -325,8 +326,7 @@ namespace CommTool {
             NewString.Append("</QueryViewColumns> \r\n");
             return NewString.ToString();
         }
-
-
+        
         public static String NewOrderMethod(string pInput) {
             string NewXmlPath = AppDomain.CurrentDomain.BaseDirectory + "\\" + "New.xml";
             XmlFile xmlfile = new XmlFile();
