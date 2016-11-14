@@ -29,6 +29,9 @@ namespace WebInfo
             public const string PostMessage = "Post Start";
             public const string JsonKey = "json";
             public const string JSonStringFormat = "{0}={1}";
+            public const string DefaultLogPath = @"C:\SLog";
+            public const string ResourceAddress = "https://www.ptt.cc/bbs/Beauty/";
+            public const string HTML = ".html";
         }
 
         private string _pLogPath;
@@ -37,7 +40,11 @@ namespace WebInfo
             ToolLog.ToolPath = pLogPath;
             _pLogPath = pLogPath;
         }
-        
+
+        public WebInfo() {
+            ToolLog.ToolPath = Default.DefaultLogPath;
+        }
+
         /// <summary>PostHttp資料給指定位置</summary>
         /// <param name="Data"></param>
         /// <param name="Url"></param>
@@ -129,31 +136,34 @@ namespace WebInfo
                 info = SiteInfoList[Default.FirstItem];
             }
             try {
-                ToolLog.Log(Default.PostMessage + info.Title);
-                PostData Data = new PostData();
-                Data.Author = SiteInfoList[Default.MinItem].Author;
-                Data.Content = SiteInfoList[Default.MinItem].Context;
-                Data.Title = SiteInfoList[Default.MinItem].Title;
-                string strJson = string.Format(Default.JSonStringFormat, Default.JsonKey, JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented));
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Address);
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.Method = Default.Post;  
-                byte[] byteArray = Encoding.UTF8.GetBytes(strJson);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream()) {
-                    dataStream.Write(byteArray, Default.Zero, byteArray.Length);
-                }
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse()) {
-                    Stream receiveStream = response.GetResponseStream();
-                    Encoding encode = System.Text.Encoding.GetEncoding(Default.UTF8);
-                    StreamReader readStream = new StreamReader(receiveStream, encode);
-                    length = response.ContentLength;
-                    string st = readStream.ReadToEnd();
-                    if (st.IndexOf("Dis") != -1) {
-                        DateTime date = DateTime.Now;
+                if (info != null) {
+                    ToolLog.Log(Default.PostMessage + info.Title);
+                    PostData Data = new PostData();
+                    Data.Author = info.Author;
+                    Data.Content = info.Context;
+                    Data.Title = info.Title;
+                    Data.Guid = info.Address.Replace(Default.ResourceAddress, string.Empty).Replace(Default.HTML, string.Empty);
+                    string strJson = string.Format(Default.JSonStringFormat, Default.JsonKey, JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented));
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Address);
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.Method = Default.Post;
+                    byte[] byteArray = Encoding.UTF8.GetBytes(strJson);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream()) {
+                        dataStream.Write(byteArray, Default.Zero, byteArray.Length);
                     }
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse()) {
+                        Stream receiveStream = response.GetResponseStream();
+                        Encoding encode = System.Text.Encoding.GetEncoding(Default.UTF8);
+                        StreamReader readStream = new StreamReader(receiveStream, encode);
+                        length = response.ContentLength;
+                        string st = readStream.ReadToEnd();
+                        if (st.IndexOf("Dis") != -1) {
+                            DateTime date = DateTime.Now;
+                        }
+                    }
+                    ToolLog.Record(strJson);
                 }
-                ToolLog.Record(strJson);
             }
             catch (WebException ex) {
                 ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);
@@ -243,4 +253,6 @@ public class PostData {
     public string Content { set; get; }
 
     public string Title { set; get; }
+
+    public string Guid { set; get; }
 }
