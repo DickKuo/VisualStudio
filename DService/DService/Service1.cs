@@ -24,6 +24,10 @@ namespace DService
         {
             public const int Second = 1000;
             public const int Interval = Second * 1;
+            public const string Root = "root";
+            public const string Version = "Version";
+            public const string ShortTimeFormat = "ShortTimeFormat";
+            public const string XML = ".xml";
         }
 
         private TriggerService server = null;
@@ -31,14 +35,17 @@ namespace DService
         private List<string> _timelist = new List<string>();
         Dictionary<string, string> DicParameters = new Dictionary<string, string>();   //參數設定 
 
+
         public Service1() {
             InitializeComponent();
         }
+
 
         private void Init() {
             ToolLog.ToolPath = Settings1.Default.LogPath;
             InitParamter();
         }
+
 
         private void InitParamter() {
             try {
@@ -76,14 +83,16 @@ namespace DService
             time2.Start();
         }
 
+
         private TriggerService GetTriggerServices() {
             ServerImplement service = new ServerImplement();
             return service.GetAutoTriggerService();
         }
 
+
         private void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
-            string time = DateTime.Now.ToString(configmanage.GetValue("ShortTimeFormat"));
-            if (DateTime.Now.ToString(configmanage.GetValue("ShortTimeFormat")) == configmanage.GetValue("UpDateTime")) {
+            string time = DateTime.Now.ToString(configmanage.GetValue(Default.ShortTimeFormat));
+            if (DateTime.Now.ToString(configmanage.GetValue(Default.ShortTimeFormat)) == configmanage.GetValue("UpDateTime")) {
                 ToolLog.Log("更新開始");
                 UpdateDll(Settings1.Default.UpDateGradPath);
                 ToolLog.Log("更新結束");
@@ -92,9 +101,10 @@ namespace DService
 
 
         private void time2_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
-            string time = DateTime.Now.ToString(configmanage.GetValue("ShortTimeFormat"));
+            string time = DateTime.Now.ToString(configmanage.GetValue(Default.ShortTimeFormat));
             server.Run(time);
         }
+
 
         protected override void OnStop() {
             ToolLog.Log("服務停止");
@@ -124,14 +134,14 @@ namespace DService
                         File.Copy(FiInfo.FullName, AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name, true);
                     }
                     else {
-                        if (FiInfo.Extension.Equals(".xml")) {
+                        if (FiInfo.Extension.Equals(Default.XML)) {
                             try {
                                 XmlDocument SourceDoc = XmlFile.LoadXml(FiInfo.FullName);
-                                XmlNode root = SourceDoc.SelectSingleNode("root");
+                                XmlNode root = SourceDoc.SelectSingleNode(Default.Root);
                                 XmlDocument DeInfo = XmlFile.LoadXml(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name);
-                                XmlNode deroot = DeInfo.SelectSingleNode("root");
+                                XmlNode deroot = DeInfo.SelectSingleNode(Default.Root);
                                 if (root != null && deroot != null) {
-                                    if (!root.Attributes["Version"].Value.Equals(deroot.Attributes["Version"].Value)) {
+                                    if (!root.Attributes[Default.Version].Value.Equals(deroot.Attributes[Default.Version].Value)) {
                                         try {
                                             File.Copy(FiInfo.FullName, AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name, true);
                                         }
@@ -161,6 +171,7 @@ namespace DService
                 ToolLog.Log(ex.Message);
             }
         }
+
 
     }
 }

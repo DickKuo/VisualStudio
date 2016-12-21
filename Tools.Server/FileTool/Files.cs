@@ -6,6 +6,8 @@ using System.Xml;
 using System.Diagnostics;
 using CommTool.Business;
 using System.Runtime.InteropServices;
+using System.Data;
+using System.Net;
 
 
 namespace CommTool
@@ -16,6 +18,11 @@ namespace CommTool
             public const string Version = "Version";
             public const string FileTool = "FileTool.dll";
             public const string kernel32 = "kernel32";
+            public const char SplitChar = ',';
+            public const string ReplaceString = ",\"";
+            public const char SplitLine = '|';
+            public const string ChangeChar = "|";
+            public const string DateTimeFormat = "yyyy/MM/dd";
         }
 
         /// <summary>直接寫入檔案方法</summary>
@@ -176,6 +183,36 @@ namespace CommTool
             StringBuilder temp = new StringBuilder(255);
             int i = GetPrivateProfileString(Section, Key, string.Empty, temp, 255, SaveFile);
             return temp.ToString();
+        }
+
+        /// <summary>讀取CSV檔案，轉成DataTable資料流</summary>
+        /// <param name="FilePath"></param>
+        /// <param name="Table">Table的欄位順序要與CSV順序一致</param>
+        /// <returns></returns>
+        public static DataTable ReadCSV(string FilePath,DataTable Table) {
+            StreamReader SR = new StreamReader(FilePath,Encoding.Default);
+            string  line =string.Empty;
+            line = SR.ReadLine();
+            while((line=SR.ReadLine())!=null)
+            {
+                string[] sp = line.Replace(Default.ReplaceString,Default.ChangeChar).Replace("\"",string.Empty).Split(Default.SplitChar);
+                DataRow dr = Table.NewRow();
+                int i=0;
+                foreach (string result in sp) {   
+                    dr[i] = result;
+                    i++;                    
+                }
+                Table.Rows.Add(dr);
+            }
+            return Table;
+        }
+
+        /// <summary>下載檔案到指定位置</summary>
+        /// <param name="Url"></param>
+        /// <param name="Destination"></param>
+        public static void DownLoadFile(string Url,string Destination) {
+            WebClient wc = new WebClient();
+            wc.DownloadFile(Url, Destination);
         }
 
         [DllImport(Default.kernel32, CharSet = CharSet.Unicode)]

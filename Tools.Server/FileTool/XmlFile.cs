@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.ComponentModel;
 using System.IO;
+using System.Net; 
 
 namespace CommTool {
     public class XmlFile {
@@ -83,7 +84,7 @@ namespace CommTool {
                 li.Add(child.Attributes[Att].Value);
             }
             return li;
-        }
+        } 
 
         /// <summary>讀取所有節點</summary>     
         /// <returns></returns>
