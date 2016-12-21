@@ -74,6 +74,7 @@
     <Compile Include="TCP.cs" />
     <Compile Include="ToolLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrigerServers.cs" />
     <Compile Include="View.cs" />
     <Compile Include="XmlFile.cs" />
   </ItemGroup>

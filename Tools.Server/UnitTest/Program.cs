@@ -118,7 +118,7 @@ namespace UnitTest {
 
 
             //List<Option> OptionsList = new List<Option>();
-            //Stock.StockData stock = new Stock.StockData();
+            Stock.StockData stock = new Stock.StockData();
             //for (int i = 0; i <= 2; i++) {
             //    DateTime NowDate = DateTime.Now.AddMonths(i);
             //    List<Option> options = stock.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=" + NowDate.ToString("yyyyMM"), Encoding.UTF8);
@@ -139,13 +139,13 @@ namespace UnitTest {
             //}
             //stock.SaveWeighted(dt);
 
-            //stock.GetOptionWeek(1, 8);
+            stock.GetOptionWeek(1, 8);
             //Console.WriteLine("統計結束");
             //Console.ReadLine();
                          
-            CommTool.Files.DownLoadFile("https://www.taifex.com.tw/3_2_3_getcontract.asp?date1=" + DateTime.Now.AddDays(-1).ToString("yyyy/MM/dd") + "&date2=" + DateTime.Now.ToString("yyyy/MM/dd") + "", @"D:\Test\TestDownLoad.csv");
-
-
+            ////CommTool.Files.DownLoadFile("https://www.taifex.com.tw/3_2_3_getcontract.asp?date1=" + DateTime.Now.AddDays(-1).ToString("yyyy/MM/dd") + "&date2=" + DateTime.Now.ToString("yyyy/MM/dd") + "", @"D:\Test\TestDownLoad.csv");
+            //object username = new object();
+            //CommTool.ObjectUtility.ReadRegistry("UserName", ref username);
             
 
 

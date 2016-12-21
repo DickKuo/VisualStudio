@@ -250,6 +250,14 @@ namespace SQLHelper {
     }
 
     public class UseStoreProcedure {
+
+        private class Default {
+            public const string MsUserName = "MsUserName";
+            public const string MsPassWord = "MsPassWord";
+            public const string DBName = "DBName";
+            public const string ConnectionFormat = "Data Source=.;Initial Catalog={0};User Id={1};Password={2};";
+        }
+
         //private  Dictionary<string, object>  _parameters    = new Dictionary<string,object>();
         private List<string> _OutParameter = new List<string>();
 
@@ -279,6 +287,18 @@ namespace SQLHelper {
         private string _LastCommandString = string.Empty;
 
         public List<string> OutParameterValues = new List<string>();
+
+        public UseStoreProcedure() {
+            object DbName = new object();
+            object PassWord = new object();
+            object UserName = new object();
+            CommTool.ObjectUtility.ReadRegistry(Default.DBName, ref DbName);
+            CommTool.ObjectUtility.ReadRegistry(Default.MsUserName, ref UserName);
+            CommTool.ObjectUtility.ReadRegistry(Default.MsPassWord, ref PassWord);
+            _ConnetionString = string.Format(Default.ConnectionFormat, DbName.ToString(), UserName.ToString(), PassWord.ToString());
+
+        }
+
 
         /// <summary>執行預存不傳回值</summary>
         /// <param name="StoreProcedureName"></param>

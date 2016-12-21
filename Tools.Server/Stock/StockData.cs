@@ -11,7 +11,6 @@ namespace Stock {
     public class StockData {
         private class Default {
             public const string sqlconnection = "sqlconnection";
-            public const string SqlConnectionString = "";
             public const int Second = 1000;
             public const string Html = ".html";
             public const string TableTag = "//table[@class='ext-big-tbl']";
@@ -98,18 +97,16 @@ namespace Stock {
         #endregion
         SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
         
-        public StockData(string pStockNum) {
-            _stock = new Stock();
-            StockNum = pStockNum;
-            _stock.StockNum = this._stockNum;
-            Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic[Default.sqlconnection] = Default.SqlConnectionString;
-            SQLHelper.SHelper.InitSHelper(dic);
-        }
+        //public StockData(string pStockNum) {
+        //    _stock = new Stock();
+        //    StockNum = pStockNum;
+        //    _stock.StockNum = this._stockNum;
+        //    Dictionary<string, string> dic = new Dictionary<string, string>();
+        //    dic[Default.sqlconnection] = string.Empty;
+        //    SQLHelper.SHelper.InitSHelper(dic);
+        //}
 
-        public StockData() {
-            USP.ConnectiinString = Default.SqlConnectionString;
-        }
+      
 
         #region public mothed
 
