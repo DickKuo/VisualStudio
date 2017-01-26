@@ -60,7 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calendar.cs" />
+    <Compile Include="CalendarData.cs" />
     <Compile Include="HistoryOption.cs" />
+    <Compile Include="Open_Interest.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

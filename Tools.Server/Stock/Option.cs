@@ -16,14 +16,18 @@ namespace Stock {
 
         public double Change { set; get; }
 
-        public double Open { set; get; }
-
-        public double Total { set; get; }
-
-        public DateTime Time { set; get; }
+        public string Time { set; get; }
 
         public string Contract { set; get; }
 
-        public string Mom { set; get; }
+        /// <summary>成交量</summary>
+        public int Volume { set; get; }
+
+        /// <summary>未沖銷契約數</summary>
+        public int NumberOfContracts { set; get; }
+
+        /// <summary>類別</summary>
+        public string DueMonth { set; get; }
+
     }
 }

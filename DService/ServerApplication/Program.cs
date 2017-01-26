@@ -40,22 +40,33 @@ namespace ServerApplication
             #endregion
 
             #region 設定自動觸發
-            server = GetTriggerServices();
-            System.Timers.Timer t = new System.Timers.Timer(1000);
-            t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);   //到達時間的時候執行事件； 
-            t.AutoReset = true;//設置是執行一次（false）還是一直執行(true)； 
-            t.Enabled = true;//是否執行System.Timers.Timer.Elapsed事件； 
+            //server = GetTriggerServices();
+            //System.Timers.Timer t = new System.Timers.Timer(1000);
+            //t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);   //到達時間的時候執行事件； 
+            //t.AutoReset = true;//設置是執行一次（false）還是一直執行(true)； 
+            //t.Enabled = true;//是否執行System.Timers.Timer.Elapsed事件； 
             #endregion
             
             #region  等候客戶端連線
-            Thread t1 = new Thread(Lessner);
-            t1.Start();
-            #endregion                   
+            //Thread t1 = new Thread(Lessner);
+            //t1.Start();
+            #endregion               
+    
+            
+            System.Timers.Timer StockTimer = new System.Timers.Timer(20*1000);
+            StockTimer.Elapsed += StockTimer_Elapsed;
+         
+            StockTimer.Start();
 
             Console.Read();
         }
 
-
+        static void StockTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {           
+            Stock.StockData _StockData = new Stock.StockData();
+            string StockUrl = "https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=";
+            string Result   = _StockData.GetOptionEveryDay(StockUrl);           
+        }
+ 
    
 
         static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

@@ -14,12 +14,11 @@ using System.Security.Permissions;
 using System.Security;
 
 namespace WebInfo {
-    public class GetSite : IGetSiteService {
+    public class GetSite :  IGetSiteService {
 
         private class Default {
             public const string GetContext = "抓取文章";
-            public const string Attributes_href = "href";
-            public const string TimeFormat = "yyyy/MM/dd HH:mm:ss";
+            public const string Attributes_href = "href";           
             public const int Second = 1000;
             public const string HtmlExtend = ".html";
             public const string Href = "href=";
@@ -353,9 +352,9 @@ namespace WebInfo {
         /// <param name="PushCount">推文數</param>
         private static void Record(XmlDocument doc, string pTitle, string Address, string PushCount) {
             XmlNode root = doc.SelectSingleNode(Default.Root);
-            XmlElement element = doc.CreateElement("Title");
+            XmlElement element = doc.CreateElement(BaseConst.Title);            
             element.InnerText = pTitle;
-            element.SetAttribute("Time", DateTime.Now.ToString(Default.TimeFormat));
+            element.SetAttribute("Time", DateTime.Now.ToString(BaseConst.TimeFormatComplete));
             element.SetAttribute("Address", Address);
             element.SetAttribute("PushCount", PushCount);
             root.AppendChild(element);
@@ -486,7 +485,6 @@ namespace WebInfo {
             return result;
         }
 
-
-     
+        
     }
 }

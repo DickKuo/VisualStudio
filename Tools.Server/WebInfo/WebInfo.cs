@@ -8,6 +8,7 @@ using CommTool;
 using WebInfo.Business.DataEntities;
 using WebInfo.Business;
 using System.Xml;
+using HtmlAgilityPack;
 
 namespace WebInfo
 {
@@ -56,7 +57,7 @@ namespace WebInfo
             request.ContentType = Default.ContentType;
             request.ContentLength = bytes.Length;
             Stream requestStream = request.GetRequestStream();
-            requestStream.Write(bytes, 0, bytes.Length);
+            requestStream.Write(bytes, Default.Zero, bytes.Length);
             requestStream.Close();
             HttpWebResponse response;
             response = (HttpWebResponse)request.GetResponse();
@@ -138,7 +139,7 @@ namespace WebInfo
             try {
                 if (info != null) {
                     ToolLog.Log(Default.PostMessage + info.Title);
-                    PostData Data = new PostData();
+                    Beauty Data = new Beauty();
                     Data.Author = info.Author;
                     Data.Content = info.Context;
                     Data.Title = info.Title;
@@ -182,7 +183,7 @@ namespace WebInfo
             }
             try {
                 ToolLog.Log(Default.PostMessage + info.Title);
-                PostData Data = new PostData();
+                Beauty Data = new Beauty();
                 Data.Author = SiteInfoList[Default.MinItem].Author;
                 Data.Content = SiteInfoList[Default.MinItem].Context;
                 Data.Title = SiteInfoList[Default.MinItem].Title;
@@ -242,17 +243,44 @@ namespace WebInfo
                     }
                 }
             }
-        }       
+        }
+
+        /// <summary>取得網站的HtmlDocument</summary>
+        /// <param name="ppweburl"></param>
+        /// <returns></returns>
+        public HtmlDocument GetWebHtmlDocument(string ppweburl, Encoding Encode) {
+            HttpWebRequest MyHttpWebRequest = HttpWebRequest.Create(ppweburl) as HttpWebRequest;
+            HttpWebResponse MyHttpWebResponse = MyHttpWebRequest.GetResponse() as HttpWebResponse;
+            StreamReader myStreamReader = new StreamReader(MyHttpWebResponse.GetResponseStream(), Encode);
+            HtmlAgilityPack.HtmlDocument _HtmlDocument = new HtmlAgilityPack.HtmlDocument();
+            _HtmlDocument.LoadHtml(myStreamReader.ReadToEnd());
+            myStreamReader.Close();
+            MyHttpWebResponse = null;
+            MyHttpWebRequest = null;
+            return _HtmlDocument;
+        }
+
+        /// <summary>取得網站的Tag陣列</summary>
+        /// <param name="Url"></param>
+        /// <param name="Tag"></param>
+        /// <param name="Code"></param>
+        /// <returns></returns>
+        public HtmlNodeCollection GetWebHtmlDocumentNodeCollection(string Url, string Tag, Encoding Code)
+        {
+            HtmlAgilityPack.HtmlDocument _HtmlDocument = GetWebHtmlDocument(Url, Code);
+            HtmlAgilityPack.HtmlNodeCollection anchors = _HtmlDocument.DocumentNode.SelectNodes(Tag);
+            return anchors;
+        }
+
+        /// <summary>取得網站的Tag陣列</summary>
+        /// <param name="Url"></param>
+        /// <param name="Tag"></param>
+        /// <returns></returns>
+        public HtmlNodeCollection GetWebHtmlDocumentNodeCollection(string Url, string Tag) {
+            HtmlAgilityPack.HtmlDocument _HtmlDocument = GetWebHtmlDocument(Url, Encoding.Default);
+            HtmlAgilityPack.HtmlNodeCollection anchors = _HtmlDocument.DocumentNode.SelectNodes(Tag);
+            return anchors;
+        }
     }
 }
 
-/// <summary>輔助Class</summary>
-public class PostData {
-    public string Author { set; get; }
-
-    public string Content { set; get; }
-
-    public string Title { set; get; }
-
-    public string Guid { set; get; }
-}

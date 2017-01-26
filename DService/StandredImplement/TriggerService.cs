@@ -7,6 +7,7 @@ using WebInfo;
 using System.IO;
 using WebInfo.Business.DataEntities;
 using DService.Business.Entities;
+using Stock;
 
 namespace StandredImplement
 {
@@ -61,6 +62,14 @@ namespace StandredImplement
             public const string StartPoint = "StartPoint";
             public const string StartTag = "StartTag";
             public const string FileName = "Record.xml";
+            public const string ShortTimeFormat = "ShortTimeFormat";
+            public const string Interval = "Interval";
+            public const string IntervalUnit = "IntervalUnit";
+            public const string TestPostAddress = "TestPostAddress";
+            public const string PostAddress = "PostAddress";
+            public const string html = ".html";
+            public const string IsTest = "IsTest";
+            public const string PushCount = "PushCount";
         }
 
         public GetBueaty() {
@@ -68,12 +77,12 @@ namespace StandredImplement
             DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 0);
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
             ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
-            int interval = Convert.ToInt32(configmanage.GetValue("Interval"));
+            int interval = Convert.ToInt32(configmanage.GetValue(Default.Interval));
             ToolLog.ToolPath = configmanage.GetValue(Default.LogPath);
-            _shortFormat = configmanage.GetValue("ShortTimeFormat");
+            _shortFormat = configmanage.GetValue(Default.ShortTimeFormat);
             while (BaseTime <= FlagTime) {
                 _timelist.Add(BaseTime.ToString(_shortFormat));
-                BaseTime = BaseTime.AddSeconds(GetTime(configmanage.GetValue("IntervalUnit")) * interval);
+                BaseTime = BaseTime.AddSeconds(GetTime(configmanage.GetValue(Default.IntervalUnit)) * interval);
             }
         }
 
@@ -98,11 +107,11 @@ namespace StandredImplement
                         }
                         XmlDocument doc = XmlFile.LoadXml(RecordXml);
                         XmlNode root = doc.SelectSingleNode(AutoTrigger.Default.Root);
-                        site.PostAddress = Convert.ToBoolean(configmanage.GetValue("IsTest")) == true ? configmanage.GetValue("TestPostAddress") : site.PostAddress = configmanage.GetValue("PostAddress");
-                        site.PushCount = Convert.ToInt32(configmanage.GetValue("PushCount"));
+                        site.PostAddress = Convert.ToBoolean(configmanage.GetValue(Default.IsTest)) == true ? configmanage.GetValue(Default.TestPostAddress) : site.PostAddress = configmanage.GetValue(Default.PostAddress);
+                        site.PushCount = Convert.ToInt32(configmanage.GetValue(Default.PushCount));
                         site.Tag = currentTag;
                         string Site = configmanage.GetValue("Theme");
-                        string ListAddress = "https://www.ptt.cc/bbs/" + Site + Default.Index + site.Tag + ".html";
+                        string ListAddress = "https://www.ptt.cc/bbs/" + Site + Default.Index + site.Tag + Default.html;
                         ToolLog.Log("取得表特列表" + DateTime.Now.ToString(Default.DateTimeFormat));
                         ToolLog.Log("列表網址:" + ListAddress);
                         SitePlus siteplus = site.GetUrlList(ListAddress);
@@ -220,4 +229,77 @@ namespace StandredImplement
 
     }
     #endregion
+
+
+    #region 20170126 抓取選擇權資料
+    public class OptionTrigger : AutoTrigger {
+        BackgroundWorker _work;
+        private class Default {
+            public const string DServiceConfig = "DService.exe.config";
+            public const string DService = "DService";
+            public const string YahooStock = "YahooStock";
+        }
+
+        public OptionTrigger() {
+            _work = new BackgroundWorker();
+            _work.DoWork += new DoWorkEventHandler(work_DoWork);
+            _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
+        }
+
+        void work_DoWork(object sender, DoWorkEventArgs e) {
+            try {
+                Stock.StockData StockContext = new Stock.StockData();
+                string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
+                ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
+                string Url = configmanage.GetValue(Default.YahooStock);
+                StockContext.GetOptionEveryDay(Url);
+            }
+            catch (Exception ex) {
+                ToolLog.Log(ex.Message);
+            }
+        }        
+
+        /// <summary></summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+        }
+
+        /// <summary>執行trigger</summary>
+        /// <param name="pCurrentTime"></param>
+        public override void Execute(string pCurrentTime) {
+            //if (pCurrentTime == "16:00:00") {
+            string[] sp = pCurrentTime.Split(':');
+            if (Convert.ToInt32(sp[2]) % 20 == 0) {
+                CalendarData CalendarDB = new CalendarData();
+                Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);
+                if (_Calendar.IsWorkDay) {
+                    bool IsWork = true;
+                    if (Convert.ToInt32(sp[0]) > 8 && Convert.ToInt32(sp[0]) < 14) {
+                        if (Convert.ToInt32(sp[0]) == 8) {
+                            if (Convert.ToInt32(sp[1]) < 45) {
+                                IsWork = false;
+                            }
+                        }
+                        if (Convert.ToInt32(sp[0]) == 13) {
+                            if (Convert.ToInt32(sp[1]) > 45) {
+                                IsWork = false;
+                            }
+                        }
+                        IsWork = true;
+                        if (IsWork) {
+                            if (!_work.IsBusy) {
+                                _work.RunWorkerAsync();
+                            }
+                        }
+                    }
+                }
+            }
+            //}
+        }
+
+    }
+    #endregion
+
+
 }

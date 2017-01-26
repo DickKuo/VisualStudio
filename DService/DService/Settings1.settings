@@ -80,5 +80,8 @@
     <Setting Name="IsAutoUpdate" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="YahooStock" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&amp;opmr=optionpart&amp;opcm=WTXO&amp;opym=</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

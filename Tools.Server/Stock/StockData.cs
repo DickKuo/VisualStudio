@@ -21,6 +21,8 @@ namespace Stock {
             public const string NullSing = "--";
             public const string TimeFormat = "yyyy/MM/dd";
             public const int FirstItem = 0;
+            public const int SecondItem = 1;
+            public const int ThirdItem = 2;                
         }
 
         private class SP {
@@ -29,6 +31,7 @@ namespace Stock {
             public const string SaveWeighted = "SaveWeighted";
             public const string GetDueMonth = "GetDueMonth";
             public const string GetOptionHistory = "GetOptionHistory";
+            public const string SaveOpenInterest = "SaveOpenInterest";
         }
 
         private class SPParameter {
@@ -44,6 +47,9 @@ namespace Stock {
             public const string Mom = "Mom";
             public const string Start = "Start";
             public const string End = "End";
+            public const string Volume = "Volume";
+            public const string NumberOfContracts = "NumberOfContracts";
+            public const string DueMonth = "DueMonth";
         }
 
         private class OptionHistory {
@@ -67,12 +73,23 @@ namespace Stock {
         }
 
         private class WeightedHistory{
-           public const string TradeDate = "TradeDate";
+            public const string TradeDate = "TradeDate";
             public const string OpenPrice="OpenPrice";
             public const string HighestPrice="HighestPrice";
             public const string LowestPrice="LowestPrice";
             public const string ClosingPrice="ClosingPrice";
             public const string Remark="Remark";
+        }
+
+        private class OpenInterest {
+            public const string SN = "SN";
+            public const string TradeDate = "TradeDate";
+            public const string PutVolume = "PutVolume";
+            public const string CallVolume = "CallVolume";
+            public const string Ratios = "Ratios";
+            public const string PutOpenInterest = "PutOpenInterest";
+            public const string CallOpenInterest = "CallOpenInterest";
+            public const string OpenInterestRatios = "OpenInterestRatios";
         }
 
         private string _stockNum;
@@ -105,9 +122,7 @@ namespace Stock {
         //    dic[Default.sqlconnection] = string.Empty;
         //    SQLHelper.SHelper.InitSHelper(dic);
         //}
-
-      
-
+        
         #region public mothed
 
         public Stock GetStockData(string Url, string ConnetionString) {
@@ -268,22 +283,53 @@ namespace Stock {
             }
         }
 
+        /// <summary>抓取當日的資料</summary>
+        /// <param name="Url"></param>
+        /// <returns></returns>
+        public dynamic GetOptionEveryDay(string Url) {
+            CalendarData CalendarDB = new CalendarData();
+            Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);
+            string Message = string.Empty;
+            if (_Calendar.IsWorkDay) {
+                try {
+                    List<Option> ListOption = new List<Option>();
+                    ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8)); //周選  
+                    ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8)); //近月選1                               
+                    ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8)); //近月選2                              
+                    SaveOpionData(ListOption);
+
+                    Message = "GetOptionOK";
+                    CommTool.ToolLog.Log(Message);
+                    return Message;
+                }
+                catch (Exception ex) {
+                    CommTool.ToolLog.Log(ex);
+                    return "Error";
+                }
+            }
+            else {
+                Message = "NotWorkDay";
+                CommTool.ToolLog.Log(Message);
+                return Message;
+            }
+        }
 
         /// <summary>取得選擇權價格清單，預設編碼</summary>
         /// <param name="Url">POST位置</param>
         /// <returns></returns>
-        public List<Option> GetOptionDaily(string Url) {
-            return GetOptionDaily(Url, Encoding.Default);
+        public List<Option> GetOptionDaily(string Url, string Contract) {
+            return GetOptionDaily(Url, Contract, Encoding.Default);
         }
 
         /// <summary>取得選擇權價格清單</summary>
         /// 20161110 add by Dick
+        /// 20170126 modifed by Dick
         /// <param name="Url">POST位置</param>
         /// <param name="UrlEncoding">編碼</param>
-        public List<Option> GetOptionDaily(string Url, Encoding UrlEncoding) {
+        public List<Option> GetOptionDaily(string Url, string Contract, Encoding UrlEncoding) {
             WebInfo.WebInfo Info = new WebInfo.WebInfo();
             List<Option> list = new List<Option>();
-            StreamReader SR = Info.GetResponse(Url, UrlEncoding);
+            StreamReader SR = Info.GetResponse(Url + Contract, UrlEncoding);
             HtmlAgilityPack.HtmlDocument _HtmlDocument = new HtmlAgilityPack.HtmlDocument();
             _HtmlDocument.LoadHtml(SR.ReadToEnd());
             SR.Close();
@@ -291,34 +337,30 @@ namespace Stock {
             if (anchors != null) {
                 if (anchors.Count > 3) {
                     HtmlAgilityPack.HtmlNodeCollection Nodes = anchors[3].SelectNodes(Default.HtmlTr);
-                    string Mom = string.Empty;
-                    if (Url.IndexOf(Default.MomStart) != -1) {
-                        Mom = Url.Substring(Url.IndexOf(Default.MomStart) + 5, 6);
-                    }
                     for (int i = 29; i <= 45; i++) {
                         Option Call = new Option();
-                        Call.OP         = Default.Call;
-                        Call.buy        = Nodes[i].ChildNodes[1].InnerText.Trim()   == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[1].InnerText);
-                        Call.sell       = Nodes[i].ChildNodes[3].InnerText.Trim()   == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[3].InnerText);
-                        Call.clinch     = Nodes[i].ChildNodes[5].InnerText.Trim()   == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[5].InnerText);
-                        Call.Change     = Nodes[i].ChildNodes[7].InnerText.Trim()   == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[7].InnerText);
-                        Call.Open       = Nodes[i].ChildNodes[9].InnerText.Trim()   == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[9].InnerText);
-                        Call.Total      = Nodes[i].ChildNodes[11].InnerText.Trim()  == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[11].InnerText);
-                        Call.Time       = Nodes[i].ChildNodes[13].InnerText.Trim()  == Default.NullSing ? DateTime.Now : Convert.ToDateTime(Nodes[i].ChildNodes[13].InnerText);
-                        Call.Contract   = Nodes[i].ChildNodes[15].InnerText.Trim();
-                        Call.Mom = Mom;
+                        Call.OP = Default.Call;
+                        Call.DueMonth = Contract;
+                        Call.buy = Nodes[i].ChildNodes[1].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[1].InnerText);
+                        Call.sell = Nodes[i].ChildNodes[3].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[3].InnerText);
+                        Call.clinch = Nodes[i].ChildNodes[5].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[5].InnerText);
+                        Call.Change = Nodes[i].ChildNodes[7].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[7].InnerText);
+                        Call.NumberOfContracts = Nodes[i].ChildNodes[9].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[9].InnerText);
+                        Call.Volume = Nodes[i].ChildNodes[11].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[11].InnerText);
+                        Call.Time = Nodes[i].ChildNodes[13].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[13].InnerText).ToString(CommTool.BaseConst.TimeFormatComplete);
+                        Call.Contract = Nodes[i].ChildNodes[15].InnerText.Trim() ;                        
                         list.Add(Call);
                         Option Put = new Option();
-                        Put.OP          = Default.Put;
-                        Put.Contract    = Nodes[i].ChildNodes[15].InnerText.Trim();
-                        Put.buy         = Nodes[i].ChildNodes[17].InnerText.Trim()  == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[17].InnerText);
-                        Put.sell        = Nodes[i].ChildNodes[19].InnerText.Trim()  == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[19].InnerText);
-                        Put.clinch      = Nodes[i].ChildNodes[21].InnerText.Trim()  == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[21].InnerText);
-                        Put.Change      = Nodes[i].ChildNodes[23].InnerText.Trim()  == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[23].InnerText);
-                        Put.Open        = Nodes[i].ChildNodes[25].InnerText.Trim()  == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[25].InnerText);
-                        Put.Total       = Nodes[i].ChildNodes[27].InnerText.Trim()  == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[27].InnerText);
-                        Put.Time        = Nodes[i].ChildNodes[29].InnerText.Trim()  == Default.NullSing ? DateTime.Now : Convert.ToDateTime(Nodes[i].ChildNodes[29].InnerText);
-                        Put.Mom = Mom;
+                        Put.OP = Default.Put;
+                        Put.DueMonth = Contract;
+                        Put.Contract = Nodes[i].ChildNodes[15].InnerText.Trim();    
+                        Put.buy = Nodes[i].ChildNodes[17].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[17].InnerText);
+                        Put.sell = Nodes[i].ChildNodes[19].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[19].InnerText);
+                        Put.clinch = Nodes[i].ChildNodes[21].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[21].InnerText);
+                        Put.Change = Nodes[i].ChildNodes[23].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[23].InnerText);
+                        Put.NumberOfContracts = Nodes[i].ChildNodes[25].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[25].InnerText);
+                        Put.Volume = Nodes[i].ChildNodes[27].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[27].InnerText);
+                        Put.Time = Nodes[i].ChildNodes[29].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[29].InnerText).ToString(CommTool.BaseConst.TimeFormatComplete);                        
                         list.Add(Put);
                     }
                 }
@@ -332,20 +374,23 @@ namespace Stock {
         public void SaveOpionData(List<Option> Options) {         
             try {               
                 foreach (Option op in Options) {
-                    USP.AddParameter(SPParameter.OP, op.OP);
-                    USP.AddParameter(SPParameter.Buy, op.buy);
-                    USP.AddParameter(SPParameter.Change, op.Change);
-                    USP.AddParameter(SPParameter.Clinch, op.clinch);
-                    USP.AddParameter(SPParameter.Contract, op.Contract);
-                    USP.AddParameter(SPParameter.Open, op.Open);
-                    USP.AddParameter(SPParameter.Sell, op.sell);
-                    USP.AddParameter(SPParameter.Time, op.Time);
-                    USP.AddParameter(SPParameter.Total, op.Total);
-                    USP.AddParameter(SPParameter.Mom, op.Mom);
-                    USP.ExeProcedureNotQuery(SP.SaveOption);
+                    if (op.Volume > 0) {
+                        USP.AddParameter(SPParameter.OP, op.OP);
+                        USP.AddParameter(SPParameter.Buy, op.buy);
+                        USP.AddParameter(SPParameter.Change, op.Change);
+                        USP.AddParameter(SPParameter.Clinch, op.clinch);
+                        USP.AddParameter(SPParameter.Contract, op.Contract);               
+                        USP.AddParameter(SPParameter.Sell, op.sell);
+                        USP.AddParameter(SPParameter.Time, op.Time);
+                        USP.AddParameter(SPParameter.DueMonth, op.DueMonth);
+                        USP.AddParameter(SPParameter.NumberOfContracts, op.NumberOfContracts);
+                        USP.AddParameter(SPParameter.Volume, op.Volume);
+                        USP.ExeProcedureNotQuery(SP.SaveOption);
+                    }
                 }
             }
             catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
             }
         }
 
@@ -378,10 +423,10 @@ namespace Stock {
                 }
             }
             catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
             }
         }
-
-
+        
         /// <summary>儲存大盤歷史資料</summary>
         /// <param name="dt"></param>
         public void SaveWeighted(DataTable dt) {
@@ -397,6 +442,7 @@ namespace Stock {
                 }
             }
             catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
             }
         }
 
@@ -434,6 +480,8 @@ namespace Stock {
             Report.Columns.Add(OptionHistory.DueMonth);
             Report.Columns.Add(OptionHistory.Price);
             Report.Columns.Add(OptionHistory.Closing);
+            Report.Columns.Add(WeightedHistory.OpenPrice);
+            Report.Columns.Add(WeightedHistory.ClosingPrice);
             List<string> MonthsList = new List<string>();
             DateTime NowDate = new DateTime(2012, 11, 20);
             string[] Option = new string[] { "賣權", "買權" };
@@ -512,6 +560,159 @@ namespace Stock {
             CommTool.ToolLog.Log(string.Format("勝率:{0}%", (win * 100 / weekcount)));
         }
 
+        /// <summary>計算最大交易量的周選勝率及賺賠結果，遇到收盤操過買進價格的數倍時停損</summary>
+        /// <param name="BaseMoney"></param>
+        /// <param name="SmallPoint"></param>
+        /// <param name="StopBase"></param>
+        public void GetOptionWeekWithStop(int BaseMoney, decimal SmallPoint,decimal StopBase) {
+            DataTable Report = new DataTable();
+            Report.Columns.Add(OptionHistory.TradeDate);
+            Report.Columns.Add(OptionHistory.Option);
+            Report.Columns.Add(OptionHistory.DueMonth);
+            Report.Columns.Add(OptionHistory.Price);
+            Report.Columns.Add(OptionHistory.Closing);
+            Report.Columns.Add(WeightedHistory.OpenPrice);
+            Report.Columns.Add(WeightedHistory.ClosingPrice);
+            Report.Columns.Add(OptionHistory.Highest);
+            Report.Columns.Add(OptionHistory.Opening_Price);
+            List<string> MonthsList = new List<string>();
+            DateTime NowDate = new DateTime(2012, 11, 20);
+            string[] Option = new string[] { "賣權", "買權" };
+            DateTime Month = NowDate;
+            DataTable DueMonthTable = this.GetDueMonth();
+            if (DueMonthTable.Rows.Count > 0) {
+                foreach (DataRow dr in DueMonthTable.Rows) {
+                    MonthsList.Add(dr[Default.FirstItem].ToString());
+                }
+            }
+            string NowDueMont, NowPrice = string.Empty;
+            bool IsNoData = false;
+            bool IsPass = false;
+            DataRow NewRow = Report.NewRow();
+            Decimal StartPrice = 0;
+            Decimal EndPrice = 0;
+            Decimal Result = 0;
+            int weekcount = 0;
+            int win = 0;
+            int PassDay = 0;
+            decimal buyPoint = 0;
+            foreach (string Due in MonthsList) {
+                weekcount++;
+                decimal week = 0;
+                PassDay += 6;
+                foreach (string OP in Option) {
+                    decimal StopPrice = 0;
+                    DateTime Temp = NowDate.AddDays(PassDay);
+                    while (Temp <= DateTime.Now) {
+                        Temp = Temp.AddDays(1);
+                        if (!IsNoData) {
+                            DataRow row = GETPrice(NewRow, OP, Temp, Due);
+                            NowDueMont = Due;
+                            NowPrice = row.ItemArray[3].ToString();
+                            if (!string.IsNullOrEmpty(NowPrice)) {
+                                IsNoData = true;
+                                Report.Rows.Add(row);
+                                var temp = Convert.ToDecimal(row.ItemArray[4]);
+                                if (temp > SmallPoint) {
+                                    StartPrice = temp;
+                                    StopPrice = CalculateStopPrice(StartPrice, row.ItemArray[3].ToString(), Convert.ToDecimal(row.ItemArray[6].ToString()));
+                                    CommTool.ToolLog.Log(string.Format("契約:{0} , 日期:{1} , Option :{2} , 價格:{3} ,停損價格 {4}", Due, row.ItemArray[0].ToString(), OP, temp, StopPrice));                                  
+                                }
+                                else {
+                                    IsPass = true;
+                                }
+                            }
+                        }
+                        else {
+                            DataRow row = GetResultByPrice(NewRow, OP, Temp, Due, NowPrice);
+                            if (row.ItemArray[3].ToString() != string.Empty) {
+                                Report.Rows.Add(row);
+                            }
+                        }
+                        if (Report.Rows.Count > 0) {
+                            DataRow LastRow = Report.Rows[Report.Rows.Count - 1];
+                            if (Convert.ToDateTime(LastRow.ItemArray[0]).AddMonths(2) <= Temp) {
+                                break;
+                            }
+                        }
+                    }
+                    IsNoData = false;
+                    if (!IsPass) {
+                        if (Report.Rows.Count > 0) {
+                            decimal Loss = 0;
+                            decimal BuyPoint = 0;
+                            DataRow EndRow = Report.Rows[Report.Rows.Count - 1];
+                            EndPrice = Convert.ToDecimal(EndRow.ItemArray[4].ToString());
+                            bool IsOver = false;
+                            for (int i = 1; i < Report.Rows.Count; i++) {
+                                DataRow row = Report.Rows[i];
+                                decimal TempPrice = Convert.ToDecimal(row.ItemArray[4].ToString());
+                                decimal HighPrice = Convert.ToDecimal(row.ItemArray[7].ToString());
+                                CommTool.ToolLog.Log(string.Format("契約:{0} , 日期:{1} , Option :{2} , 契約價格:{3} , 點數:{4} , 最高點{5}", Due, row.ItemArray[0].ToString(), OP, row.ItemArray[3].ToString(), TempPrice, HighPrice));
+                                if (!IsOver) {
+                                    if (TempPrice > (StopPrice + StartPrice) || HighPrice > (StopPrice + StartPrice)) {
+                                        Loss += ((StopPrice + StartPrice) - StartPrice) + 10;
+                                        StartPrice = (StopPrice + StartPrice);
+                                        IsOver = true;
+                                    }
+                                }
+                                else {
+                                    if (TempPrice <= StartPrice) {
+                                        BuyPoint = ((TempPrice - StartPrice) - 10) * 5;
+                                        StartPrice = TempPrice;
+                                        IsOver = false;
+                                    }                                   
+                                }
+
+                                //if (!IsOver) {
+                                //    if (TempPrice >= (StartPrice * StopBase)) {
+                                //        buyPoint = (EndPrice - TempPrice) * (5 * BaseMoney);
+                                //        EndPrice = TempPrice;
+                                //        CommTool.ToolLog.Log(string.Format("契約:{0} , 買價:{1} , 停損價：{2} ,Option :{3} , 轉買方價差 {4}", Due, StartPrice.ToString("00000.##"), TempPrice.ToString("00000.##"), OP, buyPoint));
+                                //        IsOver = true;
+                                //    }
+                                //}
+                            }
+                            if (EndPrice > StartPrice) {
+                                BuyPoint = (EndPrice - StartPrice) * 5;
+                            }
+                            else {
+                                BuyPoint += (StartPrice - EndPrice);
+                            }
+                            //if (!IsOver) {
+                            //    week += (StartPrice - EndPrice) * BaseMoney;
+                            //}
+                            //else {
+                                week += (BuyPoint - Loss);
+                            //}
+                        }
+                    }
+                    Report.Rows.Clear();
+                    IsPass = false;
+                    CommTool.ToolLog.Log(string.Empty);
+                }
+                Result += (week + buyPoint);
+                buyPoint = 0;
+                if (week > 0) {
+                    win++;
+                }
+                string Message = string.Format("契約:{0} ,賺賠:{1},總賺賠：{2}", Due, week.ToString("00000.##"), Result.ToString("00000.##"));
+                CommTool.ToolLog.Log(Message);
+                CommTool.ToolLog.Log(string.Empty);
+            }
+            CommTool.ToolLog.Log(string.Format("勝率:{0}%", (win * 100 / weekcount)));
+        }
+
+        /// <summary>計算停損價格</summary>
+        /// <param name="Price"></param>
+        /// <param name="Contact"></param>
+        /// <param name="ClosePrice"></param>
+        /// <returns></returns>
+        private decimal CalculateStopPrice(decimal Price, string Contact, decimal ClosePrice) {
+            decimal BasePrice =(Price * 50) + (17000 - (Convert.ToDecimal(Contact) - ClosePrice));
+            return ((BasePrice * decimal.Parse("0.1")) / 50);
+        }
+        
         /// <summary>取得最大交易量的契約</summary>
         /// <param name="Source"></param>
         /// <param name="Option"></param>
@@ -524,12 +725,16 @@ namespace Stock {
             if (dt.Rows.Count > 0) {                
                 var temp = dt.Select("Volume= MAX(Volume)");
                 var Price = temp[Default.FirstItem][OptionHistory.Price].ToString();
-                var Closing = Convert.ToDecimal(temp[0][OptionHistory.Closing]);
+                var Closing = Convert.ToDecimal(temp[Default.FirstItem][OptionHistory.Closing]);
                 NewRow[OptionHistory.TradeDate] = Temp.Date.ToString(Default.TimeFormat);
                 NewRow[OptionHistory.Option] = Option;
                 NewRow[OptionHistory.DueMonth] = DueMonth;
                 NewRow[OptionHistory.Price] = Price;
                 NewRow[OptionHistory.Closing] = Closing;
+                NewRow[WeightedHistory.OpenPrice] = Convert.ToDecimal(temp[Default.FirstItem][WeightedHistory.OpenPrice]);
+                NewRow[WeightedHistory.ClosingPrice] = Convert.ToDecimal(temp[Default.FirstItem][WeightedHistory.ClosingPrice]);
+                NewRow[OptionHistory.Highest] = Convert.ToDecimal(temp[Default.FirstItem][OptionHistory.Highest]);
+                NewRow[OptionHistory.Opening_Price] = Convert.ToDecimal(temp[Default.FirstItem][OptionHistory.Opening_Price]);
             }
             return NewRow;
         }
@@ -551,7 +756,11 @@ namespace Stock {
                     NewRow[OptionHistory.Option] = Option;
                     NewRow[OptionHistory.DueMonth] = DueMonth;
                     NewRow[OptionHistory.Price] = Price;
-                    NewRow[OptionHistory.Closing] = row.ItemArray[9];
+                    NewRow[OptionHistory.Closing] = row[OptionHistory.Closing];
+                    NewRow[WeightedHistory.OpenPrice] = Convert.ToDecimal(row[WeightedHistory.OpenPrice]);
+                    NewRow[WeightedHistory.ClosingPrice] = Convert.ToDecimal(row[WeightedHistory.ClosingPrice]);
+                    NewRow[OptionHistory.Highest] = Convert.ToDecimal(row[OptionHistory.Highest]);
+                    NewRow[OptionHistory.Opening_Price] = Convert.ToDecimal(row[OptionHistory.Opening_Price]);
                 }
             }
             return NewRow;
@@ -569,6 +778,37 @@ namespace Stock {
             this.SaveOptionHistoryData(dt) ;
         }
 
+        /// <summary>儲存買賣未平昌率</summary>
+        /// <param name="DataResource"></param>
+        public void SaveOpen_InterestHistory(string DataResource) {
+            PropertyInfo[] infos = typeof(Open_Interest).GetProperties();
+            DataTable dt = new DataTable();
+            foreach (PropertyInfo info in infos) {
+                if (!info.Name.Equals(OpenInterest.SN))
+                dt.Columns.Add(info.Name);
+            }
+
+            CommTool.Files.ReadCSV(DataResource, dt);
+            SaveOpenInterestData(dt);
+        }
+
+        /// <summary>儲存買賣未平昌率資料</summary>
+        /// <param name="dt"></param>
+        public void SaveOpenInterestData(DataTable dt) {
+            if (dt != null && dt.Rows.Count > 0) {
+                foreach (DataRow dr in dt.Rows) {
+
+                    USP.AddParameter(OpenInterest.TradeDate, dr[OpenInterest.TradeDate]);
+                    USP.AddParameter(OpenInterest.CallOpenInterest, dr[OpenInterest.CallOpenInterest]);
+                    USP.AddParameter(OpenInterest.CallVolume, dr[OpenInterest.CallVolume]);
+                    USP.AddParameter(OpenInterest.OpenInterestRatios, dr[OpenInterest.OpenInterestRatios]);
+                    USP.AddParameter(OpenInterest.PutOpenInterest, dr[OpenInterest.PutOpenInterest]);
+                    USP.AddParameter(OpenInterest.PutVolume, dr[OpenInterest.PutVolume]);
+                    USP.AddParameter(OpenInterest.Ratios, dr[OpenInterest.Ratios]);
+                    USP.ExeProcedureNotQuery(SP.SaveOpenInterest);
+                }
+            }
+        }
         #endregion
     }
 }

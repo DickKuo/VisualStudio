@@ -57,7 +57,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Beauty.cs" />
+    <Compile Include="MotorData.cs" />
     <Compile Include="GetSite.cs" />
+    <Compile Include="Motor.cs" />
     <Compile Include="WebInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

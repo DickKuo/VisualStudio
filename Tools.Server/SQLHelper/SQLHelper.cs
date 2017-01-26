@@ -328,7 +328,7 @@ namespace SQLHelper {
             }
         }
 
-        /// <summary>執行預存有傳回值</summary>
+        /// <summary>執行預存回傳單一結果</summary>
         /// <param name="StoreProcedureName"></param>
         /// <param name="OutParameter"></param>
         /// <returns></returns>

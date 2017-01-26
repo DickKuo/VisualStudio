@@ -12,10 +12,15 @@ namespace CommTool {
         public const string TxtFile = ".txt";
         public const string DateFormat = "yyyy-MM-dd";
         public const string TimeFormat = "HH:mm:ss";
+        public const string TimeFormatComplete = "yyyy/MM/dd HH:mm:ss";
+        public const string Title="Title";
+        public const string Table = "Table";
+        public const string Tr = "tr";
         public const string Dot = ",";
+        public const string Div = "Div";
+        public const string EmptySpace = "&nbsp;";
         public const string BaseLogPath = "";
         public const int MinItems = 0;
-
         public const int ArrayMinItems = 0;
         public const int ArrayFirstItem = 0;
         public const int ArraySecondItem = 1;
