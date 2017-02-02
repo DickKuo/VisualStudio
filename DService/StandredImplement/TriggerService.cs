@@ -248,11 +248,13 @@ namespace StandredImplement
 
         void work_DoWork(object sender, DoWorkEventArgs e) {
             try {
-                Stock.StockData StockContext = new Stock.StockData();
-                string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
-                ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
-                string Url = configmanage.GetValue(Default.YahooStock);
-                StockContext.GetOptionEveryDay(Url);
+                lock (IsBusy) {
+                    Stock.StockData StockContext = new Stock.StockData();
+                    string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
+                    ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
+                    string Url = configmanage.GetValue(Default.YahooStock);
+                    StockContext.GetOptionEveryDay(Url);
+                }
             }
             catch (Exception ex) {
                 ToolLog.Log(ex.Message);
@@ -265,39 +267,42 @@ namespace StandredImplement
         void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
         }
 
+        private static object IsBusy = new object();
+
         /// <summary>執行trigger</summary>
         /// <param name="pCurrentTime"></param>
         public override void Execute(string pCurrentTime) {
-            //if (pCurrentTime == "16:00:00") {
-            string[] sp = pCurrentTime.Split(':');
-            if (Convert.ToInt32(sp[2]) % 20 == 0) {
-                CalendarData CalendarDB = new CalendarData();
-                Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);
-                if (_Calendar.IsWorkDay) {
-                    bool IsWork = true;
-                    if (Convert.ToInt32(sp[0]) > 8 && Convert.ToInt32(sp[0]) < 14) {
-                        if (Convert.ToInt32(sp[0]) == 8) {
-                            if (Convert.ToInt32(sp[1]) < 45) {
-                                IsWork = false;
+            try {
+                string[] sp = pCurrentTime.Split(':');
+                if (Convert.ToInt32(sp[2]) % 20 == 0) {
+                    CalendarData CalendarDB = new CalendarData();
+                    Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);                   
+                    if (_Calendar.IsWorkDay) {
+                        bool IsWork = true;
+                        if (Convert.ToInt32(sp[0]) >= 8 && Convert.ToInt32(sp[0]) < 14) {
+                            if (Convert.ToInt32(sp[0]) == 8) {
+                                if (Convert.ToInt32(sp[1]) < 45) {
+                                    IsWork = false;
+                                }
+                            }
+                            if (Convert.ToInt32(sp[0]) == 13) {
+                                if (Convert.ToInt32(sp[1]) > 45) {
+                                    IsWork = false;
+                                }
+                            }
+                            if (IsWork) {
+                                if (!_work.IsBusy) {
+                                    _work.RunWorkerAsync();
+                                }
                             }
                         }
-                        if (Convert.ToInt32(sp[0]) == 13) {
-                            if (Convert.ToInt32(sp[1]) > 45) {
-                                IsWork = false;
-                            }
-                        }
-                        IsWork = true;
-                        if (IsWork) {
-                            if (!_work.IsBusy) {
-                                _work.RunWorkerAsync();
-                            }
-                        }
-                    }
+                    }                    
                 }
             }
-            //}
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
         }
-
     }
     #endregion
 
