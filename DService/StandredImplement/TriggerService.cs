@@ -270,33 +270,15 @@ namespace StandredImplement
         private static object IsBusy = new object();
 
         /// <summary>執行trigger</summary>
+        /// 20170202 修正這邊單純執行，將時間判斷交給Object    modified by Dick 
         /// <param name="pCurrentTime"></param>
         public override void Execute(string pCurrentTime) {
             try {
                 string[] sp = pCurrentTime.Split(':');
                 if (Convert.ToInt32(sp[2]) % 20 == 0) {
-                    CalendarData CalendarDB = new CalendarData();
-                    Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);                   
-                    if (_Calendar.IsWorkDay) {
-                        bool IsWork = true;
-                        if (Convert.ToInt32(sp[0]) >= 8 && Convert.ToInt32(sp[0]) < 14) {
-                            if (Convert.ToInt32(sp[0]) == 8) {
-                                if (Convert.ToInt32(sp[1]) < 45) {
-                                    IsWork = false;
-                                }
-                            }
-                            if (Convert.ToInt32(sp[0]) == 13) {
-                                if (Convert.ToInt32(sp[1]) > 45) {
-                                    IsWork = false;
-                                }
-                            }
-                            if (IsWork) {
-                                if (!_work.IsBusy) {
-                                    _work.RunWorkerAsync();
-                                }
-                            }
-                        }
-                    }                    
+                    if (!_work.IsBusy) {
+                        _work.RunWorkerAsync();
+                    }           
                 }
             }
             catch (Exception ex) {

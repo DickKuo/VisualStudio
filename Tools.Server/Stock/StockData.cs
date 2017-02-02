@@ -285,26 +285,37 @@ namespace Stock {
 
         /// <summary>抓取當日的資料</summary>
         /// 20170126 modifed by Dick
+        /// 20170202 修正由這邊控制抓取資料的時間區間 modifed by Dick
         /// <param name="Url"></param>
         /// <returns></returns>
         public dynamic GetOptionEveryDay(string Url) {
             CalendarData CalendarDB = new CalendarData();
-            Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);
-            string Message = string.Empty;
+            DateTime TimeStamp =DateTime.Now ;
+            Calendar _Calendar = CalendarDB.GetCalendar(TimeStamp);
+            string Message = "NotTradeTime";
             if (_Calendar.IsWorkDay) {
-                try {
-                    List<Option> ListOption = new List<Option>();
-                    ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8)); //周選  
-                    ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8)); //近月選1                               
-                    ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8)); //近月選2                              
-                    SaveOpionData(ListOption);
-                    Message = "GetOptionOK";
+                TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 45, 0));
+                TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 0));
+                if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
+                    try {
+                        List<Option> ListOption = new List<Option>();
+                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8)); //周選  
+                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8)); //近月選1                               
+                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8)); //近月選2                              
+                        SaveOpionData(ListOption);
+                        Message = "GetOptionOK";
+                        CommTool.ToolLog.Log(Message);
+                        return Message;
+                    }
+                    catch (Exception ex) {
+                        CommTool.ToolLog.Log(ex);
+                        Message = "Error";
+                        return Message;
+                    }
+                }
+                else {
                     CommTool.ToolLog.Log(Message);
                     return Message;
-                }
-                catch (Exception ex) {
-                    CommTool.ToolLog.Log(ex);
-                    return "Error";
                 }
             }
             else {
