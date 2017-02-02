@@ -284,6 +284,7 @@ namespace Stock {
         }
 
         /// <summary>抓取當日的資料</summary>
+        /// 20170126 modifed by Dick
         /// <param name="Url"></param>
         /// <returns></returns>
         public dynamic GetOptionEveryDay(string Url) {
@@ -297,7 +298,6 @@ namespace Stock {
                     ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8)); //近月選1                               
                     ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8)); //近月選2                              
                     SaveOpionData(ListOption);
-
                     Message = "GetOptionOK";
                     CommTool.ToolLog.Log(Message);
                     return Message;
@@ -324,6 +324,7 @@ namespace Stock {
         /// <summary>取得選擇權價格清單</summary>
         /// 20161110 add by Dick
         /// 20170126 modifed by Dick
+        /// 20170202 修正網頁上資訊不足時出現陣列長度錯誤  modifed by Dick
         /// <param name="Url">POST位置</param>
         /// <param name="UrlEncoding">編碼</param>
         public List<Option> GetOptionDaily(string Url, string Contract, Encoding UrlEncoding) {
