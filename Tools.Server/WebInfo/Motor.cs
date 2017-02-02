@@ -6,6 +6,8 @@ using System.Text;
 namespace WebInfo {
     public class Motor {
 
+        public int SN { set; get; }
+
         /// <summary>來源的編碼</summary>
         public string Key { set; get; }
 
@@ -16,7 +18,7 @@ namespace WebInfo {
         public string Url { set; get; }
 
         /// <summary>價格</summary>
-        public double Price { set; get; }
+        public string Price { set; get; }
 
         /// <summary>內文</summary>
         public string Context { set; get; }
