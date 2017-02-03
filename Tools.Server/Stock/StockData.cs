@@ -78,6 +78,9 @@ namespace Stock {
             public const string HighestPrice="HighestPrice";
             public const string LowestPrice="LowestPrice";
             public const string ClosingPrice="ClosingPrice";
+            public const string Price = "Price";
+            public const string Change = "Change";
+            public const string Futures = "Futures";
             public const string Remark="Remark";
         }
 
@@ -286,6 +289,7 @@ namespace Stock {
         /// <summary>抓取當日的資料</summary>
         /// 20170126 modifed by Dick
         /// 20170202 修正由這邊控制抓取資料的時間區間 modifed by Dick
+        /// 20170203 加入抓取大盤資料的功能
         /// <param name="Url"></param>
         /// <returns></returns>
         public dynamic GetOptionEveryDay(string Url) {
@@ -299,10 +303,10 @@ namespace Stock {
                 if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
                     try {
                         List<Option> ListOption = new List<Option>();
-                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8)); //周選  
+                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8,true)); //周選  
                         ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8)); //近月選1                               
                         ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8)); //近月選2                              
-                        SaveOpionData(ListOption);
+                        SaveOpionData(ListOption);                      
                         Message = "GetOptionOK";
                         CommTool.ToolLog.Log(Message);
                         return Message;
@@ -332,13 +336,17 @@ namespace Stock {
             return GetOptionDaily(Url, Contract, Encoding.Default);
         }
 
+
         /// <summary>取得選擇權價格清單</summary>
         /// 20161110 add by Dick
         /// 20170126 modifed by Dick
         /// 20170202 修正網頁上資訊不足時出現陣列長度錯誤  modifed by Dick
-        /// <param name="Url">POST位置</param>
-        /// <param name="UrlEncoding">編碼</param>
-        public List<Option> GetOptionDaily(string Url, string Contract, Encoding UrlEncoding) {
+        /// <param name="Url"></param>
+        /// <param name="Contract"></param>
+        /// <param name="UrlEncoding"></param>
+        /// <param name="IsGetWeighed">是否抓取大盤</param>
+        /// <returns></returns>
+        public List<Option> GetOptionDaily(string Url, string Contract, Encoding UrlEncoding,bool IsGetWeighed=false) {
             WebInfo.WebInfo Info = new WebInfo.WebInfo();
             List<Option> list = new List<Option>();
             StreamReader SR = Info.GetResponse(Url + Contract, UrlEncoding);
@@ -381,8 +389,70 @@ namespace Stock {
                     }
                 }
             }
+            if (IsGetWeighed) {
+                Weighted _Weighted = GetWeightedDaily(_HtmlDocument);
+                if (_Weighted != null) {
+                    SaveWeighted(_Weighted);
+                }
+                else {
+                    CommTool.ToolLog.Log("Weighted Is Null");
+                }
+            }
             _HtmlDocument = null;
             return list;
+        }
+
+        /// <summary>取得大盤價格走勢</summary>
+        /// <param name="Url"></param>
+        /// <returns></returns>
+        public Weighted GetWeightedDaily(string Url)
+        {
+            WebInfo.WebInfo Info = new WebInfo.WebInfo();
+            HtmlAgilityPack.HtmlDocument Doc =  Info.GetWebHtmlDocument(Url,Encoding.UTF8);           
+            return GetWeighted(Doc);
+        }
+
+        /// <summary>取得大盤價格走勢</summary>
+        /// <param name="Doc"></param>
+        /// <returns></returns>
+        public Weighted GetWeightedDaily(HtmlAgilityPack.HtmlDocument Doc) {
+            return GetWeighted(Doc);
+        }
+        
+        /// <summary>取得大盤價格走勢</summary>
+        /// 20170203 抓取大盤走勢的功能，同期貨的一起抓  add by Dick 
+        /// <param name="Url"></param>
+        /// <returns></returns>
+        private Weighted GetWeighted(HtmlAgilityPack.HtmlDocument Doc) {
+            Weighted _Weighted =null;
+            HtmlNode Tr = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[1]/tbody[1]/tr[1]");
+            HtmlNode NodeWeighted = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[2]/tbody[1]/tr[1]");
+            HtmlNode NearMonth = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[2]/tbody[1]/tr[2]");
+            if (Tr != null) {
+                try {
+                    _Weighted = new Weighted();
+                    int Start = Tr.ChildNodes[3].InnerText.IndexOf("（");
+                    int End = Tr.ChildNodes[3].InnerText.IndexOf("）");
+                    _Weighted.Price = decimal.Parse(Tr.ChildNodes[3].InnerText.Substring(0, Start));
+                    _Weighted.Change = decimal.Parse(Tr.ChildNodes[3].InnerText.Trim().Substring(Start + 1, End - Start - 1));
+                    _Weighted.HighestPrice = decimal.Parse(Tr.ChildNodes[7].InnerText);
+                    _Weighted.LowestPrice = decimal.Parse(Tr.ChildNodes[11].InnerText);
+                    _Weighted.Volume = Tr.ChildNodes[15].InnerText.Trim().Replace("（億）", string.Empty).Replace("\t", string.Empty); //過濾掉不必要的字元
+                    if (NodeWeighted != null) {
+                        _Weighted.Futures = decimal.Parse(NearMonth.ChildNodes[3].InnerText);
+                        _Weighted.TradeDate = DateTime.Parse(NearMonth.ChildNodes[27].InnerText);
+                    }
+                    if (NodeWeighted != null) {
+                        _Weighted.OpenPrice = decimal.Parse(NodeWeighted.ChildNodes[15].InnerText);
+                        _Weighted.ClosingPrice = decimal.Parse(NodeWeighted.ChildNodes[7].InnerText);
+                    }
+                }
+                catch (Exception ex) {
+                    CommTool.ToolLog.Log(ex);
+                    _Weighted = null;
+                }
+            }
+            return _Weighted;
         }
 
         /// <summary>儲存選擇權交易歷史資訊</summary>
@@ -444,6 +514,7 @@ namespace Stock {
         }
         
         /// <summary>儲存大盤歷史資料</summary>
+        /// 20170203 加入新欄位    add by Dick
         /// <param name="dt"></param>
         public void SaveWeighted(DataTable dt) {
             try {
@@ -453,9 +524,30 @@ namespace Stock {
                     USP.AddParameter(WeightedHistory.HighestPrice, dr[WeightedHistory.HighestPrice]);
                     USP.AddParameter(WeightedHistory.LowestPrice, dr[WeightedHistory.LowestPrice]);
                     USP.AddParameter(WeightedHistory.OpenPrice, dr[WeightedHistory.OpenPrice]);
+                    USP.AddParameter(WeightedHistory.Price, dr[WeightedHistory.Price]);
+                    USP.AddParameter(WeightedHistory.Futures, dr[WeightedHistory.Futures]);
                     USP.AddParameter(WeightedHistory.Remark, dr[WeightedHistory.Remark]);
                     USP.ExeProcedureNotQuery(SP.SaveWeighted);
                 }
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+        }
+
+        /// <summary>儲存大盤歷史資料</summary>
+        public void SaveWeighted(Weighted _Weighted) {
+            try {
+                USP.AddParameter(WeightedHistory.TradeDate, _Weighted.TradeDate);
+                USP.AddParameter(WeightedHistory.ClosingPrice, _Weighted.ClosingPrice);
+                USP.AddParameter(WeightedHistory.HighestPrice, _Weighted.HighestPrice);
+                USP.AddParameter(WeightedHistory.LowestPrice, _Weighted.LowestPrice);
+                USP.AddParameter(WeightedHistory.OpenPrice, _Weighted.OpenPrice);
+                USP.AddParameter(WeightedHistory.Price, _Weighted.Price);
+                USP.AddParameter(WeightedHistory.Futures, _Weighted.Futures);
+                USP.AddParameter(WeightedHistory.Change, _Weighted.Change);
+                USP.AddParameter(WeightedHistory.Remark, _Weighted.Remark == null ? string.Empty : _Weighted.Remark);
+                USP.ExeProcedureNotQuery(SP.SaveWeighted);                 
             }
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
@@ -471,6 +563,7 @@ namespace Stock {
                 return USP.ExeProcedureGetDataTable(SP.GetOptionHistory);
             }
             catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
                 return null;
             }             
         }
