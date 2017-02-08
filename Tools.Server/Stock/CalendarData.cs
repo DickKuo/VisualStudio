@@ -28,6 +28,7 @@ namespace Stock {
             public const string NearMonth1 = "NearMonth1";
             public const string NearMonth2 = "NearMonth2";
             public const string Remark = "Remark";
+            public const string IsMaill = "IsMaill";
         }
 
         SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
@@ -115,6 +116,7 @@ namespace Stock {
                 USP.AddParameter(SPParameter.NearMonth1, _Calendar.NearMonth1);
                 USP.AddParameter(SPParameter.NearMonth2, _Calendar.NearMonth2);
                 USP.AddParameter(SPParameter.Remark, _Calendar.Remark);
+                USP.AddParameter(SPParameter.IsMaill, _Calendar.IsMaill);
                 USP.ExeProcedureNotQuery(SP.UpdateCalendar);
             }
             catch (Exception ex) {

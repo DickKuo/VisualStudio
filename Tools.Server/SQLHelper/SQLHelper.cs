@@ -296,9 +296,7 @@ namespace SQLHelper {
             CommTool.ObjectUtility.ReadRegistry(Default.MsUserName, ref UserName);
             CommTool.ObjectUtility.ReadRegistry(Default.MsPassWord, ref PassWord);
             _ConnetionString = string.Format(Default.ConnectionFormat, DbName.ToString(), UserName.ToString(), PassWord.ToString());
-
         }
-
 
         /// <summary>執行預存不傳回值</summary>
         /// <param name="StoreProcedureName"></param>
@@ -427,11 +425,8 @@ namespace SQLHelper {
 
     public class MessageType {
         public const string LogInFail = "Login Failed";
-
         public const string LoginSucess = "Login Sucess";
-
         public const string Parameter = "Parameter Add Error";
-
         public const string Sucess = "Store Procedure Execute Sucess";
     }
 

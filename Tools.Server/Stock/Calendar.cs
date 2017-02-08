@@ -24,6 +24,9 @@ namespace Stock {
         /// <summary>近月2</summary>
         public string NearMonth2 { set; get; }
 
+        /// <summary>是否發送Maill</summary>
+        public bool IsMaill { set; get; }
+
         /// <summary>備註</summary>
         public string Remark { set; get; }
     }

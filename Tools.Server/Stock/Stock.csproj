@@ -71,10 +71,6 @@
     <Compile Include="Weighted.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mail\Mail.csproj">
-      <Project>{72D6764D-3805-4664-961A-067597B8E17D}</Project>
-      <Name>Mail</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SQLHelper\SQLHelper.csproj">
       <Project>{C64334ED-5B13-4D7B-B3AF-7AD6ABFA7FB3}</Project>
       <Name>SQLHelper</Name>

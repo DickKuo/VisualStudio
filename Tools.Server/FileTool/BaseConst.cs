@@ -32,5 +32,7 @@ namespace CommTool {
         public const int ArrayEithItem = 7;
         public const int ArrayNinethItem = 8;
         public const int ArrayTenthItem = 9;
+        public const string DServiceConfig = "DService.exe.config";
+        public const string Wednesday = "Wednesday";
     }
 }

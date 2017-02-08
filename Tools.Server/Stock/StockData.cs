@@ -22,7 +22,7 @@ namespace Stock {
             public const string TimeFormat = "yyyy/MM/dd";
             public const int FirstItem = 0;
             public const int SecondItem = 1;
-            public const int ThirdItem = 2;                
+            public const int ThirdItem = 2;
         }
 
         private class SP {
@@ -32,6 +32,9 @@ namespace Stock {
             public const string GetDueMonth = "GetDueMonth";
             public const string GetOptionHistory = "GetOptionHistory";
             public const string SaveOpenInterest = "SaveOpenInterest";
+            public const string GetMaxNumberOfContracts = "GetMaxNumberOfContracts";
+            public const string GetMaxVolume = "GetMaxVolume";
+            public const string GetWeighted = "GetWeighted";
         }
 
         private class SPParameter {
@@ -50,6 +53,7 @@ namespace Stock {
             public const string Volume = "Volume";
             public const string NumberOfContracts = "NumberOfContracts";
             public const string DueMonth = "DueMonth";
+            public const string Today = "Today";
         }
 
         private class OptionHistory {
@@ -82,6 +86,7 @@ namespace Stock {
             public const string Change = "Change";
             public const string Futures = "Futures";
             public const string Remark="Remark";
+            public const string Volume = "Volume";
         }
 
         private class OpenInterest {
@@ -290,6 +295,7 @@ namespace Stock {
         /// 20170126 modifed by Dick
         /// 20170202 修正由這邊控制抓取資料的時間區間 modifed by Dick
         /// 20170203 加入抓取大盤資料的功能
+        /// 20170208 加入發送Maill的功能
         /// <param name="Url"></param>
         /// <returns></returns>
         public dynamic GetOptionEveryDay(string Url) {
@@ -309,6 +315,7 @@ namespace Stock {
                         SaveOpionData(ListOption);                      
                         Message = "GetOptionOK";
                         CommTool.ToolLog.Log(Message);
+                        GetNumberOfContractsAndMaill();
                         return Message;
                     }
                     catch (Exception ex) {
@@ -335,8 +342,7 @@ namespace Stock {
         public List<Option> GetOptionDaily(string Url, string Contract) {
             return GetOptionDaily(Url, Contract, Encoding.Default);
         }
-
-
+        
         /// <summary>取得選擇權價格清單</summary>
         /// 20161110 add by Dick
         /// 20170126 modifed by Dick
@@ -546,12 +552,31 @@ namespace Stock {
                 USP.AddParameter(WeightedHistory.Price, _Weighted.Price);
                 USP.AddParameter(WeightedHistory.Futures, _Weighted.Futures);
                 USP.AddParameter(WeightedHistory.Change, _Weighted.Change);
+                USP.AddParameter(WeightedHistory.Volume, _Weighted.Volume);
                 USP.AddParameter(WeightedHistory.Remark, _Weighted.Remark == null ? string.Empty : _Weighted.Remark);
                 USP.ExeProcedureNotQuery(SP.SaveWeighted);                 
             }
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
             }
+        }
+        
+        /// <summary>取得最新一筆大盤資訊</summary>
+        /// <returns></returns>
+        public Weighted GetWeighted() {
+            DataTable dt = USP.ExeProcedureGetDataTable(SP.GetWeighted);
+            Weighted _Weighted = new Weighted();
+            if (dt != null && dt.Rows.Count > CommTool.BaseConst.MinItems) {
+                DataRow Row = dt.Rows[CommTool.BaseConst.ArrayFirstItem];
+                PropertyInfo[] infos = typeof(Weighted).GetProperties();
+                foreach (PropertyInfo info in infos) {                   
+                    _Weighted.GetType().GetProperty(info.Name).SetValue(_Weighted, Row[info.Name], null);
+                }
+                return _Weighted;
+            }
+            else {
+                return null;
+            }      
         }
 
         public DataTable SelectOptionHistory(string DueMonth,string Option,string Start,string End) {
@@ -813,13 +838,13 @@ namespace Stock {
         }
 
         /// <summary>計算停損價格</summary>
-        /// <param name="Price"></param>
+        /// <param name="Price">點數</param>
         /// <param name="Contact"></param>
         /// <param name="ClosePrice"></param>
         /// <returns></returns>
         private decimal CalculateStopPrice(decimal Price, string Contact, decimal ClosePrice) {
             decimal BasePrice =(Price * 50) + (17000 - (Convert.ToDecimal(Contact) - ClosePrice));
-            return ((BasePrice * decimal.Parse("0.1")) / 50);
+            return Price + ((BasePrice * decimal.Parse("0.1")) / 50);
         }
         
         /// <summary>取得最大交易量的契約</summary>
@@ -887,7 +912,7 @@ namespace Stock {
             this.SaveOptionHistoryData(dt) ;
         }
 
-        /// <summary>儲存買賣未平昌率</summary>
+        /// <summary>儲存買賣未平昌</summary>
         /// <param name="DataResource"></param>
         public void SaveOpen_InterestHistory(string DataResource) {
             PropertyInfo[] infos = typeof(Open_Interest).GetProperties();
@@ -901,7 +926,7 @@ namespace Stock {
             SaveOpenInterestData(dt);
         }
 
-        /// <summary>儲存買賣未平昌率資料</summary>
+        /// <summary>儲存買賣未平昌資料</summary>
         /// <param name="dt"></param>
         public void SaveOpenInterestData(DataTable dt) {
             if (dt != null && dt.Rows.Count > 0) {
@@ -918,6 +943,63 @@ namespace Stock {
                 }
             }
         }
+        
+        /// <summary>每周三取得操作指標，並且發送Maill</summary>
+        /// 20170208 add by Dick 收盤後抓取每周的操作並發送Maill
+        public void GetNumberOfContractsAndMaill() {
+            try {
+                if (DateTime.Now.DayOfWeek.ToString() == CommTool.BaseConst.Wednesday) {
+                    DateTime TimeStamp = DateTime.Now;
+                    DateTime Start = new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 35, 0);
+                    DateTime End = new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 0);
+                    TimeSpan StartTimeSpan = TimeStamp.Subtract(Start);
+                    TimeSpan EndTimeSpan = TimeStamp.Subtract(End);
+                    if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
+                        CalendarData CalendarDB = new CalendarData();
+                        Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);
+                        if (!_Calendar.IsMaill) {
+                            List<string> OPList = new List<string>();
+                            OPList.Add(Default.Call);
+                            OPList.Add(Default.Put);
+                            StringBuilder SB = new StringBuilder();
+                            SB.AppendLine(string.Format("次周交易:{0}", _Calendar.NearMonth1));
+                            foreach (string OP in OPList) {
+                                USP.AddParameter(SPParameter.OP, OP);
+                                USP.AddParameter(SPParameter.DueMonth, _Calendar.NearMonth1);
+                                DataTable dt = null;
+                                if (_Calendar.NearMonth1.IndexOf("W") != -1) {
+                                    dt = USP.ExeProcedureGetDataTable(SP.GetMaxVolume);
+                                }
+                                else {
+                                    dt = USP.ExeProcedureGetDataTable(SP.GetMaxNumberOfContracts);
+                                }
+                                if (dt != null && dt.Rows.Count > 0) {
+                                    Weighted _Weighted = this.GetWeighted();
+                                    decimal StopPrice = 0;
+                                    if (_Weighted != null) {
+                                        StopPrice = this.CalculateStopPrice(Convert.ToDecimal(dt.Rows[0][0]), dt.Rows[0][1].ToString(), _Weighted.Futures);
+                                    }
+                                    SB.AppendLine(string.Format("方向:{0} ,   價格:{1}  ,   契約:{2}  ,   交易量:{3} ,   最大未平昌量:{4}  ,   建議停損價格:{5} ", OP, dt.Rows[0][0], dt.Rows[0][1], dt.Rows[0][2], dt.Rows[0][4], StopPrice));
+                                }
+                            }
+                            CommTool.MailData MailDB = new CommTool.MailData();
+                            DataTable MaillDataTable = MailDB.GetSendMail();
+                            if (MaillDataTable != null && MaillDataTable.Rows.Count > 0) {
+                                foreach (DataRow dr in MaillDataTable.Rows) {
+                                    MailDB.RegistrySend(dr[1].ToString(), "每周操作指標", SB.ToString());
+                                }
+                            }
+                        }
+                        _Calendar.IsMaill = true;
+                        CalendarDB.UpdateCalendar(_Calendar);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+        }
+
         #endregion
     }
 }
