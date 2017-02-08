@@ -2,6 +2,7 @@
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace WebInfo {
 
         private class Default {
             public const string Brand = "Brand";
+            public const string MotorPostAddress = "MotorPostAddress";
         }
 
         private class SP {
@@ -85,6 +87,7 @@ namespace WebInfo {
                                                 if (Node != null) {
                                                     _Motor.Price = Node.InnerText.Replace("Giá", string.Empty).Replace(":", string.Empty).Replace("vnđ", string.Empty).Trim();
                                                 }
+                                                _Motor.Key = "rongbay";
                                                 HtmlNodeCollection Location = _doc.DocumentNode.SelectNodes("//p[@class='cl_666']");
                                                 if (Location != null) {
                                                     _Motor.Location = Location[0].InnerText.Replace("Địa chỉ:", string.Empty).Trim();
@@ -154,10 +157,12 @@ namespace WebInfo {
                                     GetBrand(_Motor);
                                     GetYears(_Motor);
 
-                                    if (_Motor.Url.IndexOf("-id") != -1) {
-                                        int Leng = _Motor.Url.IndexOf("-id");
-                                        _Motor.Key = _Motor.Url.Substring(Leng + 3, _Motor.Url.Length - 1 - Leng - 3);
-                                    }
+                                    //if (_Motor.Url.IndexOf("-id") != -1) {
+                                    //    int Leng = _Motor.Url.IndexOf("-id");
+                                    //    _Motor.Key = _Motor.Url.Substring(Leng + 3, _Motor.Url.Length - 1 - Leng - 3);
+                                    //}
+                                    _Motor.Key = "muaban";
+
                                     HtmlNodeCollection Context = Web.GetWebHtmlDocumentNodeCollection(_Motor.Url, "//div[@id='dvContent']", Encoding.UTF8);
                                     if (Context != null) {
                                         var ContextNodes = Context[0].SelectNodes("//div[@class='ct-body overflow clearfix']");
@@ -231,6 +236,7 @@ namespace WebInfo {
                                                     NewMotor.Location = NewMotor.Location.Replace(ReplaceString, string.Empty);
                                                 }
                                             }
+                                            NewMotor.Key = "webike";
                                             NewMotor.Milage = Child.ChildNodes[1].ChildNodes[9].ChildNodes[0].InnerHtml.ToLower().Replace("km", string.Empty).Replace("đi:", string.Empty).Replace("đ&atilde;", string.Empty).Trim();
                                             NewMotor.Url = Child.ChildNodes[1].Attributes[0].Value;
                                             NewMotor.Img = Child.ChildNodes[1].ChildNodes[1].ChildNodes[1].Attributes[0].Value;
@@ -296,31 +302,43 @@ namespace WebInfo {
         /// <summary>寫入DB紀錄</summary>
         /// 20170207 addd by Dick
         /// <param name="_Motor"></param>
-        public void AddMotor(Motor _Motor) {
-            USP.AddParameter(SPParameter.Brand, _Motor.Brand == null ? string.Empty : _Motor.Brand);
-            USP.AddParameter(SPParameter.Context, _Motor.Context == null ? string.Empty : _Motor.Context);
-            USP.AddParameter(SPParameter.Img, _Motor.Img == null ? string.Empty : _Motor.Img);
-            USP.AddParameter(SPParameter.Key, _Motor.Key == null ? string.Empty : _Motor.Key);
-            USP.AddParameter(SPParameter.Location, _Motor.Location == null ? string.Empty : _Motor.Location);
-            USP.AddParameter(SPParameter.Milage, _Motor.Milage == null ? string.Empty : _Motor.Milage);
-            USP.AddParameter(SPParameter.Model, _Motor.Model == null ? string.Empty : _Motor.Model);
-            USP.AddParameter(SPParameter.Price, _Motor.Price == null ? string.Empty : _Motor.Price);
-            USP.AddParameter(SPParameter.Remark, _Motor.Remark == null ? string.Empty : _Motor.Remark);
-            USP.AddParameter(SPParameter.Title, _Motor.Title == null ? string.Empty : _Motor.Title);
-            USP.AddParameter(SPParameter.Url, _Motor.Url == null ? string.Empty : _Motor.Url);
-            USP.AddParameter(SPParameter.Years, _Motor.Years == null ? string.Empty : _Motor.Years);
-            USP.ExeProcedureNotQuery(SP.AddMotor);
+        public int AddMotor(Motor _Motor) {           
+            try {
+                USP.AddParameter(SPParameter.Brand, _Motor.Brand == null ? string.Empty : _Motor.Brand);
+                USP.AddParameter(SPParameter.Context, _Motor.Context == null ? string.Empty : _Motor.Context);
+                USP.AddParameter(SPParameter.Img, _Motor.Img == null ? string.Empty : _Motor.Img);
+                USP.AddParameter(SPParameter.Key, _Motor.Key == null ? string.Empty : _Motor.Key);
+                USP.AddParameter(SPParameter.Location, _Motor.Location == null ? string.Empty : _Motor.Location);
+                USP.AddParameter(SPParameter.Milage, _Motor.Milage == null ? string.Empty : _Motor.Milage);
+                USP.AddParameter(SPParameter.Model, _Motor.Model == null ? string.Empty : _Motor.Model);
+                USP.AddParameter(SPParameter.Price, _Motor.Price == null ? string.Empty : _Motor.Price);
+                USP.AddParameter(SPParameter.Remark, _Motor.Remark == null ? string.Empty : _Motor.Remark);
+                USP.AddParameter(SPParameter.Title, _Motor.Title == null ? string.Empty : _Motor.Title);
+                USP.AddParameter(SPParameter.Url, _Motor.Url == null ? string.Empty : _Motor.Url);
+                USP.AddParameter(SPParameter.Years, _Motor.Years == null ? string.Empty : _Motor.Years);
+                return USP.ExeProcedureReturnKey(SP.AddMotor);                
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+                return -1;
+            }           
         }
 
-        /// <summary>寫入資料庫，並Post出去</summary>
+        /// <summary>寫入資料庫，並同步過去</summary>
         /// 20170207 addd by Dick
         /// <param name="_Motor"></param>
-        public void PostAndAddMotor(Motor _Motor) {
-            WebInfo _WebInfo = new WebInfo();
-            AddMotor(_Motor);
-            string JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(_Motor);
-            CommTool.ToolLog.Log(JsonData);
-             _WebInfo.HttpPostMethod(JsonData, string.Empty);            
+        public void PostAndAddMotor(Motor _Motor) {            
+            int SN = AddMotor(_Motor);
+            if (SN != -1) {
+                _Motor.SN = SN;
+                string JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(_Motor);
+                CommTool.ToolLog.Log(JsonData);
+                string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, BaseConst.DServiceConfig);
+                ConfigManager configmanage = new ConfigManager(configiPath, BaseConst.DServiceConfig);
+                string PostAddress = configmanage.GetValue(Default.MotorPostAddress);
+                WebInfo _WebInfo = new WebInfo();
+                _WebInfo.HttpPostMethod(JsonData, PostAddress);
+            }
         }
 
     }

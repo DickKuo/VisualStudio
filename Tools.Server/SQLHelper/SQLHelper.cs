@@ -388,6 +388,21 @@ namespace SQLHelper {
             return dt;
         }
 
+        /// <summary>執行StoreProcedure並取得Key值</summary>
+        /// 20170208 add by Dick
+        /// <param name="StoreProcedureName"></param>
+        /// <returns></returns>
+        public int ExeProcedureReturnKey(string StoreProcedureName) {
+            DataTable dt = this.ExeProcedureGetDataTable(StoreProcedureName);
+            int Result = -1;
+            if (dt != null && dt.Rows.Count > 0) {
+                if (dt.Rows[0][0] != null && dt.Rows[0][0].ToString() != string.Empty) {
+                    Result = Int32.Parse(dt.Rows[0][0].ToString());
+                }
+            }
+            return Result;
+        }
+
         private void ExeInit(string StoreProcedureName, out SqlConnection con) {
             if (Scmd == null) {
                 Scmd = new SqlCommand();
