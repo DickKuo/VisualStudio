@@ -8,6 +8,7 @@ using System.IO;
 using WebInfo.Business.DataEntities;
 using DService.Business.Entities;
 using Stock;
+using System.Threading;
 
 namespace StandredImplement
 {
@@ -246,14 +247,24 @@ namespace StandredImplement
             _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
         }
 
+        /// <summary>執行</summary>
+        /// 20170208 修改成一個Thread來執行到底 modified by Dick
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void work_DoWork(object sender, DoWorkEventArgs e) {
             try {
                 lock (IsBusy) {
-                    Stock.StockData StockContext = new Stock.StockData();
-                    string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
-                    ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
-                    string Url = configmanage.GetValue(Default.YahooStock);
-                    StockContext.GetOptionEveryDay(Url);
+                    DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,8,44,40);
+                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 46 , 0);
+                    while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0)
+                    {
+                        Stock.StockData StockContext = new Stock.StockData();
+                        string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
+                        ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
+                        string Url = configmanage.GetValue(Default.YahooStock);
+                        StockContext.GetOptionEveryDay(Url);
+                        Thread.Sleep(5000);
+                    }
                 }
             }
             catch (Exception ex) {
@@ -267,19 +278,16 @@ namespace StandredImplement
         void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
         }
 
-        private static object IsBusy = new object();
+        private static object IsBusy = new object();               
 
         /// <summary>執行trigger</summary>
         /// 20170202 修正這邊單純執行，將時間判斷交給Object    modified by Dick 
         /// <param name="pCurrentTime"></param>
         public override void Execute(string pCurrentTime) {
             try {
-                string[] sp = pCurrentTime.Split(':');
-                if (Convert.ToInt32(sp[2]) % 20 == 0) {
-                    if (!_work.IsBusy) {
-                        _work.RunWorkerAsync();
-                    }           
-                }
+                if (!_work.IsBusy) {
+                    _work.RunWorkerAsync();
+                }   
             }
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);

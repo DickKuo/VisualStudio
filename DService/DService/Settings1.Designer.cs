@@ -347,5 +347,30 @@ namespace DService {
                 this["YahooStock"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Honda,Piaggio,Piagio,Nouvo,Yamaha,Vespa,Suzuki,Wave,Spacy,APRILIA,BMW,KAWASAKI,KT" +
+            "M,INDIAN,TRIUMPH,BENELLI")]
+        public string Brand {
+            get {
+                return ((string)(this["Brand"]));
+            }
+            set {
+                this["Brand"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MotorPostAddress {
+            get {
+                return ((string)(this["MotorPostAddress"]));
+            }
+            set {
+                this["MotorPostAddress"] = value;
+            }
+        }
     }
 }

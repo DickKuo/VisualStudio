@@ -83,5 +83,11 @@
     <Setting Name="YahooStock" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&amp;opmr=optionpart&amp;opcm=WTXO&amp;opym=</Value>
     </Setting>
+    <Setting Name="Brand" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Honda,Piaggio,Piagio,Nouvo,Yamaha,Vespa,Suzuki,Wave,Spacy,APRILIA,BMW,KAWASAKI,KTM,INDIAN,TRIUMPH,BENELLI</Value>
+    </Setting>
+    <Setting Name="MotorPostAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
