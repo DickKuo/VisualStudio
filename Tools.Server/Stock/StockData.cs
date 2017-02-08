@@ -35,6 +35,7 @@ namespace Stock {
             public const string GetMaxNumberOfContracts = "GetMaxNumberOfContracts";
             public const string GetMaxVolume = "GetMaxVolume";
             public const string GetWeighted = "GetWeighted";
+            public const string AddWeekPoint = "AddWeekPoint";
         }
 
         private class SPParameter {
@@ -54,6 +55,7 @@ namespace Stock {
             public const string NumberOfContracts = "NumberOfContracts";
             public const string DueMonth = "DueMonth";
             public const string Today = "Today";
+            public const string StopPrice = "StopPrice";
         }
 
         private class OptionHistory {
@@ -541,6 +543,24 @@ namespace Stock {
             }
         }
 
+        /// <summary>每周操作紀錄</summary>
+        /// 20170208 add by Dick 
+        /// <param name="_WeekPoint"></param>
+        public void AddWeekPoint(WeekPoint _WeekPoint) {
+            try {
+                USP.AddParameter(WeightedHistory.TradeDate, _WeekPoint.TradeDate);
+                USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
+                USP.AddParameter(SPParameter.Contract, _WeekPoint.Contract);
+                USP.AddParameter(WeightedHistory.Price, _WeekPoint.Price);
+                USP.AddParameter(SPParameter.Volume, _WeekPoint.Volume);
+                USP.AddParameter(SPParameter.StopPrice, _WeekPoint.StopPirce);
+                USP.ExeProcedureHasResult(SP.AddWeekPoint);
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+        }
+
         /// <summary>儲存大盤歷史資料</summary>
         public void SaveWeighted(Weighted _Weighted) {
             try {
@@ -569,7 +589,7 @@ namespace Stock {
             if (dt != null && dt.Rows.Count > CommTool.BaseConst.MinItems) {
                 DataRow Row = dt.Rows[CommTool.BaseConst.ArrayFirstItem];
                 PropertyInfo[] infos = typeof(Weighted).GetProperties();
-                foreach (PropertyInfo info in infos) {                   
+                foreach (PropertyInfo info in infos) {
                     _Weighted.GetType().GetProperty(info.Name).SetValue(_Weighted, Row[info.Name], null);
                 }
                 return _Weighted;
@@ -979,6 +999,14 @@ namespace Stock {
                                     if (_Weighted != null) {
                                         StopPrice = this.CalculateStopPrice(Convert.ToDecimal(dt.Rows[0][0]), dt.Rows[0][1].ToString(), _Weighted.Futures);
                                     }
+                                    WeekPoint _WeekPoint = new WeekPoint();
+                                    _WeekPoint.OP = OP;
+                                    _WeekPoint.TradeDate = DateTime.Now;
+                                    _WeekPoint.Price = dt.Rows[0][0].ToString();
+                                    _WeekPoint.Contract = dt.Rows[0][1].ToString();
+                                    _WeekPoint.Volume = dt.Rows[0][2].ToString();
+                                    _WeekPoint.StopPirce = StopPrice.ToString();
+                                    AddWeekPoint(_WeekPoint);
                                     SB.AppendLine(string.Format("方向:{0} ,   價格:{1}  ,   契約:{2}  ,   交易量:{3} ,   最大未平昌量:{4}  ,   建議停損價格:{5} ", OP, dt.Rows[0][0], dt.Rows[0][1], dt.Rows[0][2], dt.Rows[0][4], StopPrice));
                                 }
                             }

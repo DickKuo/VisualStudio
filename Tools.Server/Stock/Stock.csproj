@@ -68,6 +68,7 @@
     <Compile Include="Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockData.cs" />
+    <Compile Include="WeekPoint.cs" />
     <Compile Include="Weighted.cs" />
   </ItemGroup>
   <ItemGroup>
