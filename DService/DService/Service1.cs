@@ -28,6 +28,8 @@ namespace DService
             public const string Version = "Version";
             public const string ShortTimeFormat = "ShortTimeFormat";
             public const string XML = ".xml";
+            public const string UpDateGradPath = "UpDateGradPath";
+            public const string ServerBakPath = "ServerBakPath";
         }
 
         private TriggerService server = null;
@@ -69,7 +71,7 @@ namespace DService
             configmanage = new ConfigManager(configiPath, "DService");
             if (Convert.ToBoolean(configmanage.GetValue("IsAutoUpdate"))) {
                 ToolLog.Log("服務啟動更新開始...");
-                UpdateDll(Settings1.Default.UpDateGradPath);
+                UpdateDll(configmanage.GetValue(Default.UpDateGradPath));
                 ToolLog.Log("服務啟動更新結束...");
                 time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
                 time.Interval = Default.Interval;
@@ -117,17 +119,23 @@ namespace DService
         }
 
         /// <summary>20141219 add by Dick for 更新DLL</summary>
+        /// 20170210 修改讓就算一個檔案無法搬移其他檔案還是可以正常運作 modified by Dick
         /// <param name="UpdatePath"></param>
         public virtual void UpdateDll(string UpdatePath) {
-            try {
-                DirectoryInfo LocalDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-                List<string> LocalFileList = new List<string>();
-                foreach (FileInfo FiInfo in LocalDir.GetFiles()) {
-                    LocalFileList.Add(FiInfo.Name);
-                }
-                DirectoryInfo RemoveDir = new DirectoryInfo(UpdatePath);
-                foreach (FileInfo FiInfo in RemoveDir.GetFiles()) {
+            DirectoryInfo LocalDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
+            configmanage = new ConfigManager(configiPath, "DService");
+            List<string> LocalFileList = new List<string>();
+            foreach (FileInfo FiInfo in LocalDir.GetFiles()) {
+                LocalFileList.Add(FiInfo.Name);
+            }
+            DirectoryInfo RemoveDir = new DirectoryInfo(UpdatePath);
+            foreach (FileInfo FiInfo in RemoveDir.GetFiles()) {
+                try {
                     if (FiInfo.Name.Equals("FileTool.dll")) {
+                        continue;
+                    }
+                    if (!FiInfo.Extension.Equals(".dll")) {
                         continue;
                     }
                     if (!LocalFileList.Contains(FiInfo.Name)) {
@@ -158,20 +166,20 @@ namespace DService
                         else {
                             FileVersionInfo SourceFile = FileVersionInfo.GetVersionInfo(FiInfo.FullName); //遠端檔案
                             FileVersionInfo Info = FileVersionInfo.GetVersionInfo(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + FiInfo.Name); //本地檔案
+                            string ServerBakPath = configmanage.GetValue(Default.ServerBakPath) + Path.DirectorySeparatorChar + FiInfo.Name;
                             if (SourceFile.FileVersion != null) {
                                 if (!SourceFile.FileVersion.Equals(Info.FileVersion)) {
+                                    File.Copy(Info.FileName, ServerBakPath, true);//先備份
                                     File.Copy(SourceFile.FileName, Info.FileName, true);
                                 }
                             }
                         }
                     }
                 }
-            }
-            catch (Exception ex) {
-                ToolLog.Log(ex.Message);
+                catch (Exception ex) {
+                    ToolLog.Log(ex);
+                }
             }
         }
-
-
     }
 }

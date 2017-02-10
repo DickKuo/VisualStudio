@@ -43,7 +43,14 @@ namespace StandredImplement
     //    /// <param name="pCurrentTime"></param>
     //    public override void Execute(string pCurrentTime)
     //    {
-    //        //throw new NotImplementedException();
+            //try {
+            //    if (!_work.IsBusy) {
+            //        _work.RunWorkerAsync();
+            //    }   
+            //}
+            //catch (Exception ex) {
+            //    CommTool.ToolLog.Log(ex);
+            //}
     //    }
     //}
     #endregion
@@ -296,5 +303,45 @@ namespace StandredImplement
     }
     #endregion
 
+    /// <summary> 20170208 抓取摩托車資訊 </summary>
+    public class MotorTrigger : AutoTrigger {
+        BackgroundWorker _work;
+        private static object IsBusy = new object();      
+        public MotorTrigger() {
+            _work = new BackgroundWorker();
+            _work.DoWork += new DoWorkEventHandler(work_DoWork);
+            _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
+        }
 
+        void work_DoWork(object sender, DoWorkEventArgs e) {
+            try {
+                lock (IsBusy) {
+                    WebInfo.MotorData _MotorDB = new MotorData();
+                    _MotorDB.GetMotorData();                                   
+                }
+            }
+            catch (Exception ex) {
+                ToolLog.Log(ex.Message);
+            }
+        }
+
+        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+
+        }
+
+        /// <summary>
+        /// 執行trigger 
+        /// </summary>
+        /// <param name="pCurrentTime"></param>
+        public override void Execute(string pCurrentTime) {
+            try {
+                if (!_work.IsBusy) {
+                    _work.RunWorkerAsync();
+                }
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+        }
+    }
 }

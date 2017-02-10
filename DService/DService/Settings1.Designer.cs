@@ -350,26 +350,25 @@ namespace DService {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Honda,Piaggio,Piagio,Nouvo,Yamaha,Vespa,Suzuki,Wave,Spacy,APRILIA,BMW,KAWASAKI,KT" +
-            "M,INDIAN,TRIUMPH,BENELLI")]
-        public string Brand {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://5561.16mb.com/index.php/api/addData")]
+        public string MotroPostAddress {
             get {
-                return ((string)(this["Brand"]));
+                return ((string)(this["MotroPostAddress"]));
             }
             set {
-                this["Brand"] = value;
+                this["MotroPostAddress"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string MotorPostAddress {
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Dropbox\\ServserBak")]
+        public string ServerBakPath {
             get {
-                return ((string)(this["MotorPostAddress"]));
+                return ((string)(this["ServerBakPath"]));
             }
             set {
-                this["MotorPostAddress"] = value;
+                this["ServerBakPath"] = value;
             }
         }
     }
