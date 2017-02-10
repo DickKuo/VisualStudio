@@ -25,7 +25,7 @@ namespace WebInfo
             public const int FirstItem = 0;
             public const string Post = "Post";
             public const string Get = "Get";
-            public const string ContentType = "text/xml; encoding='utf-8'";
+            public const string ContentType = "application/x-www-form-urlencoded";  //   "text/xml; encoding='utf-8'"
             public const string UTF8 = "utf-8";
             public const string PostMessage = "Post Start";
             public const string JsonKey = "json";
@@ -51,7 +51,7 @@ namespace WebInfo
         /// <param name="Url"></param>
         /// <returns></returns>
         public string HttpPostMethod(string Data, string Url) {
-            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Data);
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Data);
             var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
             request.Method = Default.Post;
             request.ContentType = Default.ContentType;
@@ -127,6 +127,7 @@ namespace WebInfo
         
         /// <summary>Post功能</summary>
         /// 20160909 加入紀錄POST的JSON資料 By Dick 
+        /// 20170210 修改統一的POST方法 modified by Dick
         /// <param name="Address">網址</param>
         /// <param name="SiteInfoList">文章列</param>
         /// <returns></returns>
@@ -145,29 +146,13 @@ namespace WebInfo
                     Data.Title = info.Title;
                     Data.Guid = info.Address.Replace(Default.ResourceAddress, string.Empty).Replace(Default.HTML, string.Empty);
                     string strJson = string.Format(Default.JSonStringFormat, Default.JsonKey, JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented));
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Address);
-                    request.ContentType = "application/x-www-form-urlencoded";
-                    request.Method = Default.Post;
-                    byte[] byteArray = Encoding.UTF8.GetBytes(strJson);
-                    request.ContentLength = byteArray.Length;
-                    using (Stream dataStream = request.GetRequestStream()) {
-                        dataStream.Write(byteArray, Default.Zero, byteArray.Length);
-                    }
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse()) {
-                        Stream receiveStream = response.GetResponseStream();
-                        Encoding encode = System.Text.Encoding.GetEncoding(Default.UTF8);
-                        StreamReader readStream = new StreamReader(receiveStream, encode);
-                        length = response.ContentLength;
-                        string st = readStream.ReadToEnd();
-                        if (st.IndexOf("Dis") != -1) {
-                            DateTime date = DateTime.Now;
-                        }
-                    }
                     ToolLog.Record(strJson);
+                    string PostResult = this.HttpPostMethod(strJson, Address);
+                    length = PostResult.Length;
                 }
             }
             catch (WebException ex) {
-                ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);
+                ToolLog.Log(ex);
                 length = 8055;
             }
             return length;
@@ -193,7 +178,7 @@ namespace WebInfo
                 ToolLog.Record(strJson);
             }
             catch (Exception ex) {
-                ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);  
+                ToolLog.Log(ex);  
             }
         }
 

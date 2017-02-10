@@ -144,6 +144,7 @@ namespace CommTool
                 TempPath = ToolPath + Path.DirectorySeparatorChar + dt.ToString(BaseConst.DateFormat) + Default.ErrorFile;
                 using (StreamWriter sw2 = new StreamWriter(TempPath, true)) {
                     ErrorMessage.AppendFormat(Default.MessageFormat, dt.ToString(BaseConst.TimeFormat), typeconvert(type), str);
+                    sw2.Write(ErrorMessage.ToString());
                     sw2.Close();
                     sw2.Dispose();
                 }

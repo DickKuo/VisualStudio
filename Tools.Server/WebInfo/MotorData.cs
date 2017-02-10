@@ -1,26 +1,36 @@
 ﻿using CommTool;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace WebInfo {
     public class MotorData {
 
         private List<string> Brand = new List<string>();
+        private List<string> Modles = new List<string>();
 
         SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
 
         private class Default {
             public const string Brand = "Brand";
             public const string MotorPostAddress = "MotorPostAddress";
+            public const string JsonKey = "json";
+            public const string JSonStringFormat = "{0}={1}";
+
         }
 
         private class SP {
             public const string AddMotor = "AddMotor";
+            public const string GetMotorModle = "GetMotorModle";
+            public const string GetMotorBrands = "GetMotorBrands";
+            public const string AddMotorModle = "AddMotorModle";
+            public const string AddMotorBrands = "AddMotorBrands";
         }
 
         private class SPParameter {
@@ -36,23 +46,26 @@ namespace WebInfo {
             public const string Brand = "Brand";
             public const string Model = "Model";
             public const string Remark = "Remark";
+            public const string ModleName = "ModleName";
         }
 
         /// <summary>抓取所有網站的資料</summary>
         /// 20170207 addd by Dick
         public void GetMotorData() {
-            string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, BaseConst.DServiceConfig);
-            ConfigManager configmanage = new ConfigManager(configiPath, BaseConst.DServiceConfig);
-            string Brands = configmanage.GetValue(Default.Brand);
-            if (string.IsNullOrEmpty(Brands)) {
-                Brands = "Honda,Piaggio,Piagio,Nouvo,Yamaha,Vespa,Suzuki,Wave,Spacy,APRILIA,BMW,KAWASAKI,KTM,INDIAN,TRIUMPH,BENELLI";
+            DataTable BrandDT = USP.ExeProcedureGetDataTable(SP.GetMotorBrands);
+            if (BrandDT != null && BrandDT.Rows.Count > 0) {
+                foreach (DataRow dr in BrandDT.Rows) {
+                    Brand.Add(dr[1].ToString());
+                }
             }
-            if (!string.IsNullOrEmpty(Brands)) {
-                string[] Array = Brands.Split(',');
-                Brand.AddRange(Array);
+            DataTable dt = USP.ExeProcedureGetDataTable(SP.GetMotorModle);
+            if (dt != null && dt.Rows.Count > 0) {
+                foreach (DataRow dr in dt.Rows) {
+                    Modles.Add(dr[1].ToString());
+                }
             }
-            Getmuaban();
             Getwebike();
+            Getmuaban();
             Getrongbay();
         }
 
@@ -107,6 +120,9 @@ namespace WebInfo {
                                                 GetBrand(_Motor);
                                                 GetYears(_Motor);
                                             }
+                                            if (string.IsNullOrEmpty(_Motor.Model)) {
+                                                GetModle(_Motor);
+                                            }
                                             ResultList.Add(_Motor);
                                             if (IsPostAndAdd) {
                                                 PostAndAddMotor(_Motor);
@@ -156,13 +172,7 @@ namespace WebInfo {
                                     }
                                     GetBrand(_Motor);
                                     GetYears(_Motor);
-
-                                    //if (_Motor.Url.IndexOf("-id") != -1) {
-                                    //    int Leng = _Motor.Url.IndexOf("-id");
-                                    //    _Motor.Key = _Motor.Url.Substring(Leng + 3, _Motor.Url.Length - 1 - Leng - 3);
-                                    //}
                                     _Motor.Key = "muaban";
-
                                     HtmlNodeCollection Context = Web.GetWebHtmlDocumentNodeCollection(_Motor.Url, "//div[@id='dvContent']", Encoding.UTF8);
                                     if (Context != null) {
                                         var ContextNodes = Context[0].SelectNodes("//div[@class='ct-body overflow clearfix']");
@@ -186,6 +196,10 @@ namespace WebInfo {
                                             }
                                             _Motor.Img = _Motor.Img.Substring(1, _Motor.Img.Length - 1);
                                         }
+                                    }
+                                    if(string.IsNullOrEmpty(_Motor.Model))
+                                    {
+                                        GetModle(_Motor);
                                     }
                                     ResultList.Add(_Motor);
                                     if (IsPostAndAdd) {
@@ -225,7 +239,7 @@ namespace WebInfo {
                                             NewMotor.Model = TempStr.Replace(TempArray[0], string.Empty).Replace(TempArray[TempArray.Length - 1], string.Empty).Trim();
                                             NewMotor.Brand = TempArray[0];
                                             NewMotor.Years = TempArray[TempArray.Length - 1];
-                                            NewMotor.Price = Child.ChildNodes[1].ChildNodes[5].InnerText.Trim().Replace("VNĐ", string.Empty);
+                                            NewMotor.Price = Child.ChildNodes[1].ChildNodes[5].InnerText.Trim().Replace("VNĐ", string.Empty).Replace(".",",");
                                             if (Child.ChildNodes[1].ChildNodes[7].InnerText.IndexOf("&") != -1) {
                                                 NewMotor.Location = Child.ChildNodes[1].ChildNodes[7].InnerText;
                                                 while ((NewMotor.Location.IndexOf("&") != -1)) {
@@ -253,6 +267,16 @@ namespace WebInfo {
                                                     NewMotor.Context = desc.Value;
                                                 }
                                             }
+                                        }
+                                        //if (string.IsNullOrEmpty(NewMotor.Model)) {
+                                        //    GetModle(NewMotor);
+                                        //}
+                                        if(!string.IsNullOrEmpty(NewMotor.Model))
+                                        {
+                                            AddMotorModle(NewMotor);
+                                        }
+                                        if (!string.IsNullOrEmpty(NewMotor.Brand)) {
+                                            AddMotorBrands(NewMotor);
                                         }
                                         ResultList.Add(NewMotor);
                                         if (IsPostAndAdd) {
@@ -299,6 +323,18 @@ namespace WebInfo {
             }
         }
 
+        /// <summary>取得型號</summary>
+        /// <param name="_Motor"></param>
+        private void GetModle(Motor _Motor) {
+            if (!string.IsNullOrEmpty(_Motor.Title)) {
+                foreach (string str in Modles) {
+                    if (_Motor.Title.ToUpper().IndexOf(str.ToUpper()) != -1) {
+                        _Motor.Model = str;
+                    }
+                }
+            }
+        }
+
         /// <summary>寫入DB紀錄</summary>
         /// 20170207 addd by Dick
         /// <param name="_Motor"></param>
@@ -324,20 +360,44 @@ namespace WebInfo {
             }           
         }
 
+        /// <summary>AddMotorModle</summary>
+        /// <param name="_Motor"></param>
+        public void AddMotorModle(Motor _Motor) {
+            if (!string.IsNullOrEmpty(_Motor.Model)) {
+                USP.AddParameter(SPParameter.ModleName, _Motor.Model);
+                USP.ExeProcedureNotQuery(SP.AddMotorModle);                   
+            }
+        }
+
+        /// <summary>AddMotorBrands</summary>
+        /// <param name="_Motor"></param>
+        public void AddMotorBrands(Motor _Motor) { 
+            if(!string.IsNullOrEmpty(_Motor.Brand))
+            {
+                USP.AddParameter(SPParameter.Brand, _Motor.Brand);
+                USP.ExeProcedureNotQuery(SP.AddMotorBrands);   
+            }
+        }
+
         /// <summary>寫入資料庫，並同步過去</summary>
         /// 20170207 addd by Dick
         /// <param name="_Motor"></param>
-        public void PostAndAddMotor(Motor _Motor) {            
-            int SN = AddMotor(_Motor);
+        public void PostAndAddMotor(Motor _Motor) {
+            if (_Motor.Price == "Li&ecirc;n hệ") {
+                _Motor.Price = "0";
+            }
+            int SN =  AddMotor(_Motor);
             if (SN != -1) {
-                _Motor.SN = SN;
-                string JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(_Motor);
+                _Motor.SN = SN;                 
+                string JsonData = "json="+ JsonConvert.SerializeObject(_Motor); 
                 CommTool.ToolLog.Log(JsonData);
-                string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, BaseConst.DServiceConfig);
-                ConfigManager configmanage = new ConfigManager(configiPath, BaseConst.DServiceConfig);
-                string PostAddress = configmanage.GetValue(Default.MotorPostAddress);
+                //string configiPath = Path.Combine(AppDom   ain.CurrentDomain.BaseDirectory, BaseConst.DServiceConfig);
+                //ConfigManager configmanage = new ConfigManager(configiPath, BaseConst.DServiceConfig);  "http://localhost:57445/LABForm/Individual";
+                //string PostAddress = configmanage.GetValue(Default.MotorPostAddress);"http://5561.16mb.com/index.php/api/addData";
+                string PostAddress = "http://5561.16mb.com/index.php/api/addData";
                 WebInfo _WebInfo = new WebInfo();
                 _WebInfo.HttpPostMethod(JsonData, PostAddress);
+                Thread.Sleep(3000);
             }
         }
 
