@@ -1,6 +1,5 @@
 ﻿using CommTool;
 using HtmlAgilityPack;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +13,6 @@ namespace WebInfo {
 
         private List<string> Brand = new List<string>();
         private List<string> Modles = new List<string>();
-
         SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
 
         private class Default {
@@ -173,7 +171,9 @@ namespace WebInfo {
                                     }
                                     GetBrand(_Motor);
                                     GetYears(_Motor);
+
                                     _Motor.Key = "muaban";
+
                                     HtmlNodeCollection Context = Web.GetWebHtmlDocumentNodeCollection(_Motor.Url, "//div[@id='dvContent']", Encoding.UTF8);
                                     if (Context != null) {
                                         var ContextNodes = Context[0].SelectNodes("//div[@class='ct-body overflow clearfix']");
@@ -198,8 +198,7 @@ namespace WebInfo {
                                             _Motor.Img = _Motor.Img.Substring(1, _Motor.Img.Length - 1);
                                         }
                                     }
-                                    if(string.IsNullOrEmpty(_Motor.Model))
-                                    {
+                                    if (string.IsNullOrEmpty(_Motor.Model)) {
                                         GetModle(_Motor);
                                     }
                                     ResultList.Add(_Motor);
@@ -240,7 +239,7 @@ namespace WebInfo {
                                             NewMotor.Model = TempStr.Replace(TempArray[0], string.Empty).Replace(TempArray[TempArray.Length - 1], string.Empty).Trim();
                                             NewMotor.Brand = TempArray[0];
                                             NewMotor.Years = TempArray[TempArray.Length - 1];
-                                            NewMotor.Price = Child.ChildNodes[1].ChildNodes[5].InnerText.Trim().Replace("VNĐ", string.Empty).Replace(".",",");
+                                            NewMotor.Price = Child.ChildNodes[1].ChildNodes[5].InnerText.Trim().Replace("VNĐ", string.Empty);
                                             if (Child.ChildNodes[1].ChildNodes[7].InnerText.IndexOf("&") != -1) {
                                                 NewMotor.Location = Child.ChildNodes[1].ChildNodes[7].InnerText;
                                                 while ((NewMotor.Location.IndexOf("&") != -1)) {
@@ -269,11 +268,7 @@ namespace WebInfo {
                                                 }
                                             }
                                         }
-                                        //if (string.IsNullOrEmpty(NewMotor.Model)) {
-                                        //    GetModle(NewMotor);
-                                        //}
-                                        if(!string.IsNullOrEmpty(NewMotor.Model))
-                                        {
+                                        if (!string.IsNullOrEmpty(NewMotor.Model)) {
                                             AddMotorModle(NewMotor);
                                         }
                                         if (!string.IsNullOrEmpty(NewMotor.Brand)) {
@@ -366,17 +361,16 @@ namespace WebInfo {
         public void AddMotorModle(Motor _Motor) {
             if (!string.IsNullOrEmpty(_Motor.Model)) {
                 USP.AddParameter(SPParameter.ModleName, _Motor.Model);
-                USP.ExeProcedureNotQuery(SP.AddMotorModle);                   
+                USP.ExeProcedureNotQuery(SP.AddMotorModle);
             }
         }
 
         /// <summary>AddMotorBrands</summary>
         /// <param name="_Motor"></param>
-        public void AddMotorBrands(Motor _Motor) { 
-            if(!string.IsNullOrEmpty(_Motor.Brand))
-            {
+        public void AddMotorBrands(Motor _Motor) {
+            if (!string.IsNullOrEmpty(_Motor.Brand)) {
                 USP.AddParameter(SPParameter.Brand, _Motor.Brand);
-                USP.ExeProcedureNotQuery(SP.AddMotorBrands);   
+                USP.ExeProcedureNotQuery(SP.AddMotorBrands);
             }
         }
 
@@ -387,10 +381,10 @@ namespace WebInfo {
             if (_Motor.Price == "Li&ecirc;n hệ") {
                 _Motor.Price = "0";
             }
-            int SN =  AddMotor(_Motor);
+            int SN = AddMotor(_Motor);
             if (SN != -1) {
-                _Motor.SN = SN;                 
-                string JsonData = "json="+ JsonConvert.SerializeObject(_Motor); 
+                _Motor.SN = SN;
+                string JsonData = Newtonsoft.Json.JsonConvert.SerializeObject(_Motor);
                 CommTool.ToolLog.Log(JsonData);
                 string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
                 ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);

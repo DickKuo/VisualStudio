@@ -25,7 +25,7 @@ namespace WebInfo
             public const int FirstItem = 0;
             public const string Post = "Post";
             public const string Get = "Get";
-            public const string ContentType = "application/x-www-form-urlencoded";  //   "text/xml; encoding='utf-8'"
+            public const string ContentType = "application/x-www-form-urlencoded";
             public const string UTF8 = "utf-8";
             public const string PostMessage = "Post Start";
             public const string JsonKey = "json";
@@ -127,7 +127,6 @@ namespace WebInfo
         
         /// <summary>Post功能</summary>
         /// 20160909 加入紀錄POST的JSON資料 By Dick 
-        /// 20170210 修改統一的POST方法 modified by Dick
         /// <param name="Address">網址</param>
         /// <param name="SiteInfoList">文章列</param>
         /// <returns></returns>
@@ -146,13 +145,12 @@ namespace WebInfo
                     Data.Title = info.Title;
                     Data.Guid = info.Address.Replace(Default.ResourceAddress, string.Empty).Replace(Default.HTML, string.Empty);
                     string strJson = string.Format(Default.JSonStringFormat, Default.JsonKey, JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented));
+                    string response = this.HttpPostMethod(strJson, Address);
                     ToolLog.Record(strJson);
-                    string PostResult = this.HttpPostMethod(strJson, Address);
-                    length = PostResult.Length;
                 }
             }
             catch (WebException ex) {
-                ToolLog.Log(ex);
+                ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);
                 length = 8055;
             }
             return length;
@@ -178,7 +176,7 @@ namespace WebInfo
                 ToolLog.Record(strJson);
             }
             catch (Exception ex) {
-                ToolLog.Log(ex);  
+                ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);  
             }
         }
 
