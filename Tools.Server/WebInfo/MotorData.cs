@@ -22,7 +22,8 @@ namespace WebInfo {
             public const string MotorPostAddress = "MotorPostAddress";
             public const string JsonKey = "json";
             public const string JSonStringFormat = "{0}={1}";
-
+            public const string DServiceConfig = "DService.exe.config";
+            public const string DService = "DService";
         }
 
         private class SP {
@@ -391,13 +392,12 @@ namespace WebInfo {
                 _Motor.SN = SN;                 
                 string JsonData = "json="+ JsonConvert.SerializeObject(_Motor); 
                 CommTool.ToolLog.Log(JsonData);
-                //string configiPath = Path.Combine(AppDom   ain.CurrentDomain.BaseDirectory, BaseConst.DServiceConfig);
-                //ConfigManager configmanage = new ConfigManager(configiPath, BaseConst.DServiceConfig);  "http://localhost:57445/LABForm/Individual";
-                //string PostAddress = configmanage.GetValue(Default.MotorPostAddress);"http://5561.16mb.com/index.php/api/addData";
-                string PostAddress = "http://5561.16mb.com/index.php/api/addData";
+                string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
+                ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
+                string PostAddress = configmanage.GetValue(Default.MotorPostAddress);                 
                 WebInfo _WebInfo = new WebInfo();
                 _WebInfo.HttpPostMethod(JsonData, PostAddress);
-                Thread.Sleep(3000);
+                Thread.Sleep(5000);
             }
         }
 
