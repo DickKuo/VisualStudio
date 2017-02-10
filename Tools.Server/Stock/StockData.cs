@@ -307,7 +307,7 @@ namespace Stock {
             string Message = "NotTradeTime";
             if (_Calendar.IsWorkDay) {
                 TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 45, 0));
-                TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 0));
+                TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45,15));
                 if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
                     try {
                         List<Option> ListOption = new List<Option>();
@@ -429,35 +429,41 @@ namespace Stock {
         
         /// <summary>取得大盤價格走勢</summary>
         /// 20170203 抓取大盤走勢的功能，同期貨的一起抓  add by Dick 
+        /// 20170209 修改TradeDate改成當下時間 modified by Dick
         /// <param name="Url"></param>
         /// <returns></returns>
         private Weighted GetWeighted(HtmlAgilityPack.HtmlDocument Doc) {
-            Weighted _Weighted =null;
-            HtmlNode Tr = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[1]/tbody[1]/tr[1]");
-            HtmlNode NodeWeighted = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[2]/tbody[1]/tr[1]");
-            HtmlNode NearMonth = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[2]/tbody[1]/tr[2]");
-            if (Tr != null) {
-                try {
-                    _Weighted = new Weighted();
-                    int Start = Tr.ChildNodes[3].InnerText.IndexOf("（");
-                    int End = Tr.ChildNodes[3].InnerText.IndexOf("）");
-                    _Weighted.Price = decimal.Parse(Tr.ChildNodes[3].InnerText.Substring(0, Start));
-                    _Weighted.Change = decimal.Parse(Tr.ChildNodes[3].InnerText.Trim().Substring(Start + 1, End - Start - 1));
-                    _Weighted.HighestPrice = decimal.Parse(Tr.ChildNodes[7].InnerText);
-                    _Weighted.LowestPrice = decimal.Parse(Tr.ChildNodes[11].InnerText);
-                    _Weighted.Volume = Tr.ChildNodes[15].InnerText.Trim().Replace("（億）", string.Empty).Replace("\t", string.Empty); //過濾掉不必要的字元
-                    if (NodeWeighted != null) {
-                        _Weighted.Futures = decimal.Parse(NearMonth.ChildNodes[3].InnerText);
-                        _Weighted.TradeDate = DateTime.Parse(NearMonth.ChildNodes[27].InnerText);
+            DateTime TimeStamp = DateTime.Now;
+            Weighted _Weighted = null;
+            TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 9, 0, 0));
+            TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 15));
+            if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
+                HtmlNode Tr = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[1]/tbody[1]/tr[1]");
+                HtmlNode NodeWeighted = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[2]/tbody[1]/tr[1]");
+                HtmlNode NearMonth = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[2]/tbody[1]/tr[2]");
+                if (Tr != null) {
+                    try {
+                        _Weighted = new Weighted();
+                        int Start = Tr.ChildNodes[3].InnerText.IndexOf("（");
+                        int End = Tr.ChildNodes[3].InnerText.IndexOf("）");
+                        _Weighted.Price = decimal.Parse(Tr.ChildNodes[3].InnerText.Substring(0, Start));
+                        _Weighted.Change = decimal.Parse(Tr.ChildNodes[3].InnerText.Trim().Substring(Start + 1, End - Start - 1));
+                        _Weighted.HighestPrice = decimal.Parse(Tr.ChildNodes[7].InnerText);
+                        _Weighted.LowestPrice = decimal.Parse(Tr.ChildNodes[11].InnerText);
+                        _Weighted.Volume = Tr.ChildNodes[15].InnerText.Trim().Replace("（億）", string.Empty).Replace("\t", string.Empty); //過濾掉不必要的字元
+                        if (NodeWeighted != null) {
+                            _Weighted.Futures = decimal.Parse(NearMonth.ChildNodes[3].InnerText);
+                            _Weighted.TradeDate = DateTime.Now;
+                        }
+                        if (NodeWeighted != null) {
+                            _Weighted.OpenPrice = decimal.Parse(NodeWeighted.ChildNodes[15].InnerText);
+                            _Weighted.ClosingPrice = decimal.Parse(NodeWeighted.ChildNodes[7].InnerText);
+                        }
                     }
-                    if (NodeWeighted != null) {
-                        _Weighted.OpenPrice = decimal.Parse(NodeWeighted.ChildNodes[15].InnerText);
-                        _Weighted.ClosingPrice = decimal.Parse(NodeWeighted.ChildNodes[7].InnerText);
+                    catch (Exception ex) {
+                        CommTool.ToolLog.Log(ex);
+                        _Weighted = null;
                     }
-                }
-                catch (Exception ex) {
-                    CommTool.ToolLog.Log(ex);
-                    _Weighted = null;
                 }
             }
             return _Weighted;
