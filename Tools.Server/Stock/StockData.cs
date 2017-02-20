@@ -311,10 +311,10 @@ namespace Stock {
                 if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
                     try {
                         List<Option> ListOption = new List<Option>();
-                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8,true)); //周選  
+                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8, true)); //周選  
                         ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8)); //近月選1                               
                         ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8)); //近月選2                              
-                        SaveOpionData(ListOption);                      
+                        SaveOpionData(ListOption);
                         Message = "GetOptionOK";
                         CommTool.ToolLog.Log(Message);
                         GetNumberOfContractsAndMaill();
@@ -1010,10 +1010,10 @@ namespace Stock {
                                     _WeekPoint.TradeDate = DateTime.Now;
                                     _WeekPoint.Price = dt.Rows[0][0].ToString();
                                     _WeekPoint.Contract = dt.Rows[0][1].ToString();
-                                    _WeekPoint.Volume = dt.Rows[0][2].ToString();
+                                    _WeekPoint.Volume = dt.Rows[0][2].ToString();                                    
                                     _WeekPoint.StopPirce = StopPrice.ToString();
                                     AddWeekPoint(_WeekPoint);
-                                    SB.AppendLine(string.Format("方向:{0} ,   價格:{1}  ,   契約:{2}  ,   交易量:{3} ,   最大未平昌量:{4}  ,   建議停損價格:{5} ", OP, dt.Rows[0][0], dt.Rows[0][1], dt.Rows[0][2], dt.Rows[0][4], StopPrice));
+                                    SB.AppendLine(string.Format("方向:{0} ,   價格:{1}  ,   契約:{2}  ,   交易量:{3} ,   最大未平昌量:{4}  ,   建議停損價格:{5} ", OP, _WeekPoint.Price, _WeekPoint.Contract, _WeekPoint.Volume, dt.Rows[0][4], StopPrice));
                                 }
                             }
                             CommTool.MailData MailDB = new CommTool.MailData();
