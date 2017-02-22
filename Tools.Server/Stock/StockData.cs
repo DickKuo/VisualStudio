@@ -306,7 +306,7 @@ namespace Stock {
             Calendar _Calendar = CalendarDB.GetCalendar(TimeStamp);
             string Message = "NotTradeTime";
             if (_Calendar.IsWorkDay) {
-                TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 45, 0));
+                TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 44,59));
                 TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45,15));
                 if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
                     try {
@@ -435,7 +435,7 @@ namespace Stock {
         private Weighted GetWeighted(HtmlAgilityPack.HtmlDocument Doc) {
             DateTime TimeStamp = DateTime.Now;
             Weighted _Weighted = null;
-            TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 9, 0, 0));
+            TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 59, 59));
             TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 15));
             if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
                 HtmlNode Tr = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[1]/tbody[1]/tr[1]");
@@ -972,6 +972,7 @@ namespace Stock {
         
         /// <summary>每周三取得操作指標，並且發送Maill</summary>
         /// 20170208 add by Dick 收盤後抓取每周的操作並發送Maill
+        /// 20170222 modified by Dick 修正訊息資料發送錯誤
         public void GetNumberOfContractsAndMaill() {
             try {
                 if (DateTime.Now.DayOfWeek.ToString() == CommTool.BaseConst.Wednesday) {
@@ -1010,10 +1011,10 @@ namespace Stock {
                                     _WeekPoint.TradeDate = DateTime.Now;
                                     _WeekPoint.Price = dt.Rows[0][0].ToString();
                                     _WeekPoint.Contract = dt.Rows[0][1].ToString();
-                                    _WeekPoint.Volume = dt.Rows[0][2].ToString();                                    
+                                    _WeekPoint.Volume = dt.Rows[0][3].ToString();                                    
                                     _WeekPoint.StopPirce = StopPrice.ToString();
                                     AddWeekPoint(_WeekPoint);
-                                    SB.AppendLine(string.Format("方向:{0} ,   價格:{1}  ,   契約:{2}  ,   交易量:{3} ,   最大未平昌量:{4}  ,   建議停損價格:{5} ", OP, _WeekPoint.Price, _WeekPoint.Contract, _WeekPoint.Volume, dt.Rows[0][4], StopPrice));
+                                    SB.AppendLine(string.Format("方向:{0} ,   價格:{1}  ,   契約:{2}  ,   交易量:{3} ,   建議停損價格:{4}  ", OP, _WeekPoint.Price, _WeekPoint.Contract, _WeekPoint.Volume, StopPrice));
                                 }
                             }
                             CommTool.MailData MailDB = new CommTool.MailData();
