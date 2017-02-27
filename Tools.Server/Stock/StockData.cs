@@ -56,6 +56,7 @@ namespace Stock {
             public const string DueMonth = "DueMonth";
             public const string Today = "Today";
             public const string StopPrice = "StopPrice";
+            public const string BuyStopPrice = "BuyStopPrice";
         }
 
         private class OptionHistory {
@@ -551,6 +552,7 @@ namespace Stock {
 
         /// <summary>每周操作紀錄</summary>
         /// 20170208 add by Dick 
+        /// 20170227 add by Dick for 追加新欄位
         /// <param name="_WeekPoint"></param>
         public void AddWeekPoint(WeekPoint _WeekPoint) {
             try {
@@ -560,6 +562,8 @@ namespace Stock {
                 USP.AddParameter(WeightedHistory.Price, _WeekPoint.Price);
                 USP.AddParameter(SPParameter.Volume, _WeekPoint.Volume);
                 USP.AddParameter(SPParameter.StopPrice, _WeekPoint.StopPirce);
+                USP.AddParameter(SPParameter.DueMonth　, _WeekPoint.DueMonth);
+                USP.AddParameter(SPParameter.BuyStopPrice, _WeekPoint.BuyStopPrice);
                 USP.ExeProcedureHasResult(SP.AddWeekPoint);
             }
             catch (Exception ex) {
@@ -863,7 +867,7 @@ namespace Stock {
             CommTool.ToolLog.Log(string.Format("勝率:{0}%", (win * 100 / weekcount)));
         }
 
-        /// <summary>計算停損價格</summary>
+        /// <summary>計算Sell停損價格</summary>
         /// <param name="Price">點數</param>
         /// <param name="Contact"></param>
         /// <param name="ClosePrice"></param>
@@ -871,6 +875,14 @@ namespace Stock {
         private decimal CalculateStopPrice(decimal Price, string Contact, decimal ClosePrice) {
             decimal BasePrice =(Price * 50) + (17000 - (Convert.ToDecimal(Contact) - ClosePrice));
             return Price + ((BasePrice * decimal.Parse("0.1")) / 50);
+        }
+
+        /// <summary>計算Buy停損價格</summary>
+        /// 20170227 add by Dick
+        /// <param name="Price"></param>
+        /// <returns></returns>
+        private decimal CalculateBuyStopPrice(decimal Price) {
+            return Price * (decimal)0.8;
         }
         
         /// <summary>取得最大交易量的契約</summary>
@@ -973,6 +985,7 @@ namespace Stock {
         /// <summary>每周三取得操作指標，並且發送Maill</summary>
         /// 20170208 add by Dick 收盤後抓取每周的操作並發送Maill
         /// 20170222 modified by Dick 修正訊息資料發送錯誤
+        /// 20170227 modified by Dick 修正訊息錯誤，追加買方策略停損價格
         public void GetNumberOfContractsAndMaill() {
             try {
                 if (DateTime.Now.DayOfWeek.ToString() == CommTool.BaseConst.Wednesday) {
@@ -1013,8 +1026,10 @@ namespace Stock {
                                     _WeekPoint.Contract = dt.Rows[0][1].ToString();
                                     _WeekPoint.Volume = dt.Rows[0][3].ToString();                                    
                                     _WeekPoint.StopPirce = StopPrice.ToString();
+                                    _WeekPoint.BuyStopPrice = CalculateBuyStopPrice(StopPrice).ToString();
+                                    _WeekPoint.DueMonth = dt.Rows[0][5].ToString();
                                     AddWeekPoint(_WeekPoint);
-                                    SB.AppendLine(string.Format("方向:{0} ,   價格:{1}  ,   契約:{2}  ,   交易量:{3} ,   建議停損價格:{4}  ", OP, _WeekPoint.Price, _WeekPoint.Contract, _WeekPoint.Volume, StopPrice));
+                                    SB.AppendLine(string.Format("方向:{0} ,   價格:{1}  ,   契約:{2}  ,   交易量:{3} ,   建議停損價格:{4}  , 買方停損價:{5}  ", OP, _WeekPoint.Price, _WeekPoint.Contract, _WeekPoint.Volume, StopPrice, _WeekPoint.BuyStopPrice));
                                 }
                             }
                             CommTool.MailData MailDB = new CommTool.MailData();
