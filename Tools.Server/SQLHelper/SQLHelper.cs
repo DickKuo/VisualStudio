@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace SQLHelper {
     public static class SHelper {
@@ -324,6 +325,24 @@ namespace SQLHelper {
                 con.Dispose();
                 _OutParameter.Clear();
             }
+        }
+
+        /// <summary>將StoreProcedure資料撈出，並轉成物件</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="StoreProcedureName"></param>
+        /// <param name="Obj"></param>
+        /// <returns></returns>
+        public T ExeProcedureGetObject<T>(string StoreProcedureName,T Obj) {
+           DataTable dt =  this.ExeProcedureGetDataTable(StoreProcedureName);
+           if (dt != null && dt.Rows.Count > 0) {
+               foreach (PropertyInfo Info in Obj.GetType().GetProperties()) {
+                   try {
+                       Obj.GetType().GetProperty(Info.Name).SetValue(Obj, dt.Rows[0][Info.Name], null);
+                   }
+                   catch { }
+               }
+           }
+           return Obj;
         }
 
         /// <summary>執行預存回傳單一結果</summary>
