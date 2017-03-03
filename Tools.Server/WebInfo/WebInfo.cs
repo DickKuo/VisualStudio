@@ -50,23 +50,33 @@ namespace WebInfo
         /// <param name="Data"></param>
         /// <param name="Url"></param>
         /// <returns></returns>
-        public string HttpPostMethod(string Data, string Url) {
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Data);
-            var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
-            request.Method = Default.Post;
-            request.ContentType = Default.ContentType;
-            request.ContentLength = bytes.Length;
-            Stream requestStream = request.GetRequestStream();
-            requestStream.Write(bytes, Default.Zero, bytes.Length);
-            requestStream.Close();
-            HttpWebResponse response;
-            response = (HttpWebResponse)request.GetResponse();
-            string responseStr = string.Empty;
-            if (response.StatusCode == HttpStatusCode.OK) {
-                Stream responseStream = response.GetResponseStream();
-                responseStr = new StreamReader(responseStream).ReadToEnd();
+        public string HttpPostMethod(string Data, string Url ,bool IsSSL=false) {
+            try {
+                if (IsSSL) {
+                    ServicePointManager.ServerCertificateValidationCallback =
+                        delegate { return true; };
+                }
+                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Data);
+                var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
+                request.Method = Default.Post;
+                request.ContentType = Default.ContentType;                
+                request.ContentLength = bytes.Length;
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(bytes, Default.Zero, bytes.Length);
+                requestStream.Close();
+                HttpWebResponse response;
+                response = (HttpWebResponse)request.GetResponse();
+                string responseStr = string.Empty;
+                if (response.StatusCode == HttpStatusCode.OK) {
+                    Stream responseStream = response.GetResponseStream();
+                    responseStr = new StreamReader(responseStream).ReadToEnd();
+                }
+                return responseStr;
             }
-            return responseStr;
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+                return "Error";
+            }
         }
         
         /// <summary> 抓取網頁資訊</summary>
