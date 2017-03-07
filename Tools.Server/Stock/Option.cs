@@ -8,13 +8,13 @@ namespace Stock {
 
         public string OP { set; get; }
         
-        public double buy {set;get;}
+        public decimal Buy {set;get;}
 
-        public double sell { set; get; }
+        public decimal Sell { set; get; }
 
-        public double clinch { set; get; }
+        public decimal Clinch { set; get; }
 
-        public double Change { set; get; }
+        public decimal Change { set; get; }
 
         public string Time { set; get; }
 
