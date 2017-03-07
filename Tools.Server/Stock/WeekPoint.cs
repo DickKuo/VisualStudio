@@ -25,12 +25,15 @@ namespace Stock {
         public string Volume { set; get; }
 
         /// <summary>停損價格</summary>
-        public string StopPirce { set; get; }
+        public string StopPrice { set; get; }
 
         /// <summary>周</summary>
         public string DueMonth { set; get; }
 
         /// <summary>買方停損價</summary>
         public string BuyStopPrice { set; get; }
+
+        /// <summary>結算價格</summary>
+        public string ClosePrice { set; get; }
     }
 }

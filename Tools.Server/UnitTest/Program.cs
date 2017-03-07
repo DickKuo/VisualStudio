@@ -65,7 +65,7 @@ namespace UnitTest {
             //string end = Sr.ReadToEnd();
 
 
-            //WebInfo.WebInfo Web = new WebInfo.WebInfo(@"D:\Test\LogText");
+            WebInfo.WebInfo Web = new WebInfo.WebInfo(@"D:\Test\LogText");
 
             //string result = Web.GetStringResponse(@"http://www.taifex.com.tw/chinese/3/7_9.asp", Encoding.UTF8);
 
@@ -76,19 +76,16 @@ namespace UnitTest {
             //HtmlAgilityPack.HtmlNodeCollection anchors = _HtmlDocument.DocumentNode.SelectNodes(Default.ItemListTag);
             //string address = "http://118.99.187.60/wordpress/api_beauty.php";
 
-            //List<SiteInfo> SiteInfoList = new List<SiteInfo>();
 
-            //SiteInfo info = new SiteInfo();
-            //info.Address = "https://www.ptt.cc/bbs/Beauty/M.1470846108.A.25E.html";
-            //info.Author = "作者</span><span class='article-meta-value'>yoyonigo (呦呦二號)";
-            //info.Context = "<a href='http://i.imgur.com/gg4iZXS.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/gg4iZXS.jpg</a><div class='richcontent'><img src='//i.imgur.com/gg4iZXS.jpg' data-original='//i.imgur.com/gg4iZXS.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/OyPMdM3.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/OyPMdM3.jpg</a><div class='richcontent'><img src='//i.imgur.com/OyPMdM3.jpg' data-original='//i.imgur.com/OyPMdM3.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/U8gRYV4.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/U8gRYV4.jpg</a><div class='richcontent'><img src='//i.imgur.com/U8gRYV4.jpg' data-original='//i.imgur.com/U8gRYV4.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/zUlHueY.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/zUlHueY.jpg</a><div class='richcontent'><img src='//i.imgur.com/zUlHueY.jpg' data-original='//i.imgur.com/zUlHueY.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/zoPgrn3.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/zoPgrn3.jpg</a><div class='richcontent'><img src='//i.imgur.com/zoPgrn3.jpg' data-original='//i.imgur.com/zoPgrn3.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/mPqhI4L.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/mPqhI4L.jpg</a><div class='richcontent'><img src='//i.imgur.com/mPqhI4L.jpg' data-original='//i.imgur.com/mPqhI4L.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/Yzykl9T.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/Yzykl9T.jpg</a><div class='richcontent'><img src='//i.imgur.com/Yzykl9T.jpg' data-original='//i.imgur.com/Yzykl9T.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/GvkBkYs.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/GvkBkYs.jpg</a><div class='richcontent'><img src='//i.imgur.com/GvkBkYs.jpg' data-original='//i.imgur.com/GvkBkYs.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/9co2EDG.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/9co2EDG.jpg</a><div class='richcontent'><img src='//i.imgur.com/9co2EDG.jpg' data-original='//i.imgur.com/9co2EDG.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/gfdc2nN.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/gfdc2nN.jpg</a><div class='richcontent'><img src='//i.imgur.com/gfdc2nN.jpg' data-original='//i.imgur.com/gfdc2nN.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/UgoVQKu.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/UgoVQKu.jpg</a><div class='richcontent'><img src='//i.imgur.com/UgoVQKu.jpg' data-original='//i.imgur.com/UgoVQKu.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/3uxGapf.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/3uxGapf.jpg</a><div class='richcontent'><img src='//i.imgur.com/3uxGapf.jpg' data-original='//i.imgur.com/3uxGapf.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/Q4kWy06.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/Q4kWy06.jpg</a><div class='richcontent'><img src='//i.imgur.com/Q4kWy06.jpg' data-original='//i.imgur.com/Q4kWy06.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/tORruW0.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/tORruW0.jpg</a><div class='richcontent'><img src='//i.imgur.com/tORruW0.jpg' data-original='//i.imgur.com/tORruW0.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/zVrCjAh.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/zVrCjAh.jpg</a><div class='richcontent'><img src='//i.imgur.com/zVrCjAh.jpg' data-original='//i.imgur.com/zVrCjAh.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/VZzFC6p.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/VZzFC6p.jpg</a><div class='richcontent'><img src='//i.imgur.com/VZzFC6p.jpg' data-original='//i.imgur.com/VZzFC6p.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/FDWHOKA.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/FDWHOKA.jpg</a><div class='richcontent'><img src='//i.imgur.com/FDWHOKA.jpg' data-original='//i.imgur.com/FDWHOKA.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/2Bw4c3y.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/2Bw4c3y.jpg</a><div class='richcontent'><img src='//i.imgur.com/2Bw4c3y.jpg' data-original='//i.imgur.com/2Bw4c3y.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/JU6Y1Rm.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/JU6Y1Rm.jpg</a><div class='richcontent'><img src='//i.imgur.com/JU6Y1Rm.jpg' data-original='//i.imgur.com/JU6Y1Rm.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/UZqTnKi.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/UZqTnKi.jpg</a><div class='richcontent'><img src='//i.imgur.com/UZqTnKi.jpg' data-original='//i.imgur.com/UZqTnKi.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/TWUB1wl.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/TWUB1wl.jpg</a><div class='richcontent'><img src='//i.imgur.com/TWUB1wl.jpg' data-original='//i.imgur.com/TWUB1wl.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/abzORYR.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/abzORYR.jpg</a><div class='richcontent'><img src='//i.imgur.com/abzORYR.jpg' data-original='//i.imgur.com/abzORYR.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/Zm51EDw.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/Zm51EDw.jpg</a><div class='richcontent'><img src='//i.imgur.com/Zm51EDw.jpg' data-original='//i.imgur.com/Zm51EDw.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/DYEmKLl.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/DYEmKLl.jpg</a><div class='richcontent'><img src='//i.imgur.com/DYEmKLl.jpg' data-original='//i.imgur.com/DYEmKLl.jpg' class='lazy' alt='' /></div><a href='http://i.imgur.com/DM6sEBw.jpg' target='_blank' rel='nofollow'>http://i.imgur.com/DM6sEBw.jpg</a><div class='richcontent'><img src='//i.imgur.com/DM6sEBw.jpg' data-original='//i.imgur.com/DM6sEBw.jpg' class='lazy' alt='' /></div>";
-            //info.Title = "[正324234234234- 批踢踢實業坊";
-            ////info.PostDate = DateTime.Now;
-            //SiteInfoList.Add(info);
+            //Web.GetBueatyDirtory("https://www.ptt.cc/bbs/Beauty/M.1486780171.A.9C3.html", 0, "http://robertlan.16mb.com/api_beauty.php");
 
-            //Web.GetBueatyDirtory("https://www.ptt.cc/bbs/Beauty/M.1478850577.A.35F.html", 0, "http://robertlan.16mb.com/api_beauty.php");
+            Stock.StockData data = new StockData();
+            WeekPoint WP = new WeekPoint();
+            WP.DueMonth = "201703W2";
+            WP.OP = "call";
+            data.GetNumberOfContractsAndMaill();
 
-
+            Console.Read();
             //ToolLog.Log(Default.PostMessage + info.Title);
             //PostData Data = new PostData();
             //Data.Author = SiteInfoList[Default.MinItem].Author;
@@ -97,7 +94,18 @@ namespace UnitTest {
             //string strJson = string.Format( "json=" + JsonConvert.SerializeObject(info, Newtonsoft.Json.Formatting.Indented));
             ////string FullPath = Address +strJson;
 
+            //LineMessage Line = new LineMessage();
 
+            //Message msg = new Message();
+            //msg.type = "text";
+            //msg.text = "TryText";
+            //Line.to = "dick22707";
+            //Line.messages.Add(msg);
+
+
+
+
+            //Web.HttpPostMethod(Newtonsoft.Json.JsonConvert.SerializeObject(Line), "https://api.line.me/v2/bot/message/push");
             //string result = Web.GetStringResponse("https://www.ptt.cc/bbs/Beauty/M.1478850577.A.35F.html", Encoding.UTF8);
                         
             //Encoding myEncoding = Encoding.GetEncoding("gb2312");
@@ -115,47 +123,158 @@ namespace UnitTest {
             //Web.POST(address, SiteInfoList);
 
             //Web.BueatyPostContentByGetMothed(address, SiteInfoList);
+            Stock.CalendarData CalendarDB = new CalendarData();
+            //Stock.StockData data=new StockData();
+            for (int i = 14; i <= 19;i++ ) {
+                Calendar _Calendar = CalendarDB.GetCalendar(new DateTime(2017, 12, i));
+                _Calendar.Week = "201712";
+                _Calendar.NearMonth1 = "201801";
+                _Calendar.NearMonth2 = "201802";
+                CalendarDB.UpdateCalendar(_Calendar);
+            }
+            //data.UpdateWeekPointEndPrice("201703W2","call");
+             
 
-
+            //Stock.StockData stock = new Stock.StockData();
             //List<Option> OptionsList = new List<Option>();
-            Stock.StockData stock = new Stock.StockData();
+            //LineClient clinent = new LineMessagingAPISDK.LineClient("x9D+Uh67zOnuoqYZBXk4QsCuTLDURikSHVz0kN7XbbVCdbZKz1Rjb6qAuNbSckcpODTpWMOFLPZUyY7cpgpwC0TBCsgK0XeUS/fYSl4U9Fs9p2yKMlp2BapJNdQI97RAl1N1OHjDAX8yaxHyDj2iXwdB04t89/1O/w1cDnyilFU=");
+            //PushMessage PMessage = new LineMessagingAPISDK.Models.PushMessage();
+            //PMessage.To = "dick22707";
+
+            //TextMessage txMessage = new LineMessagingAPISDK.Models.TextMessage("Test");
+            //txMessage.Id = "dick22707";
+            //txMessage.Text = "Hello www";
+
+            //PMessage.Messages.Add(txMessage);
+
+            //clinent.PushAsync(PMessage);
+
+
+            //Web.HttpPostMethod("key=76e2db97-a330-4418-a6bf-f26072695969&id=dick22707&msg=test","https://isbaas.azurewebsites.net/api/LineWebHook");
+            //stock.GetOptionWeekWithStop(1,8,1);
+
+             //stock.GetNumberOfContractsAndMaill();
             //for (int i = 0; i <= 2; i++) {
             //    DateTime NowDate = DateTime.Now.AddMonths(i);
             //    List<Option> options = stock.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=" + NowDate.ToString("yyyyMM"), Encoding.UTF8);
-            //    OptionsList.AddRange(options);
+            //  
             //}
+
+            //List<Option> options = stock.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "201702", Encoding.UTF8);
+            //OptionsList.AddRange(options);
+
             //stock.SaveOpionData(OptionsList);
 
             //stock.SaveOptionHistroy(@"D:\Test\BBA63A05-4767-47BC-AE1F-B3380F71925C.csv");
 
-            //PropertyInfo[] infos = typeof(Stock.Weighted).GetProperties();
+            //PropertyInfo[] infos = typeof(Stock.HistoryOption).GetProperties();
             //DataTable dt = new DataTable();
             //foreach (PropertyInfo info in infos) {
             //    dt.Columns.Add(info.Name);
             //}
 
             //for (int i = 1; i <= 12; i++) {
-            //    dt = CommTool.Files.ReadCSV(string.Format(@"D:\Test\MI_5MINS_HIST100{0}.csv", i.ToString("00")), dt);
+            // dt = CommTool.Files.ReadCSV(string.Format(@"D:\Test\MI_5MINS_HIST100{0}.csv", i.ToString("00")), dt);
             //}
             //stock.SaveWeighted(dt);
 
-            stock.GetOptionWeek(1, 8);
+
+
+            //CommTool.MailData _MailData = new MailData();
+
+
+            //dt = CommTool.Files.ReadCSV(@"D:\Test\201612.csv", dt);
+
+            //stock.SaveOptionHistoryData(dt);
+
+            //WebInfo.MotorData Motor = new WebInfo.MotorData();
+            //Motor.GetMotorData();
+            //for (int i =23; i <= 28; i++) {
+            //DateTime Spa = new DateTime(2017, 2, 22);
+            //Calendar _Calendar = CalendarDB.GetCalendar(Spa);
+            //    //_Calendar.IsWorkDay = true;
+            //    _Calendar.Week = "201702W5";
+            //_Calendar.NearMonth1 = "201703W1";
+            //    _Calendar.NearMonth2 = "201704";
+
+            //    if (i == 22) {
+            //        _Calendar.Week = "201702W4";
+            //        _Calendar.NearMonth1 = "201702W5";
+            //        _Calendar.NearMonth2 = "201703";
+            //    }
+
+            //CalendarDB.UpdateCalendar(_Calendar);
+            //}
+            //stock.GetOptionEveryDay("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=");
+
+            //Weighted _Weighted = stock.GetWeightedDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=");
+            //stock.SaveWeighted(_Weighted);
+            //int week = 1;
+            //for (int i = 2; i <= 31; i++) {
+            //    DateTime Dat = new DateTime(2017, 3, i);
+            //    Calendar _Calendar = CalendarDB.GetCalendar(Dat);
+
+            //    switch (week)
+            //    {
+            //        case 1:
+            //        case 2:
+            //            _Calendar.Week = string.Format("{0}{1}W{2}", Dat.Year, Dat.Month,week);
+            //            _Calendar.NearMonth1 = string.Format("{0}{1}", Dat.Year, Dat.Month);
+            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
+            //            break;
+            //        case 4:
+            //        case 5:
+            //            _Calendar.Week = string.Format("{0}{1}W{2}", Dat.Year, Dat.Month,week);
+            //            _Calendar.NearMonth1 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
+            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(2).Year, Dat.AddMonths(2).Month);
+            //            break;
+            //    }                
+
+            //    if (week == 3) {
+            //        _Calendar.Week = string.Format("{0}{1}", Dat.Year, Dat.Month);
+            //        _Calendar.NearMonth1 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
+            //        _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(2).Year, Dat.AddMonths(2).Month);
+            //    }
+                
+
+            //    if (Dat.DayOfWeek.ToString() == "Wednesday") {
+            //        if (week == 1) {
+            //            _Calendar.NearMonth1 = string.Format("{0}{1}W2", Dat.Year, Dat.Month);
+            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
+            //        }
+            //        if (week == 3) {
+            //            _Calendar.NearMonth1 = string.Format("{0}{1}W4", Dat.Year, Dat.Month);
+            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
+            //        }
+            //        if (week == 4) {
+            //            _Calendar.NearMonth1 = string.Format("{0}{1}W5", Dat.Year, Dat.Month);
+            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
+            //        }
+            //        week++;
+            //    }
+            //        //_Calendar.Remark = "周選結算";
+
+
+            //    CalendarDB.UpdateCalendar(_Calendar);
+            //}
+
+
+            //stock.GetOptionWeekWithStop(1, 8, 1);
+            
             //Console.WriteLine("統計結束");
             //Console.ReadLine();
+
+
+            //for (int i = 1; i <= 12; i++) {
+            //    stock.SaveOpen_InterestHistory(string.Format(@"D:\Test\Ratios2016_{0}.csv",i.ToString("00")));
+            //} 
                          
             ////CommTool.Files.DownLoadFile("https://www.taifex.com.tw/3_2_3_getcontract.asp?date1=" + DateTime.Now.AddDays(-1).ToString("yyyy/MM/dd") + "&date2=" + DateTime.Now.ToString("yyyy/MM/dd") + "", @"D:\Test\TestDownLoad.csv");
             //object username = new object();
             //CommTool.ObjectUtility.ReadRegistry("UserName", ref username);
-            
-
-
+             
         }
-
-       
-
-
-       
-
+              
 
         /// <summary>取得網站的HtmlDocument</summary>
         /// <param name="ppweburl"></param>
@@ -171,6 +290,7 @@ namespace UnitTest {
         //    MyHttpWebRequest = null;
         //    return _HtmlDocument;
         //}
+
 
 
         private static void GetAnalysis(StringBuilder sb, string context, string resul) {
@@ -195,6 +315,8 @@ namespace UnitTest {
                 }
             }
         }
+
+
     }
 
     public class TestAddin : IServiceProviderAddin {
@@ -204,6 +326,20 @@ namespace UnitTest {
                 return _serviceEntries;
             }
         }
+    }
+
+    public class LineMessage {
+
+        public string to { set; get; }
+
+        public List<Message> messages = new List<Message>();
+    }
+
+
+    public class Message {
+       public string type { set; get; }
+
+       public string text { set; get; }
     }
 
 }

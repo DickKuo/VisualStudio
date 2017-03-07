@@ -9,6 +9,7 @@ using HtmlAgilityPack;
 using System.Reflection;
 namespace Stock {
     public class StockData {
+
         private class Default {
             public const string sqlconnection = "sqlconnection";
             public const int Second = 1000;
@@ -36,6 +37,9 @@ namespace Stock {
             public const string GetMaxVolume = "GetMaxVolume";
             public const string GetWeighted = "GetWeighted";
             public const string AddWeekPoint = "AddWeekPoint";
+            public const string GetWeekPointByDueMonthAndOP = "GetWeekPointByDueMonthAndOP";
+            public const string GetOptionByDueMonthAndOP = "GetOptionByDueMonthAndOP";
+            public const string UpdateWeekPoint = "UpdateWeekPoint";
         }
 
         private class SPParameter {
@@ -57,50 +61,32 @@ namespace Stock {
             public const string Today = "Today";
             public const string StopPrice = "StopPrice";
             public const string BuyStopPrice = "BuyStopPrice";
-        }
-
-        private class OptionHistory {
             public const string TradeDate = "TradeDate";
-            public const string DueMonth = "DueMonth";
             public const string Price = "Price";
-            public const string Option="Option";
+            public const string Option = "Option";
             public const string Opening_Price = "Opening_Price";
             public const string Highest = "Highest";
             public const string Lowest = "Lowest";
             public const string Closing = "Closing";
-            public const string Volume = "Volume";
             public const string Settlement = "Settlement";
-            public const string NumberOfContracts = "NumberOfContracts";
             public const string History_Highest = "History_Highest";
             public const string History_Lowest = "History_Lowest";
-            public const string Contract = "Contract";
             public const string GreatBuy = "GreatBuy";
             public const string GreatSell = "GreatSell";
             public const string Remark = "Remark";
-        }
-
-        private class WeightedHistory{
-            public const string TradeDate = "TradeDate";
-            public const string OpenPrice="OpenPrice";
-            public const string HighestPrice="HighestPrice";
-            public const string LowestPrice="LowestPrice";
-            public const string ClosingPrice="ClosingPrice";
-            public const string Price = "Price";
-            public const string Change = "Change";
+            public const string OpenPrice = "OpenPrice";
+            public const string HighestPrice = "HighestPrice";
+            public const string LowestPrice = "LowestPrice";
+            public const string ClosingPrice = "ClosingPrice";
             public const string Futures = "Futures";
-            public const string Remark="Remark";
-            public const string Volume = "Volume";
-        }
-
-        private class OpenInterest {
             public const string SN = "SN";
-            public const string TradeDate = "TradeDate";
             public const string PutVolume = "PutVolume";
             public const string CallVolume = "CallVolume";
             public const string Ratios = "Ratios";
             public const string PutOpenInterest = "PutOpenInterest";
             public const string CallOpenInterest = "CallOpenInterest";
             public const string OpenInterestRatios = "OpenInterestRatios";
+            public const string ClosePrice = "ClosePrice";
         }
 
         private string _stockNum;
@@ -123,6 +109,7 @@ namespace Stock {
         }
 
         #endregion
+
         SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
         
         //public StockData(string pStockNum) {
@@ -372,10 +359,10 @@ namespace Stock {
                                 Option Call = new Option();
                                 Call.OP = Default.Call;
                                 Call.DueMonth = Contract;
-                                Call.buy = Nodes[i].ChildNodes[1].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[1].InnerText);
-                                Call.sell = Nodes[i].ChildNodes[3].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[3].InnerText);
-                                Call.clinch = Nodes[i].ChildNodes[5].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[5].InnerText);
-                                Call.Change = Nodes[i].ChildNodes[7].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[7].InnerText);
+                                Call.Buy = Nodes[i].ChildNodes[1].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[1].InnerText);
+                                Call.Sell = Nodes[i].ChildNodes[3].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[3].InnerText);
+                                Call.Clinch = Nodes[i].ChildNodes[5].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[5].InnerText);
+                                Call.Change = Nodes[i].ChildNodes[7].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[7].InnerText);
                                 Call.NumberOfContracts = Nodes[i].ChildNodes[9].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[9].InnerText);
                                 Call.Volume = Nodes[i].ChildNodes[11].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[11].InnerText);
                                 Call.Time = Nodes[i].ChildNodes[13].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[13].InnerText).ToString(CommTool.BaseConst.TimeFormatComplete);
@@ -385,10 +372,10 @@ namespace Stock {
                                 Put.OP = Default.Put;
                                 Put.DueMonth = Contract;
                                 Put.Contract = Nodes[i].ChildNodes[15].InnerText.Trim();
-                                Put.buy = Nodes[i].ChildNodes[17].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[17].InnerText);
-                                Put.sell = Nodes[i].ChildNodes[19].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[19].InnerText);
-                                Put.clinch = Nodes[i].ChildNodes[21].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[21].InnerText);
-                                Put.Change = Nodes[i].ChildNodes[23].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDouble(Nodes[i].ChildNodes[23].InnerText);
+                                Put.Buy = Nodes[i].ChildNodes[17].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[17].InnerText);
+                                Put.Sell = Nodes[i].ChildNodes[19].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[19].InnerText);
+                                Put.Clinch = Nodes[i].ChildNodes[21].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[21].InnerText);
+                                Put.Change = Nodes[i].ChildNodes[23].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[23].InnerText);
                                 Put.NumberOfContracts = Nodes[i].ChildNodes[25].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[25].InnerText);
                                 Put.Volume = Nodes[i].ChildNodes[27].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[27].InnerText);
                                 Put.Time = Nodes[i].ChildNodes[29].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[29].InnerText).ToString(CommTool.BaseConst.TimeFormatComplete);
@@ -477,11 +464,11 @@ namespace Stock {
                 foreach (Option op in Options) {
                     if (op.Volume > 0) {
                         USP.AddParameter(SPParameter.OP, op.OP);
-                        USP.AddParameter(SPParameter.Buy, op.buy);
+                        USP.AddParameter(SPParameter.Buy, op.Buy);
                         USP.AddParameter(SPParameter.Change, op.Change);
-                        USP.AddParameter(SPParameter.Clinch, op.clinch);
+                        USP.AddParameter(SPParameter.Clinch, op.Clinch);
                         USP.AddParameter(SPParameter.Contract, op.Contract);               
-                        USP.AddParameter(SPParameter.Sell, op.sell);
+                        USP.AddParameter(SPParameter.Sell, op.Sell);
                         USP.AddParameter(SPParameter.Time, op.Time);
                         USP.AddParameter(SPParameter.DueMonth, op.DueMonth);
                         USP.AddParameter(SPParameter.NumberOfContracts, op.NumberOfContracts);
@@ -495,30 +482,45 @@ namespace Stock {
             }
         }
 
+        /// <summary>取得每周焦點</summary>
+        /// <param name="weekPoint"></param>
+        /// <returns></returns>
+        public WeekPoint GetWeekPointByDueMonthAndOP(WeekPoint weekPoint) {
+            try {
+                USP.AddParameter(SPParameter.OP, weekPoint.OP);
+                USP.AddParameter(SPParameter.DueMonth, weekPoint.DueMonth);
+                return USP.ExeProcedureGetObject(SP.GetWeekPointByDueMonthAndOP, weekPoint);
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+                return null;
+            }
+        }
+
         /// <summary>儲存選擇權交易歷史資訊</summary>
         /// <param name="dt"></param>
         public void SaveOptionHistoryData(DataTable dt) {
             try {
                 foreach (DataRow dr in dt.Rows) {
-                    decimal Temp = Convert.ToDecimal(dr[OptionHistory.Opening_Price]);
+                    decimal Temp = Convert.ToDecimal(dr[SPParameter.Opening_Price]);
                     if (Temp != 0) {
-                        USP.AddParameter(OptionHistory.TradeDate, dr[OptionHistory.TradeDate]);
-                        USP.AddParameter(OptionHistory.Contract, dr[OptionHistory.Contract]);
-                        USP.AddParameter(OptionHistory.DueMonth, dr[OptionHistory.DueMonth]);
-                        USP.AddParameter(OptionHistory.Price, dr[OptionHistory.Price]);
-                        USP.AddParameter(OptionHistory.Option, dr[OptionHistory.Option]);
-                        USP.AddParameter(OptionHistory.Opening_Price, dr[OptionHistory.Opening_Price]);
-                        USP.AddParameter(OptionHistory.Highest, dr[OptionHistory.Highest]);
-                        USP.AddParameter(OptionHistory.Lowest, dr[OptionHistory.Lowest]);
-                        USP.AddParameter(OptionHistory.Closing, dr[OptionHistory.Closing]);
-                        USP.AddParameter(OptionHistory.Volume, dr[OptionHistory.Volume]);
-                        USP.AddParameter(OptionHistory.Settlement, dr[OptionHistory.Settlement]);
-                        USP.AddParameter(OptionHistory.NumberOfContracts, dr[OptionHistory.NumberOfContracts]);
-                        USP.AddParameter(OptionHistory.GreatBuy, dr[OptionHistory.GreatBuy]);
-                        USP.AddParameter(OptionHistory.GreatSell, dr[OptionHistory.GreatSell]);
-                        USP.AddParameter(OptionHistory.History_Highest, dr[OptionHistory.History_Highest]);
-                        USP.AddParameter(OptionHistory.History_Lowest, dr[OptionHistory.History_Lowest]);
-                        USP.AddParameter(OptionHistory.Remark, dr[OptionHistory.Remark]);
+                        USP.AddParameter(SPParameter.TradeDate, dr[SPParameter.TradeDate]);
+                        USP.AddParameter(SPParameter.Contract, dr[SPParameter.Contract]);
+                        USP.AddParameter(SPParameter.DueMonth, dr[SPParameter.DueMonth]);
+                        USP.AddParameter(SPParameter.Price, dr[SPParameter.Price]);
+                        USP.AddParameter(SPParameter.Option, dr[SPParameter.Option]);
+                        USP.AddParameter(SPParameter.Opening_Price, dr[SPParameter.Opening_Price]);
+                        USP.AddParameter(SPParameter.Highest, dr[SPParameter.Highest]);
+                        USP.AddParameter(SPParameter.Lowest, dr[SPParameter.Lowest]);
+                        USP.AddParameter(SPParameter.Closing, dr[SPParameter.Closing]);
+                        USP.AddParameter(SPParameter.Volume, dr[SPParameter.Volume]);
+                        USP.AddParameter(SPParameter.Settlement, dr[SPParameter.Settlement]);
+                        USP.AddParameter(SPParameter.NumberOfContracts, dr[SPParameter.NumberOfContracts]);
+                        USP.AddParameter(SPParameter.GreatBuy, dr[SPParameter.GreatBuy]);
+                        USP.AddParameter(SPParameter.GreatSell, dr[SPParameter.GreatSell]);
+                        USP.AddParameter(SPParameter.History_Highest, dr[SPParameter.History_Highest]);
+                        USP.AddParameter(SPParameter.History_Lowest, dr[SPParameter.History_Lowest]);
+                        USP.AddParameter(SPParameter.Remark, dr[SPParameter.Remark]);
                         USP.ExeProcedureNotQuery(SP.SaveOptionHistory);
                     }
                 }
@@ -534,14 +536,14 @@ namespace Stock {
         public void SaveWeighted(DataTable dt) {
             try {
                 foreach (DataRow dr in dt.Rows) {
-                    USP.AddParameter(WeightedHistory.TradeDate, Convert.ToDateTime(dr[WeightedHistory.TradeDate]));
-                    USP.AddParameter(WeightedHistory.ClosingPrice, dr[WeightedHistory.ClosingPrice]);
-                    USP.AddParameter(WeightedHistory.HighestPrice, dr[WeightedHistory.HighestPrice]);
-                    USP.AddParameter(WeightedHistory.LowestPrice, dr[WeightedHistory.LowestPrice]);
-                    USP.AddParameter(WeightedHistory.OpenPrice, dr[WeightedHistory.OpenPrice]);
-                    USP.AddParameter(WeightedHistory.Price, dr[WeightedHistory.Price]);
-                    USP.AddParameter(WeightedHistory.Futures, dr[WeightedHistory.Futures]);
-                    USP.AddParameter(WeightedHistory.Remark, dr[WeightedHistory.Remark]);
+                    USP.AddParameter(SPParameter.TradeDate, Convert.ToDateTime(dr[SPParameter.TradeDate]));
+                    USP.AddParameter(SPParameter.ClosingPrice, dr[SPParameter.ClosingPrice]);
+                    USP.AddParameter(SPParameter.HighestPrice, dr[SPParameter.HighestPrice]);
+                    USP.AddParameter(SPParameter.LowestPrice, dr[SPParameter.LowestPrice]);
+                    USP.AddParameter(SPParameter.OpenPrice, dr[SPParameter.OpenPrice]);
+                    USP.AddParameter(SPParameter.Price, dr[SPParameter.Price]);
+                    USP.AddParameter(SPParameter.Futures, dr[SPParameter.Futures]);
+                    USP.AddParameter(SPParameter.Remark, dr[SPParameter.Remark]);
                     USP.ExeProcedureNotQuery(SP.SaveWeighted);
                 }
             }
@@ -556,12 +558,12 @@ namespace Stock {
         /// <param name="_WeekPoint"></param>
         public void AddWeekPoint(WeekPoint _WeekPoint) {
             try {
-                USP.AddParameter(WeightedHistory.TradeDate, _WeekPoint.TradeDate);
+                USP.AddParameter(SPParameter.TradeDate, _WeekPoint.TradeDate);
                 USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
                 USP.AddParameter(SPParameter.Contract, _WeekPoint.Contract);
-                USP.AddParameter(WeightedHistory.Price, _WeekPoint.Price);
+                USP.AddParameter(SPParameter.Price, _WeekPoint.Price);
                 USP.AddParameter(SPParameter.Volume, _WeekPoint.Volume);
-                USP.AddParameter(SPParameter.StopPrice, _WeekPoint.StopPirce);
+                USP.AddParameter(SPParameter.StopPrice, _WeekPoint.StopPrice);
                 USP.AddParameter(SPParameter.DueMonth　, _WeekPoint.DueMonth);
                 USP.AddParameter(SPParameter.BuyStopPrice, _WeekPoint.BuyStopPrice);
                 USP.ExeProcedureHasResult(SP.AddWeekPoint);
@@ -574,16 +576,16 @@ namespace Stock {
         /// <summary>儲存大盤歷史資料</summary>
         public void SaveWeighted(Weighted _Weighted) {
             try {
-                USP.AddParameter(WeightedHistory.TradeDate, _Weighted.TradeDate);
-                USP.AddParameter(WeightedHistory.ClosingPrice, _Weighted.ClosingPrice);
-                USP.AddParameter(WeightedHistory.HighestPrice, _Weighted.HighestPrice);
-                USP.AddParameter(WeightedHistory.LowestPrice, _Weighted.LowestPrice);
-                USP.AddParameter(WeightedHistory.OpenPrice, _Weighted.OpenPrice);
-                USP.AddParameter(WeightedHistory.Price, _Weighted.Price);
-                USP.AddParameter(WeightedHistory.Futures, _Weighted.Futures);
-                USP.AddParameter(WeightedHistory.Change, _Weighted.Change);
-                USP.AddParameter(WeightedHistory.Volume, _Weighted.Volume);
-                USP.AddParameter(WeightedHistory.Remark, _Weighted.Remark == null ? string.Empty : _Weighted.Remark);
+                USP.AddParameter(SPParameter.TradeDate, _Weighted.TradeDate);
+                USP.AddParameter(SPParameter.ClosingPrice, _Weighted.ClosingPrice);
+                USP.AddParameter(SPParameter.HighestPrice, _Weighted.HighestPrice);
+                USP.AddParameter(SPParameter.LowestPrice, _Weighted.LowestPrice);
+                USP.AddParameter(SPParameter.OpenPrice, _Weighted.OpenPrice);
+                USP.AddParameter(SPParameter.Price, _Weighted.Price);
+                USP.AddParameter(SPParameter.Futures, _Weighted.Futures);
+                USP.AddParameter(SPParameter.Change, _Weighted.Change);
+                USP.AddParameter(SPParameter.Volume, _Weighted.Volume);
+                USP.AddParameter(SPParameter.Remark, _Weighted.Remark == null ? string.Empty : _Weighted.Remark);
                 USP.ExeProcedureNotQuery(SP.SaveWeighted);                 
             }
             catch (Exception ex) {
@@ -611,8 +613,8 @@ namespace Stock {
 
         public DataTable SelectOptionHistory(string DueMonth,string Option,string Start,string End) {
             try {
-                USP.AddParameter(OptionHistory.DueMonth, DueMonth);
-                USP.AddParameter(OptionHistory.Option, Option);
+                USP.AddParameter(SPParameter.DueMonth, DueMonth);
+                USP.AddParameter(SPParameter.Option, Option);
                 USP.AddParameter(SPParameter.Start, Start);
                 USP.AddParameter(SPParameter.End, End);                
                 return USP.ExeProcedureGetDataTable(SP.GetOptionHistory);
@@ -639,13 +641,13 @@ namespace Stock {
         /// <param name="SmallPoint">最低買進點數</param>
         public void GetOptionWeek(int BaseMoney, int SmallPoint) {          
             DataTable Report = new DataTable();
-            Report.Columns.Add(OptionHistory.TradeDate);
-            Report.Columns.Add(OptionHistory.Option);
-            Report.Columns.Add(OptionHistory.DueMonth);
-            Report.Columns.Add(OptionHistory.Price);
-            Report.Columns.Add(OptionHistory.Closing);
-            Report.Columns.Add(WeightedHistory.OpenPrice);
-            Report.Columns.Add(WeightedHistory.ClosingPrice);
+            Report.Columns.Add(SPParameter.TradeDate);
+            Report.Columns.Add(SPParameter.Option);
+            Report.Columns.Add(SPParameter.DueMonth);
+            Report.Columns.Add(SPParameter.Price);
+            Report.Columns.Add(SPParameter.Closing);
+            Report.Columns.Add(SPParameter.OpenPrice);
+            Report.Columns.Add(SPParameter.ClosingPrice);
             List<string> MonthsList = new List<string>();
             DateTime NowDate = new DateTime(2012, 11, 20);
             string[] Option = new string[] { "賣權", "買權" };
@@ -730,15 +732,15 @@ namespace Stock {
         /// <param name="StopBase"></param>
         public void GetOptionWeekWithStop(int BaseMoney, decimal SmallPoint,decimal StopBase) {
             DataTable Report = new DataTable();
-            Report.Columns.Add(OptionHistory.TradeDate);
-            Report.Columns.Add(OptionHistory.Option);
-            Report.Columns.Add(OptionHistory.DueMonth);
-            Report.Columns.Add(OptionHistory.Price);
-            Report.Columns.Add(OptionHistory.Closing);
-            Report.Columns.Add(WeightedHistory.OpenPrice);
-            Report.Columns.Add(WeightedHistory.ClosingPrice);
-            Report.Columns.Add(OptionHistory.Highest);
-            Report.Columns.Add(OptionHistory.Opening_Price);
+            Report.Columns.Add(SPParameter.TradeDate);
+            Report.Columns.Add(SPParameter.Option);
+            Report.Columns.Add(SPParameter.DueMonth);
+            Report.Columns.Add(SPParameter.Price);
+            Report.Columns.Add(SPParameter.Closing);
+            Report.Columns.Add(SPParameter.OpenPrice);
+            Report.Columns.Add(SPParameter.ClosingPrice);
+            Report.Columns.Add(SPParameter.Highest);
+            Report.Columns.Add(SPParameter.Opening_Price);
             List<string> MonthsList = new List<string>();
             DateTime NowDate = new DateTime(2012, 11, 20);
             string[] Option = new string[] { "賣權", "買權" };
@@ -896,17 +898,17 @@ namespace Stock {
             DataRow NewRow = Source.Table.NewRow();
             if (dt.Rows.Count > 0) {                
                 var temp = dt.Select("Volume= MAX(Volume)");
-                var Price = temp[Default.FirstItem][OptionHistory.Price].ToString();
-                var Closing = Convert.ToDecimal(temp[Default.FirstItem][OptionHistory.Closing]);
-                NewRow[OptionHistory.TradeDate] = Temp.Date.ToString(Default.TimeFormat);
-                NewRow[OptionHistory.Option] = Option;
-                NewRow[OptionHistory.DueMonth] = DueMonth;
-                NewRow[OptionHistory.Price] = Price;
-                NewRow[OptionHistory.Closing] = Closing;
-                NewRow[WeightedHistory.OpenPrice] = Convert.ToDecimal(temp[Default.FirstItem][WeightedHistory.OpenPrice]);
-                NewRow[WeightedHistory.ClosingPrice] = Convert.ToDecimal(temp[Default.FirstItem][WeightedHistory.ClosingPrice]);
-                NewRow[OptionHistory.Highest] = Convert.ToDecimal(temp[Default.FirstItem][OptionHistory.Highest]);
-                NewRow[OptionHistory.Opening_Price] = Convert.ToDecimal(temp[Default.FirstItem][OptionHistory.Opening_Price]);
+                var Price = temp[Default.FirstItem][SPParameter.Price].ToString();
+                var Closing = Convert.ToDecimal(temp[Default.FirstItem][SPParameter.Closing]);
+                NewRow[SPParameter.TradeDate] = Temp.Date.ToString(Default.TimeFormat);
+                NewRow[SPParameter.Option] = Option;
+                NewRow[SPParameter.DueMonth] = DueMonth;
+                NewRow[SPParameter.Price] = Price;
+                NewRow[SPParameter.Closing] = Closing;
+                NewRow[SPParameter.OpenPrice] = Convert.ToDecimal(temp[Default.FirstItem][SPParameter.OpenPrice]);
+                NewRow[SPParameter.ClosingPrice] = Convert.ToDecimal(temp[Default.FirstItem][SPParameter.ClosingPrice]);
+                NewRow[SPParameter.Highest] = Convert.ToDecimal(temp[Default.FirstItem][SPParameter.Highest]);
+                NewRow[SPParameter.Opening_Price] = Convert.ToDecimal(temp[Default.FirstItem][SPParameter.Opening_Price]);
             }
             return NewRow;
         }
@@ -924,15 +926,15 @@ namespace Stock {
             if (dt.Rows.Count > 0) {
                 if (dt.Select(string.Format("Price= {0}", Price)).Length > 0) {
                     var row = dt.Select(string.Format("Price= {0}", Price))[0];
-                    NewRow[OptionHistory.TradeDate] = Temp.Date.ToString(Default.TimeFormat);
-                    NewRow[OptionHistory.Option] = Option;
-                    NewRow[OptionHistory.DueMonth] = DueMonth;
-                    NewRow[OptionHistory.Price] = Price;
-                    NewRow[OptionHistory.Closing] = row[OptionHistory.Closing];
-                    NewRow[WeightedHistory.OpenPrice] = Convert.ToDecimal(row[WeightedHistory.OpenPrice]);
-                    NewRow[WeightedHistory.ClosingPrice] = Convert.ToDecimal(row[WeightedHistory.ClosingPrice]);
-                    NewRow[OptionHistory.Highest] = Convert.ToDecimal(row[OptionHistory.Highest]);
-                    NewRow[OptionHistory.Opening_Price] = Convert.ToDecimal(row[OptionHistory.Opening_Price]);
+                    NewRow[SPParameter.TradeDate] = Temp.Date.ToString(Default.TimeFormat);
+                    NewRow[SPParameter.Option] = Option;
+                    NewRow[SPParameter.DueMonth] = DueMonth;
+                    NewRow[SPParameter.Price] = Price;
+                    NewRow[SPParameter.Closing] = row[SPParameter.Closing];
+                    NewRow[SPParameter.OpenPrice] = Convert.ToDecimal(row[SPParameter.OpenPrice]);
+                    NewRow[SPParameter.ClosingPrice] = Convert.ToDecimal(row[SPParameter.ClosingPrice]);
+                    NewRow[SPParameter.Highest] = Convert.ToDecimal(row[SPParameter.Highest]);
+                    NewRow[SPParameter.Opening_Price] = Convert.ToDecimal(row[SPParameter.Opening_Price]);
                 }
             }
             return NewRow;
@@ -956,7 +958,7 @@ namespace Stock {
             PropertyInfo[] infos = typeof(Open_Interest).GetProperties();
             DataTable dt = new DataTable();
             foreach (PropertyInfo info in infos) {
-                if (!info.Name.Equals(OpenInterest.SN))
+                if (!info.Name.Equals(SPParameter.SN))
                 dt.Columns.Add(info.Name);
             }
 
@@ -969,23 +971,23 @@ namespace Stock {
         public void SaveOpenInterestData(DataTable dt) {
             if (dt != null && dt.Rows.Count > 0) {
                 foreach (DataRow dr in dt.Rows) {
-
-                    USP.AddParameter(OpenInterest.TradeDate, dr[OpenInterest.TradeDate]);
-                    USP.AddParameter(OpenInterest.CallOpenInterest, dr[OpenInterest.CallOpenInterest]);
-                    USP.AddParameter(OpenInterest.CallVolume, dr[OpenInterest.CallVolume]);
-                    USP.AddParameter(OpenInterest.OpenInterestRatios, dr[OpenInterest.OpenInterestRatios]);
-                    USP.AddParameter(OpenInterest.PutOpenInterest, dr[OpenInterest.PutOpenInterest]);
-                    USP.AddParameter(OpenInterest.PutVolume, dr[OpenInterest.PutVolume]);
-                    USP.AddParameter(OpenInterest.Ratios, dr[OpenInterest.Ratios]);
+                    USP.AddParameter(SPParameter.TradeDate, dr[SPParameter.TradeDate]);
+                    USP.AddParameter(SPParameter.CallOpenInterest, dr[SPParameter.CallOpenInterest]);
+                    USP.AddParameter(SPParameter.CallVolume, dr[SPParameter.CallVolume]);
+                    USP.AddParameter(SPParameter.OpenInterestRatios, dr[SPParameter.OpenInterestRatios]);
+                    USP.AddParameter(SPParameter.PutOpenInterest, dr[SPParameter.PutOpenInterest]);
+                    USP.AddParameter(SPParameter.PutVolume, dr[SPParameter.PutVolume]);
+                    USP.AddParameter(SPParameter.Ratios, dr[SPParameter.Ratios]);
                     USP.ExeProcedureNotQuery(SP.SaveOpenInterest);
                 }
             }
         }
-        
+
         /// <summary>每周三取得操作指標，並且發送Maill</summary>
         /// 20170208 add by Dick 收盤後抓取每周的操作並發送Maill
         /// 20170222 modified by Dick 修正訊息資料發送錯誤
         /// 20170227 modified by Dick 修正訊息錯誤，追加買方策略停損價格
+        /// 20170308 add by Dick 加入周選結算結果，最大未平昌點數過小時，就使用最大交易量作為基準
         public void GetNumberOfContractsAndMaill() {
             try {
                 if (DateTime.Now.DayOfWeek.ToString() == CommTool.BaseConst.Wednesday) {
@@ -1012,6 +1014,17 @@ namespace Stock {
                                 }
                                 else {
                                     dt = USP.ExeProcedureGetDataTable(SP.GetMaxNumberOfContracts);
+                                    #region 最大未平昌點數過小時，就使用最大交易量作為基準
+                                    if (dt != null && dt.Rows.Count > 0)
+                                    {
+                                        if (Convert.ToDecimal(dt.Rows[0][0]) < 8)
+                                        {
+                                            USP.AddParameter(SPParameter.OP, OP);
+                                            USP.AddParameter(SPParameter.DueMonth, _Calendar.NearMonth1);
+                                            dt = USP.ExeProcedureGetDataTable(SP.GetMaxVolume);
+                                        }
+                                    }
+                                    #endregion
                                 }
                                 if (dt != null && dt.Rows.Count > 0) {
                                     Weighted _Weighted = this.GetWeighted();
@@ -1024,12 +1037,19 @@ namespace Stock {
                                     _WeekPoint.TradeDate = DateTime.Now;
                                     _WeekPoint.Price = dt.Rows[0][0].ToString();
                                     _WeekPoint.Contract = dt.Rows[0][1].ToString();
-                                    _WeekPoint.Volume = dt.Rows[0][3].ToString();                                    
-                                    _WeekPoint.StopPirce = StopPrice.ToString();
+                                    _WeekPoint.Volume = dt.Rows[0][3].ToString();
+                                    _WeekPoint.StopPrice = StopPrice.ToString();
                                     _WeekPoint.BuyStopPrice = CalculateBuyStopPrice(StopPrice).ToString();
                                     _WeekPoint.DueMonth = dt.Rows[0][5].ToString();
                                     AddWeekPoint(_WeekPoint);
                                     SB.AppendLine(string.Format("方向:{0} ,   價格:{1}  ,   契約:{2}  ,   交易量:{3} ,   建議停損價格:{4}  , 買方停損價:{5}  ", OP, _WeekPoint.Price, _WeekPoint.Contract, _WeekPoint.Volume, StopPrice, _WeekPoint.BuyStopPrice));
+                                                                        
+                                    #region 更新上周的結果                                       
+                                    WeekPoint LastWeek = new WeekPoint();
+                                    LastWeek.DueMonth = _Calendar.Week;
+                                    LastWeek.OP = OP;
+                                    UpdateWeekPointEndPrice(LastWeek);
+                                    #endregion
                                 }
                             }
                             CommTool.MailData MailDB = new CommTool.MailData();
@@ -1044,6 +1064,51 @@ namespace Stock {
                         CalendarDB.UpdateCalendar(_Calendar);
                     }
                 }
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+        }
+
+        /// <summary>紀錄周選結算價格</summary>
+        /// 20170308 add by Dick 更新周選結算結果
+        /// <param name="DueMonth"></param>
+        /// <param name="Op"></param>
+        public void UpdateWeekPointEndPrice(WeekPoint _WeekPoint) {
+            try {
+                WeekPoint Result = GetWeekPointByDueMonthAndOP(_WeekPoint);
+                USP.AddParameter(SPParameter.DueMonth, _WeekPoint.DueMonth);
+                USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
+                WeekPoint OptionResult = USP.ExeProcedureGetObject(SP.GetWeekPointByDueMonthAndOP, new WeekPoint()) as WeekPoint;
+                #region 更新ClosePrice
+                USP.AddParameter(SPParameter.DueMonth, _WeekPoint.DueMonth);
+                USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
+                USP.AddParameter(SPParameter.Contract, _WeekPoint.Contract);
+                Option OPResult = USP.ExeProcedureGetObject(SP.GetOptionByDueMonthAndOP, new Option()) as Option;
+                _WeekPoint.ClosePrice = OPResult.Clinch.ToString();
+                #endregion 
+                this.UpdateWeekPoint(_WeekPoint);
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+        }
+
+        /// <summary>更新周選資訊</summary>
+        /// <param name="_WeekPoint"></param>
+        public void UpdateWeekPoint(WeekPoint _WeekPoint) {
+            try {
+                USP.AddParameter(SPParameter.BuyStopPrice, _WeekPoint.BuyStopPrice);
+                USP.AddParameter(SPParameter.ClosePrice, _WeekPoint.ClosePrice);
+                USP.AddParameter(SPParameter.Contract, _WeekPoint.Contract);
+                USP.AddParameter(SPParameter.DueMonth, _WeekPoint.DueMonth);
+                USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
+                USP.AddParameter(SPParameter.Price, _WeekPoint.Price);
+                USP.AddParameter(SPParameter.SN, _WeekPoint.SN);
+                USP.AddParameter(SPParameter.StopPrice, _WeekPoint.StopPrice);
+                USP.AddParameter(SPParameter.TradeDate, _WeekPoint.TradeDate);
+                USP.AddParameter(SPParameter.Volume, _WeekPoint.Volume);
+                USP.ExeProcedureNotQuery(SP.UpdateWeekPoint);
             }
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
