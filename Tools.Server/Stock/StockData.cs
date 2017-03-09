@@ -39,6 +39,7 @@ namespace Stock {
             public const string AddWeekPoint = "AddWeekPoint";
             public const string GetWeekPointByDueMonthAndOP = "GetWeekPointByDueMonthAndOP";
             public const string GetOptionByDueMonthAndOP = "GetOptionByDueMonthAndOP";
+            public const string GetOptionByMonthAndContractAndOP = "GetOptionByMonthAndContractAndOP";
             public const string UpdateWeekPoint = "UpdateWeekPoint";
         }
 
@@ -874,7 +875,7 @@ namespace Stock {
         /// <param name="Contact"></param>
         /// <param name="ClosePrice"></param>
         /// <returns></returns>
-        private decimal CalculateStopPrice(decimal Price, string Contact, decimal ClosePrice) {
+        public decimal CalculateStopPrice(decimal Price, string Contact, decimal ClosePrice) {
             decimal BasePrice =(Price * 50) + (17000 - (Convert.ToDecimal(Contact) - ClosePrice));
             return Price + ((BasePrice * decimal.Parse("0.1")) / 50);
         }
@@ -883,7 +884,7 @@ namespace Stock {
         /// 20170227 add by Dick
         /// <param name="Price"></param>
         /// <returns></returns>
-        private decimal CalculateBuyStopPrice(decimal Price) {
+        public decimal CalculateBuyStopPrice(decimal Price) {
             return Price * (decimal)0.8;
         }
         
@@ -1084,7 +1085,7 @@ namespace Stock {
                 USP.AddParameter(SPParameter.DueMonth, _WeekPoint.DueMonth);
                 USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
                 USP.AddParameter(SPParameter.Contract, _WeekPoint.Contract);
-                Option OPResult = USP.ExeProcedureGetObject(SP.GetOptionByDueMonthAndOP, new Option()) as Option;
+                Option OPResult = USP.ExeProcedureGetObject(SP.GetOptionByMonthAndContractAndOP, new Option()) as Option;
                 _WeekPoint.ClosePrice = OPResult.Clinch.ToString();
                 #endregion 
                 this.UpdateWeekPoint(_WeekPoint);
@@ -1113,6 +1114,16 @@ namespace Stock {
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
             }
+        }
+
+        /// <summary>取得指定的OPtion</summary>
+        /// <param name="_WeekPoint"></param>
+        /// <returns></returns>
+        public Option GetOptionByMonthAndContractAndOP(WeekPoint _WeekPoint) {
+            USP.AddParameter(SPParameter.DueMonth,_WeekPoint.DueMonth);
+            USP.AddParameter(SPParameter.OP,_WeekPoint.OP);
+            USP.AddParameter(SPParameter.Contract,_WeekPoint.Contract);
+            return USP.ExeProcedureGetObject(SP.GetOptionByMonthAndContractAndOP, new Option()) as Option;
         }
 
         #endregion
