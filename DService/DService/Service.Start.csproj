@@ -104,6 +104,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings1.settings</DependentUpon>
     </Compile>
+    <Compile Include="ToolLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

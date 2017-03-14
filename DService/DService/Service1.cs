@@ -10,10 +10,11 @@ using System.IO;
 using System.Xml;
 using System.Threading;
 using System.Configuration;
-using WebInfo;
-using CommTool;
+using WebInfo; 
 using WebInfo.Business.DataEntities;
 using DStandardServer;
+using ServiceLog;
+using CommTool; 
 
 
 namespace DService
@@ -32,8 +33,8 @@ namespace DService
             public const string ServerBakPath = "ServerBakPath";
         }
 
-        private TriggerService server = null;
-        private ConfigManager configmanage;
+        private CommTool.TriggerService server = null;
+        private CommTool.ConfigManager configmanage;
         private List<string> _timelist = new List<string>();
         Dictionary<string, string> DicParameters = new Dictionary<string, string>();   //參數設定 
 
@@ -44,7 +45,7 @@ namespace DService
 
 
         private void Init() {
-            ToolLog.ToolPath = Settings1.Default.LogPath;
+            ServiceLog.ToolLog.ToolPath = Settings1.Default.LogPath;
             InitParamter();
         }
 
@@ -52,31 +53,31 @@ namespace DService
         private void InitParamter() {
             try {
                 foreach (SettingsProperty PropertyName in Settings1.Default.Properties) {
-                    ToolLog.Log(string.Format("初始化參數：{0}", PropertyName.Name));
+                    ServiceLog.ToolLog.Log(string.Format("初始化參數：{0}", PropertyName.Name));
                     DicParameters.Add(PropertyName.Name, Settings1.Default.PropertyValues[PropertyName.Name].PropertyValue.ToString());
                 }
             }
             catch (Exception ex) {
-                ToolLog.Log(ex);
+                ServiceLog.ToolLog.Log(ex);
             }
         }
 
 
-        protected override void OnStart(string[] args) {
-            server = GetTriggerServices();
-            ToolLog.Log("服務啟動");
+        protected override void OnStart(string[] args) {           
+            ServiceLog.ToolLog.Log("服務啟動");
             Init();
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
             System.Timers.Timer time = new System.Timers.Timer();
             configmanage = new ConfigManager(configiPath, "DService");
             if (Convert.ToBoolean(configmanage.GetValue("IsAutoUpdate"))) {
-                ToolLog.Log("服務啟動更新開始...");
+                ServiceLog.ToolLog.Log("服務啟動更新開始...");
                 UpdateDll(configmanage.GetValue(Default.UpDateGradPath));
-                ToolLog.Log("服務啟動更新結束...");
+                ServiceLog.ToolLog.Log("服務啟動更新結束...");
                 time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
                 time.Interval = Default.Interval;
                 time.Start();
             }
+            server = GetTriggerServices();
             Thread t1 = new Thread(Lessner);
             t1.Start();
             System.Timers.Timer time2 = new System.Timers.Timer();
@@ -95,9 +96,9 @@ namespace DService
         private void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
             string time = DateTime.Now.ToString(configmanage.GetValue(Default.ShortTimeFormat));
             if (DateTime.Now.ToString(configmanage.GetValue(Default.ShortTimeFormat)) == configmanage.GetValue("UpDateTime")) {
-                ToolLog.Log("更新開始");
+                ServiceLog.ToolLog.Log("更新開始");
                 UpdateDll(Settings1.Default.UpDateGradPath);
-                ToolLog.Log("更新結束");
+                ServiceLog.ToolLog.Log("更新結束");
             }
         }
 
@@ -109,7 +110,7 @@ namespace DService
 
 
         protected override void OnStop() {
-            ToolLog.Log("服務停止");
+            ServiceLog.ToolLog.Log("服務停止");
         }
 
 
@@ -177,7 +178,7 @@ namespace DService
                     }
                 }
                 catch (Exception ex) {
-                    ToolLog.Log(ex);
+                    ServiceLog.ToolLog.Log(ex);
                 }
             }
         }

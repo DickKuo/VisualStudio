@@ -41,6 +41,7 @@ namespace Stock {
             public const string GetOptionByDueMonthAndOP = "GetOptionByDueMonthAndOP";
             public const string GetOptionByMonthAndContractAndOP = "GetOptionByMonthAndContractAndOP";
             public const string UpdateWeekPoint = "UpdateWeekPoint";
+            public const string GetListOption = "GetListOption";
         }
 
         private class SPParameter {
@@ -88,6 +89,8 @@ namespace Stock {
             public const string CallOpenInterest = "CallOpenInterest";
             public const string OpenInterestRatios = "OpenInterestRatios";
             public const string ClosePrice = "ClosePrice";
+            public const string BeginTime = "BeginTime";
+            public const string EndTime = "EndTime";
         }
 
         private string _stockNum;
@@ -1126,6 +1129,23 @@ namespace Stock {
             return USP.ExeProcedureGetObject(SP.GetOptionByMonthAndContractAndOP, new Option()) as Option;
         }
 
+
+        public List<Option> GetOptionTimeInterval(DateTime BeginTime ,DateTime EndTime,WeekPoint _WeekPoint) {
+            List<Option> ListOption = new List<Option>();
+            try {
+                USP.AddParameter(SPParameter.BeginTime, _WeekPoint.BuyStopPrice);
+                USP.AddParameter(SPParameter.EndTime, _WeekPoint.ClosePrice);
+                USP.AddParameter(SPParameter.Contract, _WeekPoint.Contract);
+                USP.AddParameter(SPParameter.DueMonth, _WeekPoint.DueMonth);
+                USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
+                USP.ExeProcedureNotQuery(SP.GetListOption);
+                return ListOption;
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+                return null;
+            }           
+        }
         #endregion
     }
 }

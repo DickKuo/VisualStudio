@@ -80,10 +80,8 @@ namespace UnitTest {
             //Web.GetBueatyDirtory("https://www.ptt.cc/bbs/Beauty/M.1486780171.A.9C3.html", 0, "http://robertlan.16mb.com/api_beauty.php");
 
             Stock.StockData data = new StockData();
-            WeekPoint WP = new WeekPoint();
-            WP.DueMonth = "201703W2";
-            WP.OP = "call";
-            data.GetNumberOfContractsAndMaill();
+            decimal result=  data.CalculateStopPrice(decimal.Parse("12.5"),"9550",decimal.Parse("9650"));
+
 
             Console.Read();
             //ToolLog.Log(Default.PostMessage + info.Title);

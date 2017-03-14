@@ -346,7 +346,7 @@ namespace StandredImplement
     }
 
 
-    #region 此為標準trigger 範例
+    #region  監控價格
     /// <summary>
     /// 此為標準trigger 範例
     /// </summary>
