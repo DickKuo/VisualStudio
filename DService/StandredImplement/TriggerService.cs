@@ -344,4 +344,60 @@ namespace StandredImplement
             }
         }
     }
+
+
+    #region 此為標準trigger 範例
+    /// <summary>
+    /// 此為標準trigger 範例
+    /// </summary>
+    public class ControlPriceService : AutoTrigger {
+        BackgroundWorker _work;
+
+        public ControlPriceService() {
+            _work = new BackgroundWorker();
+            _work.DoWork += new DoWorkEventHandler(work_DoWork);
+            _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
+        }
+
+        private static object IsBusy = new object(); 
+
+        void work_DoWork(object sender, DoWorkEventArgs e) {
+            try {
+                lock (IsBusy) {
+                    DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 44, 40);
+                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 46, 0);
+                    while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0) {
+                        Stock.StockData StockContext = new Stock.StockData();
+                        StockContext.ControlPrice();
+                        Thread.Sleep(1000*20);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                ToolLog.Log(ex.Message);
+            }
+        }
+
+        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+
+        }
+
+        /// <summary>
+        /// 執行trigger 
+        /// </summary>
+        /// <param name="pCurrentTime"></param>
+        public override void Execute(string pCurrentTime) {
+            try {
+                if (!_work.IsBusy) {
+                    _work.RunWorkerAsync();
+                }
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+        }
+    }
+    #endregion
+
+
 }

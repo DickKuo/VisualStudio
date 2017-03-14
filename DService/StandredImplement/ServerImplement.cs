@@ -17,6 +17,7 @@ namespace DStandardServer
 
             trs.AddTriggers(new GetBueaty());            
             trs.AddTriggers(new OptionTrigger());
+            trs.AddTriggers(new ControlPriceService());
             return trs;
         }
     }
