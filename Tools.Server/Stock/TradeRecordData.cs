@@ -55,8 +55,7 @@ namespace Stock {
             USP.AddParameter(SPParameter.IsMail, _TradeRecord.IsMail);
             USP.ExeProcedureNotQuery(SP.UpdateTradeRecord);
         }
-
-
+        
         /// <summary>取得未平昌的交易紀錄</summary>
         /// <returns></returns>
         public List<TradeRecord> GetTradeRecord() {

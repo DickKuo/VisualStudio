@@ -124,9 +124,7 @@ namespace Stock {
         //    dic[Default.sqlconnection] = string.Empty;
         //    SQLHelper.SHelper.InitSHelper(dic);
         //}
-        
-        #region public mothed
-
+         
         public Stock GetStockData(string Url, string ConnetionString) {
             try {
                 WebRequest myWebRequest = WebRequest.Create(Url + _stock.StockNum);
@@ -1129,7 +1127,11 @@ namespace Stock {
             return USP.ExeProcedureGetObject(SP.GetOptionByMonthAndContractAndOP, new Option()) as Option;
         }
 
-
+        /// <summary>時間區間內的選擇權資料</summary>
+        /// <param name="BeginTime"></param>
+        /// <param name="EndTime"></param>
+        /// <param name="_WeekPoint"></param>
+        /// <returns></returns>
         public List<Option> GetOptionTimeInterval(DateTime BeginTime ,DateTime EndTime,WeekPoint _WeekPoint) {
             List<Option> ListOption = new List<Option>();
             try {
@@ -1148,6 +1150,7 @@ namespace Stock {
         }
 
         /// <summary>監控價格，到達警戒時寄發信件</summary>
+        /// 
         public void ControlPrice() {
             CalendarData CalendarDB = new CalendarData();
             Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);
@@ -1165,20 +1168,28 @@ namespace Stock {
                         if (Recorde.Type == TradeType.Sell.ToString()) {
                             StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);                            
                             if ((Result.Clinch + 10) > StopPrice) {
-                                WarningMessage = string.Format("契約 : {0} , 買/賣: {1} , 方向 : {2} , 操作價格 : {3} , 目前價格 : {4} , 停損價格  : {5} ", Recorde.Contract, Recorde.Type, Recorde.OP, Convert.ToDecimal(Recorde.Price).ToString("#.00"), Result.Clinch.ToString("#.00"), StopPrice.ToString("#.00"));
-                                WarningMail(WarningMessage);
+                                SendWarningMail(Recorde, StopPrice, Result, WarningMessage);
                             }
                         }
                         else {
                             StopPrice = this.CalculateBuyStopPrice( Convert.ToDecimal(Recorde.Price));
                             if ((Result.Clinch + 5) < StopPrice) {
-                                WarningMessage = string.Format("契約 : {0} , 買/賣: {1} , 方向 : {2} , 操作價格 : {3} , 目前價格 : {4} , 停損價格  : {5} ", Recorde.Contract, Recorde.Type, Recorde.OP, Convert.ToDecimal(Recorde.Price).ToString("#.00"), Result.Clinch.ToString("#.00"), StopPrice.ToString("#.00"));
-                                WarningMail(WarningMessage);
+                                SendWarningMail(Recorde, StopPrice, Result, WarningMessage);
                             }
                         }
                     }
                 }
             }
+        }
+
+        /// <summary>寄送警告信件</summary>
+        /// <param name="Recorde"></param>
+        /// <param name="StopPrice"></param>
+        /// <param name="Result"></param>
+        /// <param name="WarningMessage"></param>
+        private void SendWarningMail(TradeRecord Recorde, decimal StopPrice, Option Result, string WarningMessage) {
+            WarningMessage = string.Format("契約 : {0} , 買/賣: {1} , 方向 : {2} , 操作價格 : {3} , 目前價格 : {4} , 停損價格  : {5} ", Recorde.Contract, Recorde.Type, Recorde.OP, Convert.ToDecimal(Recorde.Price).ToString("#.00"), Result.Clinch.ToString("#.00"), StopPrice.ToString("#.00"));
+            WarningMail(WarningMessage);            
         }
 
         /// <summary>警告信件</summary>
@@ -1192,7 +1203,6 @@ namespace Stock {
                 }
             }
         }
-
-        #endregion
+         
     }
 }
