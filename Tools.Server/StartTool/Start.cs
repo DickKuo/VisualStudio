@@ -52,7 +52,7 @@ namespace StartTool {
             CommTool.XmlFile xf = new CommTool.XmlFile(_stockxml);
             List<string> nodes = xf.XmlLoadList();
             foreach (string node in nodes) {
-                Stock.StockData stockData = new Stock.StockData(node);
+                Stock.StockData stockData = new Stock.StockData();
                 Stock.Stock stock = stockData.GetStockData(_url, _connentionstring);
                 stockData.SetkData(_connentionstring);
             }

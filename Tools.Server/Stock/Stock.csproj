@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseData.cs" />
     <Compile Include="Calendar.cs" />
     <Compile Include="CalendarData.cs" />
     <Compile Include="HistoryOption.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockData.cs" />
+    <Compile Include="TradeRecord.cs" />
+    <Compile Include="TradeRecordData.cs" />
     <Compile Include="WeekPoint.cs" />
     <Compile Include="Weighted.cs" />
   </ItemGroup>
