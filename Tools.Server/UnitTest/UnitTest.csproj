@@ -59,7 +59,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Dropbox\Export\SQLHelper.dll</HintPath>
     </Reference>
-    <Reference Include="Stock">
+    <Reference Include="Stock, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Dropbox\Export\Stock.dll</HintPath>
     </Reference>
     <Reference Include="System" />

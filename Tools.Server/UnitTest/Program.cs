@@ -80,7 +80,7 @@ namespace UnitTest {
             //Web.GetBueatyDirtory("https://www.ptt.cc/bbs/Beauty/M.1486780171.A.9C3.html", 0, "http://robertlan.16mb.com/api_beauty.php");
 
             Stock.StockData data = new StockData();
-            decimal result=  data.CalculateStopPrice(decimal.Parse("12.5"),"9550",decimal.Parse("9650"));
+             data.ControlPrice();
 
 
             Console.Read();

@@ -71,6 +71,7 @@
     <Compile Include="StockData.cs" />
     <Compile Include="TradeRecord.cs" />
     <Compile Include="TradeRecordData.cs" />
+    <Compile Include="TradeType.cs" />
     <Compile Include="WeekPoint.cs" />
     <Compile Include="Weighted.cs" />
   </ItemGroup>

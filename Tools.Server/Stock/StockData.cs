@@ -1146,6 +1146,53 @@ namespace Stock {
                 return null;
             }           
         }
+
+        /// <summary>監控價格，到達警戒時寄發信件</summary>
+        public void ControlPrice() {
+            CalendarData CalendarDB = new CalendarData();
+            Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);
+            if (_Calendar.IsWorkDay)
+            {
+                TradeRecordData RecordDB = new TradeRecordData();
+                List<TradeRecord> RecordList= RecordDB.GetTradeRecord();
+                foreach (TradeRecord Recorde in RecordList)
+                {
+                    if (Recorde.IsMail) {
+                        Weighted _Weighted = this.GetWeighted();
+                        decimal StopPrice = 0m ;
+                        Option Result = GetOptionByMonthAndContractAndOP(new WeekPoint() { DueMonth = Recorde.DueMonth, OP = Recorde.OP, Contract = Recorde.Contract });
+                        string WarningMessage=string.Empty;
+                        if (Recorde.Type == TradeType.Sell.ToString()) {
+                            StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);                            
+                            if ((Result.Clinch + 10) > StopPrice) {
+                                WarningMessage = string.Format("契約 : {0} , 買/賣: {1} , 方向 : {2} , 操作價格 : {3} , 目前價格 : {4} , 停損價格  : {5} ", Recorde.Contract, Recorde.Type, Recorde.OP, Convert.ToDecimal(Recorde.Price).ToString("#.00"), Result.Clinch.ToString("#.00"), StopPrice.ToString("#.00"));
+                                WarningMail(WarningMessage);
+                            }
+                        }
+                        else {
+                            StopPrice = this.CalculateBuyStopPrice( Convert.ToDecimal(Recorde.Price));
+                            if ((Result.Clinch + 5) < StopPrice) {
+                                WarningMessage = string.Format("契約 : {0} , 買/賣: {1} , 方向 : {2} , 操作價格 : {3} , 目前價格 : {4} , 停損價格  : {5} ", Recorde.Contract, Recorde.Type, Recorde.OP, Convert.ToDecimal(Recorde.Price).ToString("#.00"), Result.Clinch.ToString("#.00"), StopPrice.ToString("#.00"));
+                                WarningMail(WarningMessage);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>警告信件</summary>
+        /// <param name="WarningMessage"></param>
+        private void WarningMail(string WarningMessage) {           
+            CommTool.MailData MailDB = new CommTool.MailData();
+            DataTable MaillDataTable = MailDB.GetSendMail();
+            if (MaillDataTable != null && MaillDataTable.Rows.Count > 0) {
+                foreach (DataRow dr in MaillDataTable.Rows) {
+                    MailDB.RegistrySend(dr[1].ToString(), "停損警戒", WarningMessage);
+                }
+            }
+        }
+
         #endregion
     }
 }
