@@ -24,6 +24,9 @@ namespace Stock {
             public const string Price = "Price";
             public const string IsPyeongchang = "IsPyeongchang";
             public const string IsMail = "IsMail";
+            public const string StopPrice = "StopPrice";
+            public const string Settlement = "Settlement";
+            public const string Level = "Level";
         }
 
         /// <summary>新增操作紀錄</summary>
@@ -53,7 +56,10 @@ namespace Stock {
             USP.AddParameter(SPParameter.Price, _TradeRecord.Price);
             USP.AddParameter(SPParameter.IsPyeongchang, _TradeRecord.IsPyeongchang);
             USP.AddParameter(SPParameter.IsMail, _TradeRecord.IsMail);
-            USP.ExeProcedureNotQuery(SP.UpdateTradeRecord);
+            USP.AddParameter(SPParameter.StopPrice, _TradeRecord.StopPrice);
+            USP.AddParameter(SPParameter.Settlement, _TradeRecord.Settlement);
+            USP.AddParameter(SPParameter.Level, _TradeRecord.Level);
+            USP.ExeProcedureGetDataTable(SP.UpdateTradeRecord);
         }
         
         /// <summary>取得未平昌的交易紀錄</summary>
@@ -71,7 +77,10 @@ namespace Stock {
                     Record.Contract = row[SPParameter.Contract].ToString();
                     Record.Type = row[SPParameter.Type].ToString();
                     Record.Lot = row[SPParameter.Lot].ToString();
-                    Record.Price = row[SPParameter.Price].ToString();
+                    Record.Price = Convert.ToDecimal(row[SPParameter.Price]);
+                    Record.StopPrice = row[SPParameter.StopPrice].ToString() == string.Empty ? 0 : Convert.ToDecimal(row[SPParameter.StopPrice]);
+                    Record.Settlement = row[SPParameter.Settlement].ToString() == string.Empty ? 0 : Convert.ToDecimal(row[SPParameter.Settlement]);
+                    Record.Level = Convert.ToInt32(row[SPParameter.Level]);
                     Record.IsPyeongchang = Convert.ToBoolean(row[SPParameter.IsPyeongchang]);
                     Record.IsMail = Convert.ToBoolean(row[SPParameter.IsMail]);
                     TradeList.Add(Record);

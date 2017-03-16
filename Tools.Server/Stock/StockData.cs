@@ -1150,7 +1150,7 @@ namespace Stock {
         }
 
         /// <summary>監控價格，到達警戒時寄發信件</summary>
-        /// 
+        /// 20170316 add by Dick 加入功能。
         public void ControlPrice() {
             CalendarData CalendarDB = new CalendarData();
             Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);
@@ -1161,21 +1161,67 @@ namespace Stock {
                 foreach (TradeRecord Recorde in RecordList)
                 {
                     if (Recorde.IsMail) {
-                        Weighted _Weighted = this.GetWeighted();
-                        decimal StopPrice = 0m ;
+                        Weighted _Weighted = this.GetWeighted();                      
                         Option Result = GetOptionByMonthAndContractAndOP(new WeekPoint() { DueMonth = Recorde.DueMonth, OP = Recorde.OP, Contract = Recorde.Contract });
-                        string WarningMessage=string.Empty;
-                        if (Recorde.Type == TradeType.Sell.ToString()) {
-                            StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);                            
-                            if ((Result.Clinch + 10) > StopPrice) {
-                                SendWarningMail(Recorde, StopPrice, Result, WarningMessage);
-                            }
+                        CalculateStopPoint(RecordDB, Recorde, _Weighted, Result);
+                    }
+                }
+            }
+        }
+
+        /// <summary>計算停損及移動停利</summary>
+        /// 20170316 add by Dick 加入功能。
+        /// <param name="RecordDB"></param>
+        /// <param name="Recorde"></param>
+        /// <param name="_Weighted"></param>
+        /// <param name="Result"></param>
+        public void CalculateStopPoint(TradeRecordData RecordDB, TradeRecord Recorde, Weighted _Weighted, Option Result) {
+            decimal StopPrice = 0m;
+            string WarningMessage = string.Empty;
+            if (Recorde.Type == TradeType.Sell.ToString()) {
+                StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);
+                if ((Result.Clinch + 10) > StopPrice) {
+                    SendWarningMail(Recorde, StopPrice, Result, WarningMessage, "停損警戒");
+                }
+                else {
+                    Recorde.Settlement = ((Recorde.Price - Result.Clinch) * Convert.ToInt32(Recorde.Lot)) - 2;
+                    RecordDB.UpdateTradeRecord(Recorde);
+                }
+            }
+            else {
+                ///這邊要做停損跟停利的計算
+                StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(Recorde.Price));
+                if ((Result.Clinch) < (StopPrice + 8)) {
+                    SendWarningMail(Recorde, StopPrice, Result, WarningMessage, "停損警戒");
+                }
+                else {
+                    int NewLevel = 0;
+                    decimal ButtomStopPrice = 0m;
+                    decimal TopStopPrice = 0m;
+                    for (int i = 0; i <= 50; i++) {
+                        ButtomStopPrice = ((StopPrice * ((1.1m) + (i * 0.1m))) - 1);
+                        TopStopPrice = ((StopPrice * ((1.1m) + (i * 0.1m))) + 1m);
+                        if (ButtomStopPrice < Result.Clinch && Result.Clinch < TopStopPrice) {
+                            NewLevel = i;
                         }
-                        else {
-                            StopPrice = this.CalculateBuyStopPrice( Convert.ToDecimal(Recorde.Price));
-                            if ((Result.Clinch + 5) < StopPrice) {
-                                SendWarningMail(Recorde, StopPrice, Result, WarningMessage);
-                            }
+                    }
+                    if (Recorde.Level == 0) {
+                        StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(Recorde.Price));
+                    }
+                    else {
+                        StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(((StopPrice * ((1.1m) + (Recorde.Level * 0.1m))) + 1)));
+                    }
+                    if (NewLevel < Recorde.Level) {
+                        if ((StopPrice + 8) > Result.Clinch) {
+                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯", NewLevel));
+                        }
+                    }
+                    else {
+                        if (NewLevel > Recorde.Level) {
+                            Recorde.Level = NewLevel;
+                            Recorde.Settlement = ((Result.Clinch - Recorde.Price) * Convert.ToInt32(Recorde.Lot)) - 2;
+                            RecordDB.UpdateTradeRecord(Recorde);
+                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("目前到第{0}階梯", Recorde.Level));
                         }
                     }
                 }
@@ -1187,19 +1233,19 @@ namespace Stock {
         /// <param name="StopPrice"></param>
         /// <param name="Result"></param>
         /// <param name="WarningMessage"></param>
-        private void SendWarningMail(TradeRecord Recorde, decimal StopPrice, Option Result, string WarningMessage) {
-            WarningMessage = string.Format("契約 : {0} , 買/賣: {1} , 方向 : {2} , 操作價格 : {3} , 目前價格 : {4} , 停損價格  : {5} ", Recorde.Contract, Recorde.Type, Recorde.OP, Convert.ToDecimal(Recorde.Price).ToString("#.00"), Result.Clinch.ToString("#.00"), StopPrice.ToString("#.00"));
-            WarningMail(WarningMessage);            
+        private void SendWarningMail(TradeRecord Recorde, decimal StopPrice, Option Result, string WarningMessage,string Title) {
+            WarningMessage = string.Format("操作價格: {3} ,目前價格: {4} ,停損價格: {5} ,買/賣: {1} ,方向: {2} ,契約: {0} ", Recorde.Contract, Recorde.Type, Recorde.OP, Convert.ToDecimal(Recorde.Price).ToString("#.00"), Result.Clinch.ToString("#.00"), StopPrice.ToString("#.00"));
+            WarningMail(WarningMessage, Title);            
         }
 
         /// <summary>警告信件</summary>
         /// <param name="WarningMessage"></param>
-        private void WarningMail(string WarningMessage) {           
+        private void WarningMail(string WarningMessage,string Title) {           
             CommTool.MailData MailDB = new CommTool.MailData();
             DataTable MaillDataTable = MailDB.GetSendMail();
             if (MaillDataTable != null && MaillDataTable.Rows.Count > 0) {
                 foreach (DataRow dr in MaillDataTable.Rows) {
-                    MailDB.RegistrySend(dr[1].ToString(), "停損警戒", WarningMessage);
+                    MailDB.RegistrySend(dr[1].ToString(), Title, WarningMessage);
                 }
             }
         }

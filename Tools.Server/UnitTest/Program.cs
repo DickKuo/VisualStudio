@@ -80,10 +80,14 @@ namespace UnitTest {
             //Web.GetBueatyDirtory("https://www.ptt.cc/bbs/Beauty/M.1486780171.A.9C3.html", 0, "http://robertlan.16mb.com/api_beauty.php");
 
             Stock.StockData data = new StockData();
-             data.ControlPrice();
+            for (int i = 0; i <= 100; i++) {
+                data.ControlPrice();
+
+                System.Threading.Thread.Sleep(1000*20);
+            }
 
 
-            Console.Read();
+            //Console.Read();
             //ToolLog.Log(Default.PostMessage + info.Title);
             //PostData Data = new PostData();
             //Data.Author = SiteInfoList[Default.MinItem].Author;

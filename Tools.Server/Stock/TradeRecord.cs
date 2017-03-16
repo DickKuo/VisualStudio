@@ -20,7 +20,16 @@ namespace Stock {
 
         public string Lot { set; get; }
 
-        public string Price { set; get; }
+        /// <summary>操作價格</summary>
+        public decimal Price { set; get; }
+
+        /// <summary>停損價格</summary>
+        public decimal StopPrice { set; get; }
+        
+        /// <summary>結算點數</summary>
+        public decimal Settlement { set; get; }
+
+        public int Level { set; get; }
 
         public bool IsPyeongchang { set; get; }
 
