@@ -345,6 +345,30 @@ namespace SQLHelper {
            return Obj;
         }
 
+        /// <summary>將StoreProcedure資料撈出，並轉成物件(List)</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="StoreProcedureName"></param>
+        /// <param name="Obj"></param>
+        /// <returns></returns>
+        public List<T> ExeProcedureGetObjectList <T>(string StoreProcedureName, T Obj) {           
+            List<T> ObjList = new List<T>();
+            DataTable dt = this.ExeProcedureGetDataTable(StoreProcedureName);
+            if (dt != null && dt.Rows.Count > 0) {
+                foreach (DataRow row in dt.Rows) {
+                    Type elementType = Obj.GetType();
+                    T NewObj =(T)Activator.CreateInstance(elementType);
+                    foreach (PropertyInfo Info in Obj.GetType().GetProperties()) {
+                        try {
+                            NewObj.GetType().GetProperty(Info.Name).SetValue(NewObj, row[Info.Name], null);
+                        }
+                        catch { }
+                    }
+                    ObjList.Add(NewObj);
+                }
+            }
+            return ObjList;
+        }
+
         /// <summary>執行預存回傳單一結果</summary>
         /// <param name="StoreProcedureName"></param>
         /// <param name="OutParameter"></param>

@@ -74,6 +74,7 @@
     <Compile Include="TradeType.cs" />
     <Compile Include="WeekPoint.cs" />
     <Compile Include="Weighted.cs" />
+    <Compile Include="WeightedData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SQLHelper\SQLHelper.csproj">

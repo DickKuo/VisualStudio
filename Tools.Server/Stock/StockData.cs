@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using System.Reflection;
 namespace Stock {
-    public class StockData {
+    public class StockData : BaseData{
 
         private class Default {
             public const string sqlconnection = "sqlconnection";
@@ -29,13 +29,11 @@ namespace Stock {
         private class SP {
             public const string SaveOption = "SaveOption";
             public const string SaveOptionHistory = "SaveOptionHistory";
-            public const string SaveWeighted = "SaveWeighted";
             public const string GetDueMonth = "GetDueMonth";
             public const string GetOptionHistory = "GetOptionHistory";
             public const string SaveOpenInterest = "SaveOpenInterest";
             public const string GetMaxNumberOfContracts = "GetMaxNumberOfContracts";
-            public const string GetMaxVolume = "GetMaxVolume";
-            public const string GetWeighted = "GetWeighted";
+            public const string GetMaxVolume = "GetMaxVolume";         
             public const string AddWeekPoint = "AddWeekPoint";
             public const string GetWeekPointByDueMonthAndOP = "GetWeekPointByDueMonthAndOP";
             public const string GetOptionByDueMonthAndOP = "GetOptionByDueMonthAndOP";
@@ -76,11 +74,11 @@ namespace Stock {
             public const string GreatBuy = "GreatBuy";
             public const string GreatSell = "GreatSell";
             public const string Remark = "Remark";
+            public const string Futures = "Futures";
             public const string OpenPrice = "OpenPrice";
             public const string HighestPrice = "HighestPrice";
             public const string LowestPrice = "LowestPrice";
             public const string ClosingPrice = "ClosingPrice";
-            public const string Futures = "Futures";
             public const string SN = "SN";
             public const string PutVolume = "PutVolume";
             public const string CallVolume = "CallVolume";
@@ -113,9 +111,7 @@ namespace Stock {
         }
 
         #endregion
-
-        SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
-        
+                
         //public StockData(string pStockNum) {
         //    _stock = new Stock();
         //    StockNum = pStockNum;
@@ -388,9 +384,10 @@ namespace Stock {
                 }
             }
             if (IsGetWeighed) {
-                Weighted _Weighted = GetWeightedDaily(_HtmlDocument);
+                WeightedData WeightedDAO = new WeightedData();
+                Weighted _Weighted =WeightedDAO.GetWeightedDaily(_HtmlDocument);
                 if (_Weighted != null) {
-                    SaveWeighted(_Weighted);
+                    WeightedDAO.SaveWeighted(_Weighted);
                 }
                 else {
                     CommTool.ToolLog.Log("Weighted Is Null");
@@ -398,65 +395,6 @@ namespace Stock {
             }
             _HtmlDocument = null;
             return list;
-        }
-
-        /// <summary>取得大盤價格走勢</summary>
-        /// <param name="Url"></param>
-        /// <returns></returns>
-        public Weighted GetWeightedDaily(string Url)
-        {
-            WebInfo.WebInfo Info = new WebInfo.WebInfo();
-            HtmlAgilityPack.HtmlDocument Doc =  Info.GetWebHtmlDocument(Url,Encoding.UTF8);           
-            return GetWeighted(Doc);
-        }
-
-        /// <summary>取得大盤價格走勢</summary>
-        /// <param name="Doc"></param>
-        /// <returns></returns>
-        public Weighted GetWeightedDaily(HtmlAgilityPack.HtmlDocument Doc) {
-            return GetWeighted(Doc);
-        }
-        
-        /// <summary>取得大盤價格走勢</summary>
-        /// 20170203 抓取大盤走勢的功能，同期貨的一起抓  add by Dick 
-        /// 20170209 修改TradeDate改成當下時間 modified by Dick
-        /// <param name="Url"></param>
-        /// <returns></returns>
-        private Weighted GetWeighted(HtmlAgilityPack.HtmlDocument Doc) {
-            DateTime TimeStamp = DateTime.Now;
-            Weighted _Weighted = null;
-            TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 59, 59));
-            TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 15));
-            if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
-                HtmlNode Tr = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[1]/tbody[1]/tr[1]");
-                HtmlNode NodeWeighted = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[2]/tbody[1]/tr[1]");
-                HtmlNode NearMonth = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[2]/tbody[1]/tr[2]");
-                if (Tr != null) {
-                    try {
-                        _Weighted = new Weighted();
-                        int Start = Tr.ChildNodes[3].InnerText.IndexOf("（");
-                        int End = Tr.ChildNodes[3].InnerText.IndexOf("）");
-                        _Weighted.Price = decimal.Parse(Tr.ChildNodes[3].InnerText.Substring(0, Start));
-                        _Weighted.Change = decimal.Parse(Tr.ChildNodes[3].InnerText.Trim().Substring(Start + 1, End - Start - 1));
-                        _Weighted.HighestPrice = decimal.Parse(Tr.ChildNodes[7].InnerText);
-                        _Weighted.LowestPrice = decimal.Parse(Tr.ChildNodes[11].InnerText);
-                        _Weighted.Volume = Tr.ChildNodes[15].InnerText.Trim().Replace("（億）", string.Empty).Replace("\t", string.Empty); //過濾掉不必要的字元
-                        if (NodeWeighted != null) {
-                            _Weighted.Futures = decimal.Parse(NearMonth.ChildNodes[3].InnerText);
-                            _Weighted.TradeDate = DateTime.Now;
-                        }
-                        if (NodeWeighted != null) {
-                            _Weighted.OpenPrice = decimal.Parse(NodeWeighted.ChildNodes[15].InnerText);
-                            _Weighted.ClosingPrice = decimal.Parse(NodeWeighted.ChildNodes[7].InnerText);
-                        }
-                    }
-                    catch (Exception ex) {
-                        CommTool.ToolLog.Log(ex);
-                        _Weighted = null;
-                    }
-                }
-            }
-            return _Weighted;
         }
 
         /// <summary>儲存選擇權交易歷史資訊</summary>
@@ -530,30 +468,8 @@ namespace Stock {
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
             }
-        }
+        }       
         
-        /// <summary>儲存大盤歷史資料</summary>
-        /// 20170203 加入新欄位    add by Dick
-        /// <param name="dt"></param>
-        public void SaveWeighted(DataTable dt) {
-            try {
-                foreach (DataRow dr in dt.Rows) {
-                    USP.AddParameter(SPParameter.TradeDate, Convert.ToDateTime(dr[SPParameter.TradeDate]));
-                    USP.AddParameter(SPParameter.ClosingPrice, dr[SPParameter.ClosingPrice]);
-                    USP.AddParameter(SPParameter.HighestPrice, dr[SPParameter.HighestPrice]);
-                    USP.AddParameter(SPParameter.LowestPrice, dr[SPParameter.LowestPrice]);
-                    USP.AddParameter(SPParameter.OpenPrice, dr[SPParameter.OpenPrice]);
-                    USP.AddParameter(SPParameter.Price, dr[SPParameter.Price]);
-                    USP.AddParameter(SPParameter.Futures, dr[SPParameter.Futures]);
-                    USP.AddParameter(SPParameter.Remark, dr[SPParameter.Remark]);
-                    USP.ExeProcedureNotQuery(SP.SaveWeighted);
-                }
-            }
-            catch (Exception ex) {
-                CommTool.ToolLog.Log(ex);
-            }
-        }
-
         /// <summary>每周操作紀錄</summary>
         /// 20170208 add by Dick 
         /// 20170227 add by Dick for 追加新欄位
@@ -573,45 +489,7 @@ namespace Stock {
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
             }
-        }
-
-        /// <summary>儲存大盤歷史資料</summary>
-        public void SaveWeighted(Weighted _Weighted) {
-            try {
-                USP.AddParameter(SPParameter.TradeDate, _Weighted.TradeDate);
-                USP.AddParameter(SPParameter.ClosingPrice, _Weighted.ClosingPrice);
-                USP.AddParameter(SPParameter.HighestPrice, _Weighted.HighestPrice);
-                USP.AddParameter(SPParameter.LowestPrice, _Weighted.LowestPrice);
-                USP.AddParameter(SPParameter.OpenPrice, _Weighted.OpenPrice);
-                USP.AddParameter(SPParameter.Price, _Weighted.Price);
-                USP.AddParameter(SPParameter.Futures, _Weighted.Futures);
-                USP.AddParameter(SPParameter.Change, _Weighted.Change);
-                USP.AddParameter(SPParameter.Volume, _Weighted.Volume);
-                USP.AddParameter(SPParameter.Remark, _Weighted.Remark == null ? string.Empty : _Weighted.Remark);
-                USP.ExeProcedureNotQuery(SP.SaveWeighted);                 
-            }
-            catch (Exception ex) {
-                CommTool.ToolLog.Log(ex);
-            }
-        }
-        
-        /// <summary>取得最新一筆大盤資訊</summary>
-        /// <returns></returns>
-        public Weighted GetWeighted() {
-            DataTable dt = USP.ExeProcedureGetDataTable(SP.GetWeighted);
-            Weighted _Weighted = new Weighted();
-            if (dt != null && dt.Rows.Count > CommTool.BaseConst.MinItems) {
-                DataRow Row = dt.Rows[CommTool.BaseConst.ArrayFirstItem];
-                PropertyInfo[] infos = typeof(Weighted).GetProperties();
-                foreach (PropertyInfo info in infos) {
-                    _Weighted.GetType().GetProperty(info.Name).SetValue(_Weighted, Row[info.Name], null);
-                }
-                return _Weighted;
-            }
-            else {
-                return null;
-            }      
-        }
+        }       
 
         public DataTable SelectOptionHistory(string DueMonth,string Option,string Start,string End) {
             try {
@@ -998,6 +876,7 @@ namespace Stock {
                     DateTime End = new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 0);
                     TimeSpan StartTimeSpan = TimeStamp.Subtract(Start);
                     TimeSpan EndTimeSpan = TimeStamp.Subtract(End);
+                    WeightedData WeightedDAO = new WeightedData();
                     if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
                         CalendarData CalendarDB = new CalendarData();
                         Calendar _Calendar = CalendarDB.GetCalendar(DateTime.Now);
@@ -1029,7 +908,8 @@ namespace Stock {
                                     #endregion
                                 }
                                 if (dt != null && dt.Rows.Count > 0) {
-                                    Weighted _Weighted = this.GetWeighted();
+
+                                    Weighted _Weighted = WeightedDAO.GetWeighted();
                                     decimal StopPrice = 0;
                                     if (_Weighted != null) {
                                         StopPrice = this.CalculateStopPrice(Convert.ToDecimal(dt.Rows[0][0]), dt.Rows[0][1].ToString(), _Weighted.Futures);
@@ -1132,21 +1012,20 @@ namespace Stock {
         /// <param name="EndTime"></param>
         /// <param name="_WeekPoint"></param>
         /// <returns></returns>
-        public List<Option> GetOptionTimeInterval(DateTime BeginTime ,DateTime EndTime,WeekPoint _WeekPoint) {
+        public List<Option> GetListOption(DateTime BeginTime, DateTime EndTime, WeekPoint _WeekPoint) {
             List<Option> ListOption = new List<Option>();
             try {
-                USP.AddParameter(SPParameter.BeginTime, _WeekPoint.BuyStopPrice);
-                USP.AddParameter(SPParameter.EndTime, _WeekPoint.ClosePrice);
+                USP.AddParameter(SPParameter.BeginTime, BeginTime);
+                USP.AddParameter(SPParameter.EndTime, EndTime);
                 USP.AddParameter(SPParameter.Contract, _WeekPoint.Contract);
                 USP.AddParameter(SPParameter.DueMonth, _WeekPoint.DueMonth);
                 USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
-                USP.ExeProcedureNotQuery(SP.GetListOption);
-                return ListOption;
+                ListOption = USP.ExeProcedureGetObjectList(SP.GetListOption, new Option());
             }
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
-                return null;
-            }           
+            }
+            return ListOption;
         }
 
         /// <summary>監控價格，到達警戒時寄發信件</summary>
@@ -1158,10 +1037,11 @@ namespace Stock {
             {
                 TradeRecordData RecordDB = new TradeRecordData();
                 List<TradeRecord> RecordList= RecordDB.GetTradeRecord();
+                WeightedData WeightedDAO = new WeightedData();
                 foreach (TradeRecord Recorde in RecordList)
                 {
                     if (Recorde.IsMail) {
-                        Weighted _Weighted = this.GetWeighted();                      
+                        Weighted _Weighted = WeightedDAO.GetWeighted();                      
                         Option Result = GetOptionByMonthAndContractAndOP(new WeekPoint() { DueMonth = Recorde.DueMonth, OP = Recorde.OP, Contract = Recorde.Contract });
                         CalculateStopPoint(RecordDB, Recorde, _Weighted, Result);
                     }
