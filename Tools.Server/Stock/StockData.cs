@@ -1060,7 +1060,7 @@ namespace Stock {
             string WarningMessage = string.Empty;
             if (Recorde.Type == TradeType.Sell.ToString()) {
                 StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);
-                if ((Result.Clinch + 10) > StopPrice) {
+                if ((Result.Clinch + 5) > StopPrice) {
                     SendWarningMail(Recorde, StopPrice, Result, WarningMessage, "停損警戒");
                 }
                 else {
@@ -1071,10 +1071,14 @@ namespace Stock {
             else {
                 ///這邊要做停損跟停利的計算
                 StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(Recorde.Price));
-                if ((Result.Clinch) < (StopPrice + 8)) {
+                if ((Result.Clinch) < (StopPrice + 2)) {
                     SendWarningMail(Recorde, StopPrice, Result, WarningMessage, "停損警戒");
                 }
                 else {
+                    if (Recorde.TradeDate > Convert.ToDateTime( Result.Time))
+                    {
+                        return;
+                    }
                     int NewLevel = 0;
                     decimal ButtomStopPrice = 0m;
                     decimal TopStopPrice = 0m;
@@ -1092,9 +1096,13 @@ namespace Stock {
                         StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(((StopPrice * ((1.1m) + (Recorde.Level * 0.1m))) + 1)));
                     }
                     if (NewLevel < Recorde.Level) {
-                        if ((StopPrice + 8) > Result.Clinch) {
-                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯", NewLevel));
+                        if (Result.Clinch <= StopPrice)
+                        {
+                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯停利", NewLevel));
                         }
+                        //if ((StopPrice + 8) > Result.Clinch) {
+                        //    //SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯", NewLevel));
+                        //}
                     }
                     else {
                         if (NewLevel > Recorde.Level) {
