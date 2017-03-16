@@ -55,18 +55,7 @@ namespace Stock {
             List<Weighted> WeightedList = new List<Weighted>();
             USP.AddParameter(SPParameter.BeginDate,BeginDate);
             USP.AddParameter(SPParameter.EndDate, EndDate);
-            DataTable dt = USP.ExeProcedureGetDataTable(SP.GetWeighted);
-            if (dt != null && dt.Rows.Count > 0) {
-                foreach (DataRow Row in dt.Rows) {
-                    Weighted _Weighted = new Weighted();
-                    PropertyInfo[] infos = typeof(Weighted).GetProperties();
-                    foreach (PropertyInfo info in infos) {
-                        _Weighted.GetType().GetProperty(info.Name).SetValue(_Weighted, Row[info.Name], null);
-                    }
-                    WeightedList.Add(_Weighted);
-                }
-            }
-            return WeightedList;
+            return USP.ExeProcedureGetObjectList(SP.GetWeightedByDay, new Weighted());
         }
 
         /// <summary>取得大盤價格走勢</summary>
