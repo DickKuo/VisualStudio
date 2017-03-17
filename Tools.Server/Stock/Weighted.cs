@@ -37,5 +37,9 @@ namespace Stock {
 
         /// <summary>備註</summary>
         public string Remark { set; get; }
+
+        /// <summary>時間戳章</summary>
+        public string TradeTimestamp { set; get; }
+
     }
 }

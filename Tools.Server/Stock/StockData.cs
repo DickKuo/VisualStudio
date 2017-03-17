@@ -89,6 +89,7 @@ namespace Stock {
             public const string ClosePrice = "ClosePrice";
             public const string BeginTime = "BeginTime";
             public const string EndTime = "EndTime";
+            public const string TradeTimestamp = "TradeTimestamp";
         }
 
         private string _stockNum;
@@ -296,10 +297,11 @@ namespace Stock {
                 TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45,15));
                 if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
                     try {
+                        string TradeTimestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
                         List<Option> ListOption = new List<Option>();
-                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8, true)); //周選  
-                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8)); //近月選1                               
-                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8)); //近月選2                              
+                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8, TradeTimestamp, true)); //周選  
+                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); //近月選1                               
+                        ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); //近月選2                              
                         SaveOpionData(ListOption);
                         Message = "GetOptionOK";
                         CommTool.ToolLog.Log(Message);
@@ -327,8 +329,8 @@ namespace Stock {
         /// <summary>取得選擇權價格清單，預設編碼</summary>
         /// <param name="Url">POST位置</param>
         /// <returns></returns>
-        public List<Option> GetOptionDaily(string Url, string Contract) {
-            return GetOptionDaily(Url, Contract, Encoding.Default);
+        public List<Option> GetOptionDaily(string Url, string Contract, string TradeTimestamp) {
+            return GetOptionDaily(Url, Contract, Encoding.Default, TradeTimestamp);
         }
         
         /// <summary>取得選擇權價格清單</summary>
@@ -340,7 +342,7 @@ namespace Stock {
         /// <param name="UrlEncoding"></param>
         /// <param name="IsGetWeighed">是否抓取大盤</param>
         /// <returns></returns>
-        public List<Option> GetOptionDaily(string Url, string Contract, Encoding UrlEncoding,bool IsGetWeighed=false) {
+        public List<Option> GetOptionDaily(string Url, string Contract, Encoding UrlEncoding, string TradeTimestamp, bool IsGetWeighed = false) {
             WebInfo.WebInfo Info = new WebInfo.WebInfo();
             List<Option> list = new List<Option>();
             StreamReader SR = Info.GetResponse(Url + Contract, UrlEncoding);
@@ -365,6 +367,7 @@ namespace Stock {
                                 Call.Volume = Nodes[i].ChildNodes[11].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[11].InnerText);
                                 Call.Time = Nodes[i].ChildNodes[13].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[13].InnerText).ToString(CommTool.BaseConst.TimeFormatComplete);
                                 Call.Contract = Nodes[i].ChildNodes[15].InnerText.Trim();
+                                Call.TradeTimestamp = TradeTimestamp;
                                 list.Add(Call);
                                 Option Put = new Option();
                                 Put.OP = Default.Put;
@@ -377,6 +380,7 @@ namespace Stock {
                                 Put.NumberOfContracts = Nodes[i].ChildNodes[25].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[25].InnerText);
                                 Put.Volume = Nodes[i].ChildNodes[27].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[27].InnerText);
                                 Put.Time = Nodes[i].ChildNodes[29].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[29].InnerText).ToString(CommTool.BaseConst.TimeFormatComplete);
+                                Put.TradeTimestamp = TradeTimestamp;
                                 list.Add(Put);
                             }
                         }
@@ -386,6 +390,7 @@ namespace Stock {
             if (IsGetWeighed) {
                 WeightedData WeightedDAO = new WeightedData();
                 Weighted _Weighted =WeightedDAO.GetWeightedDaily(_HtmlDocument);
+                _Weighted.TradeTimestamp = TradeTimestamp;
                 if (_Weighted != null) {
                     WeightedDAO.SaveWeighted(_Weighted);
                 }
@@ -412,6 +417,7 @@ namespace Stock {
                         USP.AddParameter(SPParameter.Time, op.Time);
                         USP.AddParameter(SPParameter.DueMonth, op.DueMonth);
                         USP.AddParameter(SPParameter.NumberOfContracts, op.NumberOfContracts);
+                        USP.AddParameter(SPParameter.TradeTimestamp, op.TradeTimestamp);
                         USP.AddParameter(SPParameter.Volume, op.Volume);
                         USP.ExeProcedureNotQuery(SP.SaveOption);
                     }
@@ -1096,7 +1102,7 @@ namespace Stock {
                         StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(((StopPrice * ((1.1m) + (Recorde.Level * 0.1m))) + 1)));
                     }
                     if (NewLevel < Recorde.Level) {
-                        if (Result.Clinch <= StopPrice)
+                        if (Result.Clinch <= StopPrice+2)
                         {
                             SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯停利", NewLevel));
                         }

@@ -27,6 +27,7 @@ namespace Stock {
             public const string Change = "Change";
             public const string Volume = "Volume";
             public const string Remark = "Remark";
+            public const string TradeTimestamp = "TradeTimestamp";
         }
 
         /// <summary>取得最新一筆大盤資訊</summary>
@@ -128,6 +129,7 @@ namespace Stock {
                 USP.AddParameter(SPParameter.Futures, _Weighted.Futures);
                 USP.AddParameter(SPParameter.Change, _Weighted.Change);
                 USP.AddParameter(SPParameter.Volume, _Weighted.Volume);
+                USP.AddParameter(SPParameter.TradeTimestamp, _Weighted.TradeTimestamp);
                 USP.AddParameter(SPParameter.Remark, _Weighted.Remark == null ? string.Empty : _Weighted.Remark);
                 USP.ExeProcedureNotQuery(SP.SaveWeighted);
             }
@@ -150,6 +152,7 @@ namespace Stock {
                     USP.AddParameter(SPParameter.Price, dr[SPParameter.Price]);
                     USP.AddParameter(SPParameter.Futures, dr[SPParameter.Futures]);
                     USP.AddParameter(SPParameter.Remark, dr[SPParameter.Remark]);
+                    USP.AddParameter(SPParameter.TradeTimestamp, dr[SPParameter.TradeTimestamp]);
                     USP.ExeProcedureNotQuery(SP.SaveWeighted);
                 }
             }

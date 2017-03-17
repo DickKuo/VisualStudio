@@ -29,5 +29,7 @@ namespace Stock {
         /// <summary>類別</summary>
         public string DueMonth { set; get; }
 
+        /// <summary>時間戳章</summary>
+        public string TradeTimestamp { set; get; }
     }
 }
