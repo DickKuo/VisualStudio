@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace CommTool {
     public class BaseConst {
@@ -34,5 +32,15 @@ namespace CommTool {
         public const int ArrayTenthItem = 9;
         public const string DServiceConfig = "DService.exe.config";
         public const string Wednesday = "Wednesday";
+
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        protected string GetCurrentMethod() {
+            StackTrace st = new StackTrace();
+            StackFrame sf = st.GetFrame(1);
+            return sf.GetMethod().Name;
+        }
+
+
     }
 }
