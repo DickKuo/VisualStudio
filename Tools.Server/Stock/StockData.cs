@@ -1080,11 +1080,7 @@ namespace Stock {
                 if ((Result.Clinch) < (StopPrice + 2)) {
                     SendWarningMail(Recorde, StopPrice, Result, WarningMessage, "停損警戒");
                 }
-                else {
-                    if (Recorde.TradeDate > Convert.ToDateTime( Result.Time))
-                    {
-                        return;
-                    }
+                else { 
                     int NewLevel = 0;
                     decimal ButtomStopPrice = 0m;
                     decimal TopStopPrice = 0m;
