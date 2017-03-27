@@ -265,7 +265,7 @@ namespace StandredImplement
                     DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 46 , 0);
                     while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0)
                     {
-                        Stock.StockData StockContext = new Stock.StockData();
+                        StockDAO StockContext = new StockDAO();
                         string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
                         ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
                         string Url = configmanage.GetValue(Default.YahooStock);
@@ -367,7 +367,7 @@ namespace StandredImplement
                     DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 44, 40);
                     DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 46, 0);
                     while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0) {
-                        Stock.StockData StockContext = new Stock.StockData();
+                        StockDAO StockContext = new StockDAO();
                         StockContext.ControlPrice();
                         Thread.Sleep(1000*20);
                     }

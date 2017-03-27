@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 
 namespace Stock {
-    public class WeightedData: BaseData {
+    public class WeightedDAO: BaseData {
         private class SP {
             public const string GetWeighted = "GetWeighted";
             public const string GetWeightedByDay = "GetWeightedByDay";
@@ -84,7 +84,7 @@ namespace Stock {
             DateTime TimeStamp = DateTime.Now;
             Weighted _Weighted = null;
             TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 59, 59));
-            TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 15));
+            TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 30, 5));
             if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
                 HtmlNode Tr = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[1]/tbody[1]/tr[1]");
                 HtmlNode NodeWeighted = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[1]/body[1]/table[2]/tbody[1]/tr[1]");

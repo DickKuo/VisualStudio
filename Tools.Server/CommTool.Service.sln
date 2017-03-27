@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommTool", "FileTool\CommTool.csproj", "{E9D26E84-C166-48CC-854E-99372DF4EB3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stock", "Stock\Stock.csproj", "{6BD4C474-7A0D-4E83-821B-AA9D1CBA1E24}"
@@ -20,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTriggerService", "AutoTriggerService\AutoTriggerService.csproj", "{331187D2-A7CC-4DB3-A2FE-41F6249FE427}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{FC2F8CF0-39E5-464C-BD8E-46D3E5486A9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectBase", "ObjectBase\ObjectBase.csproj", "{2376869F-3AC0-4049-8BC7-E0785A31876E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +135,16 @@ Global
 		{FC2F8CF0-39E5-464C-BD8E-46D3E5486A9A}.Release|Mixed Platforms.Build.0 = Release|x86
 		{FC2F8CF0-39E5-464C-BD8E-46D3E5486A9A}.Release|x86.ActiveCfg = Release|x86
 		{FC2F8CF0-39E5-464C-BD8E-46D3E5486A9A}.Release|x86.Build.0 = Release|x86
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2376869F-3AC0-4049-8BC7-E0785A31876E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

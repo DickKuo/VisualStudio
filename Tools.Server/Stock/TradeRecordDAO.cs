@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 
 namespace Stock {
-    public class TradeRecordData : BaseData {
+    public class TradeRecordDAO : BaseData {
 
         private class SP {
             public const string AddTradeRecord = "AddTradeRecord";
