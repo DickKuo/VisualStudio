@@ -12,7 +12,7 @@ namespace SQLHelper {
             public const string ExtendedProperties = "ExtendedProperties";
             public const string Dirty = "Dirty";
             public const int FirstItem = 0;
-            public const string ConnectionFormat = "Data Source=.;Initial Catalog={0};User Id={1};Password={2};";
+            public const string ConnectionFormat = "Data Source={0};Initial Catalog={1};User Id={2};Password={3};";
         }
               
         public static string _sqlconnection { set; get; }
@@ -24,6 +24,8 @@ namespace SQLHelper {
         private static string _password;
 
         private static string _username;
+
+        private static string _msServerIP;
    
         public static string DBIP {
             set {
@@ -53,8 +55,13 @@ namespace SQLHelper {
             set {
                 _password = value;
             }
-        }         
-              
+        }
+
+        public static string MsServerIP {
+            set {
+                _msServerIP = value;
+            }
+        }    
         /// <summary>建構子</summary>
         /// 20150324 add by Dick
         /// <param name="DicSetting"></param>
@@ -67,7 +74,7 @@ namespace SQLHelper {
         /// <summary>建立連線字串</summary>
         /// 20160808 add by Dick
         public static void NewConnectionString() {
-            _sqlconnection = string.Format(Default.ConnectionFormat,DBName,_username,_password);
+            _sqlconnection = string.Format(Default.ConnectionFormat, _msServerIP, DBName, _username, _password);
         }
 
         /// <summary>建立連線字串</summary>
@@ -75,8 +82,8 @@ namespace SQLHelper {
         /// <param name="DbName"></param>
         /// <param name="UserName"></param>
         /// <param name="PassWord"></param>
-        public static void NewConnectionString(string DbName,string UserName,string PassWord) {
-            _sqlconnection = string.Format(Default.ConnectionFormat, DbName, UserName, PassWord);
+        public static void NewConnectionString(string MsServerIP,string DbName,string UserName,string PassWord) {
+            _sqlconnection = string.Format(Default.ConnectionFormat, MsServerIP, DbName, UserName, PassWord);
         }
 
         /// <summary>設定連線字串</summary>
@@ -255,8 +262,9 @@ namespace SQLHelper {
         private class Default {
             public const string MsUserName = "MsUserName";
             public const string MsPassWord = "MsPassWord";
+            public const string MsServerIP = "MsServerIP";
             public const string DBName = "DBName";
-            public const string ConnectionFormat = "Data Source=.;Initial Catalog={0};User Id={1};Password={2};";
+            public const string ConnectionFormat = "Data Source={0};Initial Catalog={1};User Id={2};Password={3};";
         }
 
         //private  Dictionary<string, object>  _parameters    = new Dictionary<string,object>();
@@ -278,6 +286,7 @@ namespace SQLHelper {
         /// <summary>執行Store Procedure 後的結果</summary>
         public string Result { get { return CommandResult; } }
         private string CommandResult = string.Empty;
+        private int ResultCode = 0;
 
         /// <summary>最後一次執行Sql指令</summary>
         public string LastCommandString {
@@ -293,10 +302,12 @@ namespace SQLHelper {
             object DbName = new object();
             object PassWord = new object();
             object UserName = new object();
+            object MsServerIP = new object();            
             CommTool.ObjectUtility.ReadRegistry(Default.DBName, ref DbName);
             CommTool.ObjectUtility.ReadRegistry(Default.MsUserName, ref UserName);
             CommTool.ObjectUtility.ReadRegistry(Default.MsPassWord, ref PassWord);
-            _ConnetionString = string.Format(Default.ConnectionFormat, DbName.ToString(), UserName.ToString(), PassWord.ToString());
+            CommTool.ObjectUtility.ReadRegistry(Default.MsServerIP, ref MsServerIP);
+            _ConnetionString = string.Format(Default.ConnectionFormat, MsServerIP.ToString(), DbName.ToString(), UserName.ToString(), PassWord.ToString());
         }
 
         /// <summary>執行預存不傳回值</summary>
@@ -400,6 +411,38 @@ namespace SQLHelper {
             return CommandResult;
         }
 
+        /// <summary>執行預存回傳結果Code</summary>
+        /// <param name="StoreProcedureName"></param>
+        /// <param name="OutParameter"></param>
+        /// <returns></returns>
+        public int ExeProcedureHasResultReturnCode(string StoreProcedureName) {
+            SqlConnection con;
+            ExeInit(StoreProcedureName, out con);
+            try {
+                con.Open();
+                Scmd.ExecuteNonQuery();
+                if (_OutParameter.Count > 0) {
+                    foreach (string str in _OutParameter) {
+                        OutParameterValues.Add(Scmd.Parameters[str].Value.ToString());
+                    }
+                }
+               ResultCode =Convert.ToInt32( SQLExecResultCode.Success);
+            }
+            catch (Exception ex) {
+                CommandResult = ex.Message;
+                ResultCode = Convert.ToInt32(SQLExecResultCode.Fail);
+            }
+            finally {
+                Scmd.Parameters.Clear();
+                Scmd.Cancel();
+                Scmd.Dispose();
+                con.Close();
+                con.Dispose();
+                _OutParameter.Clear();
+            }
+            return ResultCode;
+        }
+
         /// <summary>取得資料 回傳DataTable</summary>
         /// <param name="StoreProcedureName">預存名稱</param>
         /// <returns></returns>
@@ -500,6 +543,11 @@ namespace SQLHelper {
     }
 
     public class SqlMataData : ISQLMataRepair {
+    }
+
+    public enum SQLExecResultCode { 
+       Success=99,
+       Fail=-1
     }
 
 }

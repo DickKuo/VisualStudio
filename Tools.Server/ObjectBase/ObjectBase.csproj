@@ -7,16 +7,17 @@
     <ProjectGuid>{2376869F-3AC0-4049-8BC7-E0785A31876E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommTool</RootNamespace>
+    <RootNamespace>ObjectBase</RootNamespace>
     <AssemblyName>ObjectBase</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\Dropbox\Export\</OutputPath>
+    <OutputPath>..\..\..\..\Users\Dick\Dropbox\Export\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bank.cs" />
+    <Compile Include="BankDAO.cs" />
     <Compile Include="CommBase.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerDAO.cs" />

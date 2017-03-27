@@ -7,6 +7,7 @@ namespace ObjectBase {
             public const string AddCustomer = "AddCustomer";
             public const string GetCustomerBySN = "GetCustomerBySN";
             public const string GetCustomerByAccount = "GetCustomerByAccount";
+            public const string LoginCheck = "LoginCheck";
         }
 
         private class SPParameter {
@@ -32,7 +33,7 @@ namespace ObjectBase {
         public int AddCustomer(Customer _Customer) {
             try {
                 USP.AddParameter(SPParameter.PassWord, _Customer.PassWord);
-                USP.AddParameter(CommBase.Remark, _Customer.Remark);
+                USP.AddParameter(CommBase.Remark, _Customer.Remark == null ? string.Empty : _Customer.Remark);
                 USP.AddParameter(SPParameter.FirstName, _Customer.Member.FirstName);
                 USP.AddParameter(SPParameter.LastName, _Customer.Member.LastName);
                 USP.AddParameter(SPParameter.Gender, _Customer.Member.Gender);
@@ -41,9 +42,8 @@ namespace ObjectBase {
                 USP.AddParameter(SPParameter.Phone, _Customer.Member.Phone);
                 USP.AddParameter(SPParameter.BirthDay, _Customer.Member.BirthDay);
                 USP.AddParameter(SPParameter.HomeAddr, _Customer.Member.HomeAddr);
-                USP.AddParameter(SPParameter.NickName, _Customer.Member.NickName);
-                string Result = USP.ExeProcedureHasResult(SP.AddCustomer);
-                return Convert.ToInt32(Result);
+                USP.AddParameter(SPParameter.NickName, _Customer.Member.NickName == null ? string.Empty : _Customer.Member.NickName);
+                return USP.ExeProcedureHasResultReturnCode(SP.AddCustomer);                
             }
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
@@ -85,6 +85,21 @@ namespace ObjectBase {
                 CommTool.ToolLog.Log(ex);
                 return new Customer();
             }
+        }
+
+        /// <summary>檢查登入帳號</summary>
+        /// <param name="Account"></param>
+        /// <param name="PassWord"></param>
+        /// <returns></returns>
+        public Customer LoginCheck(string Account,string PassWord) {
+            USP.AddParameter(SPParameter.Account, Account);
+            USP.AddParameter(SPParameter.PassWord, PassWord);
+            Customer _Customer =  USP.ExeProcedureGetObject(SP.LoginCheck, new Customer());
+            if (_Customer != null) {
+                MemberDAO _MemberDAO = new MemberDAO();
+                _Customer.Member =  _MemberDAO.GetMemberByCustomerSN(_Customer.SN);
+            }
+            return _Customer;
         }
 
     }
