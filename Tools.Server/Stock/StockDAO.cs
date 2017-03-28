@@ -309,8 +309,8 @@ namespace Stock {
                             WeightedDAO WeightedDAO = new WeightedDAO();
                             Weighted _Weighted = WeightedDAO.GetWeightedDaily(Url);
                             if (_Weighted != null) {
-                                WeightedDAO.SaveWeighted(_Weighted);
                                 _Weighted.TradeTimestamp = TradeTimestamp;
+                                WeightedDAO.SaveWeighted(_Weighted);
                             }
                         });    
                         Task.WaitAll(Task1,Task2,Task3,Task4);
