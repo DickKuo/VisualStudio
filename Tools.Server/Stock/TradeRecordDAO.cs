@@ -11,6 +11,7 @@ namespace Stock {
             public const string AddTradeRecord = "AddTradeRecord";
             public const string UpdateTradeRecord = "UpdateTradeRecord";
             public const string GetTradeRecord = "GetTradeRecord";
+            public const string GetDueDateSettlement="GetDueDateSettlement";
         }
 
         private class SPParameter {
@@ -87,6 +88,22 @@ namespace Stock {
                 }
             }
             return TradeList;
+        }
+
+        /// <summary>取得時間區間內的結算金額</summary>
+        /// <param name="BeginDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        public decimal GetDueDateSettlement(string BeginDate,string EndDate) {
+            USP.AddParameter(BaseData.SSParameter.BeginDate,BeginDate);
+            USP.AddParameter(BaseData.SSParameter.EndDate, EndDate);
+            DataTable dt = USP.ExeProcedureGetDataTable(SP.GetDueDateSettlement);
+            if (dt != null && dt.Rows.Count > 0) {
+                return Convert.ToInt32(dt.Rows[0][0]);
+            }
+            else {
+                return 0;
+            }
         }
 
     }
