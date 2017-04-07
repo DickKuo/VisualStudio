@@ -411,6 +411,31 @@ namespace SQLHelper {
             return CommandResult;
         }
 
+        /// <summary>執行預存回傳一筆資料</summary>
+        /// <param name="StoreProcedureName"></param>
+        /// <returns></returns>
+        public object ExeProcedureSingleResult(string StoreProcedureName) {
+            SqlConnection con;
+            ExeInit(StoreProcedureName, out con);
+            object Obj = new object();
+            try {
+                con.Open();
+               Obj= Scmd.ExecuteScalar();                 
+            }
+            catch (Exception ex) {
+                CommandResult = ex.Message;
+            }
+            finally {
+                Scmd.Parameters.Clear();
+                Scmd.Cancel();
+                Scmd.Dispose();
+                con.Close();
+                con.Dispose();
+                _OutParameter.Clear();
+            }
+            return Obj;
+        }
+
         /// <summary>執行預存回傳結果Code</summary>
         /// <param name="StoreProcedureName"></param>
         /// <param name="OutParameter"></param>

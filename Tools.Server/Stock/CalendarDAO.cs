@@ -17,6 +17,7 @@ namespace Stock {
             public const string GetCalendarDaily = "GetCalendarDaily";
             public const string SaveCalendar = "SaveCalendar";
             public const string UpdateCalendar = "UpdateCalendar";
+            public const string GetDueMonthWeekStart = "GetDueMonthWeekStart";
         }
 
         private class SPParameter {
@@ -29,6 +30,7 @@ namespace Stock {
             public const string NearMonth2 = "NearMonth2";
             public const string Remark = "Remark";
             public const string IsMaill = "IsMaill";
+            public const string DueMonth = "DueMonth";
         }
 
         SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
@@ -122,6 +124,15 @@ namespace Stock {
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
             }
+        }
+
+        /// <summary>取得交易第一天</summary>
+        /// <param name="DueMonth"></param>
+        /// <returns></returns>
+        public Calendar GetDueMonthWeekStart(string DueMonth) {
+            USP.AddParameter(SPParameter.DueMonth, DueMonth);
+            Calendar _Calendar = USP.ExeProcedureGetObject(SP.GetDueMonthWeekStart,new Calendar ());
+            return _Calendar;
         }
     }
 }

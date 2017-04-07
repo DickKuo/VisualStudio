@@ -1049,6 +1049,9 @@ namespace Stock {
                     if (Recorde.IsMail) {
                         Weighted _Weighted = WeightedDAO.GetWeighted();                      
                         Option Result = GetOptionByMonthAndContractAndOP(new WeekPoint() { DueMonth = Recorde.DueMonth, OP = Recorde.OP, Contract = Recorde.Contract });
+                        if (Recorde.PyeongchangTime ==DateTime.MinValue) {
+                            Recorde.PyeongchangTime = DateTime.Now;
+                        }
                         CalculateStopPoint(RecordDB, Recorde, _Weighted, Result);
                     }
                 }
@@ -1066,8 +1069,19 @@ namespace Stock {
             string WarningMessage = string.Empty;
             if (Recorde.Type == TradeType.Sell.ToString()) {
                 StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);
-                if ((Result.Clinch + 5) > StopPrice) {
-                    SendWarningMail(Recorde, StopPrice, Result, WarningMessage, "停損警戒");
+                decimal DynamicStopPrice = StopPrice;
+
+                #region 隨時間讓停損價格流失
+                CalendarDAO CalendarDB = new CalendarDAO();
+                Calendar _Calendar =  CalendarDB.GetDueMonthWeekStart(Recorde.DueMonth);
+                int Days = DateTime.Now.Subtract(_Calendar.Daily).Days == 0 ? 1 : DateTime.Now.Subtract(_Calendar.Daily).Days;               
+                if (Days > 1) {
+                    DynamicStopPrice = StopPrice - (1.1m * Days * 1.5m);
+                }                  
+                #endregion
+
+                if ((Result.Clinch + 5) > DynamicStopPrice) {
+                    SendWarningMail(Recorde, DynamicStopPrice, Result, WarningMessage, "停損警戒");
                 }
                 else {
                     Recorde.Settlement = ((Recorde.Price - Result.Clinch) * Convert.ToInt32(Recorde.Lot)) - 2;

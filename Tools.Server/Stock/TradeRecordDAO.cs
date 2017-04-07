@@ -28,6 +28,7 @@ namespace Stock {
             public const string StopPrice = "StopPrice";
             public const string Settlement = "Settlement";
             public const string Level = "Level";
+            public const string PyeongchangTime = "PyeongchangTime";
         }
 
         /// <summary>新增操作紀錄</summary>
@@ -35,7 +36,7 @@ namespace Stock {
         /// <returns></returns>
         public int AddTradeRecord(TradeRecord _TradeRecord) {
             USP.AddParameter(SPParameter.TradeDate, _TradeRecord.TradeDate);
-            USP.AddParameter(SPParameter.DueMonth, _TradeRecord.DueMonth);
+            USP.AddParameter(SPParameter.DueMonth, _TradeRecord.DueMonth.ToUpper());
             USP.AddParameter(SPParameter.OP, _TradeRecord.OP);
             USP.AddParameter(SPParameter.Contract, _TradeRecord.Contract);
             USP.AddParameter(SPParameter.Type, _TradeRecord.Type);
@@ -48,8 +49,8 @@ namespace Stock {
         /// <summary>更新操作紀錄</summary>
         /// <param name="_TradeRecord"></param>
         public void UpdateTradeRecord(TradeRecord _TradeRecord) {
-            USP.AddParameter(SPParameter.SN, _TradeRecord.SN); 
-            USP.AddParameter(SPParameter.DueMonth, _TradeRecord.DueMonth);
+            USP.AddParameter(SPParameter.SN, _TradeRecord.SN);
+            USP.AddParameter(SPParameter.DueMonth, _TradeRecord.DueMonth.ToUpper());
             USP.AddParameter(SPParameter.OP, _TradeRecord.OP);
             USP.AddParameter(SPParameter.Contract, _TradeRecord.Contract);
             USP.AddParameter(SPParameter.Type, _TradeRecord.Type);
@@ -60,6 +61,7 @@ namespace Stock {
             USP.AddParameter(SPParameter.StopPrice, _TradeRecord.StopPrice);
             USP.AddParameter(SPParameter.Settlement, _TradeRecord.Settlement);
             USP.AddParameter(SPParameter.Level, _TradeRecord.Level);
+            USP.AddParameter(SPParameter.PyeongchangTime, _TradeRecord.PyeongchangTime);
             USP.ExeProcedureGetDataTable(SP.UpdateTradeRecord);
         }
         
@@ -67,26 +69,7 @@ namespace Stock {
         /// <returns></returns>
         public List<TradeRecord> GetTradeRecord() {
             List<TradeRecord> TradeList = new List<TradeRecord>();
-            DataTable dt= USP.ExeProcedureGetDataTable(SP.GetTradeRecord);
-            if (dt != null && dt.Rows.Count > 0) {
-                foreach (DataRow row in dt.Rows) {
-                    TradeRecord Record = new TradeRecord();
-                    Record.SN = Convert.ToInt32(row[SPParameter.SN]);
-                    Record.TradeDate = Convert.ToDateTime(row[SPParameter.TradeDate]);
-                    Record.DueMonth = row[SPParameter.DueMonth].ToString();
-                    Record.OP = row[SPParameter.OP].ToString();
-                    Record.Contract = row[SPParameter.Contract].ToString();
-                    Record.Type = row[SPParameter.Type].ToString();
-                    Record.Lot = row[SPParameter.Lot].ToString();
-                    Record.Price = Convert.ToDecimal(row[SPParameter.Price]);
-                    Record.StopPrice = row[SPParameter.StopPrice].ToString() == string.Empty ? 0 : Convert.ToDecimal(row[SPParameter.StopPrice]);
-                    Record.Settlement = row[SPParameter.Settlement].ToString() == string.Empty ? 0 : Convert.ToDecimal(row[SPParameter.Settlement]);
-                    Record.Level = Convert.ToInt32(row[SPParameter.Level]);
-                    Record.IsPyeongchang = Convert.ToBoolean(row[SPParameter.IsPyeongchang]);
-                    Record.IsMail = Convert.ToBoolean(row[SPParameter.IsMail]);
-                    TradeList.Add(Record);
-                }
-            }
+            TradeList = USP.ExeProcedureGetObjectList(SP.GetTradeRecord,new TradeRecord()); 
             return TradeList;
         }
 
@@ -95,8 +78,8 @@ namespace Stock {
         /// <param name="EndDate"></param>
         /// <returns></returns>
         public decimal GetDueDateSettlement(string BeginDate,string EndDate) {
-            USP.AddParameter(BaseData.SSParameter.BeginDate,BeginDate);
-            USP.AddParameter(BaseData.SSParameter.EndDate, EndDate);
+            USP.AddParameter(BaseData.BaseSParameter.BeginDate,BeginDate);
+            USP.AddParameter(BaseData.BaseSParameter.EndDate, EndDate);
             DataTable dt = USP.ExeProcedureGetDataTable(SP.GetDueDateSettlement);
             if (dt != null && dt.Rows.Count > 0) {
                 return Convert.ToInt32(dt.Rows[0][0]);
@@ -105,6 +88,34 @@ namespace Stock {
                 return 0;
             }
         }
-
+        
+        /// <summary>計算時間區間的獎勵</summary>
+        /// <returns></returns>
+        public decimal CalculateReward(string BeginDate, string EndDate) {
+            decimal RecordSettlement = GetDueDateSettlement(BeginDate, EndDate);
+            int BasePrice = 50;
+            if (RecordSettlement >= 500 && RecordSettlement <= 999) {
+                return BasePrice * RecordSettlement * 0.06m;
+            }
+            else if (RecordSettlement >= 1000 && RecordSettlement <= 1999) {
+                return BasePrice * RecordSettlement * 0.09m;
+            }
+            else if (RecordSettlement >= 2000 && RecordSettlement <= 3999) {
+                return BasePrice * RecordSettlement * 0.12m;
+            }
+            else if (RecordSettlement >= 4000 && RecordSettlement <= 6999) {
+                return BasePrice * RecordSettlement * 0.15m;
+            }
+            else if (RecordSettlement >= 7000 && RecordSettlement <= 9999) {
+                return BasePrice * RecordSettlement * 0.18m;
+            }
+            else if (RecordSettlement >= 10000) {
+                return BasePrice * RecordSettlement * 0.21m;
+            }
+            else {
+                return 0;
+            }
+        }
+        
     }
 }

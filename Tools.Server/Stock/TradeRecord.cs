@@ -33,6 +33,8 @@ namespace Stock {
 
         public bool IsPyeongchang { set; get; }
 
+        public DateTime PyeongchangTime { set; get; }
+
         public bool IsMail { set; get; }
     }
 }
