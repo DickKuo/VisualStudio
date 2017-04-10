@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 
 namespace Stock {
-    public class CalendarDAO {
+    public class CalendarDAO :BaseData{
 
         private class Default {
             public const string Sunday = "Sunday";
@@ -29,8 +29,7 @@ namespace Stock {
             public const string NearMonth1 = "NearMonth1";
             public const string NearMonth2 = "NearMonth2";
             public const string Remark = "Remark";
-            public const string IsMaill = "IsMaill";
-            public const string DueMonth = "DueMonth";
+            public const string IsMaill = "IsMaill"; 
         }
 
         SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
@@ -130,7 +129,7 @@ namespace Stock {
         /// <param name="DueMonth"></param>
         /// <returns></returns>
         public Calendar GetDueMonthWeekStart(string DueMonth) {
-            USP.AddParameter(SPParameter.DueMonth, DueMonth);
+            USP.AddParameter(BaseData.BaseSParameter.DueMonth, DueMonth);
             Calendar _Calendar = USP.ExeProcedureGetObject(SP.GetDueMonthWeekStart,new Calendar ());
             return _Calendar;
         }

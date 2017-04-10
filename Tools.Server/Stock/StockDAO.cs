@@ -25,6 +25,7 @@ namespace Stock {
             public const int FirstItem = 0;
             public const int SecondItem = 1;
             public const int ThirdItem = 2;
+            public const string StopWarning = "停損警戒";
         }
 
         private class SP {
@@ -1081,7 +1082,7 @@ namespace Stock {
                 #endregion
 
                 if ((Result.Clinch + 5) > DynamicStopPrice) {
-                    SendWarningMail(Recorde, DynamicStopPrice, Result, WarningMessage, "停損警戒");
+                    SendWarningMail(Recorde, DynamicStopPrice, Result, WarningMessage, Default.StopWarning);
                 }
                 else {
                     Recorde.Settlement = ((Recorde.Price - Result.Clinch) * Convert.ToInt32(Recorde.Lot)) - 2;
@@ -1092,7 +1093,7 @@ namespace Stock {
                 ///這邊要做停損跟停利的計算
                 StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(Recorde.Price));
                 if ((Result.Clinch) < (StopPrice + 2)) {
-                    SendWarningMail(Recorde, StopPrice, Result, WarningMessage, "停損警戒");
+                    SendWarningMail(Recorde, StopPrice, Result, WarningMessage, Default.StopWarning);
                 }
                 else { 
                     int NewLevel = 0;
