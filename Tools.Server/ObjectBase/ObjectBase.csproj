@@ -53,9 +53,14 @@
     <Compile Include="CommBase.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerDAO.cs" />
+    <Compile Include="EWallet.cs" />
+    <Compile Include="EWalletDAO.cs" />
+    <Compile Include="EWalletTrade.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reward.cs" />
+    <Compile Include="RewardDAO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

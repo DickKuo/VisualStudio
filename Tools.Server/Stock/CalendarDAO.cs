@@ -18,6 +18,7 @@ namespace Stock {
             public const string SaveCalendar = "SaveCalendar";
             public const string UpdateCalendar = "UpdateCalendar";
             public const string GetDueMonthWeekStart = "GetDueMonthWeekStart";
+            public const string GetDueMonthWeekLasDay = "GetDueMonthWeekLasDay";
         }
 
         private class SPParameter {
@@ -31,8 +32,6 @@ namespace Stock {
             public const string Remark = "Remark";
             public const string IsMaill = "IsMaill"; 
         }
-
-        SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
 
         /// <summary>取得當日的行事曆</summary>
         /// <param name="Today"></param>
@@ -125,7 +124,7 @@ namespace Stock {
             }
         }
 
-        /// <summary>取得交易第一天</summary>
+        /// <summary>取得交易契約的第一天</summary>
         /// <param name="DueMonth"></param>
         /// <returns></returns>
         public Calendar GetDueMonthWeekStart(string DueMonth) {
@@ -133,5 +132,15 @@ namespace Stock {
             Calendar _Calendar = USP.ExeProcedureGetObject(SP.GetDueMonthWeekStart,new Calendar ());
             return _Calendar;
         }
+
+        /// <summary>取得交易契約的最後一天</summary>
+        /// <param name="DueMonth"></param>
+        /// <returns></returns>
+        public Calendar GetDueMonthWeekLasDay(string DueMonth) {
+            USP.AddParameter(BaseData.BaseSParameter.DueMonth, DueMonth);
+            Calendar _Calendar = USP.ExeProcedureGetObject(SP.GetDueMonthWeekLasDay, new Calendar());
+            return _Calendar;
+        }
+
     }
 }

@@ -7,6 +7,11 @@ using System.Text;
 namespace Stock {
     public class TradeRecordDAO : BaseData {
 
+        private class Default {
+            public const string DueMonthFormat =  "{0}{1}";
+            public const string MonthFormat = "00";
+        }
+
         private class SP {
             public const string AddTradeRecord = "AddTradeRecord";
             public const string UpdateTradeRecord = "UpdateTradeRecord";
@@ -116,6 +121,24 @@ namespace Stock {
                 return 0;
             }
         }
-        
+
+        public void CalculateResultReport() { 
+            CalendarDAO CalDAO = new CalendarDAO();
+            string Begin = string.Format(Default.DueMonthFormat, DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month.ToString(Default.MonthFormat));
+            string End = string.Format(Default.DueMonthFormat, DateTime.Now.Year, DateTime.Now.Month.ToString(Default.MonthFormat));
+            Calendar _Calendar = CalDAO.GetDueMonthWeekLasDay(End);
+            if (_Calendar.Daily.Day == DateTime.Now.Day) {
+                Calendar Last_Calendar = CalDAO.GetDueMonthWeekLasDay(Begin);
+                decimal Result = this.CalculateReward(Last_Calendar.Daily.ToString(BaseData.BaseSParameter.DataTimeFormat), _Calendar.Daily.ToString(BaseData.BaseSParameter.DataTimeFormat));
+                CommTool.MailData MailDB = new CommTool.MailData();
+                DataTable MaillDataTable = MailDB.GetSendMail();
+                if (MaillDataTable != null && MaillDataTable.Rows.Count > 0) {
+                    foreach (DataRow dr in MaillDataTable.Rows) {
+                        MailDB.RegistrySend(dr[1].ToString(), "本月操作報表", string.Format(" 結算獎金 : {0} ", Result));
+                    }
+                }
+            } 
+        }
+
     }
 }

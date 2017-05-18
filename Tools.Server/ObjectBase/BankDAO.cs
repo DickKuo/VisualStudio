@@ -51,13 +51,7 @@ namespace ObjectBase {
                 USP.AddParameter(SSParamter.LastName, _Bank.LastName);
                 USP.AddParameter(SSParamter.Seq, _Bank.Seq);
                 USP.AddParameter(CommBase.Remark, _Bank.Remark == null ? string.Empty : _Bank.Remark);
-                string Result = USP.ExeProcedureHasResult(SP.UpdateBankBySN);
-                if (Result == CommBase.SQLSuccessMessage) {
-                    return 99;
-                }
-                else {
-                    return -1;
-                }      
+                return USP.ExeProcedureHasResultReturnCode(SP.UpdateBankBySN);                      
             }
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);

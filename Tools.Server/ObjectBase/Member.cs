@@ -26,6 +26,8 @@ namespace ObjectBase {
 
         public string HomeAddr { set; get; }
 
+        public DateTime EditTime { set; get; }
+
         public string Remark { set; get; }
     }
 }

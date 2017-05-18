@@ -4,11 +4,12 @@ namespace ObjectBase
     public class CommBase
     {
         protected SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
-        public const string DateTimeFormat = "yyyy/MM/dd HH:mm:ss";
-        public const string SN = "SN";
-        public const string Remark = "Remark";
-        public const string OutResult = "OutResult";
-        public const string SQLSuccessMessage = "Store Procedure Execute Sucess";
+        protected const string DateTimeFormat = "yyyy/MM/dd HH:mm:ss";
+        protected const string SN = "SN";
+        protected const string Remark = "Remark";
+        protected const string OutResult = "OutResult";
+        protected const string SQLSuccessMessage = "Store Procedure Execute Sucess";
+        protected const string CustomerSN = "CustomerSN";
     }
     public enum SQLExecResultCode {
         Success = 99,
@@ -19,4 +20,10 @@ namespace ObjectBase
         Male = 1,
         Fmale = 2
     }
+
+    public enum TradeType { 
+       Deposit=1,
+       Withdrawal=2
+    }
+
 }
