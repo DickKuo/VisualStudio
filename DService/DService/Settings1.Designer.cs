@@ -371,5 +371,17 @@ namespace DService {
                 this["ServerBakPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://www.capitalfutures.com.tw/option/default.asp?")]
+        public string Capitalfutures {
+            get {
+                return ((string)(this["Capitalfutures"]));
+            }
+            set {
+                this["Capitalfutures"] = value;
+            }
+        }
     }
 }

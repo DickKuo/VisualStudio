@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Web;
+using System.Web; 
 namespace Stock {
     public class StockDAO : BaseData{
 
@@ -292,7 +292,7 @@ namespace Stock {
         /// 20170518 modified by Dick for 換個網站抓選擇權
         /// <param name="Url"></param>
         /// <returns></returns>
-        public dynamic GetOptionEveryDay(string Url) {
+        public dynamic GetOptionEveryDay(string CapitalfuturesUrl,string WeightedUrl) {
             CalendarDAO CalendarDB = new CalendarDAO();
             DateTime TimeStamp =DateTime.Now ;
             Calendar _Calendar = CalendarDB.GetCalendar(TimeStamp);
@@ -308,12 +308,12 @@ namespace Stock {
                         //Task Task1 = Task.Factory.StartNew(() => {  ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8, TradeTimestamp));   });//周選 
                         //Task Task2 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); });//近月選1   
                         //Task Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2   
-                        Task Task1 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(Url, _Calendar.Week, Encoding.UTF8, TradeTimestamp)); });//周選 
-                        Task Task2 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(Url, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); });//近月選1   
-                        Task Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(Url, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2                                 
+                        Task Task1 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.Week, Encoding.UTF8, TradeTimestamp)); });//周選 
+                        Task Task2 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); });//近月選1   
+                        Task Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2                                 
                         Task Task4 = Task.Factory.StartNew(() => {
                             WeightedDAO WeightedDAO = new WeightedDAO();
-                            Weighted _Weighted = WeightedDAO.GetWeightedDaily(Url);
+                            Weighted _Weighted = WeightedDAO.GetWeightedDaily(WeightedUrl);
                             if (_Weighted != null) {
                                 _Weighted.TradeTimestamp = TradeTimestamp;
                                 WeightedDAO.SaveWeighted(_Weighted);
@@ -408,8 +408,10 @@ namespace Stock {
             return list;
         }
 
+
         /// <summary>抓取周選資料</summary>
         /// 20170518 add by Dick
+        /// 20170519 modifed by Dick 修正抓取資料錯誤
         /// <param name="Url"></param>
         /// <param name="Contract"></param>
         /// <param name="UrlEncoding"></param>
@@ -418,7 +420,7 @@ namespace Stock {
         public List<Option> GetOptionDailyCapitalfutures(string Url, string Contract, Encoding UrlEncoding, string TradeTimestamp) {
             WebInfo.WebInfo Info = new WebInfo.WebInfo();           
             List<Option> list = new List<Option>();
-            string TempCode = System.Web.HttpUtility.UrlEncode("_台選", System.Text.Encoding.GetEncoding("BIG5")).ToUpper();//将繁体汉字转换为Url
+            string TempCode = System.Web.HttpUtility.UrlEncode("_台選", System.Text.Encoding.GetEncoding("BIG5")).ToUpper();//將繁體中文轉成Uri
             string Temp = Contract.Replace(DateTime.Now.Year.ToString(), string.Empty).ToLower();
             string[] arr = Temp.Split('w');
             string GetParameter = string.Empty;
@@ -429,42 +431,65 @@ namespace Stock {
                 StartTag = 11;
                 EndTag = 67;
             }
-            else {
+            else {               
                 GetParameter = string.Format("Sname=TXO{0}{1}{0}&xy=1:7", Temp, TempCode);
                   StartTag = 91;
                   EndTag = 171;
             }
             string FullUrl = string.Format("{0}{1}", Url, GetParameter);
-            HtmlAgilityPack.HtmlNodeCollection anchors = Info.GetWebHtmlDocumentNodeCollection(Url, "//table[@class='type-03']", Encoding.Default);
-            while (StartTag <= EndTag) {
-                Option Call = new Option();
-                Call.OP = Default.Call;
-                HtmlNode Node = anchors[0].ChildNodes[StartTag];
-                Call.Buy = Node.ChildNodes[1].InnerText.Replace("&nbsp;", string.Empty) == Default.NullSing ? 0 : Convert.ToDecimal(Node.ChildNodes[1].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Call.Sell = Node.ChildNodes[3].InnerText.Replace("&nbsp;", string.Empty) == Default.NullSing ? 0 : Convert.ToDecimal(Node.ChildNodes[3].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Call.Clinch = Node.ChildNodes[5].InnerText.Replace("-&nbsp;", "--") == Default.NullSing ? 0 : Convert.ToDecimal(Node.ChildNodes[5].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Call.Change = Node.ChildNodes[7].InnerText.Replace("-&nbsp;", "--") == Default.NullSing ? 0 : Convert.ToDecimal(Node.ChildNodes[7].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Call.Volume = Node.ChildNodes[9].InnerText.Replace("-&nbsp;", "--") == Default.NullSing ? 0 : Convert.ToInt32(Node.ChildNodes[9].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Call.Contract = Node.ChildNodes[13].InnerText.Replace("&nbsp;", string.Empty).Trim().Replace(",",string.Empty);
-                Call.TradeTimestamp = TradeTimestamp;
-                Call.DueMonth = Contract;
-                Call.Time = DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete);
-                list.Add(Call);
+            HtmlAgilityPack.HtmlNodeCollection anchors = Info.GetWebHtmlDocumentNodeCollection(FullUrl, "//table[@class='type-03']", Encoding.Default);
+            if (anchors != null) {
+                if (EndTag > anchors[0].ChildNodes.Count) {
+                    StartTag = 47;
+                    EndTag = 121;
+                }
+                while (StartTag <= EndTag) {
+                    try {
+                        Option Call = new Option();
+                        Call.OP = Default.Call;
+                        HtmlNode Node = anchors[0].ChildNodes[StartTag];
+                        string C1 = Node.ChildNodes[1].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string C2 = Node.ChildNodes[3].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string C3 = Node.ChildNodes[5].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string C4 = Node.ChildNodes[7].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string C5 = Node.ChildNodes[9].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string C6 = Node.ChildNodes[13].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        Call.Buy = string.IsNullOrEmpty(C1) == true ? 0 : Convert.ToDecimal(C1);
+                        Call.Sell = string.IsNullOrEmpty(C2) == true ? 0 : Convert.ToDecimal(C2);
+                        Call.Clinch = string.IsNullOrEmpty(C3) == true ? 0 : Convert.ToDecimal(C3);
+                        Call.Change = string.IsNullOrEmpty(C4) == true ? 0 : Convert.ToDecimal(C4);
+                        Call.Volume = string.IsNullOrEmpty(C5) == true ? 0 : Convert.ToInt32(C5);
+                        Call.Contract = C6.Replace(",", string.Empty);
+                        Call.TradeTimestamp = TradeTimestamp;
+                        Call.DueMonth = Contract;
+                        Call.Time = DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete);
+                        list.Add(Call);
 
-                HtmlNode PutNode = anchors[1].ChildNodes[StartTag];
-                Option Put = new Option();
-                Put.OP = Default.Put;
-                Put.Buy = PutNode.ChildNodes[3].InnerText.Replace("&nbsp;", string.Empty) == Default.NullSing ? 0 : Convert.ToDecimal(PutNode.ChildNodes[3].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Put.Sell = PutNode.ChildNodes[5].InnerText.Replace("&nbsp;", string.Empty) == Default.NullSing ? 0 : Convert.ToDecimal(PutNode.ChildNodes[5].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Put.Clinch = PutNode.ChildNodes[7].InnerText.Replace("-&nbsp;", "--") == Default.NullSing ? 0 : Convert.ToDecimal(PutNode.ChildNodes[7].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Put.Change = PutNode.ChildNodes[9].InnerText.Replace("-&nbsp;", "--") == Default.NullSing ? 0 : Convert.ToDecimal(PutNode.ChildNodes[9].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Put.Volume = PutNode.ChildNodes[11].InnerText.Replace("-&nbsp;", "--") == Default.NullSing ? 0 : Convert.ToInt32(PutNode.ChildNodes[11].InnerText.Replace("&nbsp;", string.Empty).Replace(",", string.Empty));
-                Put.Contract = Node.ChildNodes[13].InnerText.Replace("&nbsp;", string.Empty).Trim().Replace(",", string.Empty);
-                Put.TradeTimestamp = TradeTimestamp;
-                Put.DueMonth = Contract;
-                Put.Time = DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete); 
-                list.Add(Put);
-                StartTag = StartTag + 4;
+                        HtmlNode PutNode = anchors[1].ChildNodes[StartTag];
+                        string P1 = PutNode.ChildNodes[1].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string P2 = PutNode.ChildNodes[3].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string P3 = PutNode.ChildNodes[5].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string P4 = PutNode.ChildNodes[7].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string P5 = PutNode.ChildNodes[9].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string P6 = PutNode.ChildNodes[11].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        Option Put = new Option();
+                        Put.OP = Default.Put;
+                        Put.Buy = string.IsNullOrEmpty(P2) == true ? 0 : Convert.ToDecimal(P2);
+                        Put.Sell = string.IsNullOrEmpty(P3) == true ? 0 : Convert.ToDecimal(P3);
+                        Put.Clinch = string.IsNullOrEmpty(P4) == true ? 0 : Convert.ToDecimal(P4);
+                        Put.Change = string.IsNullOrEmpty(P5) == true ? 0 : Convert.ToDecimal(P5);
+                        Put.Volume = string.IsNullOrEmpty(P6) == true ? 0 : Convert.ToInt32(P6);
+                        Put.Contract = Call.Contract;
+                        Put.TradeTimestamp = TradeTimestamp;
+                        Put.DueMonth = Contract;
+                        Put.Time = DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete);
+                        list.Add(Put);
+                    }
+                    catch (Exception ex) {
+                        CommTool.ToolLog.Log(ex);
+                    }
+                    StartTag = StartTag + 4;
+                }
             }
             return list;
         }

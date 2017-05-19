@@ -246,6 +246,7 @@ namespace StandredImplement
             public const string DServiceConfig = "DService.exe.config";
             public const string DService = "DService";
             public const string YahooStock = "YahooStock";
+            public const string Capitalfutures = "Capitalfutures";
         }
 
         public OptionTrigger() {
@@ -268,8 +269,9 @@ namespace StandredImplement
                         StockDAO StockContext = new StockDAO();
                         string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
                         ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
-                        string Url = configmanage.GetValue(Default.YahooStock);
-                        StockContext.GetOptionEveryDay(Url);
+                        string WeigthedUrl = configmanage.GetValue(Default.YahooStock);
+                         string CapitalfuturesUrl = configmanage.GetValue(Default.YahooStock);
+                         StockContext.GetOptionEveryDay(CapitalfuturesUrl, WeigthedUrl);
                         Thread.Sleep(5000);
                     }
                 }
