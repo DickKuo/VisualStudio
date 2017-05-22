@@ -448,12 +448,12 @@ namespace Stock {
                         Option Call = new Option();
                         Call.OP = Default.Call;
                         HtmlNode Node = anchors[0].ChildNodes[StartTag];
-                        string C1 = Node.ChildNodes[1].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string C2 = Node.ChildNodes[3].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string C3 = Node.ChildNodes[5].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string C4 = Node.ChildNodes[7].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string C5 = Node.ChildNodes[9].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string C6 = Node.ChildNodes[13].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string C1 = Node.ChildNodes[1].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string C2 = Node.ChildNodes[3].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string C3 = Node.ChildNodes[5].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string C4 = Node.ChildNodes[7].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string C5 = Node.ChildNodes[9].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string C6 = Node.ChildNodes[13].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
                         Call.Buy = string.IsNullOrEmpty(C1) == true ? 0 : Convert.ToDecimal(C1);
                         Call.Sell = string.IsNullOrEmpty(C2) == true ? 0 : Convert.ToDecimal(C2);
                         Call.Clinch = string.IsNullOrEmpty(C3) == true ? 0 : Convert.ToDecimal(C3);
@@ -466,12 +466,12 @@ namespace Stock {
                         list.Add(Call);
 
                         HtmlNode PutNode = anchors[1].ChildNodes[StartTag];
-                        string P1 = PutNode.ChildNodes[1].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string P2 = PutNode.ChildNodes[3].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string P3 = PutNode.ChildNodes[5].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string P4 = PutNode.ChildNodes[7].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string P5 = PutNode.ChildNodes[9].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
-                        string P6 = PutNode.ChildNodes[11].InnerText.Replace("&nbsp;", string.Empty).Replace("-", string.Empty).Replace(",", string.Empty).Trim();
+                        string P1 = PutNode.ChildNodes[1].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string P2 = PutNode.ChildNodes[3].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string P3 = PutNode.ChildNodes[5].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string P4 = PutNode.ChildNodes[7].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string P5 = PutNode.ChildNodes[9].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
+                        string P6 = PutNode.ChildNodes[11].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
                         Option Put = new Option();
                         Put.OP = Default.Put;
                         Put.Buy = string.IsNullOrEmpty(P2) == true ? 0 : Convert.ToDecimal(P2);

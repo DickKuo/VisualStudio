@@ -270,7 +270,7 @@ namespace StandredImplement
                         string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
                         ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
                         string WeigthedUrl = configmanage.GetValue(Default.YahooStock);
-                         string CapitalfuturesUrl = configmanage.GetValue(Default.YahooStock);
+                        string CapitalfuturesUrl = configmanage.GetValue(Default.Capitalfutures);
                          StockContext.GetOptionEveryDay(CapitalfuturesUrl, WeigthedUrl);
                         Thread.Sleep(5000);
                     }
