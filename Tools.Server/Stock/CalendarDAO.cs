@@ -30,6 +30,7 @@ namespace Stock {
             public const string NearMonth1 = "NearMonth1";
             public const string NearMonth2 = "NearMonth2";
             public const string Remark = "Remark";
+            public const string IsSettlement = "IsSettlement";
             public const string IsMaill = "IsMaill"; 
         }
 
@@ -117,6 +118,7 @@ namespace Stock {
                 USP.AddParameter(SPParameter.NearMonth2, _Calendar.NearMonth2);
                 USP.AddParameter(SPParameter.Remark, _Calendar.Remark);
                 USP.AddParameter(SPParameter.IsMaill, _Calendar.IsMaill);
+                USP.AddParameter(SPParameter.IsSettlement, _Calendar.IsSettlement);
                 USP.ExeProcedureNotQuery(SP.UpdateCalendar);
             }
             catch (Exception ex) {

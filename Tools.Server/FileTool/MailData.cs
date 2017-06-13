@@ -111,7 +111,7 @@ namespace CommTool {
             msg.SubjectEncoding = System.Text.Encoding.UTF8;//郵件標題編碼 
             msg.Body = body;//郵件內容 
             msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
-            msg.IsBodyHtml = false;//是否是HTML郵件 
+            msg.IsBodyHtml = true;//是否是HTML郵件 
             msg.Priority = MailPriority.Normal;//郵件優先級 
             try {
                 //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 

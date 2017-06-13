@@ -373,6 +373,14 @@ namespace StandredImplement
                         StockContext.ControlPrice();
                         Thread.Sleep(1000*20);
                     }
+
+                    DateTime ReportStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 50, 0);
+                    DateTime ReportEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 55, 0);
+                    while (DateTime.Now.Subtract(ReportStart).TotalSeconds >= 0 && DateTime.Now.Subtract(ReportEnd).TotalSeconds <= 0) {
+                        TradeRecordDAO RecordDAO = new TradeRecordDAO();
+                        RecordDAO.CalculateResultReport();
+                        Thread.Sleep(1000 * 20);
+                    }
                 }
             }
             catch (Exception ex) {

@@ -27,6 +27,8 @@ namespace Stock {
         /// <summary>是否發送Maill</summary>
         public bool IsMaill { set; get; }
 
+        public bool IsSettlement { set; get; }
+
         /// <summary>備註</summary>
         public string Remark { set; get; }
     }

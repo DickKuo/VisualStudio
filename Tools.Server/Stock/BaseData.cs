@@ -13,6 +13,7 @@ namespace Stock {
            public const string SN = "SN";
            public const string DueMonth = "DueMonth";
            public const string DataTimeFormat = "yyyy-MM-dd";
+           public const string DateTimeFormat2 = "yyyy-MM-dd HH:mm:ss";
        }
     }
 }
