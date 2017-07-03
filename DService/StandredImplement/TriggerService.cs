@@ -274,6 +274,16 @@ namespace StandredImplement
                          StockContext.GetOptionEveryDay(CapitalfuturesUrl, WeigthedUrl);
                         Thread.Sleep(5000);
                     }
+
+                    if (DateTime.Now.Day == 1) {
+                        DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30,50 );
+                        DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 31, 0);
+                        while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0) {
+                            CalendarDAO CalendarContext = new CalendarDAO();
+                            CalendarContext.CreateNextMonthCalendar(DateTime.Now);
+                        }
+                    }
+
                 }
             }
             catch (Exception ex) {
