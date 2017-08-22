@@ -1,0 +1,52 @@
+﻿@model WebApplication1.Models.ForGetPassWordViewModels.ForGetPassWordViewModel
+
+@{
+    Layout = null;    
+}
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/Bootstrap3/bootstrap-datetimepicker.js"></script>
+<script src="~/Scripts/RegisterJs.js"></script>
+
+<div class="panel panel-default container body-content">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("SendGetPassWordEmail", "ForGetPassWord", new { Id = "ForGetPassWord_Form" })) {
+            <div class="container">
+                <form class="form-signin" role="form">
+                    <div class="col-md-5 col-md-offset-4">
+                        <div class="form-group">
+                            <label for="InputAccount" class="col-xs-12 col-sm-3 control-label">
+                                @Resources.Resource.Register_Account
+                            </label>
+                            @Html.TextBoxFor(M => M.Email, new { id = "InputEmail", @required = "required", @class = "form-control", @placeholder = Resources.Resource.Register_Account, @maxlength = "50" })
+                            <label for="InputAccount" class="col-xs-12   control-label" style="color:red">
+                                @Resources.Resource.ForGetPassWord_Email
+                            </label>
+                        </div>
+
+                        @if (!ViewData.ModelState.IsValid) {
+                            <div class="alert alert-danger" role="alert">
+                                @Html.ValidationSummary()
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-xs-3">
+                                <button class="btn btn-primary" type="submit">@Resources.Resource.Btn_Send</button>
+                            </div>
+                            <a href="~/Login/LoginView" class="btn btn-success">@Resources.Resource.Register_Back</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>  

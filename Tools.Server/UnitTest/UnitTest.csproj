@@ -49,6 +49,14 @@
     <Reference Include="Implement">
       <HintPath>..\..\..\..\..\..\Dropbox\Export\Implement.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Dropbox\Export\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ObjectBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
+    </Reference>
     <Reference Include="Service.Business">
       <HintPath>..\..\..\..\..\..\Dropbox\Export\Service.Business.dll</HintPath>
     </Reference>
@@ -95,6 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,29 +8,7 @@ using WebApplication1.Models;
 namespace WebApplication1.Code.DAO
 {
     public class EmployeeDAO : DAOBase
-    {
-
-        public EmployeeDAO()
-        {
-            //WebConfig 取得
-            _DbIstance.ConnectiinString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"];      
-        }
-
-        /// <summary>初始化物件</summary>
-        /// <param name="connectionstring">設定連線字串</param>
-        public EmployeeDAO(string ConnectionString)
-        {
-            base._DbIstance.ConnectiinString = ConnectionString;
-        }
-        
-
-        /// <summary>設定新的連線字串</summary>
-        /// <param name="ConnectionString"></param>
-        public void SetConnectionString(string ConnectionString)
-        {
-            base._DbIstance.ConnectiinString = ConnectionString;
-        }
-        
+    { 
         /// <summary> StoreProcedure 的名稱 --名字修改統一修改這邊就可 </summary>
         private class SP {
             public const string ADD_EMP = "EmpAdd";
@@ -62,16 +40,16 @@ namespace WebApplication1.Code.DAO
         /// <param name="EMP"></param>
         /// <returns></returns>
         public string Create(Employee EMP)
-        {
+        {            
             EMP.EmpNo = DateTime.Now.ToString(Default.EmpFormat);
-            base._DbIstance.AddParameter(DataRowName.EmpFirstName, EMP.EmpFirstName);
-            base._DbIstance.AddParameter(DataRowName.EmpLastName, EMP.EmpLastName);
-            base._DbIstance.AddParameter(DataRowName.EmpAddr, EMP.Addr);
-            base._DbIstance.AddParameter(DataRowName.EmpTel, EMP.Tel);
-            base._DbIstance.AddParameter(DataRowName.DepNo, Default.DepNo);
-            base._DbIstance.AddParameter(DataRowName.IsDone, DataRowName.InintValue, System.Data.SqlDbType.NVarChar, 1, System.Data.ParameterDirection.Output);
-            base._DbIstance.AddParameter(DataRowName.EmpNo, EMP.EmpNo, System.Data.SqlDbType.NVarChar, 20, System.Data.ParameterDirection.Output);
-            return base._DbIstance.ExeProcedureHasResult(SP.ADD_EMP);            
+            USP.AddParameter(DataRowName.EmpFirstName, EMP.EmpFirstName);
+            USP.AddParameter(DataRowName.EmpLastName, EMP.EmpLastName);
+            USP.AddParameter(DataRowName.EmpAddr, EMP.Addr);
+            USP.AddParameter(DataRowName.EmpTel, EMP.Tel);
+            USP.AddParameter(DataRowName.DepNo, Default.DepNo);
+            USP.AddParameter(DataRowName.IsDone, DataRowName.InintValue, System.Data.SqlDbType.NVarChar, 1, System.Data.ParameterDirection.Output);
+            USP.AddParameter(DataRowName.EmpNo, EMP.EmpNo, System.Data.SqlDbType.NVarChar, 20, System.Data.ParameterDirection.Output);
+            return USP.ExeProcedureHasResult(SP.ADD_EMP);            
         }
 
 
@@ -80,13 +58,13 @@ namespace WebApplication1.Code.DAO
         /// <returns></returns>
         public string Edit(Employee EMP)
         {
-            base._DbIstance.AddParameter(DataRowName.EmpNo, EMP.EmpNo);
-            base._DbIstance.AddParameter(DataRowName.EmpFirstName, EMP.EmpFirstName);
-            base._DbIstance.AddParameter(DataRowName.EmpLastName, EMP.EmpLastName);
-            base._DbIstance.AddParameter(DataRowName.EmpAddr, EMP.Addr);
-            base._DbIstance.AddParameter(DataRowName.EmpTel, EMP.Tel);
-            base._DbIstance.AddParameter(DataRowName.IsDone, DataRowName.InintValue, System.Data.SqlDbType.NVarChar, 1, System.Data.ParameterDirection.Output);
-            return base._DbIstance.ExeProcedureHasResult(SP.EDIT_EMP);
+            USP.AddParameter(DataRowName.EmpNo, EMP.EmpNo);
+            USP.AddParameter(DataRowName.EmpFirstName, EMP.EmpFirstName);
+            USP.AddParameter(DataRowName.EmpLastName, EMP.EmpLastName);
+            USP.AddParameter(DataRowName.EmpAddr, EMP.Addr);
+            USP.AddParameter(DataRowName.EmpTel, EMP.Tel);
+            USP.AddParameter(DataRowName.IsDone, DataRowName.InintValue, System.Data.SqlDbType.NVarChar, 1, System.Data.ParameterDirection.Output);
+            return USP.ExeProcedureHasResult(SP.EDIT_EMP);
 
         }
 
@@ -100,9 +78,9 @@ namespace WebApplication1.Code.DAO
             Model.EmpList = new List<Employee>();
             string Tag = string.Empty;           
             Tag = Emp != null ? Emp.EmpNo.ToString() : "-1";
-            this._DbIstance.AddParameter(DataRowName.EmpNo, Tag);
+            USP.AddParameter(DataRowName.EmpNo, Tag);
             string Result = string.Empty;
-            DataTable dt = this._DbIstance.ExeProcedureGetDataTable(SP.LIST_EMP);
+            DataTable dt = USP.ExeProcedureGetDataTable(SP.LIST_EMP);
             if (dt != null && dt.Rows.Count > 0)
             {
                 foreach (DataRow dr in dt.Rows)
@@ -125,10 +103,10 @@ namespace WebApplication1.Code.DAO
         /// <returns></returns>
         public string Delete(Employee Emp)
         {
-            base._DbIstance.AddParameter(DataRowName.EmpNo, Emp.EmpNo);
-            base._DbIstance.AddParameter(DataRowName.IsDone, DataRowName.InintValue, System.Data.SqlDbType.NVarChar, 1, System.Data.ParameterDirection.Output);
-            base._DbIstance.ExeProcedureHasResult(SP.DELETE_EMP);
-            return base._DbIstance.Result;
+            USP.AddParameter(DataRowName.EmpNo, Emp.EmpNo);
+            USP.AddParameter(DataRowName.IsDone, DataRowName.InintValue, System.Data.SqlDbType.NVarChar, 1, System.Data.ParameterDirection.Output);
+            USP.ExeProcedureHasResult(SP.DELETE_EMP);
+            return USP.Result;
         }
 
 

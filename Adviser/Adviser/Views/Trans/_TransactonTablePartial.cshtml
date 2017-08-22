@@ -1,0 +1,40 @@
+﻿@model Adviser.Models.ViewModels.TransactionViewModels.TransactionViewModel
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>序</th>
+            <th>客戶帳號</th>
+            <th>姓名</th>
+            <th>入金方式</th>
+            <th>金額</th>
+            <th>送單時間</th> 
+            <th>審核狀況</th>           
+            <th>審核人</th>
+            <th>審核時間</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int RowID = 1;
+        }
+        @if (@Model.ListTransInfo != null && Model.ListTransInfo.Count > 0) {
+            foreach (var Item in Model.ListTransInfo) {
+                <tr>
+                    <th scope="row">@RowID</th>
+                    <td><a href="~/Trans/TransDetail?TransSN=@Item.TranSN">@Item.Account</a></td>
+                    <td>@Item.NickName</td>
+                    <td>@(Resources.ResourceTransaction.ResourceManager.GetString("TransType_" + Item.TradeType.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
+                    <td>@Item.Draw</td>
+                    <td>@Item.TradeTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                    <td>@(Resources.Resource.ResourceManager.GetString("AuditTpyes_" + Item.AuditState.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
+                    <td>@Item.AdviserName</td>
+                    <td>@Item.AuditeTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                </tr>
+                RowID++;
+            }
+        }
+    </tbody>
+</table>
+
+

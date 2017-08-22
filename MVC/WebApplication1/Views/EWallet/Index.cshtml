@@ -1,0 +1,118 @@
+﻿@model WebApplication1.Models.EWalletViewModels.EWalletViewModel
+@{
+    ViewBag.Title = Resources.Menu.Menu_1003;
+}
+
+<h2>@Resources.Menu.Menu_1003</h2>
+<hr>
+
+<div class="panel panel-info">
+    <div class="panel-heading">@Resources.ResourceDeposit.Label_Header</div>
+    <div class="panel-body">
+        <div class="container">
+
+            <div class="row" style="padding-bottom:5px">
+                <label class="col-xs-3  control-label">
+                    權益總值
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.Balance</label>
+                </div>
+                <label class="col-xs-1  control-label">
+                    帳號
+                </label>
+                <div class='col-xs-5'>
+                    <label class="col-xs-1  control-label">@Model._Customer.Account</label>
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:5px">
+                <label class="col-xs-3  control-label">
+                    原始保證點數 
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.Pyeongchang</label>
+                </div>
+                <label class="col-xs-1  control-label">
+                    姓名
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-6  control-label">@(Model._Customer.Member.LastName + Model._Customer.Member.FirstName  )</label>
+                </div>
+            </div>
+            
+            <div class="row" style="padding-bottom:5px">
+                <label class="col-xs-3  control-label">
+                    可動用(點數)
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.Available</label>
+                </div>
+                <label class="col-xs-1  control-label">
+                    E-mail
+                </label>
+                <div class='col-xs-5'>
+                    <label class="col-xs-1  control-label">@Model._Customer.Member.Email</label>
+                </div>
+            </div>
+            
+            <div class="row" style="padding-bottom:5px">
+                <label class="col-xs-3  control-label">
+                    未入帳點數
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.TranscationDraw</label>
+                </div>                 
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel-footer">
+        @Html.ActionLink("入金", "Index", "Deposit",null, new { @class = "btn btn-warning" })
+        @Html.ActionLink("出金", "Index", "Withdrawal", null, new { @class = "btn btn-warning" })
+        @Html.ActionLink("歷史交易紀錄", "Index", "Transaction", null, new { @class = "btn btn-warning" })        
+    </div>
+
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">歷史交易</div>
+    <div class="panel-body">
+        <div class="container">
+            <div class="row">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>序</th>
+                            <th>交易日期</th>
+                            <th>出金/入金</th>
+                            <th>交易點數</th>
+                            <th>手續費</th>
+                            <th>審核狀態</th>
+                            <th>審核時間</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int RowID = 1;
+                        }
+                        @foreach (var Item in Model.TransList) {
+                            <tr>
+                                <td>@RowID</td>
+                                <td>@Item.TradeTime.ToString(CommTool.BaseConst.TimeFormatComplete)</td>
+                                <td>@( Convert.ToInt32(Item.TradeType) == 1 ? "入金" : "出金")</td>
+                                <td>@(Convert.ToInt32(Item.TradeType) == 1 ? Item.Detail.Draw :  0 - Item.Detail.Draw)</td>
+                                <td>@Item.Detail.Fee</td>
+                                <td>@(Resources.Resource.ResourceManager.GetString("AuditTpyes_" + Item.AuditState.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
+                                <td>@(Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete) == "0001/01/01 00:00:00" ? string.Empty : Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete))</td>
+                            </tr>
+                            RowID++;
+                        }                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

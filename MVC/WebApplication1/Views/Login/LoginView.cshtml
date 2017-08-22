@@ -10,26 +10,23 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <script src="~/Scripts/Code/Login.js"></script>
 
-
-
-@using (Html.BeginForm("LoginView", "Login", new { Id = "Load_Login_Form" }
-))
+@using (Html.BeginForm("LoginView", "Login", new { Id = "Load_Login_Form" }))
 {
     <body>
         <div class="container">
             <form class="form-signin" role="form">
-                <div class="col-md-4 col-md-offset-4">
+                <div class="col-md-5 col-md-offset-4">
                     <div class="form-group">
-                        <h1> 系統登入</h1>
+                        <h1> @Resources.Resource.Login_Title</h1>
                     </div>
                     <div class="form-group">
-                        <label for="InputAccount" class="sr-only">帳號</label>
-                        @Html.TextBoxFor(M => M.SysAd.User.UserName, new { id = "InputAccount", @required = "required", @class = "form-control", @placeholder = "帳號", @maxlength = "10" })
+                        <label for="InputAccount" class="sr-only"> @Resources.Resource.Login_Account</label>
+                        @Html.TextBoxFor(M => M.SysAd.User.UserName, new { id = "InputAccount", @required = "required", @class = "form-control", @placeholder = Resources.Resource.Login_Account, @maxlength = "50" })
                     </div>
 
                     <div class="form-group">
-                        <label for="inputPassword" class="sr-only">密碼</label>
-                        @Html.PasswordFor(M => M.SysAd.User.PassWord, new { id = "InputPassword", @required = "required", @class = "form-control", @placeholder = "密碼", @maxlength = "10" })
+                        <label for="inputPassword" class="sr-only">@Resources.Resource.Login_Password</label>
+                        @Html.PasswordFor(M => M.SysAd.User.PassWord, new { id = "InputPassword", @required = "required", @class = "form-control", @placeholder = Resources.Resource.Login_Password, @maxlength = "15" })
                     </div>
 
                     @if (!ViewData.ModelState.IsValid)
@@ -39,13 +36,19 @@
                         </div>
                     }
                     <div class="form-group">
-                        <button class="btn btn-primary" type="submit">登入</button>
+                        <div class="col-xs-3">
+                            <button class="btn btn-primary" type="submit">@Resources.Resource.Login_Submit</button>
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="~/Register/Index">@Resources.Resource.Register_Member</a>                            
+                        </div>
+                        <div class="col-xs-3">
+                            <a href="~/ForGetPassWord/Index">@Resources.Resource.Label_ForgetPassWord</a>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
         <script src="/Scripts/AssetsBS3/ie10-viewport-bug-workaround.js"></script>
     </body>
-}
-
-
+} 

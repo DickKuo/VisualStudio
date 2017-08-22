@@ -18,6 +18,9 @@ namespace Stock {
             public const string GetTradeRecord = "GetTradeRecord";
             public const string GetDueDateSettlement="GetDueDateSettlement";
             public const string GetTradeRecordByDueDay = "GetTradeRecordByDueDay";
+            public const string GetTradeRecordByDueDayPage = "GetTradeRecordByDueDayPage";
+            public const string GetTradeRecordPagesByDueDay = "GetTradeRecordPagesByDueDay";
+            public const string PyeongchangTrade = "PyeongchangTrade";
         }
 
         private class SPParameter {
@@ -35,20 +38,34 @@ namespace Stock {
             public const string Settlement = "Settlement";
             public const string Level = "Level";
             public const string PyeongchangTime = "PyeongchangTime";
+            public const string Range = "Range";
+            public const string Page = "Page";
+            public const string CustomerSN = "CustomerSN";
         }
 
         /// <summary>新增操作紀錄</summary>
         /// <param name="_TradeRecord"></param>
         /// <returns></returns>
         public int AddTradeRecord(TradeRecord _TradeRecord) {
-            USP.AddParameter(SPParameter.TradeDate, _TradeRecord.TradeDate);
             USP.AddParameter(SPParameter.DueMonth, _TradeRecord.DueMonth.ToUpper());
             USP.AddParameter(SPParameter.OP, _TradeRecord.OP);
             USP.AddParameter(SPParameter.Contract, _TradeRecord.Contract);
             USP.AddParameter(SPParameter.Type, _TradeRecord.Type);
             USP.AddParameter(SPParameter.Lot, _TradeRecord.Lot);
-            USP.AddParameter(SPParameter.Price, _TradeRecord.Price); 
+            USP.AddParameter(SPParameter.Price, _TradeRecord.Price);
+            USP.AddParameter(SPParameter.CustomerSN, _TradeRecord.CustomerSN); 
             TradeRecord Result= USP.ExeProcedureGetObject(SP.AddTradeRecord,new TradeRecord());
+            return Result.SN;
+        }
+
+        /// <summary>平昌單子</summary>
+        /// <param name="_TradeRecord"></param>
+        /// <returns></returns>
+        public int PyeongchangTrade(TradeRecord _TradeRecord) {
+            USP.AddParameter(SPParameter.SN, _TradeRecord.SN);
+            USP.AddParameter(SPParameter.Lot, _TradeRecord.Lot);
+            USP.AddParameter(SPParameter.StopPrice, _TradeRecord.StopPrice);
+            TradeRecord Result = USP.ExeProcedureGetObject(SP.PyeongchangTrade, new TradeRecord());
             return Result.SN;
         }
 
@@ -105,7 +122,38 @@ namespace Stock {
             DataTable dt = USP.ExeProcedureGetDataTable(SP.GetTradeRecordByDueDay);
             return dt;
         }
-        
+
+        /// <summary>取得時間區間的操作紀錄(分頁)</summary>
+        /// <param name="BeginDate"></param>
+        /// <param name="EndDate"></param>
+        /// <param name="Range"></param>
+        /// <param name="Page"></param>
+        /// <returns></returns>
+        public DataTable GetTradeRecordByDueDayPage(string BeginDate, string EndDate, int Range, int Page) {
+            USP.AddParameter(BaseData.BaseSParameter.BeginDate, BeginDate);
+            USP.AddParameter(BaseData.BaseSParameter.EndDate, EndDate);
+            USP.AddParameter(SPParameter.Range, Range);
+            USP.AddParameter(SPParameter.Page, Page);
+            DataTable dt = USP.ExeProcedureGetDataTable(SP.GetTradeRecordByDueDayPage);
+            return dt;
+        }
+
+        /// <summary>取得時間區間紀錄的總筆數</summary>
+        /// <param name="BeginDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        public int GetTradeRecordPagesByDueDay(string BeginDate, string EndDate, int Range) {
+            USP.AddParameter(BaseData.BaseSParameter.BeginDate, BeginDate);
+            USP.AddParameter(BaseData.BaseSParameter.EndDate, EndDate);
+            USP.AddParameter(SPParameter.Range, Range);
+            DataTable dt = USP.ExeProcedureGetDataTable(SP.GetTradeRecordPagesByDueDay);
+            int Result = 0;
+            if (dt != null && dt.Rows.Count > 0) {
+                Result = Convert.ToInt32(dt.Rows[0][0]);            
+            }
+            return Result;
+        }
+
         /// <summary>計算時間區間的獎勵</summary>
         /// <returns></returns>
         public decimal CalculateReward(decimal RecordSettlement) {            
@@ -211,5 +259,7 @@ namespace Stock {
             Html.AppendLine("</table> </body></html>");      
             return Html.ToString();
         }
+
+       
     }
 }

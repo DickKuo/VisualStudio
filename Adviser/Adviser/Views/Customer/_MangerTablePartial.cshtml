@@ -1,0 +1,36 @@
+﻿@model Adviser.Models.ViewModels.CustomerViewModels.CustomerViewModel
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>序</th>
+            <th>帳號</th>
+            <th>暱稱</th>
+            <th>姓名</th>                        
+            <th>狀態</th>
+            <th>審核狀況</th>
+            <th>加入時間</th>
+            <th>啟用</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int RowID = 1;
+        }
+        @if (@Model.ListCustomer != null && Model.ListCustomer.Count > 0) {
+            foreach (var Item in Model.ListCustomer) {
+                <tr>
+                    <th scope="row" id="@Item.SN">@RowID</th>
+                    <td><a href="~/Customer/ShowCustomerDetail?CustomerSN=@Item.SN">@Item.Account</a></td>
+                    <td>@Item.Member.NickName</td>
+                    <td>@(Item.Member.LastName + Item.Member.FirstName )</td>
+                    <td>@Item.State</td>
+                    <td>@(Resources.ResourceCustomer.ResourceManager.GetString("AuditTpyes_" + Item.Audit.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
+                    <td>@Item.AddTime.ToString("yyyy/MM/dd HH:mm:ss")</td>                   
+                    <td><input type="checkbox" checked="@Item.IsEnable" disabled="disabled"></td>                   
+                </tr>
+                RowID++;
+            }
+        }
+    </tbody> 
+</table>

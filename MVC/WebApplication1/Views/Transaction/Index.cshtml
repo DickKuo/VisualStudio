@@ -1,0 +1,52 @@
+﻿@model  WebApplication1.Models.TranscationViewModels.TranscationViewModel
+
+@{
+    ViewBag.Title = Resources.Menu.Menu_3001;
+}
+
+<h2>@Resources.Menu.Menu_3001</h2>
+<hr>
+
+
+@using (Html.BeginForm("Index", "Transaction")) {
+    <div class="panel panel-info">
+        <div class="panel-heading">基本查詢</div>
+        <div class="panel-body">
+            <div class="container">
+                <div class="row">
+                    <label class="col-xs-1  control-label">
+                        開始日期
+                    </label>
+                    <div class='col-xs-3'>
+                        <input type='text' class="form-control" id='datetimepicker4' name="BeginTime" value="@Model.BeginTime.ToString(CommTool.BaseConst.TimeFormatComplete)" />
+                    </div>
+                    <label class="col-xs-1 control-label">
+                        結束日期
+                    </label>
+                    <div class='col-xs-3'>
+                        <input type='text' class="form-control" id='datetimepicker5' name="EndTime" value="@Model.EndTime.ToString(CommTool.BaseConst.TimeFormatToMinute)" />
+                    </div>
+                    <div class="col-xs-4">
+                        <input type="submit" value="查詢" class="btn btn-info" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"></div>
+        <div class="panel-body" id="_TransactionTable">
+            @Html.Partial("_TransactionTable", @Model)
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#datetimepicker4').datetimepicker();
+        $('#datetimepicker5').datetimepicker();
+    });
+
+</script>

@@ -1,0 +1,11 @@
+﻿
+$(function () {
+
+    $("#InputBirthDay").datetimepicker();
+   
+    
+
+
+
+
+});

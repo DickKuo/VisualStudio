@@ -43,6 +43,7 @@ namespace Stock {
             public const string GetOptionByMonthAndContractAndOP = "GetOptionByMonthAndContractAndOP";
             public const string UpdateWeekPoint = "UpdateWeekPoint";
             public const string GetListOption = "GetListOption";
+            public const string GetOptionQuotesByDuMonthAndTime = "GetOptionQuotesByDuMonthAndTime";
         }
 
         private class SPParameter {
@@ -1245,6 +1246,26 @@ namespace Stock {
                 }
             }
         }
+
+        /// <summary>取得當前報價</summary>
+        /// <param name="BeginTime"></param>
+        /// <param name="EndTime"></param>
+        /// <param name="DueMonth"></param>
+        /// <returns></returns>
+        public List<Option> GetOptionQuotesByDuMonthAndTime(DateTime BeginTime, DateTime EndTime, string DueMonth) {
+            List<Option> OptionList = new List<Option>();
+            try {
+                USP.AddParameter(SPParameter.BeginTime, BeginTime.ToString(Default.TimeFormat));
+                USP.AddParameter(SPParameter.EndTime, EndTime.ToString(Default.TimeFormat));
+                USP.AddParameter(SPParameter.DueMonth, DueMonth);
+                OptionList = USP.ExeProcedureGetObjectList(SP.GetOptionQuotesByDuMonthAndTime, new Option()) as List<Option>;
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+            return OptionList;
+        }
+
          
     }
 }

@@ -1,0 +1,17 @@
+﻿
+@{
+    Layout = null;
+
+    string returnURL = ViewBag.ReturnURL;
+
+    string infoMsg = ViewBag.info;
+    
+}
+
+<script src="~/Scripts/TimeOutRedirect.js"></script>
+
+<div class="container">
+    <div class="col-xs-8 col-xs-offset-2 alert alert-info">
+        <a href="@Url.Content(returnURL)">@infoMsg<br /><br />@Resources.Resource.jump</a>
+    </div>
+</div>

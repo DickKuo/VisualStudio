@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Code;
 using WebApplication1.Code.DAO;
-using WebApplication1.Code.Helpers;
 using WebApplication1.Code.MenuHelper;
 using WebApplication1.Models;
 using WebApplication1.Models.Code;
@@ -30,23 +26,8 @@ namespace WebApplication1.Controllers
             //讀取功能選單列表
             MenuManagmentViewModels.MenuViewModel Model = MenuHelper.LoadingMenu();
             MenuHelper.SetMenuSession(Model);
-
             return View();
-        }
-         
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";          
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-            return View();
-        }
-
+        }         
 
         private ApiOperation Init(Operation Obj)
         {
@@ -57,7 +38,6 @@ namespace WebApplication1.Controllers
             Oper.obj = Obj;
             return Oper;
         }
-
 
 
         public ActionResult LoadingCarousel()
@@ -80,8 +60,24 @@ namespace WebApplication1.Controllers
             return PartialView("_CarouselPartialView", Model);
         }
 
+        /// <summary>訊息</summary>
+        /// <param name="info"></param>
+        /// <param name="returnUrl"></param>
+        /// <param name="coworker"></param>
+        /// <returns></returns>
+        public ActionResult Message(string info, string returnUrl, string coworker) {
+            ViewBag.info = info;
+            ViewBag.ReturnURL = returnUrl;
+            TempData["coworker"] = coworker;
+            return View();
+        }
 
-       
 
+        public ActionResult Messages(string MessageStr, string ReturnURL, MessageType MessageType) {
+            ViewBag.MessageStr = MessageStr;
+            ViewBag.ReturnURL = ReturnURL;
+            ViewBag.MessageType = MessageType;
+            return View();
+        }
     }
 }

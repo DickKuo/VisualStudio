@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using WebApplication1.Code;
-using WebApplication1.Code.DAO;
+﻿using System.Collections.Generic;
 
 namespace WebApplication1.Models
 {
@@ -19,8 +14,6 @@ namespace WebApplication1.Models
             public string EmployeeType { set; get; }
 
             public string Extend { set; get; }
-
-
 
             private List<string> _PhotoFileNames = new List<string>();
 

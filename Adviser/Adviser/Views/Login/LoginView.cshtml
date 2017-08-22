@@ -1,0 +1,50 @@
+﻿@model Adviser.Models.ViewModels.LoginViewModels.LoginViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<script src="~/Scripts/jquery-2.2.0.min.js"></script> 
+<script src="~/Scripts/Code/Login.js"></script>
+
+
+@using (Html.BeginForm("LoginAction", "Login", new { Id = "Login_Form" })) {
+    <body>
+        <div class="container">
+            <form class="form-signin" role="form">
+                <div class="col-md-5 col-md-offset-4">
+                    <div class="form-group">
+                        <h1> @Resources.Resource.Login_Title</h1>
+                    </div>
+                    <div class="form-group">
+                        <label for="InputAccount" class="sr-only"> @Resources.Resource.Login_Account</label>
+                        @Html.TextBoxFor(M => M.Account, new { id = "InputAccount", @required = "required", @class = "form-control", @placeholder = Resources.Resource.Login_Account, @maxlength = "50" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPassword" class="sr-only">@Resources.Resource.Login_Password</label>
+                        @Html.PasswordFor(M => M.PassWord, new { id = "InputPassword", @required = "required", @class = "form-control", @placeholder = Resources.Resource.Login_Password, @maxlength = "15" })
+                    </div>
+
+                    @if (!ViewData.ModelState.IsValid) {
+                        <div class="alert alert-danger" role="alert">
+                            @Html.ValidationSummary()
+                        </div>
+                    }
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <button class="btn btn-primary" type="submit">@Resources.Resource.Login_Submit</button>
+                        </div>
+                        <div class="col-xs-4">
+                            <a href="~/Register/Index">@Resources.Resource.Register_Adviser</a><br/>
+                            <a href="~/ForGetPassWord/Index">@Resources.Resource.Link_Forgetpassword</a>
+                        </div>                       
+                    </div>
+
+                </div>
+            </form>
+        </div>      
+    </body>
+} 

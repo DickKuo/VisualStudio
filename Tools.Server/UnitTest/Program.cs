@@ -1,282 +1,389 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WebInfo;
-using System.IO;
-using WebInfo.Business.DataEntities;
-using System.Reflection;
-using CommTool;
-using CommTool.Business.Services;
-using System.Text.RegularExpressions;
-using CommTool.Business.Metadata;
-using System.Net;
+﻿using CommTool.Business.Services;
+using ObjectBase;
 using Stock;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace UnitTest {   
+
+namespace UnitTest {
     class Program {
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern Int32 SendInput(Int32 cInputs, ref INPUT pInputs, Int32 cbSize);
         private class Default {
             public const string TimeFormat = "yyyy/MM/dd";
         }
 
-        static void Main(string[] args) {
-
-            //StreamReader sw = new StreamReader(@"C:\Users\Dick\Desktop\新增資料夾\111.txt",Encoding.Default);
-            //StringBuilder sb = new StringBuilder();
-            //string  context = sw.ReadToEnd();
-            //MatchCollection matches = Regex.Matches(context, "</span></div>[^\"]+<span class=\"f2\">", RegexOptions.Multiline);
-            //foreach (Match match in matches)
-            //{
-            //    string resul = match.Value;
-            //    GetAnalysis(sb, context, resul);
-            //}
-            //ToolLog.Log("");
-            //System.Attribute attribute = null;
-            //Assembly assembly = Assembly.LoadFrom(@"C:\Users\Dick\Desktop\Black\CommTool.Service.dll");
-            //object obj = assembly.CreateInstance("TestAddin");
-            //ITestService Itest = CallServihce.GetService<ITestService>(); 
-            //Itest.HelloWord();              <div id="main-container">   <span class="f2">
-            //  System.Type[] types = ii.GetTypes();
-            //object[] customAttributes=  types[6].GetCustomAttributes(true);
-            //if (customAttributes != null)
-            //{
-            //    object[] array = customAttributes;
-            //    for (int i = 0; i < array.Length; i++)
-            //    {
-            //        System.Attribute attribute = (System.Attribute)array[i];
-            //        if (attribute.GetType() == this._searchAttribute)
-            //        {
-            //            pFindAttribute = attribute;
-            //            //return true;
-            //        }
-            //    }
-            //}
-            //string ttt = sb.ToString();
-
-
-
-            //CommTool.ConfigManager ma = new ConfigManager(@"C:\HRSource\V5.1.6(Standard)\8101224567-世代流通資\Export\appSettings.config","",true);
-
-
-            //WebInfo.GetSite Site = new GetSite(@"D:\Test\LogText");
-            //StreamReader Sr = Site.GetWebInfo(@"http://www.taifex.com.tw/chinese/3/7_9.asp");
-            //string end = Sr.ReadToEnd();
-
-
-            WebInfo.WebInfo Web = new WebInfo.WebInfo(@"D:\Test\LogText");
-
-            //string result = Web.GetStringResponse(@"http://www.taifex.com.tw/chinese/3/7_9.asp", Encoding.UTF8);
-
-            //HtmlAgilityPack.HtmlDocument _HtmlDocument = GetWebHtmlDocument(@"http://www.taifex.com.tw/chinese/3/7_9.asp",  Encoding.UTF8);
-
-            //HtmlAgilityPack.HtmlNodeCollection anchors = _HtmlDocument.DocumentNode.SelectNodes("111");
-
-            //HtmlAgilityPack.HtmlNodeCollection anchors = _HtmlDocument.DocumentNode.SelectNodes(Default.ItemListTag);
-            //string address = "http://118.99.187.60/wordpress/api_beauty.php";
-
-
-            //Web.GetBueatyDirtory("https://www.ptt.cc/bbs/Beauty/M.1486780171.A.9C3.html", 0, "http://robertlan.16mb.com/api_beauty.php");
-
-            Stock.StockData data = new StockData();
-            for (int i = 0; i <= 100; i++) {
-                data.ControlPrice();
-
-                System.Threading.Thread.Sleep(1000*20);
-            }
-
-
-            //Console.Read();
-            //ToolLog.Log(Default.PostMessage + info.Title);
-            //PostData Data = new PostData();
-            //Data.Author = SiteInfoList[Default.MinItem].Author;
-            //Data.Content = SiteInfoList[Default.MinItem].Context;
-            //Data.Title = SiteInfoList[Default.MinItem].Title;
-            //string strJson = string.Format( "json=" + JsonConvert.SerializeObject(info, Newtonsoft.Json.Formatting.Indented));
-            ////string FullPath = Address +strJson;
-
-            //LineMessage Line = new LineMessage();
-
-            //Message msg = new Message();
-            //msg.type = "text";
-            //msg.text = "TryText";
-            //Line.to = "dick22707";
-            //Line.messages.Add(msg);
-
-
-
-
-            //Web.HttpPostMethod(Newtonsoft.Json.JsonConvert.SerializeObject(Line), "https://api.line.me/v2/bot/message/push");
-            //string result = Web.GetStringResponse("https://www.ptt.cc/bbs/Beauty/M.1478850577.A.35F.html", Encoding.UTF8);
-                        
-            //Encoding myEncoding = Encoding.GetEncoding("gb2312");
-            //address = address + System.Web.HttpUtility.UrlEncode(strJson, myEncoding);
-            //HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(address);
-            //req.Method = "GET";
-            //using (WebResponse wr = req.GetResponse()) {
-            //    //在這裡對接收到的頁面內容進行處理
-            //}            
-
-            //string QueryString = string.Format("{0}?Author={1}&Context={2}&Title={3}",address,info.Author, info.Context,info.Title);
-
-            //string QueryString = Newtonsoft.Json.JsonConvert.SerializeObject(info, Newtonsoft.Json.Formatting.Indented);
-            //Web.GetResponse(QueryString.Replace("'","\""));
-            //Web.POST(address, SiteInfoList);
-
-            //Web.BueatyPostContentByGetMothed(address, SiteInfoList);
-            Stock.CalendarData CalendarDB = new CalendarData();
-            //Stock.StockData data=new StockData();
-            for (int i = 14; i <= 19;i++ ) {
-                Calendar _Calendar = CalendarDB.GetCalendar(new DateTime(2017, 12, i));
-                _Calendar.Week = "201712";
-                _Calendar.NearMonth1 = "201801";
-                _Calendar.NearMonth2 = "201802";
-                CalendarDB.UpdateCalendar(_Calendar);
-            }
-            //data.UpdateWeekPointEndPrice("201703W2","call");
-             
-
-            //Stock.StockData stock = new Stock.StockData();
-            //List<Option> OptionsList = new List<Option>();
-            //LineClient clinent = new LineMessagingAPISDK.LineClient("x9D+Uh67zOnuoqYZBXk4QsCuTLDURikSHVz0kN7XbbVCdbZKz1Rjb6qAuNbSckcpODTpWMOFLPZUyY7cpgpwC0TBCsgK0XeUS/fYSl4U9Fs9p2yKMlp2BapJNdQI97RAl1N1OHjDAX8yaxHyDj2iXwdB04t89/1O/w1cDnyilFU=");
-            //PushMessage PMessage = new LineMessagingAPISDK.Models.PushMessage();
-            //PMessage.To = "dick22707";
-
-            //TextMessage txMessage = new LineMessagingAPISDK.Models.TextMessage("Test");
-            //txMessage.Id = "dick22707";
-            //txMessage.Text = "Hello www";
-
-            //PMessage.Messages.Add(txMessage);
-
-            //clinent.PushAsync(PMessage);
-
-
-            //Web.HttpPostMethod("key=76e2db97-a330-4418-a6bf-f26072695969&id=dick22707&msg=test","https://isbaas.azurewebsites.net/api/LineWebHook");
-            //stock.GetOptionWeekWithStop(1,8,1);
-
-             //stock.GetNumberOfContractsAndMaill();
-            //for (int i = 0; i <= 2; i++) {
-            //    DateTime NowDate = DateTime.Now.AddMonths(i);
-            //    List<Option> options = stock.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=" + NowDate.ToString("yyyyMM"), Encoding.UTF8);
-            //  
-            //}
-
-            //List<Option> options = stock.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "201702", Encoding.UTF8);
-            //OptionsList.AddRange(options);
-
-            //stock.SaveOpionData(OptionsList);
-
-            //stock.SaveOptionHistroy(@"D:\Test\BBA63A05-4767-47BC-AE1F-B3380F71925C.csv");
-
-            //PropertyInfo[] infos = typeof(Stock.HistoryOption).GetProperties();
-            //DataTable dt = new DataTable();
-            //foreach (PropertyInfo info in infos) {
-            //    dt.Columns.Add(info.Name);
-            //}
-
-            //for (int i = 1; i <= 12; i++) {
-            // dt = CommTool.Files.ReadCSV(string.Format(@"D:\Test\MI_5MINS_HIST100{0}.csv", i.ToString("00")), dt);
-            //}
-            //stock.SaveWeighted(dt);
-
-
-
-            //CommTool.MailData _MailData = new MailData();
-
-
-            //dt = CommTool.Files.ReadCSV(@"D:\Test\201612.csv", dt);
-
-            //stock.SaveOptionHistoryData(dt);
-
-            //WebInfo.MotorData Motor = new WebInfo.MotorData();
-            //Motor.GetMotorData();
-            //for (int i =23; i <= 28; i++) {
-            //DateTime Spa = new DateTime(2017, 2, 22);
-            //Calendar _Calendar = CalendarDB.GetCalendar(Spa);
-            //    //_Calendar.IsWorkDay = true;
-            //    _Calendar.Week = "201702W5";
-            //_Calendar.NearMonth1 = "201703W1";
-            //    _Calendar.NearMonth2 = "201704";
-
-            //    if (i == 22) {
-            //        _Calendar.Week = "201702W4";
-            //        _Calendar.NearMonth1 = "201702W5";
-            //        _Calendar.NearMonth2 = "201703";
-            //    }
-
-            //CalendarDB.UpdateCalendar(_Calendar);
-            //}
-            //stock.GetOptionEveryDay("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=");
-
-            //Weighted _Weighted = stock.GetWeightedDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=");
-            //stock.SaveWeighted(_Weighted);
-            //int week = 1;
-            //for (int i = 2; i <= 31; i++) {
-            //    DateTime Dat = new DateTime(2017, 3, i);
-            //    Calendar _Calendar = CalendarDB.GetCalendar(Dat);
-
-            //    switch (week)
-            //    {
-            //        case 1:
-            //        case 2:
-            //            _Calendar.Week = string.Format("{0}{1}W{2}", Dat.Year, Dat.Month,week);
-            //            _Calendar.NearMonth1 = string.Format("{0}{1}", Dat.Year, Dat.Month);
-            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
-            //            break;
-            //        case 4:
-            //        case 5:
-            //            _Calendar.Week = string.Format("{0}{1}W{2}", Dat.Year, Dat.Month,week);
-            //            _Calendar.NearMonth1 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
-            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(2).Year, Dat.AddMonths(2).Month);
-            //            break;
-            //    }                
-
-            //    if (week == 3) {
-            //        _Calendar.Week = string.Format("{0}{1}", Dat.Year, Dat.Month);
-            //        _Calendar.NearMonth1 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
-            //        _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(2).Year, Dat.AddMonths(2).Month);
-            //    }
-                
-
-            //    if (Dat.DayOfWeek.ToString() == "Wednesday") {
-            //        if (week == 1) {
-            //            _Calendar.NearMonth1 = string.Format("{0}{1}W2", Dat.Year, Dat.Month);
-            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
-            //        }
-            //        if (week == 3) {
-            //            _Calendar.NearMonth1 = string.Format("{0}{1}W4", Dat.Year, Dat.Month);
-            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
-            //        }
-            //        if (week == 4) {
-            //            _Calendar.NearMonth1 = string.Format("{0}{1}W5", Dat.Year, Dat.Month);
-            //            _Calendar.NearMonth2 = string.Format("{0}{1}", Dat.AddMonths(1).Year, Dat.AddMonths(1).Month);
-            //        }
-            //        week++;
-            //    }
-            //        //_Calendar.Remark = "周選結算";
-
-
-            //    CalendarDB.UpdateCalendar(_Calendar);
-            //}
-
-
-            //stock.GetOptionWeekWithStop(1, 8, 1);
-            
-            //Console.WriteLine("統計結束");
-            //Console.ReadLine();
-
-
-            //for (int i = 1; i <= 12; i++) {
-            //    stock.SaveOpen_InterestHistory(string.Format(@"D:\Test\Ratios2016_{0}.csv",i.ToString("00")));
-            //} 
-                         
-            ////CommTool.Files.DownLoadFile("https://www.taifex.com.tw/3_2_3_getcontract.asp?date1=" + DateTime.Now.AddDays(-1).ToString("yyyy/MM/dd") + "&date2=" + DateTime.Now.ToString("yyyy/MM/dd") + "", @"D:\Test\TestDownLoad.csv");
-            //object username = new object();
-            //CommTool.ObjectUtility.ReadRegistry("UserName", ref username);
-             
+        [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 28)]
+        public struct INPUT {
+            [FieldOffset(0)]
+            public INPUTTYPE dwType;
+            [FieldOffset(4)]
+            public MOUSEINPUT mi;
+            [FieldOffset(4)]
+            public KEYBOARDINPUT ki;
+            [FieldOffset(4)]
+            public HARDWAREINPUT hi;
         }
-              
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct MOUSEINPUT {
+            public Int32 dx;
+            public Int32 dy;
+            public Int32 mouseData;
+            public MOUSEFLAG dwFlags;
+            public Int32 time;
+            public IntPtr dwExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct KEYBOARDINPUT {
+            public Int16 wVk;
+            public Int16 wScan;
+            public KEYBOARDFLAG dwFlags;
+            public Int32 time;
+            public IntPtr dwExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct HARDWAREINPUT {
+            public Int32 uMsg;
+            public Int16 wParamL;
+            public Int16 wParamH;
+        }
+
+        public enum INPUTTYPE : int {
+            Mouse = 0,
+            Keyboard = 1,
+            Hardware = 2
+        }
+
+        [Flags()]
+        public enum MOUSEFLAG : int {
+            MOVE = 0x1,
+            LEFTDOWN = 0x2,
+            LEFTUP = 0x4,
+            RIGHTDOWN = 0x8,
+            RIGHTUP = 0x10,
+            MIDDLEDOWN = 0x20,
+            MIDDLEUP = 0x40,
+            XDOWN = 0x80,
+            XUP = 0x100,
+            VIRTUALDESK = 0x400,
+            WHEEL = 0x800,
+            ABSOLUTE = 0x8000
+        }
+
+        [Flags()]
+        public enum KEYBOARDFLAG : int {
+            EXTENDEDKEY = 1,
+            KEYUP = 2,
+            UNICODE = 4,
+            SCANCODE = 8
+        }
+
+        static void Main(string[] args) {
+            //MainMethod();
+
+           // Reward _Reward = new Reward();
+           // RewardDAO Dao = new RewardDAO();
+           // _Reward.SN = 3;
+           // _Reward.PayCustomerSN = 1;
+           // //_Reward.CustomerSN = 1;
+           // //_Reward.Money = 21m;
+           // //_Reward.RewardTime = DateTime.Now;
+           //int trtt=  Dao.PayReward(_Reward);
+
+           // EWalletDAO DAO = new EWalletDAO();
+           //decimal result = DAO.ReCalculateEWallet(2);
+
+            //CreateCustomer();
+            //StockDAO DAO = new StockDAO();
+            ////DAO.GetOptionEveryDay("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&amp;opmr=optionpart&amp;opcm=WTXO&amp;opym=");
+            ////DAO.ControlPrice();  
+            //WebInfo.WebInfo Web = new WebInfo.WebInfo();
+
+            //string TempCode = System.Web.HttpUtility.UrlEncode("_台選", System.Text.Encoding.GetEncoding("BIG5")).ToUpper();//将繁体汉字转换为Url
+
+            //string Temp ="201705W4".Replace(DateTime.Now.Year.ToString(),string.Empty);
+            //string []arr =Temp.Split('W');
+            //string GetTemp =string.Empty;
+            //if(arr.Length>0)
+            //{
+            //    GetTemp =string.Format("TX{0}{1}{2}W{0}{1}",arr[1],arr[0],TempCode);
+            //}
+
+            //WebInfo.WebInfo we = new WebInfo.WebInfo();
+            //we.HttpPostMethod("http://www666.usgfx.com/usgapiserver/DepositPage/SafechargeNotifications?ppp_status=OK&cardCompany=Visa&nameOnCard=www&country=TW&currency=USD&merchant_site_id=135323&merchant_id=439896639487429442&merchantLocale=zh_TW&requestVersion=3.0.0&PPP_TransactionID=221212373&productId=usgfx&customData=Union+Standard+Test+Multi&payment_method=cc_card&responseTimeStamp=2017-06-06.06%3A05%3A56&message=Success&Error=Success&userPaymentOptionId=1558793&Status=APPROVED&ExErrCode=0&ErrCode=0&AuthCode=111876&ReasonCode=0&Token=ZQBLAEYAUgBnAHMATABHAG0AMgAtAE8AUAA4AHIALgBaAFsAPgBhAD0AWABpACsAUABaAFAANwA1ACkALABZAF0AYgBkAEcAdQAlADMAbgBgAHoAMwA%3D&tokenId=7355934&responsechecksum=345433cb5bb9a14722ec447cf197d5c4&advanceResponseChecksum=46f2b4805dd5c3d7d524937f2f427d83&totalAmount=7.00&TransactionID=101508687190&dynamicDescriptor=Union+Standard+Test&uniqueCC=2X6q1jdQkdgSLk49u671NnyQWVQ%3D&orderTransactionId=1005396063&item_amount_1=7.00&item_quantity_1=1&merchant_unique_id=20170606140440-10011618", "http://www666.usgfx.com/usgapiserver/DepositPage/SafechargeNotifications");
+
+            //Web.HttpPostMethod(string.Empty, "http://www.capitalfutures.com.tw/option/default.asp?Sname=TX405_台選W405&xy=1:7", Encoding.Default); 
+
+            //var anchors = DAO.GetOptionDailyCapitalfutures("http://www.capitalfutures.com.tw/option/default.asp?", "201705W4", Encoding.Default, "20170518001155");
+
+            //WeightedDAO WDAO = new WeightedDAO();
+
+            //DAO.GetOptionEveryDay("http://www.capitalfutures.com.tw/option/default.asp?", "https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=");
+            //TradeRecordDAO RecordDAO = new TradeRecordDAO();
+
+            //RecordDAO.CalculateResultReport();
+
+            //CalendarDAO DAR = new CalendarDAO();
+            
+
+            //DAR.CreateNextMonthCalendar(DateTime.Now);
+
+            //EWallet Wallet = new EWallet();
+            //Wallet.CustomerSN = 2;
+            //Wallet.Balance = 1000;
+            //Wallet.Pyeongchang = 3222;
+            //Wallet.Available = 3454;
+
+
+            TranscationDAO DAO = new TranscationDAO();
+
+            //Transaction Trans = new Transaction();
+            //TransactionDetail Detail = new TransactionDetail();
+
+            //Trans.CustomerSN = 1;
+            //Trans.TradeType = TranscationTypes.Deposit;
+            //Detail.BankAccount = "dsdsadsadsa";
+            //Detail.BankName = "ERRR9453";
+            //Detail.BranchName = "PKKDDK";
+            //Detail.Draw = 70;
+            //Detail.Remark = string.Empty;
+            //Trans.Detail = Detail;
+
+          List<Transaction> ListTran =   DAO.GetTransactionsByTradeType("2017-07-01", "2017-07-31",10,1,TranscationTypes.Deposit);
+
+            //DAO.GetTransactionByCustomerSN("2017-07-10", "2017-07-11", 1);
+
+            CustomerDAO _CustDAO = new CustomerDAO();
+            Customer _Customer = new Customer();
+            //ExtraTagDAO _ExtDAO = new ExtraTagDAO();
+            //_Customer = _CustDAO.GetCustomerByAccount("dick22707@gmail.com");
+            //_Customer.PassWord = "987654321";
+            //int result = _ExtDAO.UpdateExtraTag(ExtraUserType.Customer, ExtraClass.MinimunLot, _Customer.SN, (int)MinimunLotLimit.NotLimit);
+
+            //AdviserDAO _AdviserDAO = new AdviserDAO();
+            //Adviser _adviser = new Adviser();
+            //_adviser.Account = "55441234";
+            //_adviser.PassWord = "1234567";
+            //_adviser.Address = "cfcdfdggdfgdf";
+            //_adviser.BirthDay = DateTime.Now;
+            //_adviser.Email = "dick22707@gmail.com";
+            //_adviser.FirstName = "First";
+            //_adviser.Gender = GenderType.Male;
+            //_adviser.ID = "A123456789";
+            //_adviser.LastName = "Last";
+            //_adviser.Phone = "0953359025";
+            //_adviser.Remark = "第一位";
+
+            //int result = _AdviserDAO.AddAdviser(_adviser);
+
+           //Adviser Result =  _AdviserDAO.LoginCheckAdviser(_adviser );
+
+
+            //TradeRecordDAO _TradeRecordDAO = new TradeRecordDAO();
+            //TradeRecord Red = new TradeRecord();
+            //Red.Contract = "10400";
+            //Red.DueMonth = "201707W4";
+            //Red.Lot = "2";
+            //Red.OP = "Put";
+            //Red.Price = 33.5m;
+            //Red.Type = "Sell";
+
+
+            //_TradeRecordDAO.AddTradeRecord(Red);
+
+
+
+            //_CustDAO.UpdatePassWord(_Customer,"123456789");
+
+        }
+
+
+        private void SendMailByAmazon() {
+            string FROM = "dick22707@gmail.com";
+            string TO = "erpbank.dick@gmail.com";
+
+            string SUBJECT = "Amazon SES test (SMTP interface accessed using C#)";
+            string BODY = "This email was sent through the Amazon SES SMTP interface by using C#.";
+
+
+        //AKIAIMFFECVXEROV6CZQ
+        }
+        
+
+
+        private static void CreateCustomer() {
+            CustomerDAO Dao = new CustomerDAO();
+            Customer _Customer = new Customer();
+            _Customer.PassWord = "9999";
+            _Customer.Member = new Member();
+            _Customer.Member.FirstName = "DWDWDDW";
+            _Customer.Member.LastName = "21221";
+            _Customer.Member.NickName = "21cdfds221";
+            _Customer.Member.HomeAddr = "231231221";
+            _Customer.Member.ID = "A123456789";
+            _Customer.Member.Phone = "333333";
+            _Customer.Member.BirthDay = DateTime.Now;
+            _Customer.Member.Email = "dsadsd@gmail.com";
+            Dao.AddCustomer(_Customer);
+        }
+
+        private static bool IsQeury { set; get; }
+
+        private static void MainMethod() {
+            bool IsGo = true;
+            while (IsGo) {
+                Console.WriteLine(" Query :q , Add :b ,Sell: s  ,Stop : t , Exit : e ");
+                string ReadString = Console.ReadLine();
+                string Commad = string.Empty;
+                if (!string.IsNullOrEmpty(ReadString)) {
+                    string[] Sp = ReadString.Split(' ');
+                    if (Sp.Length > 0) {
+                        switch (Sp[0].ToLower()) {
+                            case "t":
+                                IsQeury = false;
+                                break;
+                            case "e":
+                                IsGo = false;
+                                break;
+                            case "q":
+                                IsQeury = true;
+                                Task Task1 = Task.Factory.StartNew(() => {
+                                    WeekPoint A = new WeekPoint();
+                                    WeekPoint B = new WeekPoint();
+                                    A.DueMonth = Sp[1];
+                                    B.DueMonth = Sp[1];
+                                    A.OP = Change(Sp[2]);
+                                    A.Contract = Sp[3];
+                                    B.OP = Change(Sp[4]);
+                                    B.Contract = Sp[5];
+                                    ShowNowPrice(A, B);
+                                });
+                                break;
+                            case "b":
+                                Console.WriteLine(" DueMonth OP Contract Type Lot Price ");
+                                Commad = Console.ReadLine();
+                                if (!string.IsNullOrEmpty(Commad)) {
+                                    string[] SpCommand = Commad.Split(' ');
+                                    if (SpCommand.Length > 0) {
+                                        TradeRecord Record = new TradeRecord();
+                                        Record.TradeDate = DateTime.Now;
+                                        Record.DueMonth = SpCommand[0];
+                                        Record.OP = Change(SpCommand[1]);
+                                        Record.Contract = SpCommand[2];
+                                        Record.Type = Change(SpCommand[3]);
+                                        Record.Lot = SpCommand[4];
+                                        Record.Price =Convert.ToDecimal(SpCommand[5]);
+                                        TradeRecordDAO DAO = new TradeRecordDAO();
+                                        DAO.AddTradeRecord(Record);
+                                    }
+                                }
+                                break;
+                            case "s":
+                                Console.WriteLine(" DueMonth OP Contract Type Lot Price ");
+                                 Commad = Console.ReadLine();
+                                if (!string.IsNullOrEmpty(Commad)) {
+                                    string[] SpCommand = Commad.Split(' ');
+                                    if (SpCommand.Length > 0) {
+                                        TradeRecordDAO DAO = new TradeRecordDAO();
+                                        List<TradeRecord> ListRecord = new List<TradeRecord>();
+                                        ListRecord = DAO.GetTradeRecord();
+                                        foreach (TradeRecord Record in ListRecord)
+                                        {
+                                            if (Record.DueMonth.ToLower().Equals(SpCommand[0].ToLower()) && Record.OP.ToLower().Equals(Change( SpCommand[1]).ToLower()) && Record.Contract.Equals(SpCommand[2])) {
+                                                Record.IsPyeongchang = true;
+                                                Record.StopPrice = Convert.ToDecimal(SpCommand[5]);
+                                                Record.PyeongchangTime = DateTime.Now;
+                                                DAO.UpdateTradeRecord(Record);
+                                            }
+                                        }  
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+                  
+        private static string GetSHA256Enc(string Value) {
+            byte[] source = Encoding.Default.GetBytes(Value);//將字串轉為Byte[]
+            using (SHA256 sha256 = SHA256Managed.Create()) {
+                byte[] crypto = sha256.ComputeHash(source);//進行SHA256加密
+                return Convert.ToBase64String(crypto);//把加密後的字串從Byte[]轉為字串
+            }
+        }
+
+        private static string Change(string Str) {
+            switch (Str.ToLower()) {
+                case "c":
+                case "call":
+                    return "Call";
+                    
+                case "put":
+                case "p":
+                    return "Put";                    
+                case "s":
+                case "sell":
+                    return "Sell";
+                case "b":
+                case "buy":
+                    return "Buy";
+                default:
+                    return string.Empty;                    
+           }
+        }
+
+        private static void ShowNowPrice(WeekPoint APoint, WeekPoint BPoint) {
+            StockDAO _StockDAO = new StockDAO();
+            WeightedDAO _WeightDAO = new WeightedDAO();
+            while (IsQeury) {
+                DateTime TimeStamp = DateTime.Now;
+                TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 44, 59));
+                TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 23, 45, 15));
+                if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
+                    Console.WriteLine(TimeStamp.ToString("yyyy/MM/dd HH:mm:ss"));
+                    Option CallOption = _StockDAO.GetOptionByMonthAndContractAndOP(APoint);
+                    Weighted NowWeighted = _WeightDAO.GetWeighted();
+                    string StrWeighted = string.Format("Price :{0} , Futurs: {1} , Change : {2} , Volume : {3} ", NowWeighted.Price, NowWeighted.Futures, NowWeighted.Change, NowWeighted.Volume);
+                    Console.WriteLine(StrWeighted);
+                    string CallString = string.Format("OP :{0} , Contract :{1} , Price :{2} ,Volume :{3} ,Chanage :{4} ", CallOption.OP, CallOption.Contract, CallOption.Clinch, CallOption.Volume, CallOption.Change);
+                    Console.WriteLine(CallString);
+                    Option PutOption = _StockDAO.GetOptionByMonthAndContractAndOP(BPoint);
+                    string PutString = string.Format("OP :{0} , Contract :{1} , Price :{2} ,Volume :{3} ,Chanage :{4} ", PutOption.OP, PutOption.Contract, PutOption.Clinch, PutOption.Volume, PutOption.Change);
+                    Console.WriteLine(PutString);
+                    System.Threading.Thread.Sleep(1000 * 10);
+                }
+                else {
+                    Console.WriteLine("Not Trade Time");
+                    break;
+                }
+            }
+        }
+         
+        //private static void TaskTest(string DueMonth) {
+        //   StockData StockDAO = new StockData();
+        //   List<Option> OptionList = new List<Option>();
+        //   for (int i = 0; i <= 50;i++ ) {
+        //       OptionList.AddRange(StockDAO.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&amp;opmr=optionpart&amp;opcm=WTXO&amp;opym=", DueMonth, Encoding.UTF8, DateTime.Now.ToString("yyyyMMddHHmmss")));
+        //       Console.WriteLine(string.Format("{0}   {1} ",DueMonth,OptionList.Count));
+        //   }            
+        //}
+        
+        //private static void TaskTestBBB() {
+        //    for (int i = 0; i <= 50; i++) {
+        //        Console.WriteLine(string.Format("{0}     {1}   BBB", DateTime.Now.ToString(),i));
+        //        Random red = new Random();
+        //        System.Threading.Thread.Sleep(100 * red.Next(1, 50));
+        //    }
+        //}
 
         /// <summary>取得網站的HtmlDocument</summary>
         /// <param name="ppweburl"></param>
@@ -292,9 +399,7 @@ namespace UnitTest {
         //    MyHttpWebRequest = null;
         //    return _HtmlDocument;
         //}
-
-
-
+        
         private static void GetAnalysis(StringBuilder sb, string context, string resul) {
             if (resul.IndexOf("http") == -1) {
                 if (resul.IndexOf("<a href") == -1) {
@@ -318,7 +423,6 @@ namespace UnitTest {
             }
         }
 
-
     }
 
     public class TestAddin : IServiceProviderAddin {
@@ -336,12 +440,20 @@ namespace UnitTest {
 
         public List<Message> messages = new List<Message>();
     }
-
-
+    
     public class Message {
-       public string type { set; get; }
+        public string type { set; get; }
 
-       public string text { set; get; }
+        public string text { set; get; }
     }
 
+    public class CRMRequest {
+        public string IBCode { set; get; }
+
+        public string feature { set; get; }
+
+        public string timestamp { set; get; }
+
+    }
+    
 }
