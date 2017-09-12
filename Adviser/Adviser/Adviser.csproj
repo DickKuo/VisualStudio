@@ -15,7 +15,7 @@
     <AssemblyName>Adviser</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -55,6 +55,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
     </Reference>
+    <Reference Include="Stock">
+      <HintPath>..\..\..\..\Dropbox\Export\Stock.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -64,6 +67,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -84,10 +88,6 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
@@ -230,6 +230,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\BaseLoginController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\TradeController.cs" />
     <Compile Include="Controllers\TransController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -243,11 +244,13 @@
     <Compile Include="Models\Code\BaseModel.cs" />
     <Compile Include="Models\Code\LoginInfo.cs" />
     <Compile Include="Models\Code\Menu.cs" />
+    <Compile Include="Models\Code\OptionQuotes.cs" />
     <Compile Include="Models\ViewModels\BaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CustomerViewModels.cs" />
     <Compile Include="Models\ViewModels\LoginViewModels.cs" />
     <Compile Include="Models\ViewModels\MenuManagmentViewModels.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModels.cs" />
+    <Compile Include="Models\ViewModels\TradeViewModels.cs" />
     <Compile Include="Models\ViewModels\TransactionViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -270,6 +273,7 @@
     <Content Include="Scripts\Code\CustomerDetail.js" />
     <Content Include="Scripts\Code\Login.js" />
     <Content Include="Scripts\Code\RegisterJs.js" />
+    <Content Include="Scripts\Code\TradeJs.js" />
     <Content Include="Scripts\jquery-2.2.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
@@ -317,6 +321,8 @@
     <Content Include="Views\Trans\TransDetail.cshtml" />
     <Content Include="Views\Report\TransRecord.cshtml" />
     <Content Include="Views\Trans\Withdrawal.cshtml" />
+    <Content Include="Views\Trade\Quotes.cshtml" />
+    <Content Include="Views\Trade\_QuotesTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BaseLogin\" />
@@ -389,7 +395,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>9082</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.111:473</IISUrl>
+          <IISUrl>http://localhost:9082/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

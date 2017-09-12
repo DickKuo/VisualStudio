@@ -11,11 +11,9 @@
     <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-2.2.0.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
-
 </head>
 
 <body>
-
     <div>
         <nav class="navbar  navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
@@ -28,9 +26,7 @@
                     </button>
                     <a class="navbar-brand" href="~/Home/Index">Home</a>
                 </div>
-
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
                     <ul class="nav navbar-nav">
                         @if (Adviser.Helpers.MenuHelper.GetSessionObj() != null) {
                             if (Adviser.Helpers.MenuHelper.GetSessionObj().MenuList != null) {
@@ -72,8 +68,6 @@
         </nav>
     </div>
 
-
-
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -85,5 +79,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+  
 </body>
 </html>
