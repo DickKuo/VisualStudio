@@ -4,6 +4,7 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
+using Microsoft.Win32;
 
 namespace SQLHelper {
     public static class SHelper {
@@ -302,11 +303,12 @@ namespace SQLHelper {
             object DbName = new object();
             object PassWord = new object();
             object UserName = new object();
-            object MsServerIP = new object();            
-            CommTool.ObjectUtility.ReadRegistry(Default.DBName, ref DbName);
-            CommTool.ObjectUtility.ReadRegistry(Default.MsUserName, ref UserName);
-            CommTool.ObjectUtility.ReadRegistry(Default.MsPassWord, ref PassWord);
-            CommTool.ObjectUtility.ReadRegistry(Default.MsServerIP, ref MsServerIP);
+            object MsServerIP = new object();
+            ObjectUtility Utility = new ObjectUtility();
+            Utility.ReadRegistry(Default.DBName, ref DbName);
+            Utility.ReadRegistry(Default.MsUserName, ref UserName);
+            Utility.ReadRegistry(Default.MsPassWord, ref PassWord);
+            Utility.ReadRegistry(Default.MsServerIP, ref MsServerIP);
             _ConnetionString = string.Format(Default.ConnectionFormat, MsServerIP.ToString(), DbName.ToString(), UserName.ToString(), PassWord.ToString());
         }
 
@@ -574,5 +576,31 @@ namespace SQLHelper {
        Success=99,
        Fail=-1
     }
+
+
+    /// <summary>註冊檔物件</summary>
+    public  class ObjectUtility
+    {
+        private const string CC_HKEY_PATH3 = ".DEFAULT\\SOFTWARE\\DICK\\Server";
+        public const string LocalTempPath = "~/temp/";
+
+        /// <summary>抓取註冊檔資訊</summary>
+        /// <param name="KeyName"></param>
+        /// <param name="KeyValue"></param>
+        public void ReadRegistry(string KeyName, ref object KeyValue)
+        {
+            KeyValue = 1;
+            try
+            {
+                RegistryKey RegistryKeyObj = Registry.Users.OpenSubKey(CC_HKEY_PATH3, false);
+                KeyValue = RegistryKeyObj.GetValue(KeyName, 1);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+    }
+
 
 }
