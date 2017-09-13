@@ -87,154 +87,12 @@ namespace UnitTest {
         }
 
         static void Main(string[] args) {
-            //MainMethod();
-
-           // Reward _Reward = new Reward();
-           // RewardDAO Dao = new RewardDAO();
-           // _Reward.SN = 3;
-           // _Reward.PayCustomerSN = 1;
-           // //_Reward.CustomerSN = 1;
-           // //_Reward.Money = 21m;
-           // //_Reward.RewardTime = DateTime.Now;
-           //int trtt=  Dao.PayReward(_Reward);
-
-           // EWalletDAO DAO = new EWalletDAO();
-           //decimal result = DAO.ReCalculateEWallet(2);
-
-            //CreateCustomer();
-            //StockDAO DAO = new StockDAO();
-            ////DAO.GetOptionEveryDay("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&amp;opmr=optionpart&amp;opcm=WTXO&amp;opym=");
-            ////DAO.ControlPrice();  
-            //WebInfo.WebInfo Web = new WebInfo.WebInfo();
-
-            //string TempCode = System.Web.HttpUtility.UrlEncode("_台選", System.Text.Encoding.GetEncoding("BIG5")).ToUpper();//将繁体汉字转换为Url
-
-            //string Temp ="201705W4".Replace(DateTime.Now.Year.ToString(),string.Empty);
-            //string []arr =Temp.Split('W');
-            //string GetTemp =string.Empty;
-            //if(arr.Length>0)
-            //{
-            //    GetTemp =string.Format("TX{0}{1}{2}W{0}{1}",arr[1],arr[0],TempCode);
-            //}
-
-            //WebInfo.WebInfo we = new WebInfo.WebInfo();
-            //we.HttpPostMethod("http://www666.usgfx.com/usgapiserver/DepositPage/SafechargeNotifications?ppp_status=OK&cardCompany=Visa&nameOnCard=www&country=TW&currency=USD&merchant_site_id=135323&merchant_id=439896639487429442&merchantLocale=zh_TW&requestVersion=3.0.0&PPP_TransactionID=221212373&productId=usgfx&customData=Union+Standard+Test+Multi&payment_method=cc_card&responseTimeStamp=2017-06-06.06%3A05%3A56&message=Success&Error=Success&userPaymentOptionId=1558793&Status=APPROVED&ExErrCode=0&ErrCode=0&AuthCode=111876&ReasonCode=0&Token=ZQBLAEYAUgBnAHMATABHAG0AMgAtAE8AUAA4AHIALgBaAFsAPgBhAD0AWABpACsAUABaAFAANwA1ACkALABZAF0AYgBkAEcAdQAlADMAbgBgAHoAMwA%3D&tokenId=7355934&responsechecksum=345433cb5bb9a14722ec447cf197d5c4&advanceResponseChecksum=46f2b4805dd5c3d7d524937f2f427d83&totalAmount=7.00&TransactionID=101508687190&dynamicDescriptor=Union+Standard+Test&uniqueCC=2X6q1jdQkdgSLk49u671NnyQWVQ%3D&orderTransactionId=1005396063&item_amount_1=7.00&item_quantity_1=1&merchant_unique_id=20170606140440-10011618", "http://www666.usgfx.com/usgapiserver/DepositPage/SafechargeNotifications");
-
-            //Web.HttpPostMethod(string.Empty, "http://www.capitalfutures.com.tw/option/default.asp?Sname=TX405_台選W405&xy=1:7", Encoding.Default); 
-
-            //var anchors = DAO.GetOptionDailyCapitalfutures("http://www.capitalfutures.com.tw/option/default.asp?", "201705W4", Encoding.Default, "20170518001155");
-
-            //WeightedDAO WDAO = new WeightedDAO();
-
-            //DAO.GetOptionEveryDay("http://www.capitalfutures.com.tw/option/default.asp?", "https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=");
-            //TradeRecordDAO RecordDAO = new TradeRecordDAO();
-
-            //RecordDAO.CalculateResultReport();
-
-            //CalendarDAO DAR = new CalendarDAO();
-            
-
-            //DAR.CreateNextMonthCalendar(DateTime.Now);
-
-            //EWallet Wallet = new EWallet();
-            //Wallet.CustomerSN = 2;
-            //Wallet.Balance = 1000;
-            //Wallet.Pyeongchang = 3222;
-            //Wallet.Available = 3454;
-
-
             TranscationDAO DAO = new TranscationDAO();
-
-            //Transaction Trans = new Transaction();
-            //TransactionDetail Detail = new TransactionDetail();
-
-            //Trans.CustomerSN = 1;
-            //Trans.TradeType = TranscationTypes.Deposit;
-            //Detail.BankAccount = "dsdsadsadsa";
-            //Detail.BankName = "ERRR9453";
-            //Detail.BranchName = "PKKDDK";
-            //Detail.Draw = 70;
-            //Detail.Remark = string.Empty;
-            //Trans.Detail = Detail;
-
-          List<Transaction> ListTran =   DAO.GetTransactionsByTradeType("2017-07-01", "2017-07-31",10,1,TranscationTypes.Deposit);
-
-            //DAO.GetTransactionByCustomerSN("2017-07-10", "2017-07-11", 1);
-
             CustomerDAO _CustDAO = new CustomerDAO();
             Customer _Customer = new Customer();
-            //ExtraTagDAO _ExtDAO = new ExtraTagDAO();
-            //_Customer = _CustDAO.GetCustomerByAccount("dick22707@gmail.com");
-            //_Customer.PassWord = "987654321";
-            //int result = _ExtDAO.UpdateExtraTag(ExtraUserType.Customer, ExtraClass.MinimunLot, _Customer.SN, (int)MinimunLotLimit.NotLimit);
-
-            //AdviserDAO _AdviserDAO = new AdviserDAO();
-            //Adviser _adviser = new Adviser();
-            //_adviser.Account = "55441234";
-            //_adviser.PassWord = "1234567";
-            //_adviser.Address = "cfcdfdggdfgdf";
-            //_adviser.BirthDay = DateTime.Now;
-            //_adviser.Email = "dick22707@gmail.com";
-            //_adviser.FirstName = "First";
-            //_adviser.Gender = GenderType.Male;
-            //_adviser.ID = "A123456789";
-            //_adviser.LastName = "Last";
-            //_adviser.Phone = "0953359025";
-            //_adviser.Remark = "第一位";
-
-            //int result = _AdviserDAO.AddAdviser(_adviser);
-
-           //Adviser Result =  _AdviserDAO.LoginCheckAdviser(_adviser );
-
-
-            //TradeRecordDAO _TradeRecordDAO = new TradeRecordDAO();
-            //TradeRecord Red = new TradeRecord();
-            //Red.Contract = "10400";
-            //Red.DueMonth = "201707W4";
-            //Red.Lot = "2";
-            //Red.OP = "Put";
-            //Red.Price = 33.5m;
-            //Red.Type = "Sell";
-
-
-            //_TradeRecordDAO.AddTradeRecord(Red);
-
-
-
-            //_CustDAO.UpdatePassWord(_Customer,"123456789");
-
-        }
-
-
-        private void SendMailByAmazon() {
-            string FROM = "dick22707@gmail.com";
-            string TO = "erpbank.dick@gmail.com";
-
-            string SUBJECT = "Amazon SES test (SMTP interface accessed using C#)";
-            string BODY = "This email was sent through the Amazon SES SMTP interface by using C#.";
-
-
-        //AKIAIMFFECVXEROV6CZQ
+            
         }
         
-
-
-        private static void CreateCustomer() {
-            CustomerDAO Dao = new CustomerDAO();
-            Customer _Customer = new Customer();
-            _Customer.PassWord = "9999";
-            _Customer.Member = new Member();
-            _Customer.Member.FirstName = "DWDWDDW";
-            _Customer.Member.LastName = "21221";
-            _Customer.Member.NickName = "21cdfds221";
-            _Customer.Member.HomeAddr = "231231221";
-            _Customer.Member.ID = "A123456789";
-            _Customer.Member.Phone = "333333";
-            _Customer.Member.BirthDay = DateTime.Now;
-            _Customer.Member.Email = "dsadsd@gmail.com";
-            Dao.AddCustomer(_Customer);
-        }
-
         private static bool IsQeury { set; get; }
 
         private static void MainMethod() {
@@ -367,39 +225,7 @@ namespace UnitTest {
                 }
             }
         }
-         
-        //private static void TaskTest(string DueMonth) {
-        //   StockData StockDAO = new StockData();
-        //   List<Option> OptionList = new List<Option>();
-        //   for (int i = 0; i <= 50;i++ ) {
-        //       OptionList.AddRange(StockDAO.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&amp;opmr=optionpart&amp;opcm=WTXO&amp;opym=", DueMonth, Encoding.UTF8, DateTime.Now.ToString("yyyyMMddHHmmss")));
-        //       Console.WriteLine(string.Format("{0}   {1} ",DueMonth,OptionList.Count));
-        //   }            
-        //}
-        
-        //private static void TaskTestBBB() {
-        //    for (int i = 0; i <= 50; i++) {
-        //        Console.WriteLine(string.Format("{0}     {1}   BBB", DateTime.Now.ToString(),i));
-        //        Random red = new Random();
-        //        System.Threading.Thread.Sleep(100 * red.Next(1, 50));
-        //    }
-        //}
-
-        /// <summary>取得網站的HtmlDocument</summary>
-        /// <param name="ppweburl"></param>
-        /// <returns></returns>
-        //private static  HtmlDocument GetWebHtmlDocument(string ppweburl, Encoding Encode) {
-        //    HttpWebRequest MyHttpWebRequest = HttpWebRequest.Create(ppweburl) as HttpWebRequest;
-        //    HttpWebResponse MyHttpWebResponse = MyHttpWebRequest.GetResponse() as HttpWebResponse;
-        //    StreamReader myStreamReader = new StreamReader(MyHttpWebResponse.GetResponseStream(), Encode);
-        //    HtmlAgilityPack.HtmlDocument _HtmlDocument = new HtmlAgilityPack.HtmlDocument();
-        //    _HtmlDocument.LoadHtml(myStreamReader.ReadToEnd());
-        //    myStreamReader.Close();
-        //    MyHttpWebResponse = null;
-        //    MyHttpWebRequest = null;
-        //    return _HtmlDocument;
-        //}
-        
+                 
         private static void GetAnalysis(StringBuilder sb, string context, string resul) {
             if (resul.IndexOf("http") == -1) {
                 if (resul.IndexOf("<a href") == -1) {
