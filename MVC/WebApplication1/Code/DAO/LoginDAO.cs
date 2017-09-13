@@ -13,15 +13,15 @@ namespace WebApplication1.Code.DAO
     {
         protected class Parameter
         {
-            public const string UserNameParameter = "UserName";
-            public const string UserPWParameter = "PassWord";
+            public const string Account = "Account";
+            public const string PassWord = "PassWord";
         }
 
         private class Sp
         {
-            public const string LoginCheck = "SysView";
+            public const string LoginCheck = "LoginCheck";
         }
-
+            
         private class DataRows {
             public const string UserID = "UserID";
             public const string UserName = "UserName";
@@ -36,40 +36,27 @@ namespace WebApplication1.Code.DAO
         
         /// <summary>初始化Login物件 </summary>      
         public LoginDAO()
-        {
+        {             
             //WebConfig 取得
-            _DbIstance.ConnectiinString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"];
+            //_DbIstance.ConnectiinString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"];
             LogPath = System.Web.Configuration.WebConfigurationManager.AppSettings["LogPath"];   
         }
-
-
-        /// <summary>設定DB連線字串 /// </summary>
-        /// <param name="Connectionstring"></param>
-        public void SetConnection(string Connectionstring)
-        {
-           _DbIstance.ConnectiinString = Connectionstring;
-        }
-
 
         /// <summary>驗證登入使用者，成功後儲存Session </summary>
         /// <param name="sysamdin"></param>
         /// <returns>回傳錯誤碼</returns>
         public string Check(LoginInfo Info)
         {
-            base._DbIstance.AddParameter(Parameter.UserNameParameter, Info.User.UserName);
-            base._DbIstance.AddParameter(Parameter.UserPWParameter, Info.User.PassWord);
-            DataTable dt = base._DbIstance.ExeProcedureGetDataTable(Sp.LoginCheck);
+            USP.AddParameter(Parameter.Account, Info.User.UserName);
+            USP.AddParameter(Parameter.PassWord, Info.User.PassWord);
+            DataTable dt = USP.ExeProcedureGetDataTable(Sp.LoginCheck);
             if (dt != null && dt.Rows.Count > 0)
-            {
+            {   
                 bool IsEnable = Convert.ToBoolean(dt.Rows[0][DataRows.IsEnable]);
                 if (IsEnable)
                 {
-                    WebApplication1.Models.Code.User NowUser = new Models.Code.User();
-                    Info.User.UserID = dt.Rows[0][DataRows.UserID].ToString();
-                    Info.User.Email = dt.Rows[0][DataRows.Email].ToString();
-                    Info.User.RegistrationDate = Convert.ToDateTime(dt.Rows[0][DataRows.RegistrationDate]);
-                    Info.User.IsEnable = IsEnable;
-                    Info.User.RoleID = dt.Rows[0][DataRows.RoleID].ToString();
+                    ObjectBase.CustomerDAO DAO = new ObjectBase.CustomerDAO();
+                    Info.Customer = DAO.GetCustomerByAccount(Info.User.UserName);
                     LoginHelper.SetSeesion(Info);
                     return MessageType.Sucess;
                 }

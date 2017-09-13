@@ -24,6 +24,7 @@ namespace WebApplication1.Controllers
         private string NowUrl;
         private const string Controller = "Factory";
         private const string Action = "DepartmentMangement";
+        private const string MenuBar = "\\bar.xml";
 
         public ManagementController()
         {

@@ -1,0 +1,135 @@
+﻿@model Adviser.Models.ViewModels.CustomerViewModels.CustomerViewModel
+@{
+    ViewBag.Title = "CustomerDetail";
+    IEnumerable<SelectListItem> SelectAuditList = ViewBag.AuditList;
+}
+
+<script src="~/Scripts/Code/CustomerDetail.js"></script>
+
+
+<h2>@Resources.ResourcePageTitle.Title_CustomerDetail</h2>
+<hr>
+@using (Html.BeginForm("CustomerModify", "Customer", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            客戶資訊
+        </div>
+        <div class="panel-body" id="_CustomerInfo">
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_Account
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Account, new { id = "InputAccount", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_Audit
+                </label>
+                <div class='col-xs-3'>
+                    @Html.DropDownListFor(M => M._Customer.Audit, SelectAuditList, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            基本資料
+        </div>
+        <div class="panel-body" id="_CustomerDetail">
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_FirstName
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.FirstName, new { id = "InputFirstName", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_FirstName, @maxlength = "20" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_LastName
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.LastName, new { id = "InputLastName", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_LastName, @maxlength = "20" })
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_NickName
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.NickName, new { id = "InputNickName", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_NickName, @maxlength = "20" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_ID
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.ID, new { id = "InputID", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_ID, @maxlength = "10" })
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_Email
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.Email, new { id = "InputEmail", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_Email, @maxlength = "50" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_HomeAddr
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.HomeAddr, new { id = "InputHomeAddr", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_HomeAddr, @maxlength = "200" })
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_Phone
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.Phone, new { id = "InputPhone", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_Phone, @maxlength = "20" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_BirthDay
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.BirthDay, new { id = "InputBirthDay", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_BirthDay })
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_Remark
+                </label>
+                <div class='col-xs-4'>
+                    @Html.TextAreaFor(M => M._Customer.Member.Remark, new { id = "InputRemark", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_Remark, @maxlength = "200" })
+                </div>
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_IsEnable
+                </label>
+                <div class='col-xs-4'>
+                    @Html.CheckBoxFor(M => M._Customer.IsEnable, new { id = "InputIsEnable" })
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_EditTime
+                </label>
+                <div class='col-xs-10'>
+                    @Html.TextBoxFor(M => M._Customer.Member.EditTime, new { id = "InputEditTime", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_EditTime, @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <div class='col-lg-offset-2 col-xs-3'>
+                    <input type="submit" value="@Resources.ResourceCustomer.Btn_Modify" class="btn btn-info" id="Infomodify" />
+                </div>
+                <div class='col-lg-offset-2 col-xs-3'>
+                    <a class="btn btn-success" id="InfoBack" href="~/Customer/Mangement">@Resources.ResourceCustomer.Btn_Back</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

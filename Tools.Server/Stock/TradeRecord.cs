@@ -36,5 +36,7 @@ namespace Stock {
         public DateTime PyeongchangTime { set; get; }
 
         public bool IsMail { set; get; }
+
+        public int CustomerSN { set; get; }
     }
 }

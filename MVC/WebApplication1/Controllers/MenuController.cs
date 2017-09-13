@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Code.DAO;
 using WebApplication1.Models;
@@ -15,8 +13,7 @@ namespace WebApplication1.Controllers
     public class MenuController : BaseLoginController
     {
         private string ApiUrl =System.Web.Configuration.WebConfigurationManager.AppSettings["ApiUrl"].ToString();    //Api 位置  
-
-
+        
         private class ApiSetting {
             public const string Menu = "Menu";                      //Controller
             public const string MenusLoading = "MenusLoading";      //Method 
@@ -25,12 +22,10 @@ namespace WebApplication1.Controllers
             public const string Action = "Factory";
         }
 
-
         public ActionResult Index()
         {
             return View();
         }
-
         
         /// <summary> 瀏覽列表 </summary>
         /// <returns></returns>
@@ -39,12 +34,10 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-
         public ActionResult LoadingRoleView()
         {
             return View("_LoadRolePartialView");
         }
-
 
         public ActionResult EditPartialView(MenuManagmentViewModels.MenuViewModel Model)
         {
@@ -56,13 +49,11 @@ namespace WebApplication1.Controllers
             return PartialView("_ChildEditMenuPartialView");
         }
 
-
         /// <summary>功能列清單---上層節點</summary>
         /// <returns></returns>
         public ActionResult MenuList()
         {
             MenuManagmentViewModels.MenuViewModel Model = GetMenuList();
-
             var ParentNodes = from v in Model.MenuList
                               where v.ParentNo == string.Empty
                               select v;
@@ -70,22 +61,17 @@ namespace WebApplication1.Controllers
             return PartialView("_ManagementPagePartialView", Model);
         }
 
-
         /// <summary>功能列清單---下層節點</summary>
         /// <returns></returns>
         public ActionResult ChildMenuList( MenuManagmentViewModels.MenuViewModel Model)
         {
             MenuManagmentViewModels.MenuViewModel Temp = GetMenuList();
-                       
-
             var ChildNodes = from v in Temp.MenuList
                              where v.ParentNo == Model.MainMenu.MenuNo
                               select v;
             Model.MenuList = ChildNodes.ToList();
             return PartialView("_ChildMenuPartialView", Model);
         }
-
-
 
         /// <summary>取得所有Menu</summary>
         /// <returns></returns>
@@ -103,7 +89,6 @@ namespace WebApplication1.Controllers
             Model.MenuList = Model.MenuList.OrderBy(X => X.MenuNo).ToList();
             return Model;
         }
-
 
         /// <summary>編輯的Action</summary>
         /// <param name="Model"></param>
@@ -123,7 +108,6 @@ namespace WebApplication1.Controllers
             return PartialView("_EditMenuPartialView", Model);
         }
 
-
         /// <summary>初始化API</summary>
         /// <param name="Obj"></param>
         /// <returns></returns>
@@ -136,7 +120,6 @@ namespace WebApplication1.Controllers
             Oper.obj = Obj;
             return Oper;
         }
-
 
         /// <summary>編輯的Action</summary>
         /// <param name="Model"></param>
@@ -155,7 +138,6 @@ namespace WebApplication1.Controllers
             return Json(Model.MainMenu);
             //return PartialView("_EditMenuPartialView");
         }
-
           
         /// <summary>刪除功能清單</summary>
         /// <param name="Model"></param>
@@ -171,7 +153,6 @@ namespace WebApplication1.Controllers
             string temp = Api.ApiOperation(Oper);
             return PartialView("_EditMenuPartialView");
         }
-
 
         /// <summary>撈取角色清單</summary>
         /// <returns></returns>
@@ -190,14 +171,12 @@ namespace WebApplication1.Controllers
             return PartialView("_RolesPartialView", Model);
         }
 
-
         /// <summary>角色修改畫面</summary>
         /// <returns></returns>
         public ActionResult EditRolePartialView()
         {
             return PartialView("_EditRolePartialView");
         }
-
 
         /// <summary>新增角色動作</summary>
         /// <returns></returns>
@@ -217,7 +196,6 @@ namespace WebApplication1.Controllers
             }           
             return PartialView("_EditRolePartialView");
         }
-
 
         /// <summary>編輯角色動作</summary>
         /// <returns></returns>
@@ -251,7 +229,6 @@ namespace WebApplication1.Controllers
             return PartialView("_EditRolePartialView");
         }
 
-
         /// <summary>刪除角色動作</summary>
         /// <param name="Model"></param>
         /// <returns></returns>
@@ -268,18 +245,13 @@ namespace WebApplication1.Controllers
             return PartialView("_EditRolePartialView");
         }
 
-
         /// <summary>展開編擊畫面，功能列表</summary>
         /// <param name="Model"></param>
         /// <returns></returns>
         public ActionResult MenuListMatchRolesMenu(WebApplication1.Models.RoleViewModels.RoleViewModel Model)
         {            
             MenuManagmentViewModels.MenuViewModel ViewModel = GetMenuList();
-            foreach (Menu ItemMenu in ViewModel.MenuList)
-            {
-                ItemMenu.IsEnable = false;
-            }
-
+          
             if (Model.Role != null)
             {
                 #region 抓取Role
@@ -310,17 +282,13 @@ namespace WebApplication1.Controllers
                         var MenuArray = from v in ViewModel.MenuList
                                         where v.MenuNo == Item.MenuNo
                                         select v;
-                        foreach (Menu ArraryItem in MenuArray)
-                        {
-                            ArraryItem.IsEnable = true;
-                        }
+                       
                     }
                 }
                 #endregion
             }
             return PartialView("_RolesMenuPartialView", ViewModel);
         }
-
 
     }
 }

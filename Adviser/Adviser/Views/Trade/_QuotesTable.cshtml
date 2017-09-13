@@ -1,0 +1,71 @@
+﻿@model Adviser.Models.ViewModels.TradeViewModels.TradeViewModel
+@{
+    
+    @Html.AddJavaScriptVar("AdviserUrl", System.Configuration.ConfigurationManager.AppSettings["AdviserUrl"]);
+}
+
+<script src="~/Scripts/Code/TradeJs.js"></script>
+
+<div class="panel panel-info">
+    <div class=" panel panel-heading">
+        報價
+    </div>
+    <div class="panel panel-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan="3"></th>
+                    <th colspan="3">Call</th>
+                    <th colspan="1" id="DueMonth">@Model.DueMonth</th>
+                    <th colspan="3"></th>
+                    <th>Put</th>
+                </tr>
+                <tr>
+                    <th>下單</th>
+                    <th>買進</th>
+                    <th>賣出</th>
+                    <th>成交</th>
+                    <th>漲跌</th>
+                    <th>總量</th>
+                    @*<th>時間</th>*@
+                    <th>履約價</th>
+                    <th>買進</th>
+                    <th>賣出</th>
+                    <th>成交</th>
+                    <th>漲跌</th>
+                    <th>總量</th>
+                    <th>下單</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int RowID = 1;
+                }
+                @if (@Model.QuotesList != null && @Model.QuotesList.Count > 0) {
+
+                    foreach (var Item in Model.QuotesList) {
+                        <tr id="@RowID">
+                            <td><input class="btn btn-primary" type="button" name="Call" data-contract="@(Item.Contract)" value="Call"></td>
+                            <td>@Item.CallBuy</td>
+                            <td>@Item.CallSell</td>
+                            <td>@Item.CallClinch</td>
+                            <td>@Item.CallChagne</td>
+                            <td>@Item.CallVolume</td>
+                            @*<td>@Item.Time</td>*@
+                            <td>@Item.Contract</td>
+                            <td>@Item.PutBuy</td>
+                            <td>@Item.PutSell</td>
+                            <td>@Item.PutClinch</td>
+                            <td>@Item.PutChagne</td>
+                            <td>@Item.PutVolume</td>
+                            <td><input class="btn btn-primary" type="button" name="Put" data-contract="@(Item.Contract)" value="Put"></td>
+                        </tr>
+                        RowID++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="confirm" style="background-position: top right;background-repeat:no-repeat;padding-top:10px;display:none;width:600px;"></div>

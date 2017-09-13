@@ -15,10 +15,10 @@ namespace WebApplication1.Code.DAO
         public string Name { set; get; }
 
         public string ParentNo { set; get; }
+          
+        public int Seq { set; get; }
 
-        public bool IsEnable { set; get; }
-
-        public int MenuOrder { set; get; }
+        public int Permission { set; get; }
 
         public List<Menu> MenuList { set; get; }
     }

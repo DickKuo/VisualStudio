@@ -1,0 +1,122 @@
+﻿@model Adviser.Models.ViewModels.TransactionViewModels.TransactionViewModel
+
+@{
+    ViewBag.Title = "TransactionDetail";
+    IEnumerable<SelectListItem> SelectAuditList = ViewBag.AuditList;
+}
+
+<h2>@Resources.ResourcePageTitle.Title_TransactionDetail</h2>
+<hr>
+
+
+@using (Html.BeginForm("AuditTrans", "Trans", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            客戶資訊
+        </div>
+        <div class="panel-body" id="_CustomerInfo">
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_Account
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Account, new { id = "InputAccount", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_Audit
+                </label>
+                <div class='col-xs-3'>
+                    @Html.DropDownListFor(M => M.Audit, SelectAuditList, new { @class = "form-control" })
+                </div>
+
+                <input name="TransSN" hidden="hidden" value="@Model.TransSN">
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            基本資料
+        </div>
+        <div class="panel-body" id="_CustomerDetail">
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_FirstName
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.FirstName, new { id = "InputFirstName", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_LastName
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.LastName, new { id = "InputLastName", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_LastName, @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            交易資訊
+        </div>
+        <div class="panel-body" id="_CustomerDetail">
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceTransaction.Label_TransactionType
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M.Trans.TradeType, new { id = "InputTradeType", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceTransaction.Label_Draw
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M.Trans.Detail.Draw, new { id = "InputLastName", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_LastName, @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceTransaction.Label_BankName
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M.Trans.Detail.BankName, new { id = "InputBankName", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceTransaction.Label_BranchName
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M.Trans.Detail.BranchName, new { id = "InputBranchName", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_LastName, @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceTransaction.Label_BankAccount
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M.Trans.Detail.BankAccount, new { id = "InputBankAccount", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.Resource.Register_Remark
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextAreaFor(M => M.Trans.Detail.Remark, new { id = "InputRemark", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_LastName, @readonly = "readonly" })
+                </div>
+            </div>
+
+
+            <div class="row" style="padding-bottom:20px">
+                <div class='col-lg-offset-2 col-xs-3'>
+                    <input type="submit" value="@Resources.Resource.Btn_Audit" class="btn btn-info" id="Infomodify" />
+                </div>
+                <div class='col-lg-offset-2 col-xs-3'>
+                    <a class="btn btn-success" id="InfoBack" href="~/Trans/Deposit">@Resources.ResourceCustomer.Btn_Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

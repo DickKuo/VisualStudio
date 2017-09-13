@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using WebApplication1.Models.Code;
 
 namespace WebApplication1.Models
@@ -10,7 +7,6 @@ namespace WebApplication1.Models
     {
         public class UserAccountViewModel
         {
-
             public User User { set; get; }
 
             private List<User> _UserList = new List<User>();

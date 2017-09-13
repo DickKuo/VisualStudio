@@ -1,0 +1,48 @@
+﻿@model WebApplication1.Models.SettingViewModels.SettingViewModel
+@{
+    ViewBag.Title = "Setting ";
+}
+<script src="~/Scripts/SettingJs.js"></script>
+
+<h2>@Resources.Menu.Menu_4000</h2>
+
+<div class="panel panel-success">    
+    <div class="panel-heading"></div>    
+    <div class="panel-body">
+        <div class="form-group">
+            <input hidden="hidden" id="hideMinimunLotLimit" value="@Model.MinimunLotLimit">
+            <label for="InputAccount" class="col-xs-12 col-sm-3 control-label">
+                @Resources.ResourceSetting.Label_MinLot
+            </label>
+            @if (Model.MinimunLotLimit == 999999) {
+                <label class="radio-inline">
+                    <input type="radio" name="group2" id="0" value="" readonly="readonly" checked="checked"> @Resources.ResourceSetting.Label_NotLimit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="group2" id="1" value="" readonly="readonly"> @Resources.ResourceSetting.Label_SettingLot
+                </label>
+            }
+            else {
+                <label class="radio-inline">
+                    <input type="radio" name="group2" id="0" value="" readonly="readonly"> @Resources.ResourceSetting.Label_NotLimit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="group2" id="1" value="" readonly="readonly" checked="checked"> @Resources.ResourceSetting.Label_SettingLot
+                </label>
+            }
+        </div>
+          
+        <div class="form-group"  hidden="hidden" id="SettingLot">
+            <label for="InputAccount" class="col-xs-12 col-sm-3 control-label">
+               @Resources.ResourceSetting.Label_SettingMiniLotSelf
+            </label>
+            <div class='col-xs-3'>
+                <input type='text' class="form-control" id='InputLot' name="Lot" value="@Model.MinimunLotLimit" />
+            </div>
+            <div class='col-xs-3'>
+                <button class="btn btn-primary" type="submit" id="ChangeLot">@Resources.Resource.Btn_Change</button>
+            </div>
+        </div>       
+
+    </div>
+</div>   

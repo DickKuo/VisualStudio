@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Item Seq="1" Name="會員專區" MenuNo="1000" Permission="10" Url="#">
+    <SubItem Seq ="1" Name="個人資料" MenuNo="1001" Permission="10" Url="Personal/Personal"></SubItem>
+    <SubItem Seq ="2" Name="修改密碼" MenuNo="1002" Permission="10" Url="Personal/ChangePassWord"></SubItem>
+    <SubItem Seq ="3" Name="會員管理" MenuNo="1003" Permission="10" Url="Customer/Mangement"></SubItem>
+  </Item>  
+  <Item Seq="2" Name="顧問專區" MenuNo="2000" Permission="10" Url="#">
+    <SubItem Seq ="1" Name="顧問管理" MenuNo="2001" Permission="10" Url="Personal/Personal"></SubItem>   
+  </Item>
+  <Item Seq="3" Name="投資專區" MenuNo="3000" Permission="10" Url="#">
+    <SubItem Seq ="1" Name="下單" MenuNo="3001" Permission="10" Url="Trade/Quotes"></SubItem>
+    <SubItem Seq ="2" Name="會員入金申請" MenuNo="3002" Permission="10" Url="Trans/Deposit"></SubItem>
+    <SubItem Seq ="3" Name="會員提取資金申請" MenuNo="3003" Permission="10" Url="Trans/Withdrawal"></SubItem>
+    <SubItem Seq ="4" Name="獎金" MenuNo="3004" Permission="10" Url="Withdraw/Index"></SubItem>
+  </Item>
+  <Item Seq="4" Name="報表" MenuNo="4000" Permission="10" Url="#">
+    <SubItem Seq ="1" Name="歷史交易資料" MenuNo="4001" Permission="10" Url="Report/TransRecord"></SubItem>
+    <SubItem Seq ="2" Name="操作紀錄" MenuNo="4002" Permission="10" Url="Report/RecordReport"></SubItem>
+  </Item>  
+  <Item Seq="5" Name="設定" MenuNo="5000" Permission="10" Url="Setting/Index">
+  </Item>  
+  <Item Seq="6" Name="登出" MenuNo="6000" Permission="10" Url="Login/LogOut">
+  </Item>  
+</root>

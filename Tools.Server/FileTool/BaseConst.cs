@@ -11,6 +11,7 @@ namespace CommTool {
         public const string DateFormat = "yyyy-MM-dd";
         public const string TimeFormat = "HH:mm:ss";
         public const string TimeFormatComplete = "yyyy/MM/dd HH:mm:ss";
+        public const string TimeFormatToMinute = "yyyy/MM/dd HH:mm";
         public const string Title="Title";
         public const string Table = "Table";
         public const string Tr = "tr";

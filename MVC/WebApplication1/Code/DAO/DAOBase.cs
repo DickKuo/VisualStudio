@@ -8,7 +8,8 @@ namespace WebApplication1.Code.DAO
 {
     public abstract class DAOBase
     {
-        protected UseStoreProcedure _DbIstance = new UseStoreProcedure();
+        protected SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
+         
 
         public DAOBase()
         {
@@ -16,10 +17,10 @@ namespace WebApplication1.Code.DAO
         }
 
 
-        public virtual void SetConnetionString(string ConnectionString)
-        {
-            _DbIstance.ConnectiinString = ConnectionString;
-        }
+        //public virtual void SetConnetionString(string ConnectionString)
+        //{
+        //    _DbIstance.ConnectiinString = ConnectionString;
+        //}
 
 
         public abstract object Select<T>(T Obj);

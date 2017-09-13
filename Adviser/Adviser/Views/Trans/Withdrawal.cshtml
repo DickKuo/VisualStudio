@@ -1,0 +1,30 @@
+﻿
+ @model Adviser.Models.ViewModels.TransactionViewModels.TransactionViewModel
+
+@{
+    ViewBag.Title = "CustomerMangement";
+}
+
+
+<h2>@Resources.Menu.Menu_3003</h2>
+
+<hr>
+
+@using (Html.BeginForm("Search", "Trans")) {
+    <div class="panel panel-info">
+        <div class="panel-heading">基本查詢</div>
+        <div class="panel-body">
+            <div class="container">
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading"></div>
+        <div class="panel-body" id="_MangementTable">
+            @Html.Partial("_TransactonTablePartial", @Model)
+        </div>
+    </div>
+}

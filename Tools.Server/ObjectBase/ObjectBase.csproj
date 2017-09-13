@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\Users\Dick\Dropbox\Export\</OutputPath>
+    <OutputPath>..\..\..\..\Dropbox\Export\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,19 +48,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adviser.cs" />
+    <Compile Include="AdviserDAO.cs" />
+    <Compile Include="AuditTypes.cs" />
     <Compile Include="Bank.cs" />
     <Compile Include="BankDAO.cs" />
+    <Compile Include="Bouns.cs" />
+    <Compile Include="BounsDAO.cs" />
     <Compile Include="CommBase.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerDAO.cs" />
     <Compile Include="EWallet.cs" />
     <Compile Include="EWalletDAO.cs" />
-    <Compile Include="EWalletTrade.cs" />
+    <Compile Include="ExtraTag.cs" />
+    <Compile Include="ExtraTagDAO.cs" />
+    <Compile Include="ExtraTagEnum.cs" />
+    <Compile Include="Transaction.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reward.cs" />
     <Compile Include="RewardDAO.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="RoleDAO.cs" />
+    <Compile Include="TransactionDetail.cs" />
+    <Compile Include="TranscationDAO.cs" />
+    <Compile Include="TranscationTypes.cs" />
+    <Compile Include="TransInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

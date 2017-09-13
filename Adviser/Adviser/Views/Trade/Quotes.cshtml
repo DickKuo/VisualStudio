@@ -1,0 +1,30 @@
+﻿@model Adviser.Models.ViewModels.TradeViewModels.TradeViewModel
+
+@{
+    ViewBag.Title = Resources.Menu.Menu_3001;
+    IEnumerable<SelectListItem> DueMonthList = ViewBag.DueMonthList;  
+}
+<h2>@Resources.Menu.Menu_3001</h2>
+<hr>
+
+
+<div class="panel panel-success">
+    <div class=" panel panel-heading">
+        查詢
+    </div>
+    <div class="panel panel-body">
+        <div class="form-group">
+            <div class="col-xs-3">
+                @Html.DropDownListFor(M => M.DueMonth, DueMonthList, new { @class = "form-control", @id = "Drop_DueMonth" })
+            </div>
+            <div class="col-xs-3">
+                <input class="btn btn-success" type="button" name="Search" id="Btn_Search" value="Search">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="QuotesTable">
+    @Html.Partial("_QuotesTable", @Model)
+</div>
