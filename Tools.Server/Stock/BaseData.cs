@@ -14,6 +14,7 @@ namespace Stock {
            public const string DueMonth = "DueMonth";
            public const string DataTimeFormat = "yyyy-MM-dd";
            public const string DateTimeFormat2 = "yyyy-MM-dd HH:mm:ss";
+           public const string Htmlnbsp="&nbsp;";
        }
     }
 }

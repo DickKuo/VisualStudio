@@ -44,6 +44,7 @@ namespace Stock {
             public const string UpdateWeekPoint = "UpdateWeekPoint";
             public const string GetListOption = "GetListOption";
             public const string GetOptionQuotesByDuMonthAndTime = "GetOptionQuotesByDuMonthAndTime";
+            public const string AddOption = "AddOption";
         }
 
         private class SPParameter {
@@ -94,6 +95,7 @@ namespace Stock {
             public const string BeginTime = "BeginTime";
             public const string EndTime = "EndTime";
             public const string TradeTimestamp = "TradeTimestamp";
+            public const string OptionView = "OptionView";
         }
 
         private string _stockNum;
@@ -297,11 +299,12 @@ namespace Stock {
             CalendarDAO CalendarDB = new CalendarDAO();
             DateTime TimeStamp =DateTime.Now ;
             Calendar _Calendar = CalendarDB.GetCalendar(TimeStamp);
-            string Message = "NotTradeTime";
+            string Message = "NotTradeTime";            
             if (_Calendar.IsWorkDay) {
-                TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 44,59));
-                TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45,10));
-                if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0) {
+                TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 44, 59));
+                TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 10));
+                if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0)
+                {
                     try {
                         string TradeTimestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
                         var tasks = new List<Task<int>>();
@@ -319,9 +322,10 @@ namespace Stock {
                                 _Weighted.TradeTimestamp = TradeTimestamp;
                                 WeightedDAO.SaveWeighted(_Weighted);
                             }
-                        });    
-                        Task.WaitAll(Task1,Task2,Task3,Task4);
-                        SaveOpionData(ListOption);
+                        });
+                        Task.WaitAll(Task1, Task2, Task3,Task4);
+                        //SaveOpionData(ListOption);
+                        AddOption(ListOption);
                         Message = "GetOptionOK";
                         CommTool.ToolLog.Log(Message);
                         GetNumberOfContractsAndMaill();
@@ -464,8 +468,10 @@ namespace Stock {
                         Call.TradeTimestamp = TradeTimestamp;
                         Call.DueMonth = Contract;
                         Call.Time = DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete);
-                        list.Add(Call);
-
+                        if (Call.Volume > 0)
+                        {
+                            list.Add(Call);
+                        }
                         HtmlNode PutNode = anchors[1].ChildNodes[StartTag];
                         string P1 = PutNode.ChildNodes[1].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
                         string P2 = PutNode.ChildNodes[3].InnerText.Replace("-&nbsp;", string.Empty).Replace("&nbsp;", string.Empty).Replace(",", string.Empty).Trim();
@@ -484,7 +490,10 @@ namespace Stock {
                         Put.TradeTimestamp = TradeTimestamp;
                         Put.DueMonth = Contract;
                         Put.Time = DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete);
-                        list.Add(Put);
+                        if (Put.Volume > 0)
+                        {
+                            list.Add(Put);
+                        }
                     }
                     catch (Exception ex) {
                         CommTool.ToolLog.Log(ex);
@@ -498,14 +507,16 @@ namespace Stock {
         /// <summary>儲存選擇權交易歷史資訊</summary>
         /// <param name="Options"></param>
         public void SaveOpionData(List<Option> Options) {         
-            try {               
-                foreach (Option op in Options) {
-                    if (op.Volume > 0) {
+            try {
+                foreach (Option op in Options)
+                {
+                    if (op.Volume > 0)
+                    {
                         USP.AddParameter(SPParameter.OP, op.OP);
                         USP.AddParameter(SPParameter.Buy, op.Buy);
                         USP.AddParameter(SPParameter.Change, op.Change);
                         USP.AddParameter(SPParameter.Clinch, op.Clinch);
-                        USP.AddParameter(SPParameter.Contract, op.Contract);               
+                        USP.AddParameter(SPParameter.Contract, op.Contract);
                         USP.AddParameter(SPParameter.Sell, op.Sell);
                         USP.AddParameter(SPParameter.Time, op.Time);
                         USP.AddParameter(SPParameter.DueMonth, op.DueMonth);
@@ -517,6 +528,21 @@ namespace Stock {
                 }
             }
             catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+        }
+
+        /// <summary>結構方式儲存選擇權交易歷史資訊</summary>
+        /// <param name="Options"></param>
+        public void AddOption(List<Option> Options)
+        {
+            try {
+                DataTable OptionDataTable = CommTool.ObjectUtility.ToDataTable(Options, Option.GetTableTypeColumn());
+                USP.AddParameter(SPParameter.OptionView, OptionDataTable);
+                USP.ExeProcedureNotQuery(SP.AddOption);
+            }
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
             }
         }

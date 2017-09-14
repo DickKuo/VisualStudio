@@ -31,5 +31,21 @@ namespace Stock {
 
         /// <summary>時間戳章</summary>
         public string TradeTimestamp { set; get; }
+
+        public static string[] GetTableTypeColumn()
+        {
+            return new string[] { "OP",
+                                  "Buy",
+								  "Sell",
+								  "Clinch",
+                                  "Change",
+                                  "Time",
+                                  "Contract",
+                                  "DueMonth",
+                                  "NumberOfContracts",
+                                  "Volume",
+                                  "TradeTimestamp"
+								 };
+        } 
     }
 }
