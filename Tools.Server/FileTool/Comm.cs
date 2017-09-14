@@ -3,6 +3,8 @@ using System.Text;
 using CommTool.Business;
 using CommTool.Business.Services;
 using Microsoft.Win32;
+using System.Data;
+using System.Collections.Generic;
 
 
 namespace CommTool
@@ -248,6 +250,52 @@ namespace CommTool
                 throw new Exception(ex.Message);
             }
         }
+
+        /// <summary>ListToDataTable</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="_List"></param>
+        /// <param name="_Bind"></param>
+        /// <returns></returns>
+        public static DataTable ToDataTable<T>(this IList<T> _List, params string[] _Bind) {
+            if (_Bind == null) {
+                _Bind = new string[] { string.Empty };
+            }
+            System.ComponentModel.PropertyDescriptorCollection Properties = System.ComponentModel.TypeDescriptor.GetProperties(typeof(T));
+            DataTable dt = new DataTable();
+            for (int i = 0; i < _Bind.Length; i++) {
+                System.ComponentModel.PropertyDescriptor property = Properties.Find(_Bind[i], true);  
+                if (property != null) {
+                    dt.Columns.Add(property.Name, property.PropertyType);
+                }               
+            }
+
+            object[] Values = new object[dt.Columns.Count];
+            foreach (T item in _List) {
+                for (int i = 0; i < Values.Length; i++) {
+                    Values[i] = NullValueCheck(Properties[dt.Columns[i].ColumnName].GetValue(item), Properties[dt.Columns[i].ColumnName].PropertyType);
+                }
+                dt.Rows.Add(Values);
+            }
+            return dt;
+        }
+
+        /// <summary></summary>
+        /// <param name="value"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static object NullValueCheck(object value, Type type) {
+            if (type.Equals(typeof(string))) {
+                return value == null ? string.Empty : value;
+            }
+            else if (type.Equals(typeof(DateTime))) {
+                return value == null ? new DateTime(1911, 1, 1) : ((DateTime)value == DateTime.MinValue ? new DateTime(1911, 1, 1) : value);
+            }
+            else {
+                return value;
+            }
+        }
+
+
     }
 
 }
