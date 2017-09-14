@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommTool, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.dll</HintPath>
+    </Reference>
     <Reference Include="CommTool.AutoTriggerService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.AutoTriggerService.dll</HintPath>
@@ -42,16 +46,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool.Service, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
-    </Reference>
     <Reference Include="DExecute">
       <HintPath>..\..\..\..\..\Dropbox\Export\DExecute.dll</HintPath>
     </Reference>
-    <Reference Include="Stock, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Stock, Version=1.0.0.17, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dropbox\Export\Stock.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\Stock.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
