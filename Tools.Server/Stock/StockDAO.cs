@@ -293,6 +293,7 @@ namespace Stock {
         /// 20170208 加入發送Maill的功能
         /// 20170327 modified by Dick for 非同步方式抓取資料
         /// 20170518 modified by Dick for 換個網站抓選擇權
+        /// 20170914 modified by Dick for 大盤跟期貨資訊換網站抓取
         /// <param name="Url"></param>
         /// <returns></returns>
         public dynamic GetOptionEveryDay(string CapitalfuturesUrl,string WeightedUrl) {
