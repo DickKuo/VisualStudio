@@ -1,0 +1,104 @@
+﻿@model  Adviser.Models.ReportViewModels.TradeRecordReportModel
+ 
+<script src="~/Scripts/Code/ReportJs.js"></script>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>序</th>
+            <th>下單時間</th>
+            <th>契約時間</th>
+            <th>多 / 空</th>
+            <th>履約價</th>
+            <th>形態</th>
+            <th>口數</th>
+            <th>入昌點數</th>
+            <th>平昌點數</th>
+            <th>修改時間</th>
+            <th>平昌</th>
+            <th>損益</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int RowID = 1;
+        }
+        @if (@Model._TradeRecord != null && Model._TradeRecord.Count > 0) {
+            foreach (var Item in Model._TradeRecord) {
+                <tr>
+                    <th scope="row">@RowID</th>
+                    <td>@Item.TradeDate.ToString(CommTool.BaseConst.DateFormat)</td>
+                    <td>@Item.DueMonth</td>
+                    <td>@Item.OP</td>
+                    <td>@Item.Contract</td>
+                    <td>@Item.Type</td>
+                    <td>@Item.Lot</td>
+                    <td>@Item.Price</td>
+                    <td>@Item.StopPrice</td>
+                    <td>@Item.PyeongchangTime.ToString(CommTool.BaseConst.DateFormat)</td>
+                    <td>
+                        @{
+                            if (Model.Permission <= 3) {
+                                if (Item.IsPyeongchang) {
+                                   <label>平昌</label>
+                                }
+                                else { 
+                                    <input class="btn btn-primary" type="button" name="Put" id="@Item.SN" data-contract="@(Item.Contract)" value="未平昌">
+                                }                                
+                            }
+                            else { 
+                            @(Item.IsPyeongchang == true ? "平昌" : "未平昌")
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            if (Item.Type == "Buy") {
+                                @(Item.IsPyeongchang == true ? (Item.StopPrice - Item.Price) * Convert.ToDecimal(Item.Lot) : 0);
+                        }
+                        else {
+                            @( Item.IsPyeongchang == true ? (Item.Price - Item.StopPrice) * Convert.ToDecimal(Item.Lot) : 0);
+                        }
+                        }
+                    </td>
+                </tr>
+                RowID++;
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="11">合計</td>
+            <td colspan="1">@Model.Total</td>
+        </tr>
+    </tfoot>
+</table>
+
+@if (@Model._TradeRecord != null && Model._TradeRecord.Count > 0) {
+    <div id="PublicTable">
+        <nav>
+            <ul class="pagination">
+                @if (Model.MaxPage == 1 || Model.Page == 1) {
+                    <li class="disabled"><span><span aria-hidden="true">«</span><span class="sr-only">Previous</span></span></li>
+                }
+                else {
+                    <li id="Previous"><span><span aria-hidden="true">«</span><span class="sr-only">Previous</span></span></li>
+                }
+
+                @for (int i = 1; i <= Model.MaxPage; i++) {
+                    if (i == Model.Page) {
+                        <li id="@i" class="active span_c1ick"><span>@i <span class="sr-only">(current)</span></span></li>
+                    }
+                    else {
+                        <li id="@i"><span class="span_c1ick">@i<span class="sr-only"></span></span></li>
+                    }
+                }
+                @if (Model.MaxPage == 1 || Model.Page == Model.MaxPage) {
+                    <li class="disabled"><span><span aria-hidden="true">»</span><span class="sr-only">Next</span></span></li>
+                }
+                else {
+                    <li id="Next"><span><span aria-hidden="true">»</span><span class="sr-only">Next</span></span></li>
+                }
+            </ul>
+        </nav>
+    </div>
+}

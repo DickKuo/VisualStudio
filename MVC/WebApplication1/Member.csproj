@@ -296,7 +296,6 @@
     </Compile>
     <Compile Include="Models\Code\OperMethods.cs" />
     <Compile Include="Models\Code\OptionQuotes.cs" />
-    <Compile Include="Models\Code\Permission.cs" />
     <Compile Include="Models\Code\Photo.cs" />
     <Compile Include="Controllers\BaseLoginController.cs" />
     <Compile Include="Controllers\CarouselController.cs" />

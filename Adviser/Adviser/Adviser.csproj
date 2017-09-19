@@ -203,6 +203,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourcePageTitle.zh-TW.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ResourceReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceReport.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ResourceTransaction.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -235,11 +240,13 @@
     <Compile Include="Models\Code\LoginInfo.cs" />
     <Compile Include="Models\Code\Menu.cs" />
     <Compile Include="Models\Code\OptionQuotes.cs" />
+    <Compile Include="Models\Code\ReportRequest.cs" />
     <Compile Include="Models\ViewModels\BaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CustomerViewModels.cs" />
     <Compile Include="Models\ViewModels\LoginViewModels.cs" />
     <Compile Include="Models\ViewModels\MenuManagmentViewModels.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModels.cs" />
+    <Compile Include="Models\ViewModels\ReportViewModels.cs" />
     <Compile Include="Models\ViewModels\TradeViewModels.cs" />
     <Compile Include="Models\ViewModels\TransactionViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -248,29 +255,74 @@
   <ItemGroup>
     <Content Include="App_Data\bar.xml" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Code\Carousel.css" />
+    <Content Include="Content\fancybox\blank.gif" />
+    <Content Include="Content\fancybox\fancybox_buttons.png" />
+    <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Content\fancybox\fancybox_loading.gif" />
+    <Content Include="Content\fancybox\fancybox_overlay.png" />
+    <Content Include="Content\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Content\fancybox\fancybox_sprite.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.fr.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Bootstrap3\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\Bootstrap3\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\Bootstrap3\bootstrap.js" />
+    <Content Include="Scripts\Bootstrap3\bootstrap.min.js" />
     <Content Include="Scripts\Code\Customer.js" />
     <Content Include="Scripts\Code\CustomerDetail.js" />
     <Content Include="Scripts\Code\Login.js" />
     <Content Include="Scripts\Code\RegisterJs.js" />
+    <Content Include="Scripts\Code\ReportJs.js" />
     <Content Include="Scripts\Code\TradeJs.js" />
+    <Content Include="Scripts\fancybox\blank.gif" />
+    <Content Include="Scripts\fancybox\fancybox-x.png" />
+    <Content Include="Scripts\fancybox\fancybox-y.png" />
+    <Content Include="Scripts\fancybox\fancybox.png" />
+    <Content Include="Scripts\fancybox\fancy_close.png" />
+    <Content Include="Scripts\fancybox\fancy_loading.png" />
+    <Content Include="Scripts\fancybox\fancy_nav_left.png" />
+    <Content Include="Scripts\fancybox\fancy_nav_right.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_e.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_n.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_ne.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_nw.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_s.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_se.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_sw.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_w.png" />
+    <Content Include="Scripts\fancybox\fancy_title_left.png" />
+    <Content Include="Scripts\fancybox\fancy_title_main.png" />
+    <Content Include="Scripts\fancybox\fancy_title_over.png" />
+    <Content Include="Scripts\fancybox\fancy_title_right.png" />
+    <Content Include="Scripts\fancybox\jquery.easing-1.3.pack.js" />
+    <Content Include="Scripts\fancybox\jquery.fancybox-1.3.4.css" />
+    <Content Include="Scripts\fancybox\jquery.fancybox-1.3.4.js" />
+    <Content Include="Scripts\fancybox\jquery.fancybox-1.3.4.pack.js" />
+    <Content Include="Scripts\fancybox\jquery.mousewheel-3.0.4.pack.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -316,6 +368,8 @@
     <Content Include="Views\Trans\TransDetail.cshtml" />
     <Content Include="Views\Trans\Withdrawal.cshtml" />
     <Content Include="Views\Trans\_TransactonTablePartial.cshtml" />
+    <Content Include="Views\Report\RecordReport.cshtml" />
+    <Content Include="Views\Report\_ReportTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BaseLogin\" />
@@ -386,6 +440,12 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ResourceTransaction.zh-TW.designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_GlobalResources\ResourceReport.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ResourceReport.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
