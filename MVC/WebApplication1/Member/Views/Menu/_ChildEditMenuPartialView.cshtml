@@ -1,0 +1,34 @@
+﻿
+@model  WebApplication1.Models.MenuManagmentViewModels.MenuViewModel
+@using Newtonsoft.Json
+
+
+@*class="container"*@
+
+<div class="col-md-12">
+    <div class="col-md-offset-10 col-md-12">
+        <button class="btn btn-lg btn-danger btn-group" hidden="hidden" id="Btn_Child_Delete" onclick="OnDeleteMenuClick()" type="button">刪除</button>
+    </div>
+    <form class="form-signin" role="form">
+        <h2 id="Child_Hr_Title" class="form-signin-heading">編輯</h2>
+        <hr />
+        <label for="inputNo" id="Child_Lab_No" class="col-sm-4 control-label">編號:</label>
+        @Html.TextBoxFor(M => M.MainMenu.MenuNo, new { id = "Child_Menu_No", @class = "form-control", placeholder = "No", @readonly = "readonly" })
+
+        <label for="inputEmail3" class="col-sm-4 control-label">名字:</label>
+        @Html.TextBoxFor(M => M.MainMenu.Name, new { id = "Child_Menu_Name", @class = "form-control", placeholder = "Name" })
+
+        <label for="inputEmail3" class="col-sm-4 control-label">Url:</label>
+        @Html.TextBoxFor(M => M.MainMenu.Url, new { id = "Child_Menu_Url", @class = "form-control", placeholder = "Url" })
+
+     
+        <div class="col-md-offset-4 col-md-8">
+            <button class="btn btn-lg btn-primary btn-group " id="Btn_Child_Edit" type="button" onclick="OnChildMenuEditClick()">修改</button>
+
+            <button class="btn btn-lg btn-primary btn-group " hidden="hidden" id="Btn_Child_Add" type="button" onclick="OnChildAddAction()">新增</button>
+          
+        </div>
+
+    </form>
+</div>
+

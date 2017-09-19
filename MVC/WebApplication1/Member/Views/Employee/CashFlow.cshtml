@@ -1,0 +1,94 @@
+﻿@model WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+@using Newtonsoft.Json           
+
+@{
+    //Layout = null;
+    ViewBag.Title = "CashFlow";
+}
+
+@*<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
+<script src="~/Scripts/Code/Emplyee.js"></script>
+<script src="~/Scripts/Code/Trade.js"></script>
+<script src="~/Scripts/Code/ResultCode.js"></script>
+<script src="~/Scripts/Code/CashFlow.js"></script>
+@*@Styles.Render("~/Content/css")*@
+
+
+<div id="SelectEmpNo" hidden="hidden" ></div>
+<div id="SelectEmpName"></div>
+<script src="~/Scripts/Code/GlobalMethod.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        TableHighLight("CashTable")
+
+    });
+</script>
+
+<div id="BrowseView" >  
+    <h2>金流商
+    </h2>
+    <hr />
+      <div id="tr_id" hidden ="hidden">1212</div>
+    <div class="panel panel-default">
+
+        <div class="panel-heading">金流員工</div>
+
+        <table class="table" id="CashTable">
+            <tr>
+                <th>
+                    編號:
+                </th>
+                <th>
+                    姓名:
+                </th>
+                <th>
+                    姓氏:
+                </th>
+                <th>
+                    電話:
+                </th>
+                <th>
+                    地址:
+                </th>
+            </tr>
+            @if (Model != null)
+            {
+                foreach (var Item in Model.EmpList)
+                {
+                    <tr id="Emp_@Item.EmpNo" >
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.EmpNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.EmpFirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.EmpLastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.Tel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.Addr)
+                        </td>
+
+                        <td>
+                            <button type="submit" name="Cash" class="btn btn-primary" onclick="OnCashClick(@JsonConvert.SerializeObject(Item))">金流</button>                                                    
+                        </td>                      
+
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    </div>
+
+
+
+@*編輯畫面跟新增畫面載入的Div*@
+<div id="PartialView"></div>
+
+

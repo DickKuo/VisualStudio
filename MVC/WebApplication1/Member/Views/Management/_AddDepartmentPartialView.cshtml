@@ -1,0 +1,51 @@
+﻿
+@model WebApplication1.Models.DepartmentViewModels.DepartmentViewModel
+
+@{
+    ViewBag.Title = "_EditViewPartial";
+}
+
+<script type="text/javascript">
+
+
+</script>
+<div class="page-header">
+    <h3>新增部門</h3>
+</div>
+@using (Ajax.BeginForm("AddDepAction", "Management", new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnSuccess = "OnAddResult"
+},
+new { Id = "Load_AddOK_Form" }
+))
+{
+    <table>
+        <tr>
+            <td>
+                名稱：
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Dep.Name, new { id = "AddForm_Name", @required = "required", @maxlength = "20", @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                說明:
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Dep.Remark, new { id = "AddForm_Remark", @required = "required", @class = "form-control" })
+            </td>
+        </tr>
+       
+        <tr>
+            <td>
+                <input type="submit" id="Edit_OK" class="btn btn-primary marg-around-10" value="確認" />
+            </td>
+            <td>
+                <button type="button" id="Edit_Cancel" class="btn btn-default marg-around-10" onclick="OnAddDepCancel()">取消</button>
+            </td>
+        </tr>
+    </table>
+
+}

@@ -1,0 +1,92 @@
+﻿@model WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+
+@{
+    ViewBag.Title = "_EditViewPartial";
+}
+
+<div class="page-header ">
+    <h3>員工新增</h3>
+</div>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
+
+@using (Ajax.BeginForm("AddEmpAction", "Management", new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnSuccess = "OnAddEmployeeResult"
+},
+new { Id = "Load_EditOK_Form" }
+))
+{
+    <table>
+        <tr>
+            <td>
+                姓名：
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Emp.EmpFirstName, new { id = "EditForm_FirstName", name = "name", notNull = "姓名", @required = "required", @maxlength = "20", @class = "form-control noNull" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                姓氏:
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Emp.EmpLastName, new { id = "EditForm_EmpLastName", name = "name", notNull = "姓氏", @required = "required", @maxlength = "20", @class = "form-control noNull" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                電話:
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Emp.Tel, new { id = "EditForm_Tel", @required = "required", name = "name", notNull = "電話", @maxlength = "20", @class = "form-control noNull", @onkeyup = "return ValidateNumber($(this),value)" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                地址:
+            </td>
+            <td>
+                @Html.TextBoxFor(M => M.Emp.Addr, new { id = "EditForm_Addr", name = "name", notNull = "地址", @required = "required", @maxlength = "50", @class = "form-control noNull" })
+
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <label id="Lb_Emp_Extend">年資 </label>
+            </td>
+            <td>
+                <div id="Div_Extend">
+                    <input type="text" id="Input_Extend" class="form-control" required="required" onkeyup="return ValidateNumber($(this),value)">
+                </div>
+            </td>
+        </tr>
+        @Html.HiddenFor(M => M.Emp.EmpNo)
+
+        <label class="radio-inline">
+            <input type="radio" name="group2" id="0" value="全職" onclick="OnRadio_FullTime()" checked="checked"> 全職
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="group2" id="1" value="臨時工" onclick="OnRadio_PTime()"> 臨時工
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="group2" id="2" value="駐點" onclick="OnRadio_Stagnation()"> 駐點
+        </label>
+
+        <tr>
+            <td>
+                <button type="button" id="Add_OK" class="btn btn-default" onclick="OnEmpAdd('Add')">確認</button>
+
+            </td>
+            <td>
+                <button type="button" id="Add_Cancel" class="btn btn-default" onclick="OnAddCancel()">取消</button>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+
+}

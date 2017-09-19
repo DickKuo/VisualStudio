@@ -1,0 +1,66 @@
+﻿@model  WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+
+
+@using (Html.BeginForm("Create", "Employee", FormMethod.Post))
+{
+    <h2>新增</h2>
+    <hr />
+    <table>
+        <tr>
+            <td>
+                名字 :
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="EditForm_FirstName" class="sr-only"> 名字</label>
+                    @Html.TextBoxFor(M => M.Emp.EmpFirstName, new { id = "EditForm_FirstName", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                姓 :
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="EditForm_FirstName" class="sr-only"> 姓</label>
+                    @Html.TextBoxFor(M => M.Emp.EmpLastName, new { id = "EmpLastName", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                電話 :
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="EditForm_Tel" class="sr-only"> 電話</label>
+                    @Html.TextBoxFor(M => M.Emp.Tel, new { id = "EditForm_Tel", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                地址 :
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="EditForm_Addr" class="sr-only"> 地址</label>
+                    @Html.TextBoxFor(M => M.Emp.Addr, new { id = "EditForm_Addr", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" class="btn btn-primary marg-around-10" value="新增" />
+            </td>
+            <td>
+                <input type="submit" class="btn btn-default marg-around-10" value="返回" />
+            </td>
+        </tr>
+    </table>
+}

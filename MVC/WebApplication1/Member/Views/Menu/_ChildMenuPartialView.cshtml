@@ -1,0 +1,71 @@
+﻿@model  WebApplication1.Models.MenuManagmentViewModels.MenuViewModel
+@using Newtonsoft.Json
+
+@{
+    //Layout = null;
+    ViewBag.Title = "View1";
+}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        HighLight();
+    });
+</script>
+
+<div class="col-md-12" id="Div_Child">
+    <h2>子功能清單</h2>
+    <hr />
+    @*<h4>點擊下面列表欄位，以進行修改</h4>*@
+          <div id="Bt_ChildAdd" class="marg-around-10">
+            <input type="submit" value="新增功能" onclick="OnChildAddMenuclick()" class="btn btn-success">
+        </div>
+  
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Menu列表</div>
+        <table class="table" id="ChildTable">
+            <tr>
+                <th>
+                    編號:
+                </th>
+                <th>
+                    名稱:
+                </th>
+                <th>
+                    Url:
+                </th>
+                @*<th>編輯</th>
+                <th>刪除</th>*@
+            </tr>
+            @if (Model != null)
+            {
+                foreach (var Item in Model.MenuList)
+                {
+                    <tr id="ChildMenu_@Item.MenuNo" title="點擊欄位進行編輯">
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.MenuNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.Url)
+                        </td>
+
+                        <td>
+                            <button type="button" name="ChildEdit" class="btn btn-primary" onclick="OnChildEditMenuclick(@JsonConvert.SerializeObject(Item))">編輯</button>
+                        </td>
+                        <td>
+                            <button type="button" name="ChildDelete" class="btn btn-danger" onclick="OnChildDeleteMenuClick(@JsonConvert.SerializeObject(Item))">刪除</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+
+<div id="Div_ChildPartial"></div>

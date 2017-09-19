@@ -1,0 +1,75 @@
+﻿@model WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+
+@{
+    ViewBag.Title = "_EditViewPartial";
+}
+
+
+@using (Ajax.BeginForm("EditAction", "Employee", new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnSuccess = "OnAjaxSuccesForEdit"
+
+},
+new { Id = "Load_EditOK_Form" }
+))
+{
+    <h2>編輯</h2>
+    <hr />
+    <table>
+        <tr>
+            <td>
+                姓名：
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="EditForm_FirstName" class="sr-only"> FirstName</label>
+                    @Html.TextBoxFor(M => M.Emp.EmpFirstName, new { id = "EditForm_FirstName", @required = "required", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                姓:
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="EditForm_EmpLastName" class="sr-only"> FirstName</label>
+                    @Html.TextBoxFor(M => M.Emp.EmpLastName, new { id = "EditForm_EmpLastName", @required = "required", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                電話:
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="EditForm_Tel" class="sr-only"> FirstName</label>
+                    @Html.TextBoxFor(M => M.Emp.Tel, new { id = "EditForm_Tel", @required = "required", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                地址:
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="EditForm_Addr" class="sr-only"> FirstName</label>
+                    @Html.TextBoxFor(M => M.Emp.Addr, new { id = "EditForm_Addr", @required = "required", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        @Html.HiddenFor(M => M.Emp.EmpNo)
+        <tr>
+            <td>
+                <input type="submit" id="Edit_OK" class="btn btn-primary marg-around-10" value="確認" />
+            </td>
+            <td>
+                <input type="submit" id="Edit_Cancel" class="btn btn-default marg-around-10" value="返回" onclick="OnEditCancel()" />
+            </td>
+        </tr>
+    </table>
+
+}

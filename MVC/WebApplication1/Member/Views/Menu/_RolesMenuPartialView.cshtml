@@ -1,0 +1,58 @@
+﻿@model  WebApplication1.Models.MenuManagmentViewModels.MenuViewModel
+@using Newtonsoft.Json
+
+@{
+    //Layout = null;
+    ViewBag.Title = "View1";
+}
+
+
+
+<div class="panel panel-default col-md-">
+
+    <div class="panel-heading">Menu列表</div>
+    <table class="table" id="BrowseTable">
+        <tr>
+            <th>
+                編號:
+            </th>
+            <th>
+                名稱:
+            </th>
+            <th>
+                Url:
+            </th>
+
+            <th> 
+                <input type="checkbox" id="Cb_all" onclick="SelectAllCheckbox()" />
+             </th>
+           
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var Item in Model.MenuList)
+            {
+                <tr id="Menu_@Item.MenuNo" title="點擊欄位進行編輯">
+                    <td>
+                        @Html.DisplayFor(modelItem => Item.MenuNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Item.Url)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => Item.ParentNo)
+                    </td>*@
+                    <td >
+                      @Html.CheckBoxFor(modelItem => Item.IsEnable, new { id = @Item.MenuNo })
+                    </td>
+                 
+                </tr>
+            }
+        }
+    </table>
+
+</div>
+

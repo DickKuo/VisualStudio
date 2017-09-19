@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "LoadingCarousel",
+            success: function (Model) {
+                $("#LoadingCarcusel").html(Model);
+            }
+        });
+    });
+
+
+</script>
+
+
+<div id="LoadingCarcusel"></div>
+

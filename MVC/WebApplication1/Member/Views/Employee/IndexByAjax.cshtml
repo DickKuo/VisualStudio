@@ -1,0 +1,177 @@
+﻿@model WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+@using Newtonsoft.Json           
+
+  
+
+@{
+    //Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "IndexByAjax";
+}
+
+
+
+@*<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@Styles.Render("~/Content/css")*@
+
+<script src="~/Scripts/Code/Emplyee.js"></script>
+<script src="~/Scripts/Code/Trade.js"></script>
+<script src="~/Scripts/Code/ResultCode.js"></script>
+<script src="~/Scripts/Code/GlobalMethod.js"></script>
+<div id="SelectEmpNo" hidden="hidden" ></div>
+<div id="SelectEmpName"></div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        TableHighLightAndRowSelected("BrowseTable");
+    });
+</script>
+
+
+
+
+@*員工列表的Div*@
+<div id="BrowseView">  
+    
+  
+    
+
+    <h2> 員工管理</h2>
+    <hr />
+
+
+    
+    <div id="ADDControl">        
+        <input type="submit" class="btn btn-success col-md-offset-11" value="新增" onclick="OnAddClick()">  
+    </div>  
+    
+    <p></p>
+      <div id="tr_id" hidden ="hidden">1212</div>
+    <div class="panel panel-default">
+
+        <div class="panel-heading">Ajax員工列表</div>
+
+        <table class="table" id="BrowseTable">
+            <tr>
+                <th>
+                    編號:
+                </th>
+                <th>
+                    姓名:
+                </th>
+                <th>
+                    姓氏:
+                </th>
+                <th>
+                    電話:
+                </th>
+                <th>
+                    地址:
+                </th>
+            </tr>
+            @if (Model != null)
+            {
+                foreach (var Item in Model.EmpList)
+                {
+                    <tr id="Emp_@Item.EmpNo" >
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.EmpNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.EmpFirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.EmpLastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.Tel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.Addr)
+                        </td>
+
+                        <td>
+                           @* <input type="submit" name="edit" value="編輯" onclick="OnEditClick(@JsonConvert.SerializeObject(Item))" />*@
+
+                            <input type="submit" name="edit" value="編輯" class="btn btn-primary" onclick="EditLoad(@JsonConvert.SerializeObject(Item))" />
+                        </td>
+                        <td>
+                            <input type="submit" name="delete" value="刪除" class="btn btn-danger" onclick="OnDeleteClick(@JsonConvert.SerializeObject(Item))" />
+                        </td>
+
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    </div>
+
+
+
+
+
+@*編輯畫面跟新增畫面載入的Div*@
+<div id="PartialView"></div>
+
+
+@*刪除功能的Ajax方法*@
+@using (Ajax.BeginForm("DeleteAction", "Employee",
+    new AjaxOptions{
+    HttpMethod = "Post",
+    OnSuccess = "DeleteResult"
+    }
+    
+    ,new { id = "Load_Delete_Form" }))    
+{ 
+     @Html.HiddenFor(M => M.EmployeeJson, new { Id="Hidden_EmployeeDeleteJson"})    
+}
+
+
+
+
+@*編輯功能的Ajax方法*@
+@using (Ajax.BeginForm("EditPartialViewAction", "Employee", new AjaxOptions
+{
+    HttpMethod = "Post",
+    UpdateTargetId = "PartialView"    
+}, new  { id="Load_Edit_Form"}
+))
+{
+     @Html.HiddenFor(M => M.EmployeeJson, new { Id="Hidden_EmployeeEidtJson"})  
+}
+
+
+
+
+
+
+
+
+@*新增功能的Ajax方法*@
+@using (Ajax.BeginForm("ADDPartialViewAction", "Employee", new AjaxOptions
+{
+    HttpMethod = "Post" ,
+    UpdateTargetId = "PartialView"
+}
+, new { id = "Load_Add_Form" }))
+{    
+}
+
+
+
+@*新增功能的Ajax方法*@
+@using (Ajax.BeginForm("Account", "BankAccount", new AjaxOptions
+{
+    HttpMethod = "Post",
+    UpdateTargetId = "PartialView"
+}
+, new { id = "Load_Account_Form" }))
+{
+}
+
+
+

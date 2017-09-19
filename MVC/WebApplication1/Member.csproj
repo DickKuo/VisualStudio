@@ -29,6 +29,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -294,6 +296,7 @@
     </Compile>
     <Compile Include="Models\Code\OperMethods.cs" />
     <Compile Include="Models\Code\OptionQuotes.cs" />
+    <Compile Include="Models\Code\Permission.cs" />
     <Compile Include="Models\Code\Photo.cs" />
     <Compile Include="Controllers\BaseLoginController.cs" />
     <Compile Include="Controllers\CarouselController.cs" />
@@ -375,6 +378,7 @@
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\WebMVC.pubxml" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\Bootstrap3\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\Bootstrap3\bootstrap-datetimepicker.min.js" />
@@ -642,7 +646,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2728</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://192.168.1.111:8022</IISUrl>
+          <IISUrl>http://localhost/Member</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

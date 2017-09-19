@@ -1,0 +1,56 @@
+﻿@model  WebApplication1.Models.BankAccountViewModels.BankAccountViewModel
+@using Newtonsoft.Json
+
+@{
+
+    ViewBag.Title = "BankAccount";
+}
+
+@*<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
+<script src="~/Scripts/Code/Trade.js"></script>
+<script src="~/Scripts/Code/ResultCode.js"></script>
+<script src="~/Scripts/Code/GlobalMethod.js"></script>
+@*@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")*@
+
+
+
+@*<body>*@
+<div class="container">
+    <form class="form-signin" role="form">
+        <h2 class="form-signin-heading">金流控制</h2>
+        <hr />
+        <div class="input-group">
+            <span class="input-group-addon">$</span>
+            @Html.TextBoxFor(M => M.Info.Money, new { id = "Form_Money", @required = "required", @class = "form-control", onkeyup = "return ValidateNumber($(this),value)" })
+        </div>
+        <label class="radio-inline">
+            <input type="radio" name="group2" id="0" value="銀行A" checked> 銀行A
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="group2" id="1" value="銀行B"> 銀行
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="group2" id="2" value="銀行C"> 銀行C
+        </label>
+        <br />
+        <button type="submit" class="btn btn-primary marg-around-10" onclick="OnAddMoney()">加錢</button>
+
+        <button type="submit" class="btn btn-danger marg-around-10" onclick="OnReduceMoney()">扣錢</button>
+
+        <button type="button" class="btn btn-default marg-around-10" onclick="PowerSwitch('BrowseView', 'PartialView')">返回</button>
+    </form>
+</div>
+<script src="/Scripts/AssetsBS3/ie10-viewport-bug-workaround.js"></script>
+@*</body>*@
+
+
+
+
+
+
+
+
+
+

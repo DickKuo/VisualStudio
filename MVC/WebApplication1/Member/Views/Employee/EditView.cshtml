@@ -1,0 +1,90 @@
+﻿@model WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+
+@{
+    ViewBag.Title = "EditView";
+}
+@*<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")*@
+
+
+
+<script type="text/javascript">
+    //----------------------------------------------------------------------------------------
+    //返回上一頁
+    //----------------------------------------------------------------------------------------
+    function OnBack() {
+        $.ajax({
+            type: "POST",
+            url: "GoToIndexAction",
+            success: function (Model) {
+                //$("#PartialView").html(Model);
+            }
+        });
+    }
+</script>
+
+
+
+@using (Html.BeginForm("Edit", "Employee", FormMethod.Post))
+{
+    <h2>編輯畫面</h2>
+    <hr />
+    <table>
+        <tr>
+            <td>
+                姓名:
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="Emp_Name" class="sr-only"> FirstName</label>
+                    @Html.TextBoxFor(M => M.Emp.EmpFirstName, new { id = "Emp_Name", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                姓:
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="Emp_LastName" class="sr-only">LastName</label>
+                    @Html.TextBoxFor(M => M.Emp.EmpLastName, new { id = "Emp_LastName", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                電話:
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="Emp_Tel" class="sr-only">Tel</label>
+                    @Html.TextBoxFor(M => M.Emp.Tel, new { id = "Emp_Tel", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                地址:
+            </td>
+            <td>
+                <div class="form-group ">
+                    <label for="Emp_Address" class="sr-only"> Address</label>
+                    @Html.TextBoxFor(M => M.Emp.Addr, new { id = "Emp_Address", @class = "form-control" })
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" class="btn btn-primary" value="修改" />
+            </td>
+            <td>
+                <button type="button" class="btn btn-default" onclick="OnBack()">返回</button>
+            </td>
+        </tr>
+        @Html.HiddenFor(M => M.Emp.EmpNo)
+    </table>
+}
+

@@ -1,0 +1,42 @@
+﻿@model  WebApplication1.Models.MenuManagmentViewModels.MenuViewModel
+@using Newtonsoft.Json
+
+
+@*class="container"*@
+
+<div class="col-md-12">
+    <div class="col-md-offset-10 col-md-12">
+        <button class="btn btn-danger  marg-around-10" hidden="hidden" id="Btn_Delete" onclick="OnDeleteMenuClick()" type="button">刪除</button>
+    </div>
+    <form class="form-signin" role="form">
+        <h2 id="Hr_Title" class="form-signin-heading">編輯</h2>
+        <hr />
+        @*<label for="inputNo" id="Lab_No" class="col-sm-4 control-label">編號:</label>*@
+            @Html.HiddenFor(M => M.MainMenu.MenuNo, new { id = "Menu_No", @class = "form-control", placeholder = "No" ,@readonly="readonly"})
+
+
+        <div class="form-group ">
+            <label for="Menu_Name" class="col-sm-2 control-label">名稱:</label>
+            @Html.TextBoxFor(M => M.MainMenu.Name, new { id = "Menu_Name", @class = "form-control", placeholder = "Name" })
+        </div>
+
+
+        <div class="form-group ">
+            <label for="Menu_Url" class="col-sm-2 control-label">Url:</label>
+            @Html.TextBoxFor(M => M.MainMenu.Url, new { id = "Menu_Url", @class = "form-control", placeholder = "Url" })
+        </div>
+
+        <div class="col-md-offset-6">
+            <button class="btn  btn-primary  marg-around-10" id="Btn_Edit" type="button" onclick="OnMenuEditClick()">修改</button>
+
+            <button class="btn  btn-success marg-around-10" hidden="hidden" id="Btn_Add" type="button" onclick="OnAddAction()">新增</button>
+            @*<button class="btn btn-lg btn-primary btn-group" hidden="hidden" id="Btn_Cancel" type="button">取消</button>*@
+
+        </div>
+       
+
+    </form>
+</div>
+
+
+

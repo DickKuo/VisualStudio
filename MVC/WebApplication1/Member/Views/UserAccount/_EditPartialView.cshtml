@@ -1,0 +1,54 @@
+﻿
+@model  WebApplication1.Models.UserAccountViewModels.UserAccountViewModel
+
+@{
+    ViewBag.Title = "Index";
+    }
+
+@*<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/Code/UserAccount.js"></script>*@
+<div class="col-md-12">
+    <div class="col-md-offset-10 col-md-12">
+    @*    <button class="btn btn-lg btn-danger btn-group" hidden="hidden" id="Btn_Delete" onclick="OnDeleteMenuClick()" type="button">刪除</button>*@
+    </div>
+    <form class="form-signin" role="form">
+        <h2 id="Hr_Title" class="form-signin-heading">新增</h2>
+        <hr />
+
+        <div class="form-group" id="Tb_Account">                     
+            <label for="inputNo" id="Lab_No" class="col-sm-4 control-label">帳號:</label>
+            @Html.TextBoxFor(M => M.User.UserName, new { id = "User_Name", @class = "form-control", placeholder = "Account", @maxlength = "50" })
+            <label id="User_Name_Hid"></label>
+        </div>
+       
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-4 control-label">密碼:</label>
+            @Html.PasswordFor(M => M.User.PassWord, new { id = "User_PassWord", @class = "form-control", placeholder = "PassWord", @maxlength = "50" })
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-4 control-label">電子信箱:</label>
+            @Html.TextBoxFor(M => M.User.Email, new { id = "User_Email", @class = "form-control", placeholder = "E-Mail", @maxlength = "50" })
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-4 control-label">角色:</label>
+            @Html.DropDownList("RoleList", null, new { @class = "btn btn-default dropdown-toggle", id = "User_Role" })
+        </div>
+
+            @Html.HiddenFor(M => M.User.UserID, new { id = "User_UserID" })
+
+            <div class="col-md-offset-4 col-md-8">
+             
+                    <button class="btn btn-primary btn-group marg-around-10" id="Btn_EditView" type="button" onclick="OnUserEditClick()">修改</button>
+                
+                <button class="btn  btn-primary btn-group marg-around-10" id="Btn_AddView" type="button" onclick="OnBtnAddAction()">新增</button>
+
+              
+                    <button class="btn  btn-default btn-group marg-around-10" id="Btn_Cancel" type="button" onclick="OnCancelAction()">取消</button>
+              
+            </div>
+
+</form>
+</div>

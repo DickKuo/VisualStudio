@@ -1,0 +1,159 @@
+﻿@using Newtonsoft.Json;
+
+@model  WebApplication1.Models.DepartmentViewModels.DepartmentViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/Code/GlobalMethod.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#DepTable tr').click(function (event) {
+            var Data = {
+                DepNo: jQuery.trim($(this).find("td:eq(0)").text()),
+                Name: jQuery.trim($(this).find("td:eq(1)").text())
+            };
+            if ($(this).attr('id') != null) {
+                OnDepEditClick(Data);
+            }
+        });
+        TableHighLightAndRowSelected("DepTable");
+        
+        $("#bt_diloag").hide();
+        $("#bt_comfirm").hide();
+
+        
+    });
+
+   
+</script>
+
+<div id="Div_DepPartial" class="col-md-6">
+
+
+    <h2>部門管理</h2>
+    <hr />
+    <h4>點擊下面列表欄位，以進行修改</h4>
+
+    
+        <button type="submit" id="DepAddButton" onclick="OnDepAddClick()" class="btn btn-success col-md-offset-10">新增部門</button>
+    <p></p>
+  
+
+    <div class="panel panel-default">
+        <div class="panel-heading">部門列表</div>
+        <table class="table" id="DepTable">
+            <tr>
+                <th>
+                    部門編號
+                </th>
+                <th>
+                    名稱
+                </th>
+            </tr>
+            @if (Model != null)
+            {
+                foreach (var item in Model.DepList)
+                {
+                    <tr id="Dep_@item.DepNo">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DepNo)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+
+                        <td>
+                            <input type="submit" value="刪除" id="Dep_DeleteBt" class="btn btn-danger" onclick="OnDepDeleteClick(@JsonConvert.SerializeObject(item))" />
+                        </td>
+
+                    </tr>
+                }
+            }
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+
+<div id="Partial_Dep" title="Deps_Emp" class=" col-md-5"></div>
+
+<br />
+<br />
+
+@*查詢面板*@
+<div id="Query_Panel" hidden="hidden" class="col-md-5">
+    <h3>員工查詢</h3>
+    <hr />
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputPassword2">EmpName</label>
+            <input type="text" class="form-control" id="Input_QueryString" placeholder="查詢條件">
+        </div>
+        <button type="button" class="btn btn-default marg-around-10" onclick="Search_Emp()">查詢</button>
+    </form>
+</div>
+
+
+<div id="Partail_DepsEmp"></div>
+
+
+<button type="button" id="bt_diloag" class="btn btn-success col-md-offset-9" hidden="hidden" data-toggle="modal" data-target="#myModal">TEST</button>
+<button type="button" id="bt_comfirm" class="btn btn-success col-md-offset-9" hidden="hidden" data-toggle="modal" data-target="#Comfirm_Delete_Message">TEST</button>
+
+
+
+@*提示訊息面板*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-label="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div  class="modal-header">
+                <h4> 提示訊息</h4>
+                <div class="modal-body" id="Alert_Body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> 確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*刪除提示面板*@
+<div class="modal fade" id="Comfirm_Delete_Message" tabindex="-1"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>                 
+                </button>
+                <h4>刪除警告</h4>
+                <div class="modal-body" id="Comfirm_Body">
+                    15565645645645645646s
+                </div>
+
+                <div id="Delete_Data">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" onclick="ToDelete()" class="btn btn-default" data-dismiss="modal">確定</button>
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

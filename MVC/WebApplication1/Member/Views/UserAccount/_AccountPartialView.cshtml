@@ -1,0 +1,63 @@
+﻿@model  WebApplication1.Models.UserAccountViewModels.UserAccountViewModel
+@using Newtonsoft.Json
+
+
+<div  id="Div_Panel">
+    <h2>帳號管理</h2>
+    <hr />    
+
+    <div id="ADDControl" > 
+        <input type="submit" id="btn_Account_Add" value="新增帳號" class="btn btn-success col-md-offset-11" onclick="OnAddClick()"> </div>
+    <p></p>
+    <div class="panel panel-default">
+        <div class="panel-heading">帳號列表</div>
+        <table class="table" id="BrowseTable">
+            <tr>
+                <th>
+                    帳號:
+                </th>
+                <th>
+                    E-Mail:
+                </th>
+                <th>
+                    註冊日期:
+                </th>
+            </tr>
+            @if (Model != null)
+            {
+                foreach (var Item in Model.UserList)
+                {
+                    <tr id="@Item.UserID" title="點擊欄位進行設定">
+                        <td>
+
+                              @Html.DisplayFor(modelItem => Item.UserName, new { id = "Input_Account" })
+                           
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => Item.Email)
+                        </td>
+                        <td>
+                         
+                         @Html.DisplayFor(modelItem => Item.RegistrationDate)
+                           
+                        </td>
+
+                        <td>
+                            <button type="button" name="edit" class="btn btn-primary" onclick="EditLoad(@JsonConvert.SerializeObject(Item))">編輯</button>
+                        </td>
+                        <td>
+                            <button type="button" name="delete" class="btn btn-danger" onclick="OnDeleteClick(@JsonConvert.SerializeObject(Item))">刪除</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+
+    </div>
+    </div>
+
+
+@*功能Partial區塊*@
+<div id="PartialView" class="col-md-6"></div>
+

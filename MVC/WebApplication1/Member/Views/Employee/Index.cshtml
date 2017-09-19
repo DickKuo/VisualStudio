@@ -1,0 +1,85 @@
+﻿@using Newtonsoft.Json;
+
+@model  WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/jquery-2.2.0.min.js"></script>
+<script src="~/Scripts/Code/Emplyee.js"></script>
+
+
+<h2>員工管理</h2>
+
+<hr />
+@*@Html("", "CreateView", "Employee", new { @Class = "col-md-offset-10" })*@
+<input type="submit" class="btn btn-success col-md-offset-11" value="新增資料">  
+<p></p>
+
+<div class="panel panel-default">   
+    <div class="panel-heading">員工列表</div>
+    <table class="table">
+        <tr>
+            <th>
+                編號
+            </th>
+            <th>
+                姓名
+            </th>
+            <th>
+                電話
+            </th>
+            <th>
+                地址
+            </th>
+        </tr>
+
+        @if (Model != null)
+        {
+            foreach (var item in Model.EmpList)
+            {
+                <tr id="Emp_@item.EmpNo">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpNo)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpFirstName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tel)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Addr)
+                    </td>
+
+                    <td>
+                        <input type="submit" value="編輯" class="btn btn-primary" onclick="EditButtonClick(@JsonConvert.SerializeObject(item))" />
+                    </td>
+
+                    <td>
+                        <input type="submit" value="刪除" class="btn btn-danger" onclick="DeleteButtonClick(@JsonConvert.SerializeObject(item))" />
+                    </td>
+
+                </tr>
+            }
+
+        }
+
+        @using (Html.BeginForm("EditView", "Employee", FormMethod.Post, new { id = "Load_Edit_Form" }))
+        {
+            @Html.HiddenFor(M => M.EmployeeJson, new { Id = "Hidden_EmployeeJson" })
+        }
+
+
+        @using (Html.BeginForm("BDelete", "Employee", FormMethod.Post, new { id = "Load_Delete_Form" }))
+        {
+            @Html.HiddenFor(M => M.EmployeeJson, new { Id = "Hidden_EmployeeDeleteJson" })
+        }
+
+
+    </table>
+
+</div>

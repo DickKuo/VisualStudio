@@ -1,0 +1,71 @@
+﻿@model  WebApplication1.Models.TranscationViewModels.TranscationViewModel
+
+<script src="~/Scripts/Code/Transaction.js"></script>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>序</th>
+            <th>交易時間</th>
+            <th>出金/入金</th>
+            <th>點數</th>
+            <th>手續費</th>
+            <th>審合狀態</th>
+            <th>備註</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int RowID = 1;
+        }
+        @if (@Model.TransactionList != null && Model.TransactionList.Count > 0) {
+            foreach (var Item in Model.TransactionList) {
+                <tr>
+                    <td>@RowID</td>
+                    <td>@Item.TradeTime.ToString(CommTool.BaseConst.TimeFormatComplete)</td>
+                    <td>@(Resources.Resource.ResourceManager.GetString("TransTypes_" + Item.TradeType.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
+                    <td>@Item.Detail.Draw</td>
+                    <td>@Item.Detail.Fee</td>                    
+                    <td>@(Resources.Resource.ResourceManager.GetString("AuditTpyes_" + Item.AuditState.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
+                    <td>@Item.Detail.Remark</td>
+                </tr>
+                RowID++;
+            }
+        }
+    </tbody>    
+</table>
+
+
+
+@if (@Model.TransactionList != null && Model.TransactionList.Count > 0) {
+
+    <div id="PublicTable">
+        <nav>
+            <ul class="pagination">
+                @if (Model.MaxPage == 1 || Model.Page == 1) {
+                    <li class="disabled"><span><span aria-hidden="true">«</span><span class="sr-only">Previous</span></span></li>
+                }
+                else {
+                    <li id="Previous"><span><span aria-hidden="true">«</span><span class="sr-only">Previous</span></span></li>
+                }
+
+                @for (int i = 1; i <= Model.MaxPage; i++) {
+                    if (i == Model.Page) {
+                        <li id="@i" class="active span_c1ick"><span>@i <span class="sr-only">(current)</span></span></li>
+                    }
+                    else {
+                        <li id="@i"><span class="span_c1ick">@i<span class="sr-only"></span></span></li>
+                    }
+                }
+                @if (Model.MaxPage == 1 || Model.Page == Model.MaxPage) {
+                    <li class="disabled"><span><span aria-hidden="true">»</span><span class="sr-only">Next</span></span></li>
+                }
+                else {
+                    <li id="Next"><span><span aria-hidden="true">»</span><span class="sr-only">Next</span></span></li>
+                }
+            </ul>
+        </nav>
+    </div>
+}
+

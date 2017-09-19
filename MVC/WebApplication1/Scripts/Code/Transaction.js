@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    var Url = "http://192.168.1.111:8022/Transaction/";
+    var Url = "../Transaction/";
 
     $(".span_c1ick").on("click", function () {
         if (!$(this).hasClass("active")) {

@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var Url = "http://192.168.1.111:8022/Trade/";
+    var Url = "../Trade/";
 
     var BtnName = "";
     var Contract = "";

@@ -1,0 +1,48 @@
+﻿@model   WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home Page";
+}
+<script src="~/Scripts/Code/FileLoading.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        FileUpLoad();
+    });
+</script>
+
+
+@using (Html.BeginForm("Index", "FileLoad", FormMethod.Post, new { enctype = "multipart/form-data", name = "myForm" }))
+{
+    <h2>上傳檔案</h2>
+    <hr />
+    <div>
+        <input type="hidden" value="" name="act" />
+        <input type="file" value="選擇圖片" name="myFile" id="Image" accept="image/*" />
+        <table border="1" id="UploadTable">
+            @for (int i = 0; i < Model.PhotoFileNames.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <img src="@(Url.Content("~/UploadFiles/")+Model.PhotoFileNames[i])" width="500" height="350" id="ImageList" />
+
+                        @Html.HiddenFor(M => M.PhotoFileNames[i])
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+        檔案說明:      @Html.TextAreaFor(M => M.ImageRemark, new { id = "ImageRemark", @required = "required" })
+        <hr />
+
+        <div class="col-md-2">
+            <input type="submit" value="提交" onclick="postForm();" class="btn btn-success marg-around-10" />
+        </div>
+    </div>
+}
+<input type="button" value="返回" class="btn btn-default marg-around-10" onclick="javascript: location.href = 'Carousel'" />
+
+
+
+

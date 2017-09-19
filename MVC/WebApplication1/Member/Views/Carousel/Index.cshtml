@@ -1,0 +1,25 @@
+﻿@using Newtonsoft.Json;
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/Code/Carousel.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "Carousel/LoadingPartial",
+            success: function (Model) {
+                $("#Image_List").html(Model);
+            }
+        });
+    });
+
+
+</script>
+
+<div id="Image_List"></div>
+

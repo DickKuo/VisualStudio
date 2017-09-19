@@ -1,0 +1,103 @@
+﻿
+@using Newtonsoft.Json;
+
+@model  WebApplication1.Models.EmployeeMgrViewModels.EmployeeManamgerViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+@*<script src="~/Scripts/jquery-2.2.0.min.js"></script>*@
+<script src="~/Scripts/Code/Emplyee.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/Code/Management.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+
+        TableHighLightAndRowSelected("EmpTable");
+        OnAllCheckBox("EmpTable");
+
+
+        var ItemDataa = {
+            
+        };
+
+        OnDepEditClick(ItemData);
+
+        //function onAllCheckBox() 
+        //{
+        //    $('#EmpTable tr td input[type="checkbox"]').each(function () {
+        //        if (!$(this).is(":checked")) {
+        //            $(this).attr('checked', true);
+        //        }
+        //    });
+        //}
+    });
+</script>
+
+
+<div id="div_Emp_Partial">
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+            <button type="submit" id="Bt_OKADD" onclick="OnEmpSelect_OK()" class="btn btn-success marg-around-10">確認</button>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" id="Bt_Cancel" onclick="OnAddEmpCancel()" class="btn btn-default marg-around-10">返回</button>
+        </div>
+
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">員工列表</div>
+        <table class="table" id="EmpTable">
+            <tr>
+                <th>
+                    <input type="checkbox" name="user_active_col[]" id="Cb_ClickAll" onclick="OnAllCheckBox(EmpTable)" />
+                </th>
+                <th>
+                    員工編號
+                </th>
+                <th>
+                    姓名
+                </th>
+                <th>
+                    姓氏
+                </th>
+                <th>
+                    電話
+                </th>
+                
+            </tr>
+            @if (Model != null)
+            {
+                if (Model.EmpList != null)
+                {
+                    foreach (var item in Model.EmpList)
+                    {
+                        <tr id="Emp_@item.EmpNo">
+                            <td>
+                                <input type="checkbox" id="@item.EmpNo" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpFirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpLastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tel)
+                            </td>                           
+                        </tr>
+                    }
+                }
+            }
+        </table>
+    </div>
+</div>
+
+<div id="Partial_Emp"></div>
