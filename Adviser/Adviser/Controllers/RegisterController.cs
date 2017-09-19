@@ -32,13 +32,13 @@ namespace Adviser.Controllers
             _Adviser.Remark = ViewModel.Remark;            
             AdviserDAO _AdviserDAO = new AdviserDAO();
             int SN = _AdviserDAO.AddAdviser(_Adviser);
-            if (SN > 0) {
-                CommTool.MailData _MailDAO = new CommTool.MailData();
-                _MailDAO.RegistrySend(_Adviser.Email, "註冊信件", "感謝您的註冊" +
-                         "<br/>您的帳號:" + _Adviser.Account +
-                         "<br/>您的密碼:" + _Adviser.PassWord +
-                         "<br/>請您以這組帳號登入系統");
-            }
+            //if (SN > 0) {
+            //    ComTool.MailData _MailDAO = new CommTool.MailData();
+            //    _MailDAO.RegistrySend(_Adviser.Email, "註冊信件", "感謝您的註冊" +
+            //             "<br/>您的帳號:" + _Adviser.Account +
+            //             "<br/>您的密碼:" + _Adviser.PassWord +
+            //             "<br/>請您以這組帳號登入系統");
+            //}
             return RedirectToAction("Index","Home");
         }//end RegisterAdviser
 

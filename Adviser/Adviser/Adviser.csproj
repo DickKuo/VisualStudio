@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B7690782-86BF-4395-A975-AB0A5677A164}</ProjectGuid>
+    <ProjectGuid>{7E38271C-BFB9-459A-A956-92EEA3F56BB3}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -29,9 +29,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IncludeIisSettings>false</IncludeIisSettings>
-    <IncludeAppPool>true</IncludeAppPool>
-    <PublishDatabases>true</PublishDatabases>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,21 +39,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommTool, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dropbox\Export\CommTool.dll</HintPath>
+    <Reference Include="CommTool">
+      <HintPath>..\..\..\Dropbox\Export\CommTool.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool.Service, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
+    <Reference Include="CommTool.Service">
+      <HintPath>..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="ObjectBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
+    <Reference Include="ObjectBase">
+      <HintPath>..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
     </Reference>
     <Reference Include="Stock">
-      <HintPath>..\..\..\..\Dropbox\Export\Stock.dll</HintPath>
+      <HintPath>..\..\..\Dropbox\Export\Stock.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -67,7 +61,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -85,9 +79,9 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
@@ -169,60 +163,55 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Menu.zh-TW.designer.cs">
-      <DependentUpon>Menu.zh-TW.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="App_GlobalResources\Menu.designer.cs">
-      <DependentUpon>Menu.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Menu.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Menu.zh-TW1.designer.cs">
+    <Compile Include="App_GlobalResources\Menu.zh-TW.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Menu.zh-TW.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\ResourceTransaction.zh-TW.designer.cs">
-      <DependentUpon>ResourceTransaction.zh-TW.resx</DependentUpon>
+    <Compile Include="App_GlobalResources\Resource.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\ResourceTransaction.designer.cs">
-      <DependentUpon>ResourceTransaction.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="App_GlobalResources\ResourceCustomer.zh-TW.designer.cs">
-      <DependentUpon>ResourceCustomer.zh-TW.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="App_GlobalResources\ResourceCustomer.designer.cs">
-      <DependentUpon>ResourceCustomer.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="App_GlobalResources\ResourcePageTitle.zh-TW.designer.cs">
-      <DependentUpon>ResourcePageTitle.zh-TW.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="App_GlobalResources\ResourcePageTitle.designer.cs">
-      <DependentUpon>ResourcePageTitle.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="App_GlobalResources\Resource.zh-TW1.designer.cs">
+    <Compile Include="App_GlobalResources\Resource.zh-TW.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.zh-TW.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Resource1.designer.cs">
+    <Compile Include="App_GlobalResources\ResourceCustomer.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
+      <DependentUpon>ResourceCustomer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ResourceCustomer.zh-TW.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceCustomer.zh-TW.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ResourcePageTitle.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourcePageTitle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ResourcePageTitle.zh-TW.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourcePageTitle.zh-TW.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ResourceTransaction.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceTransaction.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ResourceTransaction.zh-TW.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceTransaction.zh-TW.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -230,15 +219,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\BaseLoginController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
-    <Compile Include="Controllers\TradeController.cs" />
-    <Compile Include="Controllers\TransController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\TradeController.cs" />
+    <Compile Include="Controllers\TransController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\LoginHelper.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
     <Compile Include="Models\Code\BaseModel.cs" />
@@ -268,16 +258,18 @@
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Properties\PublishProfiles\Wish.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Code\Customer.js" />
     <Content Include="Scripts\Code\CustomerDetail.js" />
     <Content Include="Scripts\Code\Login.js" />
     <Content Include="Scripts\Code\RegisterJs.js" />
     <Content Include="Scripts\Code\TradeJs.js" />
-    <Content Include="Scripts\jquery-2.2.0.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -301,6 +293,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
@@ -311,18 +304,18 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Customer\Mangement.cshtml" />
+    <Content Include="Views\Customer\ShowCustomerDetail.cshtml" />
+    <Content Include="Views\Customer\_MangerTablePartial.cshtml" />
     <Content Include="Views\Login\LoginView.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
-    <Content Include="Views\Customer\Mangement.cshtml" />
-    <Content Include="Views\Customer\_MangerTablePartial.cshtml" />
-    <Content Include="Views\Customer\ShowCustomerDetail.cshtml" />
-    <Content Include="Views\Trans\Deposit.cshtml" />
-    <Content Include="Views\Trans\_TransactonTablePartial.cshtml" />
-    <Content Include="Views\Trans\TransDetail.cshtml" />
     <Content Include="Views\Report\TransRecord.cshtml" />
-    <Content Include="Views\Trans\Withdrawal.cshtml" />
     <Content Include="Views\Trade\Quotes.cshtml" />
     <Content Include="Views\Trade\_QuotesTable.cshtml" />
+    <Content Include="Views\Trans\Deposit.cshtml" />
+    <Content Include="Views\Trans\TransDetail.cshtml" />
+    <Content Include="Views\Trans\Withdrawal.cshtml" />
+    <Content Include="Views\Trans\_TransactonTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BaseLogin\" />
@@ -335,47 +328,64 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\Menu.zh-TW.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Menu.zh-TW1.designer.cs</LastGenOutput>
-    </Content>
-    <EmbeddedResource Include="App_GlobalResources\Menu.resx">
+    <Content Include="App_GlobalResources\Menu.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Menu.designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <Content Include="App_GlobalResources\ResourcePageTitle.zh-TW.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>ResourcePageTitle.zh-TW.designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Menu.zh-TW.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Menu.zh-TW.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Resource.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resource.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Resource.zh-TW.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resource.zh-TW.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="App_GlobalResources\ResourceCustomer.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ResourceCustomer.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="App_GlobalResources\ResourceCustomer.zh-TW.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ResourceCustomer.zh-TW.designer.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="App_GlobalResources\ResourceTransaction.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>ResourceTransaction.designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\ResourcePageTitle.resx">
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\ResourcePageTitle.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ResourcePageTitle.designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\Resource.resx">
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\ResourcePageTitle.zh-TW.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resource1.designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\Resource.zh-TW.resx">
+      <LastGenOutput>ResourcePageTitle.zh-TW.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\ResourceTransaction.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resource.zh-TW1.designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\ResourceTransaction.zh-TW.resx">
+      <LastGenOutput>ResourceTransaction.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\ResourceTransaction.zh-TW.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ResourceTransaction.zh-TW.designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -393,9 +403,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>9082</DevelopmentServerPort>
+          <DevelopmentServerPort>26704</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:9082/</IISUrl>
+          <IISUrl>http://localhost:26704/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

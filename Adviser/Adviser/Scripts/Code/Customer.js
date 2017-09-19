@@ -1,4 +1,5 @@
 ﻿$(function () {
+    alert(TestRender);
 
-    
+   
 });

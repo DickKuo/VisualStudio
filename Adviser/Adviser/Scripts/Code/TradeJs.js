@@ -1,7 +1,7 @@
 ﻿
 
 $(function () {
-    var Url = AdviserUrl + "/Trade/";
+    var Url = "../Trade/";
 
     var BtnName = "";
     var Contract = "";
