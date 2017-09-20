@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>後台管理介面</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")    
-
-
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" /> 
+    @Scripts.Render("~/bundles/modernizr")       
+   
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
-    @*<script src="~/Scripts/jquery-2.2.0.min.js"></script>*@
-    @*<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
-    <script src="~/Scripts/bootstrap.js"></script>   
-    <script src="~/Scripts/Bootstrap3/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/jquery-2.2.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    @*<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>*@
+    <script src="~/Scripts/Bootstrap3/bootstrap-datetimepicker.min.js"></script>
+    <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.fancybox.pack.js"></script>
+    <script src="~/Scripts/jquery.mousewheel-3.0.6.pack.js"></script>
+  
 </head> 
-
 
 <body>
     <div>
@@ -80,11 +82,7 @@
             <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    
+    @RenderSection("scripts", required: false)    
     @Html.RenderJavaScriptVars()
     @Html.RenderJavaScripts()
 

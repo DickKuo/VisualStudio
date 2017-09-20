@@ -6,7 +6,7 @@
       <SubItem Seq ="3" Name="電子錢包" MenuNo="1003" Permission="10" Url="EWallet/Index"></SubItem>
     </Item>
     <Item Seq="2" Name="操作專區" MenuNo="6000" Permission="1" Url="#">
-       <SubItem Seq ="1" Name="下單" MenuNo="6001" Permission="1" Url="Trade/Quotes"></SubItem>
+      
     </Item>
     <Item Seq="3" Name="出入金" MenuNo="2000" Permission="10" Url="#">
       <SubItem Seq ="1" Name="存入資金" MenuNo="2001" Permission="10" Url="Deposit/Index"></SubItem>
@@ -14,7 +14,7 @@
     </Item>
     <Item Seq="4" Name="報表" MenuNo="3000" Permission="6" Url="#">
       <SubItem Seq ="1" Name="歷史交易資料" MenuNo="3001" Permission="3" Url="Transaction/Index"></SubItem>
-      <SubItem Seq ="2" Name="操作紀錄" MenuNo="3002" Permission="6" Url="Report/RecordReport"></SubItem>
+      
     </Item>
     <Item Seq="5" Name="設定" MenuNo="4000" Permission="10" Url="Setting/Index">
     </Item>

@@ -1,5 +1,4 @@
 ﻿
-
 $(function () {
     var Url = "../Trade/";
 
@@ -83,15 +82,10 @@ $(function () {
                 "</div>" +
 
                 "<div class='form-group' style='padding-top:25px;'>" +
-                    "<div class='btn-group' data-toggle='buttons'>" +
-                        "<label class='btn btn-primary active'>" +
-                            "<input id='Checkbox1' type='radio'>Sell" +
-                        "</label>" +
-                        "<label class='btn btn-primary'>" +
-                            "<input id='Checkbox2' type='radio'>Buy" +
-                        "</label>" +
-                        "</div>" +
-                "</div> <br/>"
+                   	"<label class='radio-inline'><input type='radio' value='Sell' name='optradio'  data-name='Sell'>Sell</label>" +
+                    "<label class='radio-inline'><input type='radio' value='Buy'  name='optradio'  data-name='Buy'>Buy</label>" +
+			
+                "</div>    <br/>"
               , {
                   buttons: [{
                       class: "yes",
@@ -112,14 +106,8 @@ $(function () {
          });
     });
     
-    function Commd(BtnName) {
-        var BuyType = "";
-        if ($("#Checkbox1").is(":checked")) {
-            BuyType = "Sell";
-        }
-        else if ($("#Checkbox2").is(":checked")) {
-            BuyType = "Buy";
-        }
+    function Commd(BtnName) {       
+        var BuyType = $('input[name="optradio"]:checked').val();  
         $.ajax({
             type: "POST",
             url: Url + "AddTrade",
@@ -131,11 +119,12 @@ $(function () {
                 "DueMonth": $("#DueMonth").html(),
                 "Lot": $("#Lot").val()
             },
-            success: function (Model) {                
+            success: function (Model) {
                 $.fancybox.close();
                 alert(Model);
             }
-        })
+        });
+
     }//end Commd
     
     $("#Btn_Search").on("click", function () {
