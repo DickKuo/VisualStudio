@@ -45,6 +45,7 @@ namespace Stock {
             public const string GetListOption = "GetListOption";
             public const string GetOptionQuotesByDuMonthAndTime = "GetOptionQuotesByDuMonthAndTime";
             public const string AddOption = "AddOption";
+            public const string GetListOptionByWeekPoint = "GetListOptionByWeekPoint";
         }
 
         private class SPParameter {
@@ -1149,6 +1150,26 @@ namespace Stock {
                 ListOption = USP.ExeProcedureGetObjectList(SP.GetListOption, new Option());
             }
             catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+            return ListOption;
+        }
+
+        /// <summary>指定條件，撈取區間內的走勢資訊</summary>
+        /// <param name="_WeekPoint"></param>
+        /// <returns></returns>
+        public List<Option> GetListOptionByWeekPoint(WeekPoint _WeekPoint)
+        {
+            List<Option> ListOption = new List<Option>();
+            try
+            {
+                USP.AddParameter(SPParameter.Contract, _WeekPoint.Contract);
+                USP.AddParameter(SPParameter.DueMonth, _WeekPoint.DueMonth);
+                USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
+                ListOption = USP.ExeProcedureGetObjectList(SP.GetListOptionByWeekPoint, new Option());
+            }
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
             }
             return ListOption;
