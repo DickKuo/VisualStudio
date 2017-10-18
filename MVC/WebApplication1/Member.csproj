@@ -274,6 +274,7 @@
     <Compile Include="Controllers\WithdrawalController.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\ChartViewModels.cs" />
+    <Compile Include="Models\Code\BaseCode.cs" />
     <Compile Include="Models\Code\BaseModel.cs" />
     <Compile Include="Models\Code\BaseRequest.cs" />
     <Compile Include="Models\Code\Currencies.cs" />
