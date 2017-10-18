@@ -54,7 +54,6 @@ namespace WebApplication1.Controllers
             foreach (var Item in Result.ObjList)
             {
                 Photo photo = JsonConvert.DeserializeObject<Photo>(Item.ToString());
-
                 Model.PhotoList.Add(photo);
             }
             return PartialView("_CarouselPartialView", Model);
@@ -73,7 +72,8 @@ namespace WebApplication1.Controllers
         }
 
 
-        public ActionResult Messages(string MessageStr, string ReturnURL, MessageType MessageType) {
+        public ActionResult Messages(string MessageStr, string ReturnURL, WebApplication1.Models.Code.BaseCode.MessageType MessageType)
+        {
             ViewBag.MessageStr = MessageStr;
             ViewBag.ReturnURL = ReturnURL;
             ViewBag.MessageType = MessageType;

@@ -50,7 +50,7 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.BankAccount, _Transaction.Detail.BankAccount);
                 USP.AddParameter(SParameter.BranchName, _Transaction.Detail.BranchName);
                 USP.AddParameter(SParameter.Draw, _Transaction.Detail.Draw);
-                USP.AddParameter(SParameter.Remark, _Transaction.Detail.Remark); 
+                USP.AddParameter(SParameter.Remark, string.IsNullOrEmpty(_Transaction.Detail.Remark) ? string.Empty : _Transaction.Detail.Remark); 
                 Transaction _Result = USP.ExeProcedureGetObject(SP.AddTranscation, new Transaction()) as Transaction;
                 return _Result.SN;
             }

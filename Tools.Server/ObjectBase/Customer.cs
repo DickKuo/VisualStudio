@@ -39,5 +39,7 @@ namespace ObjectBase {
         public DateTime AddTime { set; get; }
 
         public bool IsEnable { set; get; }
+
+        public int HelperSN { set; get; }
     }
 }

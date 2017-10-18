@@ -21,7 +21,17 @@ namespace WebApplication1.Controllers
                 filterContext.Result = RedirectToAction("LoginView", "Login");
             }
             base.OnActionExecuting(filterContext);            
-        } 
+        }
+
+        /// <summary>提示訊息轉址</summary>
+        /// <param name="MessageStr"></param>
+        /// <param name="ReturnURL"></param>
+        /// <param name="_MessageType"></param>
+        /// <returns></returns>
+        protected ActionResult ReturnMessage(string MessageStr,string ReturnURL ,WebApplication1.Models.Code.BaseCode.MessageType _MessageType)
+        {
+            return RedirectToAction("Messages", "Home", new { MessageStr = MessageStr, ReturnURL = ReturnURL, MessageType = _MessageType });               
+        }
       
     }
 }

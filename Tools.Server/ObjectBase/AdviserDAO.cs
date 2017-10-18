@@ -7,6 +7,7 @@ namespace ObjectBase {
         private class SP {
             public const string AddAdviser = "AddAdviser";
             public const string LoginCheckAdviser = "LoginCheckAdviser";
+            public const string GetAdviserBySN = "GetAdviserBySN";
         }
 
         private class SParameter {
@@ -61,5 +62,13 @@ namespace ObjectBase {
             return _ResultAdviser;
         }//end LoginCheckAdviser
         
+        /// <summary>依據SN取得顧問</summary>
+        /// <param name="SN"></param>
+        /// <returns></returns>
+        public Adviser GetAdviserBySN(int SN) {
+            USP.AddParameter(CommBase.SN, SN);
+            Adviser _ResultAdviser = USP.ExeProcedureGetObject(SP.GetAdviserBySN, new Adviser());
+            return _ResultAdviser;
+        }
     }
 }
