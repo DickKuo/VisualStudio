@@ -219,4 +219,7 @@
   <data name="TransTypes_Withdrawal" xml:space="preserve">
     <value>出金</value>
   </data>
+  <data name="Register_Note" xml:space="preserve">
+    <value>註冊完成後會發送信件到註冊的信箱，待審核通過後才可以使用系統。</value>
+  </data>
 </root>

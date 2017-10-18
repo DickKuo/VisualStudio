@@ -40,7 +40,6 @@ namespace Adviser.Controllers
             return PartialView("_QuotesTable", ResultView);
         }
 
-
         /// <summary></summary>
         /// <param name="ViewModel"></param>
         /// <returns></returns>

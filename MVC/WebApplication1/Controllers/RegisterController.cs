@@ -36,9 +36,9 @@ namespace WebApplication1.Controllers
                         "<br/>您的帳號:" + _Customer.Account +
                         "<br/>您的密碼:" + _Customer.PassWord +
                         "<br/>請您以這組帳號登入系統");
-                    return RedirectToAction("Message", "Home", new {
+                    return RedirectToAction("Messages", "Home", new {
                         info = Resources.Resource.Register_Success,
-                        returnUrl = "~/Login/LoginView"
+                        returnUrl = "../Login/LoginView"
                     });
                 }
                 else {

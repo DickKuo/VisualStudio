@@ -8,44 +8,45 @@
     <div class="panel panel-info">
         <div class="panel-heading">基本查詢</div>
         <div class="panel-body">
+                       
 
             <div class="row col-lg-offset-4" style="padding-bottom:20px">
-                <label for=" inputaccount" class="col-xs-12 col-sm-1 control-label">
+                <label for=" inputaccount" class="col-xs-6 col-sm-2 control-label">
                          @Resources.Resource.Login_Account
-                </label>
-                    @Html.TextBoxFor(M => M.Email, new { id = "InputAccount", @readonly = "readonly", @class = "form-control", @placeholder = Resources.Resource.Login_Account, @maxlength = "50" })
+                </label>              
+                    @Html.TextBoxFor(M => M.Email, new { id = "InputAccount", @readonly = "readonly", @class = "form-control", @placeholder = Resources.Resource.Login_Account, @maxlength = "50" })               
             </div>
 
             <div class="row col-lg-offset-4" style="padding-bottom:20px">
-                <label for="InputAccount" class="col-xs-12 col-sm-1 control-label">
+                <label for="InputAccount" class="col-xs-6 col-sm-2 control-label">
                     @Resources.Resource.Register_LastName
                 </label>
                 @Html.TextBoxFor(M => M.LastName, new { id = "InputAccount", @class = "form-control", @required = "required", @placeholder = Resources.Resource.Register_LastName, @maxlength = "50" })
             </div>
 
             <div class="row col-lg-offset-4" style="padding-bottom:20px">
-                <label for="InputAccount" class="col-xs-12 col-sm-1 control-label">
+                <label for="InputAccount" class="col-xs-12 col-sm-2 control-label">
                     @Resources.Resource.Register_FirstName
                 </label>
                 @Html.TextBoxFor(M => M.FirstName, new { id = "InputAccount", @class = "form-control", @required = "required", @placeholder = Resources.Resource.Register_FirstName, @maxlength = "50" })
             </div>          
 
             <div class="row col-lg-offset-4" style="padding-bottom:20px">
-                <label for="InputAccount" class="col-xs-12 col-sm-1 control-label">
+                <label for="InputAccount" class="col-xs-12 col-sm-2 control-label">
                     @Resources.Resource.Register_NickName
                 </label>
                 @Html.TextBoxFor(M => M.NickName, new { id = "InputAccount", @class = "form-control", @required = "required", @placeholder = Resources.Resource.Register_NickName, @maxlength = "50" })
             </div>
 
             <div class="row col-lg-offset-4" style="padding-bottom:20px">
-                <label for="InputAccount" class="col-xs-12 col-sm-1 control-label">
+                <label for="InputAccount" class="col-xs-12 col-sm-2 control-label">
                     @Resources.Resource.Register_Phone
                 </label>
                 @Html.TextBoxFor(M => M.Phone, new { id = "InputAccount", @class = "form-control", @required = "required", @placeholder = Resources.Resource.Register_Phone, @maxlength = "50" })
             </div>
 
             <div class="row col-lg-offset-4" style="padding-bottom:20px">
-                <label for="InputAccount" class="col-xs-12 col-sm-1 control-label">
+                <label for="InputAccount" class="col-xs-12 col-sm-2 control-label">
                     @Resources.Resource.Register_HomeAddr
                 </label>
                 @Html.TextBoxFor(M => M.HomeAddress, new { id = "InputAccount", @class = "form-control  ", @required = "required", @placeholder = Resources.Resource.Register_HomeAddr, @maxlength = "100" })

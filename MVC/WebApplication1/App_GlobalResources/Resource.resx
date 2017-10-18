@@ -225,4 +225,7 @@
   <data name="AlertMessage_Auto_Direct_Page" xml:space="preserve">
     <value>等待五秒或點擊馬上跳轉</value>
   </data>
+  <data name="Register_Note" xml:space="preserve">
+    <value>註冊完成後會發送信件到註冊的信箱，待審核通過後才可以使用系統。</value>
+  </data>
 </root>
