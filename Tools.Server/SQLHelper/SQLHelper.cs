@@ -536,6 +536,13 @@ namespace SQLHelper {
             if (Scmd == null) {
                 Scmd = new SqlCommand();
             }
+            if (value.GetType().Equals(typeof(string)))
+            {
+                if (value.Equals(null))
+                {
+                    value = string.Empty;
+                }
+            }
             Scmd.Parameters.Add(parameterName, value);
             if (Direction == System.Data.ParameterDirection.Output) {
                 _OutParameter.Add(parameterName);
