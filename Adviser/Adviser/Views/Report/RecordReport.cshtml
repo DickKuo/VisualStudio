@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "RecordeReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>@Resources.Menu.Menu_4002</h2>
@@ -16,13 +17,13 @@
                         開始日期
                     </label>
                     <div class='col-xs-3'>
-                        <input type='text' class="form-control" id='datetimepicker4' name="BeginTime" value="@Model.BeginTime.ToString(CommTool.BaseConst.TimeFormatComplete)" />
+                        <input type='text' class="form-control" id='BeginTimePicker' name="BeginTime" value="@Model.BeginTime.ToString(CommTool.BaseConst.TimeFormatComplete)" />
                     </div>
                     <label class="col-xs-1 control-label">
                         結束日期
                     </label>
                     <div class='col-xs-3'>
-                        <input type='text' class="form-control" id='datetimepicker5' name="EndTime" value="@Model.EndTime.ToString(CommTool.BaseConst.TimeFormatToMinute)" />
+                        <input type='text' class="form-control" id='EndTimePicker' name="EndTime" value="@Model.EndTime.ToString(CommTool.BaseConst.TimeFormatToMinute)" />
                     </div>
                     <div class="col-xs-4">
                         <input type="submit"  value="查詢" class="btn btn-info" />
@@ -41,12 +42,13 @@
 }
 <div id="confirm" style="background-position: top right;background-repeat:no-repeat;padding-top:10px;display:none;width:600px;"></div>
  
-
 <script type="text/javascript">
-
-    $(function () {
-        $('#datetimepicker4').datetimepicker();
-        $('#datetimepicker5').datetimepicker();                 
+    $(function () {       
+        $("#BeginTimePicker").datepicker({
+            format: "yyyy/mm/dd"
+         });               
+        $("#EndTimePicker").datepicker({
+            format: "yyyy/mm/dd"
+        });
     });
-
 </script>

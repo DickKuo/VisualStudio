@@ -3,9 +3,7 @@
     ViewBag.Title = "CustomerDetail";
     IEnumerable<SelectListItem> SelectAuditList = ViewBag.AuditList;
 }
-
 <script src="~/Scripts/Code/CustomerDetail.js"></script>
-
 
 <h2>@Resources.ResourcePageTitle.Title_CustomerDetail</h2>
 <hr>
@@ -26,7 +24,16 @@
                     @Resources.ResourceCustomer.Label_Audit
                 </label>
                 <div class='col-xs-3'>
-                    @Html.DropDownListFor(M => M._Customer.Audit, SelectAuditList, new { @class = "form-control" })
+                    <select id="Audit" class="selectpicker form-control" data-live-search="true" name="_Customer.Audit">
+                        @foreach (var Item in SelectAuditList) {
+                            if (Item.Selected) {
+                                <option value="@Item.Value" selected="selected">@Item.Text </option>
+                            }
+                            else {
+                                <option value="@Item.Value">@Item.Text </option>
+                            }
+                        }
+                    </select>
                 </div>
             </div>
         </div>
