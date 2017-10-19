@@ -79,11 +79,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 請確認金額正確，並打勾同意.
+        /// </summary>
+        internal static string IsRead {
+            get {
+                return ResourceManager.GetString("IsRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Account Information.
         /// </summary>
         internal static string Label_Header {
             get {
                 return ResourceManager.GetString("Label_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 最低入金點數100點.
+        /// </summary>
+        internal static string MinValue {
+            get {
+                return ResourceManager.GetString("MinValue", resourceCulture);
             }
         }
     }

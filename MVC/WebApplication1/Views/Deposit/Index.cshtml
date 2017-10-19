@@ -2,16 +2,36 @@
 
 @{
     ViewBag.Title = Resources.Menu.Menu_2001;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Html.AddJavaScriptVar("MinVal", Resources.ResourceDeposit.MinValue);
+    Html.AddJavaScriptVar("IsRead", Resources.ResourceDeposit.IsRead);
 }
 
 <h2>@Resources.Menu.Menu_2001</h2>
 <hr>
 
-@using (Html.BeginForm("Deposit", "Deposit")) {
+<script>
+    $(function () {
+        $('#DepositFrom').submit(function () {         
+            if ($("#Draw").val() < 100)
+            {
+                alert(MinVal);
+                return false;
+            }
+            if (!$("#AgreeCheck").prop("checked"))
+            {
+                alert(IsRead);
+                return false;
+            }
+        });
+    });    
+</script>
+
+@using (Html.BeginForm("Deposit", "Deposit", FormMethod.Post , new { @id="DepositFrom"} )) {
     <div class="panel panel-info">
         <div class="panel-heading">入金資料</div>
         <div class="panel-body">
-
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px ;padding-bottom :30px">
                     <div class='input-group date'>
@@ -33,7 +53,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
                     <div class='input-group date'>
@@ -43,8 +62,7 @@
                         @Html.TextArea("Remark", @Model._Transaction.Detail.Remark, new { @class = "form-control  addtimepicker col-xs-3" })
                     </div>
                 </div>
-            </div>
-                        
+            </div>                        
             <div class="form-group" style="padding-top:180px; padding-right:250px">
                 <div class="text-danger text-center">
 
@@ -59,6 +77,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 }

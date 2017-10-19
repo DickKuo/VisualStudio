@@ -123,7 +123,13 @@
   <data name="Deposit_Success" xml:space="preserve">
     <value>入金成功</value>
   </data>
+  <data name="IsRead" xml:space="preserve">
+    <value>請確認金額正確，並打勾同意</value>
+  </data>
   <data name="Label_Header" xml:space="preserve">
     <value>My Account Information</value>
+  </data>
+  <data name="MinValue" xml:space="preserve">
+    <value>最低入金點數100點</value>
   </data>
 </root>

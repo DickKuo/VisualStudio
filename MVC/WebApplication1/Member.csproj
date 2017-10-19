@@ -272,6 +272,7 @@
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UserAccountController.cs" />
     <Compile Include="Controllers\WithdrawalController.cs" />
+    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\ChartViewModels.cs" />
     <Compile Include="Models\Code\BaseCode.cs" />

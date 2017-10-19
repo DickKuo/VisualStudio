@@ -42,15 +42,15 @@ namespace WebApplication1.Controllers
                     int Result = TransDAO.AddTranscation(Trans);
                     if (Result > 0)
                     {
-                        AdviserDAO _AdviserDB = new AdviserDAO();                     
+                        AdviserDAO _AdviserDB = new AdviserDAO();
                         Adviser _Adviser = _AdviserDB.GetAdviserBySN(_Customer.HelperSN);
                         CommTool.MailData _MailData = new CommTool.MailData();
                         _MailData.RegistrySend(_Adviser.Email, "會員申請入金通知", string.Format("會員帳號:{0} 申請入金，請審核!", _Customer.Account));
-                        return ReturnMessage(Resources.ResourceDeposit.Deposit_Success, "~/EWallet/Index", BaseCode.MessageType.success);                        
+                        return ReturnMessage(Resources.ResourceDeposit.Deposit_Success, "~/EWallet/Index", BaseCode.MessageType.success);
                     }
                     else
                     {
-                        return ReturnMessage(Resources.ResourceDeposit.Deposit_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);                        
+                        return ReturnMessage(Resources.ResourceDeposit.Deposit_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
                     }
                 }
             }
