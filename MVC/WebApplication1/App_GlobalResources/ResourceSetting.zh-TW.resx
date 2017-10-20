@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Label_BankAccount" xml:space="preserve">
+    <value>銀行帳號</value>
+  </data>
+  <data name="Label_BankCode" xml:space="preserve">
+    <value>分行號碼</value>
+  </data>
+  <data name="Label_BankName" xml:space="preserve">
+    <value>銀行名稱</value>
+  </data>
+  <data name="Label_FirstName" xml:space="preserve">
+    <value>名</value>
+  </data>
+  <data name="Label_LastName" xml:space="preserve">
+    <value>姓</value>
+  </data>
   <data name="Label_Lot" xml:space="preserve">
     <value>組數</value>
   </data>
@@ -131,5 +146,11 @@
   </data>
   <data name="Label_SettingMiniLotSelf" xml:space="preserve">
     <value>自訂下單組數</value>
+  </data>
+  <data name="Title_AddNewBankAccount" xml:space="preserve">
+    <value>新增銀行帳號</value>
+  </data>
+  <data name="Title_BankList" xml:space="preserve">
+    <value>銀行列表</value>
   </data>
 </root>

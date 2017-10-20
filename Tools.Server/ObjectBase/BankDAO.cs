@@ -8,6 +8,7 @@ namespace ObjectBase {
             public const string AddBank = "AddBank";
             public const string UpdateBankBySN = "UpdateBankBySN";
             public const string GetBankByCustomerSN = "GetBankByCustomerSN";
+            public const string GetBankBySN = "GetBankBySN";
         }
 
         private class SSParamter {
@@ -17,6 +18,7 @@ namespace ObjectBase {
             public const string FirstName = "FirstName";
             public const string LastName = "LastName";
             public const string Seq = "Seq";
+            public const string BankName = "BankName";
         }
 
         /// <summary>新增Bank</summary>
@@ -25,6 +27,7 @@ namespace ObjectBase {
         public int AddBank(Bank _Bank) {
             try {
                 USP.AddParameter(SSParamter.CustomerSN, _Bank.CustomerSN);
+                USP.AddParameter(SSParamter.BankName, _Bank.BankName);
                 USP.AddParameter(SSParamter.BankCode, _Bank.BankCode);
                 USP.AddParameter(SSParamter.BankAccount, _Bank.BankAccount);
                 USP.AddParameter(SSParamter.FirstName, _Bank.FirstName);
@@ -44,13 +47,15 @@ namespace ObjectBase {
         /// <returns></returns>
         public int UpdateBankBySN(Bank _Bank) {
             try {
-                USP.AddParameter(CommBase.SN,_Bank.SN); 
+                USP.AddParameter(CommBase.SN,_Bank.SN);
+                USP.AddParameter(SSParamter.BankName, _Bank.BankName);
                 USP.AddParameter(SSParamter.BankCode, _Bank.BankCode);
                 USP.AddParameter(SSParamter.BankAccount, _Bank.BankAccount);
                 USP.AddParameter(SSParamter.FirstName, _Bank.FirstName);
                 USP.AddParameter(SSParamter.LastName, _Bank.LastName);
                 USP.AddParameter(SSParamter.Seq, _Bank.Seq);
                 USP.AddParameter(CommBase.Remark, _Bank.Remark == null ? string.Empty : _Bank.Remark);
+                USP.AddParameter(CommBase.SParamter_IsEnable, _Bank.IsEnable);
                 return USP.ExeProcedureHasResultReturnCode(SP.UpdateBankBySN);                      
             }
             catch (Exception ex) {
@@ -69,6 +74,18 @@ namespace ObjectBase {
                 return BankList;
             }
             catch (Exception ex) {                
+                CommTool.ToolLog.Log(ex);
+                return null;
+            }
+        }
+
+        public Bank GetBankBySN(int SN) {
+            try {
+                USP.AddParameter(CommBase.SN, SN);
+                Bank Result = USP.ExeProcedureGetObject(SP.GetBankBySN, new Bank());
+                return Result;
+            }
+            catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
                 return null;
             }

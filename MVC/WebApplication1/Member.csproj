@@ -273,6 +273,7 @@
     <Compile Include="Controllers\UserAccountController.cs" />
     <Compile Include="Controllers\WithdrawalController.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Models\BankViewModels.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\ChartViewModels.cs" />
     <Compile Include="Models\Code\BaseCode.cs" />
@@ -360,6 +361,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Code\Carousel.css" />
+    <Content Include="Content\DatePicker\datepicker.css" />
+    <Content Include="Content\DatePicker\datepicker.min.css" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
     <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
@@ -402,6 +405,10 @@
     <Content Include="Scripts\Code\ResultCode.js" />
     <Content Include="Scripts\Code\Transaction.js" />
     <Content Include="Scripts\Code\UserAccount.js" />
+    <Content Include="Scripts\DatePicker\datepicker.common.js" />
+    <Content Include="Scripts\DatePicker\datepicker.esm.js" />
+    <Content Include="Scripts\DatePicker\datepicker.js" />
+    <Content Include="Scripts\DatePicker\datepicker.min.js" />
     <Content Include="Scripts\fancybox\blank.gif" />
     <Content Include="Scripts\fancybox\fancybox-x.png" />
     <Content Include="Scripts\fancybox\fancybox-y.png" />
@@ -556,6 +563,8 @@
     <Content Include="Views\Personal\ChangePassWord.cshtml" />
     <Content Include="Views\Trade\_QuotesTable.cshtml" />
     <Content Include="Views\Home\Messages.cshtml" />
+    <Content Include="Views\Setting\Bank.cshtml" />
+    <Content Include="Views\Setting\BankEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\BaseLogin\" />

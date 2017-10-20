@@ -1,0 +1,71 @@
+﻿@model WebApplication1.Models.BankViewModels.BankViewModel
+@{    
+    ViewBag.Title = "Bank";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@Resources.Menu.Menu_4002</h2>
+<hr>
+
+<div class="row">
+    <div class="col-lg-12">
+        @using (Html.BeginForm("BankEdit", "Setting", new { _PageAction = WebApplication1.Models.Code.BaseCode.PageAction.Add }, FormMethod.Post, new { @class = "form-signin", @role = "form" })) {
+            <div class="form-group pull-right">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon-plus"></span>
+                    @Resources.Resource.AddData
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">@Resources.ResourceSetting.Title_BankList</div>
+    <div class="panel-body">
+        <div class="container">
+            <div class="row">                
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>序</th>
+                            <th>@Resources.ResourceSetting.Label_BankName</th>
+                            <th>@Resources.ResourceSetting.Label_BankAccount</th>
+                            <th>@Resources.ResourceSetting.Label_BankCode</th>
+                            <th>@Resources.ResourceSetting.Label_LastName</th>
+                            <th>@Resources.ResourceSetting.Label_FirstName</th>
+                            <th>@Resources.Resource.Label_IsEnable</th>
+                            <th>@Resources.Resource.Btn_Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int RowID = 1;
+                        }
+                        @if (Model.ListBank.Any()) {
+                            foreach (var Item in Model.ListBank) {
+                                <tr>
+                                    <th scope="row" id="@Item.SN">@RowID</th>
+                                    <td>@Item.BankName </td>
+                                    <td>@Item.BankAccount </td>
+                                    <td>@Item.BankCode </td>
+                                    <td>@Item.LastName </td>
+                                    <td>@Item.FirstName </td>
+                                    <td><input type="checkbox" checked="@Item.IsEnable" disabled="disabled"></td>
+                                    <td>
+                                        @using (Html.BeginForm("BankEdit", "Setting", new { _PageAction = WebApplication1.Models.Code.BaseCode.PageAction.Edit, BankSN = @Item.SN }, FormMethod.Post, new { @class = "form-signin" })) {
+                                            <button type="submit">
+                                                <i class="glyphicon glyphicon-pencil"></i>
+                                                @Resources.Resource.Btn_Edit
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                               RowID++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

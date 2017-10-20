@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查詢類似 AddNewData 的當地語系化字串。
+        /// </summary>
+        internal static string AddData {
+            get {
+                return ResourceManager.GetString("AddData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 等待五秒或點擊馬上跳轉 的當地語系化字串。
         /// </summary>
         internal static string AlertMessage_Auto_Direct_Page {
@@ -111,6 +120,15 @@ namespace Resources {
         internal static string Btn_Change {
             get {
                 return ResourceManager.GetString("Btn_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Edit 的當地語系化字串。
+        /// </summary>
+        internal static string Btn_Edit {
+            get {
+                return ResourceManager.GetString("Btn_Edit", resourceCulture);
             }
         }
         
@@ -174,6 +192,15 @@ namespace Resources {
         internal static string Label_ForgetPassWord {
             get {
                 return ResourceManager.GetString("Label_ForgetPassWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Enable 的當地語系化字串。
+        /// </summary>
+        internal static string Label_IsEnable {
+            get {
+                return ResourceManager.GetString("Label_IsEnable", resourceCulture);
             }
         }
         

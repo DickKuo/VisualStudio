@@ -1,0 +1,84 @@
+﻿@model WebApplication1.Models.BankViewModels.BankViewModel
+@{
+    ViewBag.Title = "BankEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Resources.Menu.Menu_4002</h2>
+
+<div class="panel panel-info container body-content">
+    <div class="panel-heading">
+        <div class="col-lg-offset-5">
+            <h1> @Resources.ResourceSetting.Title_AddNewBankAccount</h1>
+        </div>
+    </div>
+
+    <div class="panel-body" id="_ReportTable">
+        @using (Html.BeginForm("BankEditPost", "Setting", new { Id = "Register_Form" })) {
+            <input hidden="hidden" name="_PageAction" value="@Model._PageAction">
+
+            <div class="container">
+                <form class="form-signin" role="form">
+                    <div class="col-md-6 col-md-offset-4"> 
+                        @Html.HiddenFor(M=>M._Bank.SN)
+                        <div class="form-group">
+                            <label for="InputBankAccount" class="col-xs-12 col-sm-4 control-label">
+                                @Resources.ResourceSetting.Label_BankAccount
+                            </label>
+                            @Html.TextBoxFor(M => M._Bank.BankAccount, new { id = "BankAccount", @required = "required", @class = "form-control", @placeholder = Resources.ResourceSetting.Label_BankAccount, @maxlength = "15" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="InputBankName" class="col-xs-12 col-sm-4 control-label">
+                                @Resources.ResourceSetting.Label_BankName
+                            </label>
+                            @Html.TextBoxFor(M => M._Bank.BankName, new { id = "InputBankName", @required = "required", @class = "form-control", @placeholder = Resources.ResourceSetting.Label_BankName, @maxlength = "15" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="InputBankCode" class="col-xs-12 col-sm-4 control-label">
+                                @Resources.ResourceSetting.Label_BankCode
+                            </label>
+                            @Html.TextBoxFor(M => M._Bank.BankCode, new { id = "InputBankCode", @required = "required", @class = "form-control", @placeholder = Resources.ResourceSetting.Label_BankCode, @maxlength = "15" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="InputLastName" class="col-xs-12 col-sm-4 control-label">
+                                @Resources.ResourceSetting.Label_LastName
+                            </label>
+                            @Html.TextBoxFor(M => M._Bank.LastName, new { id = "InputLastName", @required = "required", @class = "form-control", @placeholder = Resources.ResourceSetting.Label_LastName, @maxlength = "15" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="InputFirstName" class="col-xs-12 col-sm-4 control-label">
+                                @Resources.ResourceSetting.Label_FirstName
+                            </label>
+                            @Html.TextBoxFor(M => M._Bank.FirstName, new { id = "InputFirstName", @required = "required", @class = "form-control", @placeholder = Resources.ResourceSetting.Label_FirstName, @maxlength = "15" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="InputIsEnable" class="col-xs-12 col-sm-4 control-label">
+                                @Resources.Resource.Label_IsEnable
+                            </label>
+                            @Html.CheckBoxFor(M => M._Bank.IsEnable, new { id = "InputIsEnable" })
+                        </div>
+
+                        @if (!ViewData.ModelState.IsValid) {
+                            <div class="alert alert-danger" role="alert">
+                                @Html.ValidationSummary()
+                            </div>
+                        }
+                        
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-xs-3">
+                                <button class="btn btn-primary" type="submit">@Resources.Resource.Btn_Send</button>
+                            </div>
+                            <a href="~/Setting/Bank" class="btn btn-success">@Resources.Resource.Register_Back</a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>

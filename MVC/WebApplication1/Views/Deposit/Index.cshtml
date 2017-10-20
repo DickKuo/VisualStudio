@@ -13,7 +13,8 @@
 
 <script>
     $(function () {
-        $('#DepositFrom').submit(function () {         
+        $('#DepositFrom').submit(function () {
+            e.preventDefault();
             if ($("#Draw").val() < 100)
             {
                 alert(MinVal);
@@ -24,6 +25,7 @@
                 alert(IsRead);
                 return false;
             }
+            return true;
         });
     });    
 </script>

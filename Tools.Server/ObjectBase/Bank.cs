@@ -6,6 +6,9 @@ namespace ObjectBase {
 
         public int CustomerSN { set; get; }
 
+        /// <summary>銀行名稱</summary>
+        public string BankName { set; get; }
+
         /// <summary>分行號碼</summary>
         public string BankCode { set; get; }
 
@@ -18,9 +21,10 @@ namespace ObjectBase {
         /// <summary>姓</summary>
         public string LastName { set; get; }
 
-        public string Seq { set; get; }
+        public int Seq { set; get; }
 
         public string Remark { set; get; }
 
+        public bool IsEnable { set; get; }
     }
 }

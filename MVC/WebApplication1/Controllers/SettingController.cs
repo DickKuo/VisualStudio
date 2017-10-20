@@ -2,11 +2,11 @@
 using System;
 using System.Web.Mvc;
 using WebApplication1.Code.Helpers;
-using WebApplication1.Models;
+using WebApplication1.Models; 
 
 namespace WebApplication1.Controllers
 {
-    public class SettingController : Controller
+    public class SettingController : BaseLoginController
     {
         /// <summary>初始頁面</summary>
         /// <param name="ViewModel"></param>
@@ -47,6 +47,59 @@ namespace WebApplication1.Controllers
                 }
             }
         }//end ChangeMiniLot
+        
+        /// <summary>銀行設定瀏覽頁面</summary>
+        /// <returns></returns>
+        public ActionResult Bank() {
+            WebApplication1.Models.BankViewModels.BankViewModel Model = new BankViewModels.BankViewModel();
+            BankDAO BankDB = new BankDAO();
+            Model.ListBank = BankDB.GetBankByCustomerSN(LoginHelper.GetLoginInfo().Customer.SN);
+            return View(Model);
+        }
+        
+        /// <summary>銀行設定瀏覽頁面</summary>
+        /// <returns></returns>
+        public ActionResult BankEdit(WebApplication1.Models.BankViewModels.BankViewModel Model) {
+
+            switch (Model._PageAction) {
+                case WebApplication1.Models.Code.BaseCode.PageAction.Add:
+                    break;
+                case WebApplication1.Models.Code.BaseCode.PageAction.Edit:
+                    BankDAO BankDB = new BankDAO();
+                    Model._Bank = BankDB.GetBankBySN(Model.BankSN);
+                    break;
+            }
+            return View(Model);
+        }
+
+        /// <summary>BankEditPost</summary>
+        /// <param name="Model"></param>
+        /// <returns></returns>
+        public ActionResult BankEditPost(WebApplication1.Models.BankViewModels.BankViewModel Model) {
+            string BackUrl = "../Setting/Bank";
+            BankDAO BankDB = new BankDAO();
+            int Result = 0;
+            Model._Bank.CustomerSN = LoginHelper.GetLoginInfo().Customer.SN;
+            switch (Model._PageAction) {
+                case WebApplication1.Models.Code.BaseCode.PageAction.Add:                 
+                    Result = BankDB.AddBank(Model._Bank);
+                    if (Result > 0) {
+                        return ReturnMessage("新增銀行成功", BackUrl, WebApplication1.Models.Code.BaseCode.MessageType.success);
+                    }
+                    else {
+                        return ReturnMessage("新增銀行失敗", BackUrl, WebApplication1.Models.Code.BaseCode.MessageType.danger);
+                    }
+                case WebApplication1.Models.Code.BaseCode.PageAction.Edit:
+                    Result = BankDB.UpdateBankBySN(Model._Bank);
+                    if (Result > 0) {
+                        return ReturnMessage("更新銀行成功", BackUrl, WebApplication1.Models.Code.BaseCode.MessageType.success);
+                    }
+                    else {
+                        return ReturnMessage("更新銀行失敗", BackUrl, WebApplication1.Models.Code.BaseCode.MessageType.danger);
+                    }
+            }
+            return ReturnMessage("未做任何動作", "../Home/Index", WebApplication1.Models.Code.BaseCode.MessageType.info);
+        }
 
 	}
 }

@@ -151,6 +151,9 @@
   <data name="Menu_4000" xml:space="preserve">
     <value>Set up</value>
   </data>
+  <data name="Menu_4002" xml:space="preserve">
+    <value>Bank</value>
+  </data>
   <data name="Menu_5000" xml:space="preserve">
     <value>LogOut</value>
   </data>

@@ -10,6 +10,8 @@ namespace ObjectBase
         protected const string OutResult = "OutResult";
         protected const string SQLSuccessMessage = "Store Procedure Execute Sucess";
         protected const string CustomerSN = "CustomerSN";
+        protected const string SParamter_IsEnable = "IsEnable";
+        protected const string SParamter_Seq = "Seq";
     }
     public enum SQLExecResultCode {
         Success = 99,

@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace WebApplication1.Models {
-    public class BaseViewModel {
+    public class BaseViewModel {               
 
         public DateTime BeginTime { set; get; }
 
@@ -11,5 +11,6 @@ namespace WebApplication1.Models {
 
         public int MaxPage { set; get; }
 
+        public WebApplication1.Models.Code.BaseCode.PageAction _PageAction { set; get; }
     }
 }

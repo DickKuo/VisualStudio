@@ -15,5 +15,12 @@ namespace WebApplication1.Models.Code
             info = 2,
             success = 3,
         }
+
+        public enum PageAction : int {
+            None = 0,
+            Add = 1,
+            Edit = 2,
+            Delete = 3
+        }
     }
 }

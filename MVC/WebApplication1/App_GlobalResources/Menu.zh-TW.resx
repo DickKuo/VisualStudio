@@ -151,6 +151,9 @@
   <data name="Menu_4000" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="Menu_4002" xml:space="preserve">
+    <value>銀行設定</value>
+  </data>
   <data name="Menu_5000" xml:space="preserve">
     <value>登出</value>
   </data>

@@ -222,4 +222,13 @@
   <data name="Register_Note" xml:space="preserve">
     <value>註冊完成後會發送信件到註冊的信箱，待審核通過後才可以使用系統。</value>
   </data>
+  <data name="AddData" xml:space="preserve">
+    <value>新增資料</value>
+  </data>
+  <data name="Btn_Edit" xml:space="preserve">
+    <value>編輯</value>
+  </data>
+  <data name="Label_IsEnable" xml:space="preserve">
+    <value>啟用</value>
+  </data>
 </root>
