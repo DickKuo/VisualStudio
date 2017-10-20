@@ -294,8 +294,6 @@ namespace CommTool
                 return value;
             }
         }
-
-
+        
     }
-
 }

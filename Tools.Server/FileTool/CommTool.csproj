@@ -69,7 +69,9 @@
     <Compile Include="DataEntity.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="Files.cs" />
+    <Compile Include="FtpObject.cs" />
     <Compile Include="MailData.cs" />
+    <Compile Include="ObjectBase.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
