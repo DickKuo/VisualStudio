@@ -26,8 +26,40 @@
                 return false;
             }
             return true;
+        });                
+    });
+
+
+    ///------------------------------------------------------------------------------
+    ///上傳檔案預覽
+    ///------------------------------------------------------------------------------
+    function handleFiles(input) {         
+        var Id = "MoneyOrderImg";
+        var Img = document.getElementById(Id);
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                Img.setAttribute('src', e.target.result);
+                $(Img).show();
+                $(Img).parent().find('a').hide();
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            Img.setAttribute('src', '#');
+            $(Img).hide();
+        }
+
+    }//end handleFiles
+
+    ///------------------------------------------------------------------------------
+    ///燈箱顯示圖片
+    ///------------------------------------------------------------------------------
+    function ShowImage(ItemData) {
+        $.colorbox({
+            html: ' <img class="preview" src="' + ItemData + '" />'
         });
-    });    
+    }//end ShowImage
 </script>
 
 @using (Html.BeginForm("Deposit", "Deposit", FormMethod.Post , new { @id="DepositFrom"} )) {
@@ -55,6 +87,24 @@
                     </div>
                 </div>
             </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
+                    <div class='input-group date'>
+                        <span class="input-group-addon">
+                            匯款單
+                        </span>
+                        <div>                            
+                            <input class="form-control" type="file" name="MoneyOrder" onchange="handleFiles(this)" accept=".bmp , .png , .jpg" />
+                        </div> 
+                        <div>
+                            <img id="MoneyOrderImg" style="max-width:50px; max-height:50px;" onclick="ShowImage(this.getAttribute('src'))" />
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
                     <div class='input-group date'>

@@ -18,7 +18,7 @@
     </Item>
       <Item Seq="5" Name="設定" MenuNo="4000" Permission="10" Url="">
         <SubItem Seq ="1" Name="設定" MenuNo="4001" Permission="3" Url="Setting/Index"></SubItem>
-        <SubItem Seq ="2" Name="銀行設定" MenuNo="4002" Permission="3" Url="Setting/Bank"></SubItem> 
+        <SubItem Seq ="2" Name="銀行設定" MenuNo="4002" Permission="10" Url="Setting/Bank"></SubItem> 
     </Item>
     <Item Seq="6" Name="登出" MenuNo="5000" Permission="10" Url="Login/LogOut">
     </Item>

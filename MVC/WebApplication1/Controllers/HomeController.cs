@@ -26,7 +26,8 @@ namespace WebApplication1.Controllers
             //讀取功能選單列表
             MenuManagmentViewModels.MenuViewModel Model = MenuHelper.LoadingMenu();
             MenuHelper.SetMenuSession(Model);
-            return View();
+            return RedirectToAction("Index", "EWallet");
+            //return View();
         }         
 
         private ApiOperation Init(Operation Obj)

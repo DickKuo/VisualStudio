@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
 
         /// <summary>入金開始</summary>
         /// <returns></returns>
-        public ActionResult Deposit(BaseRequest _Request) {
+        public ActionResult Deposit(DepositRequest _Request) {
             CustomerDAO CusDAO = new CustomerDAO();
             Customer _Customer = CusDAO.GetCustomerByAccount(_Request.Account);
             if (_Customer.SN > 0) {

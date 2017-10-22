@@ -280,6 +280,7 @@
     <Compile Include="Models\Code\BaseModel.cs" />
     <Compile Include="Models\Code\BaseRequest.cs" />
     <Compile Include="Models\Code\Currencies.cs" />
+    <Compile Include="Models\Code\DepositRequest.cs" />
     <Compile Include="Models\Code\JsonObj.cs" />
     <Compile Include="Models\Code\Menu.cs" />
     <Compile Include="Code\DAO\MenuApi.cs" />
@@ -405,6 +406,13 @@
     <Content Include="Scripts\Code\ResultCode.js" />
     <Content Include="Scripts\Code\Transaction.js" />
     <Content Include="Scripts\Code\UserAccount.js" />
+    <Content Include="Scripts\ColorBox\colorbox.css" />
+    <Content Include="Scripts\ColorBox\images\border.png" />
+    <Content Include="Scripts\ColorBox\images\controls.png" />
+    <Content Include="Scripts\ColorBox\images\loading.gif" />
+    <Content Include="Scripts\ColorBox\images\loading_background.png" />
+    <Content Include="Scripts\ColorBox\images\overlay.png" />
+    <Content Include="Scripts\ColorBox\jquery.colorbox-min.js" />
     <Content Include="Scripts\DatePicker\datepicker.common.js" />
     <Content Include="Scripts\DatePicker\datepicker.esm.js" />
     <Content Include="Scripts\DatePicker\datepicker.js" />
