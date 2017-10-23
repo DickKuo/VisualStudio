@@ -17,6 +17,7 @@ namespace ObjectBase {
             public const string GetTranscationBySN = "GetTranscationBySN";
             public const string AuditTranscation = "AuditTranscation";
             public const string GetTransactionByCustomerSNPages = "GetTransactionByCustomerSNPages";
+            public const string GetTranscationByTranskey = "GetTranscationByTranskey";
         }
 
         public class SParameter {
@@ -37,6 +38,7 @@ namespace ObjectBase {
             public const string EndTime = "EndTime";
             public const string Range = "Range";
             public const string Page = "Page";
+            public const string TransKey = "TransKey";
             public const string AuditAdviserSN = "AuditAdviserSN";
             public const string AttachmentsParamter = "AttachmentsParamter";
         }
@@ -52,7 +54,7 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.BankAccount, _Transaction.Detail.BankAccount);
                 USP.AddParameter(SParameter.BranchName, _Transaction.Detail.BranchName);
                 USP.AddParameter(SParameter.Draw, _Transaction.Detail.Draw);
-                USP.AddParameter(SParameter.Remark, _Transaction.Detail.Remark);
+                USP.AddParameter(SParameter.Remark, _Transaction.Detail.Remark);                
                 DataTable AttachmentTable = ObjectUtility.ToDataTable(_Transaction.AttachmentsList, Attachments.GetTableTypeColumn());
                 USP.AddParameter(SParameter.AttachmentsParamter, AttachmentTable); 
                 Transaction _Result = USP.ExeProcedureGetObject(SP.AddTranscation, new Transaction()) as Transaction;
@@ -76,6 +78,25 @@ namespace ObjectBase {
                 return _Result;
             }
             catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+                return new Transaction();
+            }
+        }
+        
+        /// <summary>取得交易單</summary>
+        /// <param name="SN"></param>
+        /// <returns></returns>
+        public Transaction GetTranscationByTranskey(string TransKey)
+        {
+            try
+            {
+                USP.AddParameter(SParameter.TransKey, TransKey);
+                Transaction _Result = USP.ExeProcedureGetObject(SP.GetTranscationByTranskey, new Transaction()) as Transaction;
+                _Result.Detail = GetDetailByTransactionSN(_Result.SN);
+                return _Result;
+            }
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
                 return new Transaction();
             }

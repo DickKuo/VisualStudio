@@ -3,7 +3,7 @@
 namespace WebApplication1.Models {
     public class DepositViewModels {
 
-        public class DepositViewModel {
+        public class DepositViewModel :BaseViewModel {
 
             public Customer _Customer { set; get; }
 

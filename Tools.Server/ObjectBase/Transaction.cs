@@ -18,6 +18,8 @@ namespace ObjectBase {
 
         public int AuditAdviserSN { set; get; }
 
+        public string TransKey { set; get; }
+
         public DateTime AuditTime { set; get; }
 
         public TransactionDetail Detail { set; get; }

@@ -13,15 +13,25 @@ namespace WebApplication1.Controllers
 {
     public class DepositController : BaseLoginController
     {
-       
-        public ActionResult Index()
+
+        public ActionResult Index(string TransKey)
         {
             WebApplication1.Models.DepositViewModels.DepositViewModel ViewModel = new Models.DepositViewModels.DepositViewModel();
             LoginInfo Info = LoginHelper.GetLoginInfo();
             ViewModel._Customer = Info.Customer;
-            ViewModel._Transaction = new ObjectBase.Transaction();
-            ViewModel._Transaction.Detail = new ObjectBase.TransactionDetail();
-            return View(ViewModel);
+            if (!string.IsNullOrEmpty(TransKey))
+            {
+                ViewModel._PageAction = WebApplication1.Models.Code.BaseCode.PageAction.View;
+                TranscationDAO TransDAO = new TranscationDAO();
+                ViewModel._Transaction = TransDAO.GetTranscationByTranskey(TransKey);
+                return View(ViewModel);
+            }
+            else
+            {
+                ViewModel._Transaction = new ObjectBase.Transaction();
+                ViewModel._Transaction.Detail = new ObjectBase.TransactionDetail();
+                return View(ViewModel);
+            }
         }
 
         /// <summary>入金開始</summary>

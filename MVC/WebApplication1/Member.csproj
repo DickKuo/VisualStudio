@@ -41,12 +41,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommTool">
-      <HintPath>..\..\..\..\Dropbox\Export\CommTool.dll</HintPath>
-    </Reference>
-    <Reference Include="CommTool.Service, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CommTool, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.dll</HintPath>
+    </Reference>
+    <Reference Include="CommTool.Service, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -64,7 +65,7 @@
     </Reference>
     <Reference Include="ObjectBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
     </Reference>
     <Reference Include="SQLHelper">
       <HintPath>..\..\..\..\Dropbox\Export\SQLHelper.dll</HintPath>
