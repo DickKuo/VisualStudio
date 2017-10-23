@@ -30,36 +30,39 @@ namespace WebApplication1.Controllers
             CustomerDAO CusDAO = new CustomerDAO();
             Customer _Customer = CusDAO.GetCustomerByAccount(_Request.Account);
             if (_Customer.SN > 0) {
-                if (_Customer.Audit == AuditTypes.OK)
-                {           
-                    TranscationDAO TransDAO = new TranscationDAO();
-                    Transaction Trans = new Transaction();
-                    AddAttachments(_Request.MoneyOrder1, Trans.AttachmentsList);
-                    AddAttachments(_Request.MoneyOrder2, Trans.AttachmentsList);
-                    AddAttachments(_Request.MoneyOrder3, Trans.AttachmentsList);
-                    Trans.CustomerSN = _Customer.SN;
-                    Trans.TradeType = TranscationTypes.Deposit;
-                    TransactionDetail TransDetail = new TransactionDetail();
-                    TransDetail.Draw = _Request.Draw;
-                    TransDetail.Remark = string.IsNullOrEmpty(_Request.Remark) ? string.Empty : _Request.Remark;
-                    TransDetail.BankAccount = string.Empty;
-                    TransDetail.BankName = string.Empty;
-                    TransDetail.BranchName = string.Empty;
-                    Trans.Detail = TransDetail;
-                    int Result = TransDAO.AddTranscation(Trans);
-                    if (Result > 0)
-                    {
-                        AdviserDAO _AdviserDB = new AdviserDAO();
-                        Adviser _Adviser = _AdviserDB.GetAdviserBySN(_Customer.HelperSN);
-                        CommTool.MailData _MailData = new CommTool.MailData();
-                        _MailData.RegistrySend(_Adviser.Email, "會員申請入金通知", string.Format("會員帳號:{0} 申請入金，請審核!", _Customer.Account));
-                        return ReturnMessage(Resources.ResourceDeposit.Deposit_Success, "~/EWallet/Index", BaseCode.MessageType.success);
+                if (_Customer.Audit == AuditTypes.OK) {
+                    try {
+                        TranscationDAO TransDAO = new TranscationDAO();
+                        Transaction Trans = new Transaction();
+                        AddAttachments(_Request.MoneyOrder1, Trans.AttachmentsList);
+                        AddAttachments(_Request.MoneyOrder2, Trans.AttachmentsList);
+                        AddAttachments(_Request.MoneyOrder3, Trans.AttachmentsList);
+                        Trans.CustomerSN = _Customer.SN;
+                        Trans.TradeType = TranscationTypes.Deposit;
+                        TransactionDetail TransDetail = new TransactionDetail();
+                        TransDetail.Draw = _Request.Draw;
+                        TransDetail.Remark = string.IsNullOrEmpty(_Request.Remark) ? string.Empty : _Request.Remark;
+                        TransDetail.BankAccount = string.Empty;
+                        TransDetail.BankName = string.Empty;
+                        TransDetail.BranchName = string.Empty;
+                        Trans.Detail = TransDetail;
+                        int Result = TransDAO.AddTranscation(Trans);
+                        if (Result > 0) {
+                            AdviserDAO _AdviserDB = new AdviserDAO();
+                            Adviser _Adviser = _AdviserDB.GetAdviserBySN(_Customer.HelperSN);
+                            CommTool.MailData _MailData = new CommTool.MailData();
+                            _MailData.RegistrySend(_Adviser.Email, "會員申請入金通知", string.Format("會員帳號:{0} 申請入金，請審核!", _Customer.Account));
+                            return ReturnMessage(Resources.ResourceDeposit.Deposit_Success, "~/EWallet/Index", BaseCode.MessageType.success);
+                        }
+                        else {
+                            return ReturnMessage(Resources.ResourceDeposit.Deposit_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
+                        }
                     }
-                    else
-                    {
+                    catch (Exception ex) {
+                        Log(ex);
                         return ReturnMessage(Resources.ResourceDeposit.Deposit_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
                     }
-                }
+                }                
             }
             return RedirectToAction("Index", "EWallet");
         }

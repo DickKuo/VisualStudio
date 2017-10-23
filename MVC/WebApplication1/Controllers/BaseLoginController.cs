@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
@@ -9,7 +10,11 @@ namespace WebApplication1.Controllers
 {
     public class BaseLoginController : Controller
     {
-            
+        private class Default {
+            public const string LogPath = "\temp";
+            public const string DateTimeFormat_yyyyMMddHHmmss = "yyyyMMddHHmmss";
+        }    
+
         /// <summary>
         /// 執行Action 之前會做的事情
         /// 驗證登入狀態
@@ -32,7 +37,16 @@ namespace WebApplication1.Controllers
         {
             return RedirectToAction("Messages", "Home", new { MessageStr = MessageStr, ReturnURL = ReturnURL, MessageType = _MessageType });               
         }
-      
+
+
+        protected void Log(string Message) {
+            System.IO.File.WriteAllText(Default.LogPath + DateTime.Now.ToString(Default.DateTimeFormat_yyyyMMddHHmmss) + ".txt", Message, System.Text.Encoding.UTF8);       
+        }
+
+        protected void Log(Exception ex) {
+            System.IO.File.WriteAllText(Default.LogPath + DateTime.Now.ToString(Default.DateTimeFormat_yyyyMMddHHmmss) + ".txt", ex.Message, System.Text.Encoding.UTF8);   
+        }
+
     }
      
 }
