@@ -4,6 +4,10 @@ using WebApplication1.Code.DAO;
 using WebApplication1.Code.Helpers;
 using WebApplication1.Models;
 using WebApplication1.Models.Code;
+using System.Collections.Generic;
+using CommTool;
+using System.Web;
+using System;
 
 namespace WebApplication1.Controllers
 {
@@ -27,14 +31,17 @@ namespace WebApplication1.Controllers
             Customer _Customer = CusDAO.GetCustomerByAccount(_Request.Account);
             if (_Customer.SN > 0) {
                 if (_Customer.Audit == AuditTypes.OK)
-                {
+                {           
                     TranscationDAO TransDAO = new TranscationDAO();
                     Transaction Trans = new Transaction();
+                    AddAttachments(_Request.MoneyOrder1, Trans.AttachmentsList);
+                    AddAttachments(_Request.MoneyOrder2, Trans.AttachmentsList);
+                    AddAttachments(_Request.MoneyOrder3, Trans.AttachmentsList);
                     Trans.CustomerSN = _Customer.SN;
                     Trans.TradeType = TranscationTypes.Deposit;
                     TransactionDetail TransDetail = new TransactionDetail();
                     TransDetail.Draw = _Request.Draw;
-                    TransDetail.Remark = _Request.Remark;
+                    TransDetail.Remark = string.IsNullOrEmpty(_Request.Remark) ? string.Empty : _Request.Remark;
                     TransDetail.BankAccount = string.Empty;
                     TransDetail.BankName = string.Empty;
                     TransDetail.BranchName = string.Empty;
@@ -55,7 +62,35 @@ namespace WebApplication1.Controllers
                 }
             }
             return RedirectToAction("Index", "EWallet");
-        } 
+        }
+
+        private void AddAttachments(HttpPostedFileBase FileBase, List<Attachments> AttachmentsList) {
+            if (FileBase != null) {
+                Attachments att = new Attachments();
+                att.AttName = SaveAsFile(FileBase, FtpDirectory.Customer);
+                att.AttType = (int)AttTypes.Deposit;
+                AttachmentsList.Add(att);
+            }
+        }
+
+
+        public string SaveAsFile(HttpPostedFileBase file, FtpDirectory ftpDirectory) {
+            string GuidStr = Guid.NewGuid().ToString().Replace("{", "").Replace("}", "").Replace("-", "").Substring(0, 15);
+            string Extension = System.IO.Path.GetExtension(file.FileName);
+            string _FileName = Extension == "" ? GuidStr : GuidStr + Extension;
+            var _Path = System.IO.Path.Combine(Server.MapPath(ObjectUtility.LocalTempPath), _FileName);
+            file.SaveAs(_Path);
+            using (FtpObject _FtpObject = new FtpObject()) {
+                _FtpObject.UploadFileToFTP(_FileName, Server.MapPath(ObjectUtility.LocalTempPath), ftpDirectory, _FileName);
+                try {
+                    System.IO.File.Delete(_Path);
+                }
+                catch (Exception ex) {
+                    throw new Exception(ex.Message);
+                }
+            }
+            return _FileName;
+        }
 
 	}
 }

@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="Adviser.cs" />
     <Compile Include="AdviserDAO.cs" />
+    <Compile Include="Attachments.cs" />
+    <Compile Include="AttachmentsDAO.cs" />
     <Compile Include="AuditTypes.cs" />
     <Compile Include="Bank.cs" />
     <Compile Include="BankDAO.cs" />

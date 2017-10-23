@@ -33,9 +33,9 @@
     ///------------------------------------------------------------------------------
     ///上傳檔案預覽
     ///------------------------------------------------------------------------------
-    function handleFiles(input) {         
-        var Id = "MoneyOrderImg";
-        var Img = document.getElementById(Id);
+    function handleFiles(input) {
+        var ImgId = input.getAttribute('data-img')      
+        var Img =  document.getElementById(ImgId);
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -62,7 +62,7 @@
     }//end ShowImage
 </script>
 
-@using (Html.BeginForm("Deposit", "Deposit", FormMethod.Post , new { @id="DepositFrom"} )) {
+@using (Html.BeginForm("Deposit", "Deposit", FormMethod.Post, new { @id = "DepositFrom", enctype = "multipart/form-data" })) {
     <div class="panel panel-info">
         <div class="panel-heading">入金資料</div>
         <div class="panel-body">
@@ -92,19 +92,50 @@
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
                     <div class='input-group date'>
                         <span class="input-group-addon">
-                            匯款單
+                            匯款單1
                         </span>
                         <div>                            
-                            <input class="form-control" type="file" name="MoneyOrder" onchange="handleFiles(this)" accept=".bmp , .png , .jpg" />
+                            <input class="form-control" type="file" name="MoneyOrder1" onchange="handleFiles(this)" data-img="MoneyOrderImg1" accept=" .bmp , .png , .jpg" />
                         </div> 
                         <div>
-                            <img id="MoneyOrderImg" style="max-width:50px; max-height:50px;" onclick="ShowImage(this.getAttribute('src'))" />
-                        </div>
-                       
+                            <img id="MoneyOrderImg1" style="max-width:50px; max-height:50px;" onclick="ShowImage(this.getAttribute('src'))" />
+                        </div>                       
                     </div>
                 </div>
             </div>
 
+            <div class="form-group">
+                <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
+                    <div class='input-group date'>
+                        <span class="input-group-addon">
+                            匯款單2
+                        </span>
+                        <div>
+                            <input class="form-control" type="file" name="MoneyOrder2" onchange="handleFiles(this)" data-img="MoneyOrderImg2" accept=".bmp , .png , .jpg" />
+                        </div>
+                        <div>
+                            <img id="MoneyOrderImg2" style="max-width:50px; max-height:50px;" onclick="ShowImage(this.getAttribute('src'))" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
+                    <div class='input-group date'>
+                        <span class="input-group-addon">
+                            匯款單3
+                        </span>
+                        <div>
+                            <input class="form-control" type="file" name="MoneyOrder3" onchange="handleFiles(this)" data-img="MoneyOrderImg3" accept=".bmp , .png , .jpg" />
+                        </div>
+                        <div>
+                            <img id="MoneyOrderImg3" style="max-width:50px; max-height:50px;" onclick="ShowImage(this.getAttribute('src'))" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
                     <div class='input-group date'>

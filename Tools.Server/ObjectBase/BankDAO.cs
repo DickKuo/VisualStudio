@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 namespace ObjectBase {
-    public class BankDAO :CommBase{
+    public class BankDAO : CommBase {
 
         private class SP {
             public const string AddBank = "AddBank";

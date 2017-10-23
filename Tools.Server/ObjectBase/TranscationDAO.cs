@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommTool;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -37,6 +38,7 @@ namespace ObjectBase {
             public const string Range = "Range";
             public const string Page = "Page";
             public const string AuditAdviserSN = "AuditAdviserSN";
+            public const string AttachmentsParamter = "AttachmentsParamter";
         }
 
         /// <summary>新增交易單</summary>
@@ -50,7 +52,9 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.BankAccount, _Transaction.Detail.BankAccount);
                 USP.AddParameter(SParameter.BranchName, _Transaction.Detail.BranchName);
                 USP.AddParameter(SParameter.Draw, _Transaction.Detail.Draw);
-                USP.AddParameter(SParameter.Remark, _Transaction.Detail.Remark); 
+                USP.AddParameter(SParameter.Remark, _Transaction.Detail.Remark);
+                DataTable AttachmentTable = ObjectUtility.ToDataTable(_Transaction.AttachmentsList, Attachments.GetTableTypeColumn());
+                USP.AddParameter(SParameter.AttachmentsParamter, AttachmentTable); 
                 Transaction _Result = USP.ExeProcedureGetObject(SP.AddTranscation, new Transaction()) as Transaction;
                 return _Result.SN;
             }
@@ -59,6 +63,7 @@ namespace ObjectBase {
                 return 0;
             }
         }
+ 
 
         /// <summary>取得交易單</summary>
         /// <param name="SN"></param>

@@ -21,5 +21,12 @@ namespace ObjectBase {
         public DateTime AuditTime { set; get; }
 
         public TransactionDetail Detail { set; get; }
+
+        public List<Attachments> AttachmentsList { set; get; }
+
+        public Transaction()
+        {
+            AttachmentsList = new List<Attachments>();
+        }
     }
 }
