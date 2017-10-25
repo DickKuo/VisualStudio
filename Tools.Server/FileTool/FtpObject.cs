@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace CommTool {
@@ -101,6 +103,66 @@ namespace CommTool {
             finally {
             }
             return ReturnBool;
+        }
+
+        public bool UploadFileToFTP(string fileName, string filePath, string directory, string ftpFileName) {
+            bool ReturnBool = false;
+            try {             
+                /* Create an FTP Request */
+                FtpWebRequest request = (FtpWebRequest)FtpWebRequest.Create("ftp://" + _Server + "/" + directory + "/" + ftpFileName);
+
+                /* Log in to the FTP Server with the User Name and Password Provided */
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.Credentials = new NetworkCredential(_UserName, _Password);
+
+                /* When in doubt, use these options */
+                request.UsePassive = true;
+                request.UseBinary = true;
+                request.KeepAlive = true;
+                request.EnableSsl = true;
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
+
+                //Load the file
+                FileStream stream = File.OpenRead(filePath + "\\" + fileName);
+                byte[] buffer = new byte[stream.Length];
+                stream.Read(buffer, 0, buffer.Length);
+                stream.Close();
+
+                /* Upload the File by Sending the Buffered Data Until the Transfer is Complete */
+                try {
+                    //Upload file                   
+                    Stream reqStream = request.GetRequestStream();
+                    reqStream.Write(buffer, 0, buffer.Length);
+                    reqStream.Close();
+                    ReturnBool = true;
+                }
+                catch (Exception ex) {
+                    ToolLog.Log(ex);
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            catch (WebException ex) {
+                ToolLog.Log(ex);
+                throw new Exception("FTP-Exception-" + ex.Message);                           //Error throw Exception
+            }
+            finally {
+            }
+            return ReturnBool;
+        }
+
+        public static bool ValidateServerCertificate(object sender,X509Certificate certificate, X509Chain chain,SslPolicyErrors sslPolicyErrors) {
+            if (sslPolicyErrors == SslPolicyErrors.RemoteCertificateChainErrors) {
+                return false;
+            }
+            else if (sslPolicyErrors == SslPolicyErrors.RemoteCertificateNameMismatch) {
+                System.Security.Policy.Zone z = System.Security.Policy.Zone.CreateFromUrl
+                   (((HttpWebRequest)sender).RequestUri.ToString());
+                if (z.SecurityZone == System.Security.SecurityZone.Intranet || z.SecurityZone == System.Security.SecurityZone.MyComputer) {
+                    return true;
+                }
+                return false;
+            }
+            return true;
         }
 
         /// <summary>DeleteFile </summary>

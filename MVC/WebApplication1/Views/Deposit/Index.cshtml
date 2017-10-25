@@ -25,6 +25,11 @@
             }
             return true;
         });
+
+        $('.btn-back').on("click", function () {        
+            location.href = '../Member/EWallet/Index';
+        });
+
     });
 
 
@@ -60,10 +65,7 @@
     }//end ShowImage
 
 
-    function BackRedirect()
-    {
-        location.href = '../Member/EWallet/Index';
-    }
+  
 
 </script>
 
@@ -182,7 +184,7 @@
                 else
                 {
                     <div class="col-lg-offset-5 col-xs-6">
-                        <input  value="返回" onclick="BackRedirect()" class="btn btn-info" />
+                        <input  value="返回"  class="btn btn-info btn-back" />
                     </div>
                 }
             </div>

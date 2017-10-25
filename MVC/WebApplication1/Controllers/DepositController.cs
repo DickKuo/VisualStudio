@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using CommTool;
 using System.Web;
 using System;
+using System.IO;
+using System.Drawing;
 
 namespace WebApplication1.Controllers
 {
@@ -62,10 +64,10 @@ namespace WebApplication1.Controllers
                             Adviser _Adviser = _AdviserDB.GetAdviserBySN(_Customer.HelperSN);
                             CommTool.MailData _MailData = new CommTool.MailData();
                             _MailData.RegistrySend(_Adviser.Email, "會員申請入金通知", string.Format("會員帳號:{0} 申請入金，請審核!", _Customer.Account));
-                            return ReturnMessage(Resources.ResourceDeposit.Deposit_Success, "~/EWallet/Index", BaseCode.MessageType.success);
+                            return ReturnMessage(Resources.ResourceDeposit.Deposit_Success  , "~/EWallet/Index", BaseCode.MessageType.success);
                         }
                         else {
-                            return ReturnMessage(Resources.ResourceDeposit.Deposit_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
+                            return ReturnMessage(Resources.ResourceDeposit.Deposit_Fail , "~/EWallet/Index", BaseCode.MessageType.danger);
                         }
                     }
                     catch (Exception ex) {
@@ -80,29 +82,10 @@ namespace WebApplication1.Controllers
         private void AddAttachments(HttpPostedFileBase FileBase, List<Attachments> AttachmentsList) {
             if (FileBase != null) {
                 Attachments att = new Attachments();
-                att.AttName = SaveAsFile(FileBase, FtpDirectory.Customer);
+                att.AttName = CommTool.Files.StreamToBase64(FileBase.InputStream); 
                 att.AttType = (int)AttTypes.Deposit;
-                AttachmentsList.Add(att);
+                AttachmentsList.Add(att);               
             }
-        }
-
-
-        public string SaveAsFile(HttpPostedFileBase file, FtpDirectory ftpDirectory) {
-            string GuidStr = Guid.NewGuid().ToString().Replace("{", "").Replace("}", "").Replace("-", "").Substring(0, 15);
-            string Extension = System.IO.Path.GetExtension(file.FileName);
-            string _FileName = Extension == "" ? GuidStr : GuidStr + Extension;
-            var _Path = System.IO.Path.Combine(Server.MapPath(ObjectUtility.LocalTempPath), _FileName);
-            file.SaveAs(_Path);
-            using (FtpObject _FtpObject = new FtpObject()) {
-                _FtpObject.UploadFileToFTP(_FileName, Server.MapPath(ObjectUtility.LocalTempPath), ftpDirectory, _FileName);
-                try {
-                    System.IO.File.Delete(_Path);
-                }
-                catch (Exception ex) {
-                    throw new Exception(ex.Message);
-                }
-            }
-            return _FileName;
         }
 
 	}

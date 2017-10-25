@@ -6,14 +6,14 @@
 <h2>@Resources.Menu.Menu_1003</h2>
 <hr>
 
-<script type="text/javascript">
-
+<script>
     
-    function ViewClick(TransKey) {
-        
-        location.href = '../Member/Deposit/Index?TransKey=' + TransKey;
-    }
-
+    $(function(){
+        $(".glyphicon-search").on("click",function(){            
+            location.href = '../Member/Deposit/Index?TransKey=' + $(this).attr('data-transkey');
+        });
+    });
+   
 </script>
 
 
@@ -119,7 +119,7 @@
                                     <td>@(Resources.Resource.ResourceManager.GetString("AuditTpyes_" + Item.AuditState.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
                                     <td>@(Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete) == "0001/01/01 00:00:00" ? string.Empty : Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete))</td>
                                     <td>
-                                        <i class='glyphicon glyphicon-search' onclick="ViewClick(@Item.TransKey)"></i>
+                                        <i class='glyphicon glyphicon-search' data-transkey="@Item.TransKey" ></i>
                                     </td>
                                 </tr>
                             RowID++;

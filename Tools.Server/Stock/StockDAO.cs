@@ -969,7 +969,7 @@ namespace Stock {
                 dt.Columns.Add(info.Name);
             }
 
-            CommTool.Files.ReadCSV(DataResource, dt);
+            CommTool.Files.ReadCSV(DataResource, dt);            
             SaveOpenInterestData(dt);
         }
 

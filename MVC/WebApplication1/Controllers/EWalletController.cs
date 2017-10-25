@@ -9,8 +9,7 @@ namespace WebApplication1.Controllers
     public class EWalletController : BaseLoginController
     {
         public ActionResult Index()
-        {         
-   
+        {       
             WebApplication1.Models.EWalletViewModels.EWalletViewModel WalletModel = new Models.EWalletViewModels.EWalletViewModel();
             LoginInfo Info = LoginHelper.GetLoginInfo();
             EWalletDAO WalletDAO = new EWalletDAO();

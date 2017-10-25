@@ -8,7 +8,7 @@ using CommTool.Business;
 using System.Runtime.InteropServices;
 using System.Data;
 using System.Net;
-
+using System.Drawing;
 
 namespace CommTool
 {
@@ -220,5 +220,41 @@ namespace CommTool
 
         [DllImport(Default.kernel32, CharSet = CharSet.Unicode)]
         private static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal,int size, string filePath);
+        
+        /// <summary>將 Stream 物件轉 Base64</summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        public static string StreamToBase64(Stream InputStream) {
+            try {
+                byte[] imageBytes = new byte[Convert.ToInt32(InputStream.Length) - 1];
+                InputStream.Read(imageBytes, 0, Convert.ToInt32(InputStream.Length) - 1);
+                // 將 byte[] 轉 base64
+                string base64String = Convert.ToBase64String(imageBytes);
+                return base64String;
+            }
+            catch (Exception ex) {
+                ToolLog.Log(ex);
+                return string.Empty;
+            }
+        }
+
+        /// <summary>將 Base64 物件轉 Image </summary>
+        /// <param name="Base64String"></param>
+        /// <returns></returns>
+        public static Image Base64ToImage(string Base64String) {
+            try {
+                byte[] bytes = Convert.FromBase64String(Base64String);
+                Image image;
+                using (MemoryStream ms = new MemoryStream(bytes)) {
+                    image = Image.FromStream(ms);
+                }
+                return image;
+            }
+            catch (Exception ex) {
+                ToolLog.Log(ex);
+                return null;
+            }
+        }
+
     }
 }
