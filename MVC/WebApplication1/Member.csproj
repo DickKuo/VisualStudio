@@ -44,16 +44,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Account">
-      <HintPath>..\..\..\..\SVN\Account\Account\bin\Debug\Account.dll</HintPath>
-    </Reference>
     <Reference Include="CommTool.Business, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
     </Reference>
     <Reference Include="CommTool.Service, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -69,8 +66,7 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ObjectBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ObjectBase">
       <HintPath>..\..\..\..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
     </Reference>
     <Reference Include="SQLHelper">
@@ -264,6 +260,7 @@
     <Compile Include="Code\DAO\DAOBase.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\AjaxFuctionsController.cs" />
     <Compile Include="Controllers\AuthorityManagementController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DepositController.cs" />
@@ -582,6 +579,7 @@
     <Content Include="Views\Setting\BankEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\AjaxFuctions\" />
     <Folder Include="Views\BaseLogin\" />
     <Folder Include="Views\Rss\" />
   </ItemGroup>

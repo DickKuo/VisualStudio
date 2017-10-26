@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers
                         TransDetail.Remark = _BaseRequest.Remark;
                         TransDetail.BankAccount = _BaseRequest.BankAccount;
                         TransDetail.BankName = _BaseRequest.BankName;
-                        TransDetail.BranchName = _BaseRequest.BranchName;
+                        TransDetail.BankCode = _BaseRequest.BankCode;
                         Trans.Detail = TransDetail;
                         if (TransDetail.Draw > 100) {
                             int Result = TransDAO.AddTranscation(Trans);

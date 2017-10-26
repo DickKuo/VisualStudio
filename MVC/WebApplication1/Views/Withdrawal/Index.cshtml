@@ -37,7 +37,7 @@
                         <span class="input-group-addon ">
                             銀行帳號
                         </span>
-                        @Html.TextArea("BankAccount", @Model._Transaction.Detail.BankAccount, new { @class = "form-control  addtimepicker col-xs-3" })
+                        @Html.TextArea("BankAccount", @Model._Transaction.Detail.BankAccount, new { @class = "form-control  addtimepicker col-xs-3", @id = "BankAccount" })
                     </div>                    
                     <div class="col-xs-6">
                         <button type="button" class="btn btn-info selectbank" >
@@ -52,7 +52,7 @@
                         <span class="input-group-addon">
                             銀行名稱
                         </span>
-                        @Html.TextArea("BankName", @Model._Transaction.Detail.BankName, new { @class = "form-control  addtimepicker col-xs-3" })
+                        @Html.TextArea("BankName", @Model._Transaction.Detail.BankName, new { @class = "form-control  addtimepicker col-xs-3", @id = "BankName" })
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                         <span class="input-group-addon">
                             銀行分行
                         </span>
-                        @Html.TextArea("BranchName", @Model._Transaction.Detail.BranchName, new { @class = "form-control  addtimepicker col-xs-3" })
+                        @Html.TextArea("BankCode", @Model._Transaction.Detail.BranchName, new { @class = "form-control  addtimepicker col-xs-3", @id = "BankCode" })
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                 </div>
 
                 <div class="col-xs-3">
-                    <button type="submit" value="Cancel" name="Status" class="btn btn-info DepositBtn" >返回</button>
+                    <button type="submit" value="Cancel" name="Status"  class="btn btn-info DepositBtn" >返回</button>
                 </div>
             </div>
 

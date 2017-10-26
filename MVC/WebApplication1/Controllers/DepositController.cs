@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers
                             TransDetail.Remark = string.IsNullOrEmpty(_Request.Remark) ? string.Empty : _Request.Remark;
                             TransDetail.BankAccount = string.Empty;
                             TransDetail.BankName = string.Empty;
-                            TransDetail.BranchName = string.Empty;
+                            TransDetail.BankCode = string.Empty;
                             Trans.Detail = TransDetail;
                             if (TransDetail.Draw > 100) {
                                 int Result = TransDAO.AddTranscation(Trans);

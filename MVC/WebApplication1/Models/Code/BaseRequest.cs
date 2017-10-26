@@ -14,7 +14,7 @@ namespace WebApplication1.Models.Code {
 
         public string BankAccount { set; get; }
 
-        public string BranchName { set; get; }
+        public string BankCode { set; get; }
 
         public string BankName { set; get; }
 

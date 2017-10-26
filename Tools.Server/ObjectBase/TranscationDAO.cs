@@ -32,7 +32,7 @@ namespace ObjectBase {
             public const string TransactionSN = "TransactionSN";
             public const string BankName = "BankName";
             public const string BankAccount = "BankAccount";
-            public const string BranchName = "BranchName";
+            public const string BankCode = "BankCode";
             public const string Remark = "Remark";
             public const string BeginTime = "BeginTime";
             public const string EndTime = "EndTime";
@@ -52,7 +52,7 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.TradeType, _Transaction.TradeType);
                 USP.AddParameter(SParameter.BankName, _Transaction.Detail.BankName);
                 USP.AddParameter(SParameter.BankAccount, _Transaction.Detail.BankAccount);
-                USP.AddParameter(SParameter.BranchName, _Transaction.Detail.BranchName);
+                USP.AddParameter(SParameter.BankCode, _Transaction.Detail.BankCode);
                 USP.AddParameter(SParameter.Draw, _Transaction.Detail.Draw);
                 USP.AddParameter(SParameter.Remark, _Transaction.Detail.Remark);                
                 DataTable AttachmentTable = ObjectUtility.ToDataTable(_Transaction.AttachmentsList, Attachments.GetTableTypeColumn());

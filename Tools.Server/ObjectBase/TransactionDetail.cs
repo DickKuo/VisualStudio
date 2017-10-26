@@ -14,7 +14,8 @@ namespace ObjectBase {
 
         public string BankAccount { set; get; }
 
-        public string BranchName { set; get; }
+        /// <summary>分行號碼</summary>
+        public string BankCode { set; get; }
 
         public decimal Draw { set; get; }
 
