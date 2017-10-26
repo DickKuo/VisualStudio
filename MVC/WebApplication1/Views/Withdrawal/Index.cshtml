@@ -13,21 +13,21 @@
         <div class="panel-body">
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px ;padding-bottom :30px">
-                    <div class='input-group date'>
+                    <div class='input-group date  col-xs-12'>
                         <span class="input-group-addon">
                             帳號
                         </span>
-                        @Html.TextBox("Account", @Model._Customer.Account, new { @class = "form-control  addtimepicker col-xs-3", @ReadOnly = "ReadOnly" })
+                        @Html.TextBox("Account", @Model._Customer.Account, new { @class = "form-control  addtimepicker col-xs-6", @ReadOnly = "ReadOnly" })
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
-                    <div class='input-group date'>
+                    <div class='input-group date  col-xs-12'>
                         <span class="input-group-addon">
                             入金金額
                         </span>
-                        @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control  addtimepicker col-xs-3" })
+                        @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control  addtimepicker " })
                     </div>
                 </div>
             </div>
@@ -48,33 +48,33 @@
             </div>
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
-                    <div class='input-group date'>
+                    <div class='input-group date  col-xs-12'>
                         <span class="input-group-addon">
                             銀行名稱
                         </span>
-                        @Html.TextArea("BankName", @Model._Transaction.Detail.BankName, new { @class = "form-control  addtimepicker col-xs-3", @id = "BankName" })
+                        @Html.TextArea("BankName", @Model._Transaction.Detail.BankName, new { @class = "form-control  addtimepicker col-xs-6", @id = "BankName" })
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
-                    <div class='input-group date'>
+                    <div class='input-group date  col-xs-12'>
                         <span class="input-group-addon">
                             銀行分行
                         </span>
-                        @Html.TextArea("BankCode", @Model._Transaction.Detail.BranchName, new { @class = "form-control  addtimepicker col-xs-3", @id = "BankCode" })
+                        @Html.TextArea("BankCode", @Model._Transaction.Detail.BankCode, new { @class = "form-control  addtimepicker col-xs-6", @id = "BankCode" })
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
-                    <div class='input-group date'>
+                    <div class='input-group date  col-xs-12'>
                         <span class="input-group-addon">
                             備註
                         </span>
-                        @Html.TextArea("Remark", @Model._Transaction.Detail.Remark, new { @class = "form-control  addtimepicker col-xs-3" })
+                        @Html.TextArea("Remark", @Model._Transaction.Detail.Remark, new { @class = "form-control  addtimepicker col-xs-6" })
                     </div>
                 </div>
             </div>

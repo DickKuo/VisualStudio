@@ -16,9 +16,7 @@ $(function () {
                     html: CreateTable(data, true),
                     width: 600,
                     height: 500
-                });
-
-               
+                });               
             },
             error: function (xhr, status, errorThrown) {
                 alert("Error");

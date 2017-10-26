@@ -54,7 +54,7 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.BankAccount, _Transaction.Detail.BankAccount);
                 USP.AddParameter(SParameter.BankCode, _Transaction.Detail.BankCode);
                 USP.AddParameter(SParameter.Draw, _Transaction.Detail.Draw);
-                USP.AddParameter(SParameter.Remark, _Transaction.Detail.Remark);                
+                USP.AddParameter(SParameter.Remark, string.IsNullOrEmpty(_Transaction.Detail.Remark) ? string.Empty : _Transaction.Detail.Remark);                
                 DataTable AttachmentTable = ObjectUtility.ToDataTable(_Transaction.AttachmentsList, Attachments.GetTableTypeColumn());
                 USP.AddParameter(SParameter.AttachmentsParamter, AttachmentTable); 
                 Transaction _Result = USP.ExeProcedureGetObject(SP.AddTranscation, new Transaction()) as Transaction;
