@@ -28,25 +28,45 @@ namespace WebApplication1.Controllers
         /// <param name="_BaseRequest"></param>
         /// <returns></returns>
         public ActionResult Withdrawal(BaseRequest _BaseRequest) {
-            CustomerDAO CusDAO = new CustomerDAO();
-            Customer _Customer = CusDAO.GetCustomerByAccount(_BaseRequest.Account);
-            if (_Customer.SN > 0) {
-                if (_Customer.Audit == AuditTypes.OK) {
-                    TranscationDAO TransDAO = new TranscationDAO();
-                    Transaction Trans = new Transaction();
-                    Trans.CustomerSN = _Customer.SN;
-                    Trans.TradeType = TranscationTypes.Withdrawal;
-                    TransactionDetail TransDetail = new TransactionDetail();
-                    TransDetail.Draw = _BaseRequest.Draw;
-                    TransDetail.Remark = _BaseRequest.Remark;
-                    TransDetail.BankAccount = _BaseRequest.BankAccount;
-                    TransDetail.BankName = _BaseRequest.BankName;
-                    TransDetail.BranchName = _BaseRequest.BranchName;
-                    Trans.Detail = TransDetail;
-                    TransDAO.AddTranscation(Trans);
-                }
+            if (!string.IsNullOrEmpty(_BaseRequest.Status) && _BaseRequest.Status == "OK") {
+                CustomerDAO CusDAO = new CustomerDAO();
+                Customer _Customer = CusDAO.GetCustomerByAccount(_BaseRequest.Account);
+                if (_Customer.SN > 0) {
+                    if (_Customer.Audit == AuditTypes.OK) {
+                        TranscationDAO TransDAO = new TranscationDAO();
+                        Transaction Trans = new Transaction();
+                        Trans.CustomerSN = _Customer.SN;
+                        Trans.TradeType = TranscationTypes.Withdrawal;
+                        TransactionDetail TransDetail = new TransactionDetail();
+                        TransDetail.Draw = _BaseRequest.Draw;
+                        TransDetail.Remark = _BaseRequest.Remark;
+                        TransDetail.BankAccount = _BaseRequest.BankAccount;
+                        TransDetail.BankName = _BaseRequest.BankName;
+                        TransDetail.BranchName = _BaseRequest.BranchName;
+                        Trans.Detail = TransDetail;
+                        if (TransDetail.Draw > 100) {
+                            int Result = TransDAO.AddTranscation(Trans);
+                            if (Result > 0) {
+                                AdviserDAO _AdviserDB = new AdviserDAO();
+                                Adviser _Adviser = _AdviserDB.GetAdviserBySN(_Customer.HelperSN);
+                                CommTool.MailData _MailData = new CommTool.MailData();
+                                _MailData.RegistrySend(_Adviser.Email, "會員申請出金通知", string.Format("會員帳號:{0} 申請出金，請審核!", _Customer.Account));
+                                return ReturnMessage(Resources.ResourceDeposit.Withdrawal_Success, "~/EWallet/Index", BaseCode.MessageType.success);
+                            }
+                            else {
+                                return ReturnMessage(Resources.ResourceDeposit.Withdrawal_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
+                            }
+                        }
+                        else {
+                            return ReturnMessage(Resources.ResourceDeposit.Withdrawal_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
+                        }
+                    }
+                } 
+                return ReturnMessage(Resources.ResourceDeposit.Withdrawal_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
             }
-            return RedirectToAction("Index", "EWallet");
+            else {
+                return RedirectToAction("Index", "EWallet");
+            }
         }//end Withdraw
 
 	}

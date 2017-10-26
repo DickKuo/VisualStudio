@@ -6,6 +6,8 @@ using System.Web;
 namespace WebApplication1.Models.Code {
     public class BaseRequest {
 
+        public string Status { set; get; }
+
         public string Account { set; get; }
         
         public decimal Draw { set; get; }

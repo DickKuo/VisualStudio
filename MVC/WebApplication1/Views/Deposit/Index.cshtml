@@ -25,13 +25,7 @@
             }
             return true;
         });
-
-        $('.btn-back').on("click", function () {        
-            location.href = '../Member/EWallet/Index';
-        });
-
     });
-
 
     ///------------------------------------------------------------------------------
     ///上傳檔案預覽
@@ -52,7 +46,6 @@
             Img.setAttribute('src', '#');
             $(Img).hide();
         }
-
     }//end handleFiles
 
     ///------------------------------------------------------------------------------
@@ -64,13 +57,19 @@
         });
     }//end ShowImage
 
-
-  
+    ///------------------------------------------------------------------------------
+    ///燈箱顯示圖片
+    ///------------------------------------------------------------------------------
+    function ShowImage(ItemData) {
+        $.colorbox({
+            html: ' <img class="preview" src="' + ItemData + '" />'
+        });
+    }//end ShowImage
 
 </script>
 
-@using (Html.BeginForm("Deposit", "Deposit", FormMethod.Post, new { @id = "DepositFrom", enctype = "multipart/form-data" }))
-{
+@using (Html.BeginForm("Deposit", "Deposit", FormMethod.Post, new { @id = "DepositFrom", enctype = "multipart/form-data" })) {
+
     <div class="panel panel-info">
         <div class="panel-heading">入金資料</div>
         <div class="panel-body">
@@ -91,70 +90,117 @@
                         <span class="input-group-addon">
                             入金金額
                         </span>
-                        @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control  addtimepicker col-xs-3" })
+                        @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                            @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control  addtimepicker col-xs-3" })
+                        }
+                        else {
+                            @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control  addtimepicker col-xs-3", @ReadOnly = "ReadOnly" })
+                        }
                     </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
-                    <div class='input-group date'>
-                        <span class="input-group-addon">
-                            匯款單1
-                        </span>
-                        @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View)
-                        {
+            @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
+                        <div class='input-group date'>
+                            <span class="input-group-addon">
+                                匯款單1
+                            </span>
                             <div>
                                 <input class="form-control" type="file" name="MoneyOrder1" onchange="handleFiles(this)" data-img="MoneyOrderImg1" accept=" .bmp , .png , .jpg" />
                             </div>
                             <div>
                                 <img id="MoneyOrderImg1" style="max-width:50px; max-height:50px;" onclick="ShowImage(this.getAttribute('src'))" />
                             </div>
-                        }
-                        else
-                        {                            
-                        }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else {
 
-            <div class="form-group">
-                <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
-                    <div class='input-group date'>
-                        <span class="input-group-addon">
-                            匯款單2
-                        </span>
-                        @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View)
-                        {
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
+                        <div class='input-group date'>
+                            @{
+                if (Model._Transaction.AttachmentsList.Count > 0) {
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", Model._Transaction.AttachmentsList[0].AttName);
+                    <img src="@imgSrc" onclick="ShowImage(this.getAttribute('src'))" style="max-width:50px; max-height:50px;" />
+                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
+                        <div class='input-group date'>
+                            <span class="input-group-addon">
+                                匯款單2
+                            </span>
+
                             <div>
                                 <input class="form-control" type="file" name="MoneyOrder2" onchange="handleFiles(this)" data-img="MoneyOrderImg2" accept=".bmp , .png , .jpg" />
                             </div>
                             <div>
                                 <img id="MoneyOrderImg2" style="max-width:50px; max-height:50px;" onclick="ShowImage(this.getAttribute('src'))" />
                             </div>
-                        }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else {
+                if (Model._Transaction.AttachmentsList.Count > 1) {
 
-            <div class="form-group">
-                <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
-                    <div class='input-group date'>
-                        <span class="input-group-addon">
-                            匯款單3
-                        </span>
-                        @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View)
-                        {
+                    <div class="form-group">
+                        <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
+                            <div class='input-group date'>
+                                @{
+                    if (Model._Transaction.AttachmentsList.Count > 1) {
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", Model._Transaction.AttachmentsList[1].AttName);
+                        <img src="@imgSrc" onclick="ShowImage(this.getAttribute('src'))" style="max-width:50px; max-height:50px;" />
+                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+            @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
+                        <div class='input-group date'>
+                            <span class="input-group-addon">
+                                匯款單3
+                            </span>
                             <div>
                                 <input class="form-control" type="file" name="MoneyOrder3" onchange="handleFiles(this)" data-img="MoneyOrderImg3" accept=".bmp , .png , .jpg" />
                             </div>
                             <div>
                                 <img id="MoneyOrderImg3" style="max-width:50px; max-height:50px;" onclick="ShowImage(this.getAttribute('src'))" />
                             </div>
-                        }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else {
+                if (Model._Transaction.AttachmentsList.Count > 2) {
+                    <div class="form-group">
+                        <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
+                            <div class='input-group date'>
+                                @{
+                    if (Model._Transaction.AttachmentsList.Count > 2) {
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", Model._Transaction.AttachmentsList[2].AttName);
+                        <img src="@imgSrc" onclick="ShowImage(this.getAttribute('src'))" style="max-width:50px; max-height:50px;" />
+                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
 
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
@@ -162,31 +208,40 @@
                         <span class="input-group-addon">
                             備註
                         </span>
-                        @Html.TextArea("Remark", @Model._Transaction.Detail.Remark, new { @class = "form-control  addtimepicker col-xs-3" })
+                        @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                            @Html.TextArea("Remark", @Model._Transaction.Detail.Remark, new { @class = "form-control  addtimepicker col-xs-3" })
+                        }
+                        else {
+                            @Html.TextArea("Remark", @Model._Transaction.Detail.Remark, new { @class = "form-control  addtimepicker col-xs-3", @ReadOnly = "ReadOnly" })
+                        }
                     </div>
                 </div>
             </div>
-            <div class="form-group" style="padding-top:180px; padding-right:250px">
-                <div class="text-danger text-center">
+            @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                <div class="form-group" style="padding-top:180px; padding-right:250px">
+                    <div class="text-danger text-center">
 
-                    <label><input type="checkbox" id="AgreeCheck" value="">入金必須要先匯入指定帳戶後，才可以進行申請，審核需要幾天的工作天，審核同意後，才算入金完成。</label>
+                        <label><input type="checkbox" id="AgreeCheck" value="">入金必須要先匯入指定帳戶後，才可以進行申請，審核需要幾天的工作天，審核同意後，才算入金完成。</label>
 
+                    </div>
                 </div>
-            </div>
+            }
 
             <div class="form-group">
-                @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View)
-                {
-                    <div class="col-lg-offset-5 col-xs-6">
-                        <input type="submit" value="送出" class="btn btn-success" />
+                @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                    <div class="col-sm-offset-4 col-xs-2">
+                        <button type="submit" value="OK" name="Status" class="btn btn-success DepositBtn">送出</button>
+                    </div>
+                    <div class="col-xs-3">
+                        <button type="submit" value="Cancel" name="Status" class="btn btn-info DepositBtn">返回</button>
                     </div>
                 }
-                else
-                {
-                    <div class="col-lg-offset-5 col-xs-6">
-                        <input  value="返回"  class="btn btn-info btn-back" />
+                else {
+                    <div class="col-lg-offset-6 col-lg-6">
+                        <button type="submit" value="Cancel" name="Status" class="btn btn-info DepositBtn">返回</button>
                     </div>
                 }
+
             </div>
         </div>
     </div>

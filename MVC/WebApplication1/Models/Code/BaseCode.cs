@@ -8,6 +8,22 @@ namespace WebApplication1.Models.Code
     public class BaseCode
     {
 
+        /// <summary>
+        /// 取得ClientIP
+        /// </summary>
+        /// <returns></returns>
+        public static string GetUserIP() {
+            string VisitorsIPAddr = string.Empty;
+            if (System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != null) {
+                VisitorsIPAddr = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"].ToString();
+            }
+            else if (System.Web.HttpContext.Current.Request.UserHostAddress.Length != 0) {
+                VisitorsIPAddr = System.Web.HttpContext.Current.Request.UserHostAddress;
+            }
+            return VisitorsIPAddr;
+        }
+
+
         public enum MessageType : int
         {
             danger = 0,

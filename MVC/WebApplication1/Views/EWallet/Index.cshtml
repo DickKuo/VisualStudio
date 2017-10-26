@@ -6,17 +6,6 @@
 <h2>@Resources.Menu.Menu_1003</h2>
 <hr>
 
-<script>
-    
-    $(function(){
-        $(".glyphicon-search").on("click",function(){            
-            location.href = '../Member/Deposit/Index?TransKey=' + $(this).attr('data-transkey');
-        });
-    });
-   
-</script>
-
-
 <div class="panel panel-info">
         <div class="panel-heading">@Resources.ResourceDeposit.Label_Header</div>
         <div class="panel-body">
@@ -97,9 +86,10 @@
                             <tr>
                                 <th>序</th>
                                 <th>交易日期</th>
-                                <th>出金/入金</th>
+                                <th>類型</th>
                                 <th>交易點數</th>
-                                <th>手續費</th>
+                                <th>手續費</th>  
+                                <th>傭金</th>                              
                                 <th>審核狀態</th>
                                 <th>審核時間</th>
                                 <th>檢視</th>
@@ -116,10 +106,11 @@
                                     <td>@( Convert.ToInt32(Item.TradeType) == 1 ? "入金" : "出金")</td>
                                     <td>@(Convert.ToInt32(Item.TradeType) == 1 ? Item.Detail.Draw :  0 - Item.Detail.Draw)</td>
                                     <td>@Item.Detail.Fee</td>
+                                    <td>0</td>
                                     <td>@(Resources.Resource.ResourceManager.GetString("AuditTpyes_" + Item.AuditState.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
                                     <td>@(Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete) == "0001/01/01 00:00:00" ? string.Empty : Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete))</td>
                                     <td>
-                                        <i class='glyphicon glyphicon-search' data-transkey="@Item.TransKey" ></i>
+                                        <a href="~/Deposit/Index?TransKey=@Item.TransKey"><i class='glyphicon glyphicon-search'></i></a>                                       
                                     </td>
                                 </tr>
                             RowID++;

@@ -93,6 +93,8 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.TransKey, TransKey);
                 Transaction _Result = USP.ExeProcedureGetObject(SP.GetTranscationByTranskey, new Transaction()) as Transaction;
                 _Result.Detail = GetDetailByTransactionSN(_Result.SN);
+                AttachmentsDAO   AttachmentsDB=new AttachmentsDAO();
+                _Result.AttachmentsList = AttachmentsDB.GetAddAttachmentsByTransSN(_Result.SN);
                 return _Result;
             }
             catch (Exception ex)

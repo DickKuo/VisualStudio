@@ -104,5 +104,23 @@ namespace Resources {
                 return ResourceManager.GetString("MinValue", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查詢類似 出金失敗 的當地語系化字串。
+        /// </summary>
+        internal static string Withdrawal_Fail {
+            get {
+                return ResourceManager.GetString("Withdrawal_Fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 出金成功 的當地語系化字串。
+        /// </summary>
+        internal static string Withdrawal_Success {
+            get {
+                return ResourceManager.GetString("Withdrawal_Success", resourceCulture);
+            }
+        }
     }
 }

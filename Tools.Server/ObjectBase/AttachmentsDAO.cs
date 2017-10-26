@@ -10,10 +10,12 @@ namespace ObjectBase {
 
         private class SP {
             public const string AddAttachment = "AddAttachment";
+            public const string GetAddAttachmentsByTransSN = "GetAddAttachmentsByTransSN";
         }
 
         private class SParamter {
             public const string AttachmentTable = "AttachmentTable";
+            public const string TargetID = "TargetID";
         }
 
         public int AddAttachmentsByBatch(List<Attachments> AttachmentsList) {  
@@ -33,6 +35,17 @@ namespace ObjectBase {
                 return -1;
             }
         }
+
+        /// <summary>取得交易單得附檔</summary>
+        /// <param name="SN"></param>
+        /// <returns></returns>
+        public List<Attachments> GetAddAttachmentsByTransSN(int SN) {
+            List<Attachments> AttachmentsList = new List<Attachments>();
+            USP.AddParameter(SParamter.TargetID, SN);
+            AttachmentsList = USP.ExeProcedureGetObjectList(SP.GetAddAttachmentsByTransSN,new Attachments());
+            return AttachmentsList;
+        }
+
 
     }
 

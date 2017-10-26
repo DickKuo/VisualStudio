@@ -132,4 +132,10 @@
   <data name="MinValue" xml:space="preserve">
     <value>最低入金點數100點</value>
   </data>
+  <data name="Withdrawal_Fail" xml:space="preserve">
+    <value>出金失敗</value>
+  </data>
+  <data name="Withdrawal_Success" xml:space="preserve">
+    <value>出金成功</value>
+  </data>
 </root>
