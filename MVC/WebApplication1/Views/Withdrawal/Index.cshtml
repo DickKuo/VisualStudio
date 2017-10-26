@@ -2,16 +2,15 @@
 
 @{
     ViewBag.Title = Resources.Menu.Menu_2002;
+    Html.AddJavaScript("~/Scripts/Code/WithdrawalJs.js");
 }
 <h2>@Resources.Menu.Menu_2002</h2>
 <hr> 
 
-@using (Html.BeginForm("Withdrawal", "Withdrawal")) {
-    
+@using (Html.BeginForm("Withdrawal", "Withdrawal")) {    
     <div class="panel panel-info">
         <div class="panel-heading">入金資料</div>
         <div class="panel-body">
-
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px ;padding-bottom :30px">
                     <div class='input-group date'>
@@ -22,7 +21,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
                     <div class='input-group date'>
@@ -33,18 +31,21 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
-                <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
-                    <div class='input-group date'>
-                        <span class="input-group-addon">
+                <div class="col-lg-offset-3 col-xs-9" style="padding-left: 15px; padding-bottom: 30px">
+                    <div class='input-group date col-xs-6'>
+                        <span class="input-group-addon ">
                             銀行帳號
                         </span>
                         @Html.TextArea("BankAccount", @Model._Transaction.Detail.BankAccount, new { @class = "form-control  addtimepicker col-xs-3" })
+                    </div>                    
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-info selectbank" >
+                            選取銀行
+                        </button>
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-6" style="padding-left: 15px; padding-bottom: 30px">
                     <div class='input-group date'>

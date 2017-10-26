@@ -412,6 +412,7 @@
     <Content Include="Scripts\Code\ResultCode.js" />
     <Content Include="Scripts\Code\Transaction.js" />
     <Content Include="Scripts\Code\UserAccount.js" />
+    <Content Include="Scripts\Code\WithdrawalJs.js" />
     <Content Include="Scripts\ColorBox\colorbox.css" />
     <Content Include="Scripts\ColorBox\images\border.png" />
     <Content Include="Scripts\ColorBox\images\controls.png" />
