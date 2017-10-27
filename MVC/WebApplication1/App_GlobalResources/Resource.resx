@@ -240,4 +240,22 @@
   <data name="Register_Error_ExsitAccount" xml:space="preserve">
     <value>The Account has been registered.</value>
   </data>
+  <data name="AuditTpyes_Cancel1" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AuditTpyes_NO1" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="AuditTpyes_NotYet1" xml:space="preserve">
+    <value>NotYet</value>
+  </data>
+  <data name="AuditTpyes_OK1" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="TransTypes_Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
+  <data name="TransTypes_Dividend" xml:space="preserve">
+    <value>Dividend</value>
+  </data>
 </root>

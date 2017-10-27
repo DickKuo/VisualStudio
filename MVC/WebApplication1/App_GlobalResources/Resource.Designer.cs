@@ -88,11 +88,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Cancel 的當地語系化字串。
+        /// </summary>
+        internal static string AuditTpyes_Cancel1 {
+            get {
+                return ResourceManager.GetString("AuditTpyes_Cancel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 NO 的當地語系化字串。
         /// </summary>
         internal static string AuditTpyes_NO {
             get {
                 return ResourceManager.GetString("AuditTpyes_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 NO 的當地語系化字串。
+        /// </summary>
+        internal static string AuditTpyes_NO1 {
+            get {
+                return ResourceManager.GetString("AuditTpyes_NO1", resourceCulture);
             }
         }
         
@@ -106,11 +124,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查詢類似 NotYet 的當地語系化字串。
+        /// </summary>
+        internal static string AuditTpyes_NotYet1 {
+            get {
+                return ResourceManager.GetString("AuditTpyes_NotYet1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 OK 的當地語系化字串。
         /// </summary>
         internal static string AuditTpyes_OK {
             get {
                 return ResourceManager.GetString("AuditTpyes_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 OK 的當地語系化字串。
+        /// </summary>
+        internal static string AuditTpyes_OK1 {
+            get {
+                return ResourceManager.GetString("AuditTpyes_OK1", resourceCulture);
             }
         }
         
@@ -412,11 +448,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Bonus 的當地語系化字串。
+        /// </summary>
+        internal static string TransTypes_Bonus {
+            get {
+                return ResourceManager.GetString("TransTypes_Bonus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Deposit 的當地語系化字串。
         /// </summary>
         internal static string TransTypes_Deposit {
             get {
                 return ResourceManager.GetString("TransTypes_Deposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Dividend 的當地語系化字串。
+        /// </summary>
+        internal static string TransTypes_Dividend {
+            get {
+                return ResourceManager.GetString("TransTypes_Dividend", resourceCulture);
             }
         }
         

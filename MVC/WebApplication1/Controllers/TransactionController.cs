@@ -15,30 +15,31 @@ namespace WebApplication1.Controllers
 
         /// <summary>初始畫面</summary>
         /// <returns></returns>
-        public ActionResult Index()
-        {
-            TranscationViewModels.TranscationViewModel Model = new TranscationViewModels.TranscationViewModel();
+        public ActionResult Index(TranscationViewModels.TranscationViewModel Model)
+        {            
             DateTime NowTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime TimeEnd = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, 1).AddDays(-1);
-            Model.BeginTime = NowTime;
-            Model.EndTime = TimeEnd;
-            Model.Page = 1;
-            LoginInfo Info =LoginHelper.GetLoginInfo();
-            TranscationDAO DAO = new TranscationDAO();
-            Model.TransactionList =  DAO.GetTop10TransactionByCustomerSN(NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), Info.Customer.SN);
-            Model.MaxPage = DAO.GetTranscationPagesByDueDay(NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), Info.Customer.SN,10);
+            Model.BeginTime = Model.BeginTime == DateTime.MinValue ? NowTime : Model.BeginTime;
+            Model.EndTime = Model.EndTime == DateTime.MinValue ? TimeEnd : Model.EndTime;
+            SearchMothed(Model);
             return View(Model);
         }//end Index
+
+        private  void SearchMothed(TranscationViewModels.TranscationViewModel Model) {
+            int MaxPage = 0;
+            LoginInfo Info = LoginHelper.GetLoginInfo();
+            TranscationDAO DAO = new TranscationDAO();
+            Model.TransactionList = DAO.GetTransactionByCustomerSNPages(Model.BeginTime.ToString(Default.DateTimeFormat), Model.EndTime.ToString(Default.DateTimeFormat), Info.Customer.SN, Model.Page, Model.Range, Convert.ToInt32(Model.TradeType), Convert.ToInt32(Model.AuditState), out MaxPage);
+            Model.MaxPage = DAO.GetTranscationPagesByDueDay(Model.BeginTime.ToString(Default.DateTimeFormat), Model.EndTime.ToString(Default.DateTimeFormat), Info.Customer.SN, 10);
+        }
 
         /// <summary>換頁</summary>
         /// <param name="Model"></param>
         /// <returns></returns>
+        [HttpPost]
         public dynamic ChagePage(TranscationViewModels.TranscationViewModel Model) {            
             if (Model.BeginTime > DateTime.MinValue && Model.EndTime > DateTime.MinValue) {
-                LoginInfo Info = LoginHelper.GetLoginInfo();
-                TranscationDAO DAO = new TranscationDAO();               
-                Model.TransactionList = DAO.GetTransactionByCustomerSNPages(Model.BeginTime.ToString(Default.DateTimeFormat), Model.EndTime.ToString(Default.DateTimeFormat), Info.Customer.SN, Model.Page, Model.Range);
-                Model.MaxPage = DAO.GetTranscationPagesByDueDay(Model.BeginTime.ToString(Default.DateTimeFormat), Model.EndTime.ToString(Default.DateTimeFormat), Info.Customer.SN, 10);
+                SearchMothed(Model);
             }
             return PartialView("_TransactionTable", Model);  
         }//end ChagePage

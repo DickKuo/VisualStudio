@@ -19,6 +19,18 @@ namespace WebApplication1.Models {
             public int Range { set; get; }
 
             public decimal Total { set; get; }
+
+            public string TradeType { set; get; }
+
+            public string Money { set; get; }
+
+            public string AuditState { set; get; }
+
+            public TranscationViewModel() {
+                TransactionList = new List<Transaction>();
+                Page = 1;
+                Range = 10;
+            }
         }
     }
 }

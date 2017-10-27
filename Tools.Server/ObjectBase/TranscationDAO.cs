@@ -41,6 +41,8 @@ namespace ObjectBase {
             public const string TransKey = "TransKey";
             public const string AuditAdviserSN = "AuditAdviserSN";
             public const string AttachmentsParamter = "AttachmentsParamter";
+            public const string MaxPage = "MaxPage";
+
         }
 
         /// <summary>新增交易單</summary>
@@ -152,15 +154,22 @@ namespace ObjectBase {
         /// <param name="Page"></param>
         /// <param name="Range"></param>
         /// <returns></returns>
-        public List<Transaction> GetTransactionByCustomerSNPages(string BeginTime, string EndTime, int CustomerSN, int Page, int Range) {
+        public List<Transaction> GetTransactionByCustomerSNPages(string BeginTime, string EndTime, int CustomerSN, int Page, int Range, int TradeType, int AuditState, out int MaxPage) {
+            MaxPage = 0;
             try {
+                USP.AddParameter(SParameter.MaxPage, MaxPage,SqlDbType.Int,20,ParameterDirection.Output);
                 USP.AddParameter(SParameter.CustomerSN, CustomerSN);
                 USP.AddParameter(SParameter.BeginTime, BeginTime);
                 USP.AddParameter(SParameter.EndTime, EndTime);
                 USP.AddParameter(SParameter.Page, Page);
                 USP.AddParameter(SParameter.Range, Range);
+                USP.AddParameter(SParameter.TradeType, TradeType);
+                USP.AddParameter(SParameter.AuditState, AuditState);                
                 List<Transaction> ListTransaction = USP.ExeProcedureGetObjectList(SP.GetTransactionByCustomerSNPages, new Transaction()) as List<Transaction>;
                 TranscationDAO DAO = new TranscationDAO();
+                if (USP.OutParameterValues.Any()) {
+                    MaxPage = Convert.ToInt32(USP.OutParameterValues[0]);
+                }
                 foreach (Transaction Tran in ListTransaction) {
                     TransactionDetail Detail = DAO.GetDetailByTransactionSN(Tran.SN);
                     Tran.Detail = Detail;

@@ -392,6 +392,7 @@ namespace SQLHelper {
             try {
                 con.Open();
                 Scmd.ExecuteNonQuery();
+                OutParameterValues.Clear();
                 if (_OutParameter.Count > 0) {
                     foreach (string str in _OutParameter) {
                         OutParameterValues.Add(Scmd.Parameters[str].Value.ToString());
@@ -448,6 +449,7 @@ namespace SQLHelper {
             try {
                 con.Open();
                 Scmd.ExecuteNonQuery();
+                OutParameterValues.Clear();
                 if (_OutParameter.Count > 0) {
                     foreach (string str in _OutParameter) {
                         OutParameterValues.Add(Scmd.Parameters[str].Value.ToString());
@@ -481,6 +483,7 @@ namespace SQLHelper {
                 con.Open();
                 dt.Load(Scmd.ExecuteReader());
                 CommandResult = MessageType.Sucess;
+                OutParameterValues.Clear();
                 if (_OutParameter.Count > 0) {
                     foreach (string str in _OutParameter) {
                         OutParameterValues.Add(Scmd.Parameters[str].Value.ToString());
@@ -548,6 +551,7 @@ namespace SQLHelper {
                 _OutParameter.Add(parameterName);
             }
         }
+        
     }
 
     public class SqlParameters {
