@@ -5,9 +5,9 @@
     Html.AddJavaScript("~/Scripts/Code/WithdrawalJs.js");
 }
 <h2>@Resources.Menu.Menu_2002</h2>
-<hr> 
+<hr>
 
-@using (Html.BeginForm("Withdrawal", "Withdrawal")) {    
+@using (Html.BeginForm("Withdrawal", "Withdrawal")) {
     <div class="panel panel-info">
         <div class="panel-heading">入金資料</div>
         <div class="panel-body">
@@ -27,23 +27,38 @@
                         <span class="input-group-addon">
                             出金金額
                         </span>
-                        @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control  addtimepicker " })
+                        @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                            @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control" })
+                        }
+                        else {
+                            @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+                        }
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-offset-3 col-xs-9" style="padding-left: 15px; padding-bottom: 30px">
-                    <div class='input-group date col-xs-6'>
-                        <span class="input-group-addon ">
-                            銀行帳號
-                        </span>
-                        @Html.TextArea("BankAccount", @Model._Transaction.Detail.BankAccount, new { @class = "form-control  addtimepicker col-xs-3", @id = "BankAccount" })
-                    </div>                    
-                    <div class="col-xs-6">
-                        <button type="button" class="btn btn-info selectbank" >
-                            選取銀行
-                        </button>
-                    </div>
+                    @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                        <div class='input-group date col-xs-6'>
+                            <span class="input-group-addon ">
+                                銀行帳號
+                            </span>
+                            @Html.TextArea("BankAccount", @Model._Transaction.Detail.BankAccount, new { @class = "form-control col-xs-3", @id = "BankAccount" })
+                        </div>
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-info selectbank">
+                                選取銀行
+                            </button>
+                        </div>
+                    }
+                    else {
+                        <div class='input-group date col-xs-6'>
+                            <span class="input-group-addon ">
+                                銀行帳號
+                            </span>
+                            @Html.TextArea("BankAccount", @Model._Transaction.Detail.BankAccount, new { @class = "form-control col-xs-3", @id = "BankAccount", @ReadOnly = "ReadOnly" })
+                        </div>
+                    }
                 </div>
             </div>
             <div class="form-group">
@@ -52,7 +67,12 @@
                         <span class="input-group-addon">
                             銀行名稱
                         </span>
-                        @Html.TextArea("BankName", @Model._Transaction.Detail.BankName, new { @class = "form-control  addtimepicker col-xs-6", @id = "BankName" })
+                        @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                            @Html.TextArea("BankName", @Model._Transaction.Detail.BankName, new { @class = "form-control  addtimepicker col-xs-6", @id = "BankName" })
+                        }
+                        else {
+                            @Html.TextArea("BankName", @Model._Transaction.Detail.BankName, new { @class = "form-control col-xs-6", @id = "BankName", @ReadOnly = "ReadOnly" })
+                        }
                     </div>
                 </div>
             </div>
@@ -62,7 +82,12 @@
                         <span class="input-group-addon">
                             銀行分行
                         </span>
-                        @Html.TextArea("BankCode", @Model._Transaction.Detail.BankCode, new { @class = "form-control  addtimepicker col-xs-6", @id = "BankCode" })
+                        @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                            @Html.TextArea("BankCode", @Model._Transaction.Detail.BankCode, new { @class = "form-control  col-xs-6", @id = "BankCode" })
+                        }
+                        else {
+                            @Html.TextArea("BankCode", @Model._Transaction.Detail.BankCode, new { @class = "form-control  col-xs-6", @id = "BankCode", @ReadOnly = "ReadOnly" })
+                        }
                     </div>
                 </div>
             </div>
@@ -72,23 +97,44 @@
                         <span class="input-group-addon">
                             備註
                         </span>
-                        @Html.TextArea("Remark", @Model._Transaction.Detail.Remark, new { @class = "form-control  addtimepicker col-xs-6" })
+                        @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                            @Html.TextArea("Remark", @Model._Transaction.Detail.Remark, new { @class = "form-control  col-xs-6" })
+                        }
+                        else {
+                            @Html.TextArea("Remark", @Model._Transaction.Detail.Remark, new { @class = "form-control  col-xs-6", @ReadOnly = "ReadOnly" })
+                        }
                     </div>
                 </div>
             </div>
-            <div class="form-group" style="padding-top:180px; padding-right:250px">
-                <div class="text-danger text-center">
-                    <label><input type="checkbox" id="AgreeCheck" value="">出金審請需要幾天的工作天，會依照申請單匯入指定的銀行帳戶。</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-4 col-xs-2">
-                    <button type="submit" value="OK" name="Status" class="btn btn-success DepositBtn" >送出</button>
-                </div>
 
-                <div class="col-xs-3">
-                    <button type="submit" value="Cancel" name="Status"  class="btn btn-info DepositBtn" >返回</button>
+            @{
+                 if (Model._Transaction.AttachmentsList.Count > 0) {
+                     var imgSrc = String.Format("data:image/gif;base64,{0}", Model._Transaction.AttachmentsList[0].AttName);
+                     <img src="@imgSrc" onclick="ShowImage(this.getAttribute('src'))" style="max-width:50px; max-height:50px;" />
+                 }
+            }
+
+            @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                <div class="form-group" style="padding-top:180px; padding-right:250px">
+                    <div class="text-danger text-center">
+                        <label><input type="checkbox" id="AgreeCheck" value="">出金審請需要幾天的工作天，會依照申請單匯入指定的銀行帳戶。</label>
+                    </div>
                 </div>
+            }
+            <div class="form-group">
+                @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
+                    <div class="col-sm-offset-4 col-xs-2">
+                        <button type="submit" value="OK" name="Status" class="btn btn-success DepositBtn">送出</button>
+                    </div>
+                    <div class="col-xs-3">
+                        <button type="submit" value="Cancel" name="Status" class="btn btn-info DepositBtn">返回</button>
+                    </div>
+                }
+                else {
+                    <div class="col-sm-offset-6  col-xs-3">
+                        <button type="submit" value="Cancel" name="Status" class="btn btn-info DepositBtn">返回</button>
+                    </div>
+                }
             </div>
         </div>
     </div>

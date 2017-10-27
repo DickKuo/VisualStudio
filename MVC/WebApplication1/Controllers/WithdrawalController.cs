@@ -14,14 +14,28 @@ namespace WebApplication1.Controllers
     { 
         /// <summary>出金畫面</summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public ActionResult Index(string TransKey)
         {
-            WebApplication1.Models.DepositViewModels.DepositViewModel ViewModel = new Models.DepositViewModels.DepositViewModel();
-            LoginInfo Info = LoginHelper.GetLoginInfo();
-            ViewModel._Customer = Info.Customer;
-            ViewModel._Transaction = new ObjectBase.Transaction();
-            ViewModel._Transaction.Detail = new ObjectBase.TransactionDetail();
-            return View(ViewModel);
+            try {
+                WebApplication1.Models.DepositViewModels.DepositViewModel ViewModel = new Models.DepositViewModels.DepositViewModel();
+                LoginInfo Info = LoginHelper.GetLoginInfo();
+                ViewModel._Customer = Info.Customer;
+                if (!string.IsNullOrEmpty(TransKey)) {
+                    ViewModel._PageAction = WebApplication1.Models.Code.BaseCode.PageAction.View;
+                    TranscationDAO TransDAO = new TranscationDAO();
+                    ViewModel._Transaction = TransDAO.GetTranscationByTranskey(TransKey);
+                    return View(ViewModel);
+                }
+                else {
+                    ViewModel._Transaction = new ObjectBase.Transaction();
+                    ViewModel._Transaction.Detail = new ObjectBase.TransactionDetail();
+                    return View(ViewModel);
+                }
+            }
+            catch (Exception ex) {
+                Log(ex);
+                return ReturnMessage(Resources.ResourceDeposit.Withdrawal_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
+            }
         }//end Index
 
         /// <summary>出金申請</summary>

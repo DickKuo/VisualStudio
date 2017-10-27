@@ -35,7 +35,8 @@ namespace WebApplication1.Controllers
                 }
             }
             catch(Exception ex){
-                return View();
+                Log(ex);
+                return ReturnMessage(Resources.ResourceDeposit.Deposit_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
             }
         }
 
