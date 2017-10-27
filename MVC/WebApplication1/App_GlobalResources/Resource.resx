@@ -237,4 +237,7 @@
   <data name="Label_IsEnable" xml:space="preserve">
     <value>Enable</value>
   </data>
+  <data name="Register_Error_ExsitAccount" xml:space="preserve">
+    <value>The Account has been registered.</value>
+  </data>
 </root>

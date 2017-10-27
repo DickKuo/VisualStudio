@@ -5,13 +5,17 @@ $(function () {
     });
 
     $('#Register_Form').submit(function () {
+        e.preventDefault();
+
         validateEmail($("#InputAccount").val());
 
         ChkMobile();
     });
 
-    $("#InputBirthDay").datetimepicker();
-
+    //$("#InputBirthDay").datetimepicker();
+    $("#InputBirthDay").datepicker({
+        format: "yyyy/mm/dd"
+    });
  
 
 });

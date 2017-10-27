@@ -231,4 +231,10 @@
   <data name="Label_IsEnable" xml:space="preserve">
     <value>啟用</value>
   </data>
+  <data name="Register_Error_ExsitAccount" xml:space="preserve">
+    <value>帳號已註冊</value>
+  </data>
+  <data name="Register_Success" xml:space="preserve">
+    <value>註冊成功</value>
+  </data>
 </root>

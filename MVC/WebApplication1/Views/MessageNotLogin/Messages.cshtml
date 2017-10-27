@@ -1,0 +1,16 @@
+﻿
+
+
+<div class="row" style="padding-top:200px" >
+    <div class="col-lg-8 col-sm-offset-2 alert alert-@ViewBag.MessageType">
+        <a href='@Url.Content(ViewBag.ReturnURL)'>@ViewBag.MessageStr，@Resources.Resource.AlertMessage_Auto_Direct_Page</a>
+    </div>
+</div>
+<script>
+    $(function () {
+        setTimeout(function () {
+            window.location.href = '@Url.Content(ViewBag.ReturnURL)';
+        }, 5000);
+    });
+</script>
+

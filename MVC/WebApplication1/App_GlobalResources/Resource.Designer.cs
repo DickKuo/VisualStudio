@@ -295,6 +295,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查詢類似 The Account has been registered. 的當地語系化字串。
+        /// </summary>
+        internal static string Register_Error_ExsitAccount {
+            get {
+                return ResourceManager.GetString("Register_Error_ExsitAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 FirstName 的當地語系化字串。
         /// </summary>
         internal static string Register_FirstName {

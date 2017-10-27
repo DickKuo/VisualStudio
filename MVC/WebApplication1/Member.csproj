@@ -267,6 +267,7 @@
     <Compile Include="Controllers\EWalletController.cs" />
     <Compile Include="Controllers\FileLoadController.cs" />
     <Compile Include="Controllers\ForGetPassWordController.cs" />
+    <Compile Include="Controllers\MessageNotLoginController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -577,6 +578,8 @@
     <Content Include="Views\Home\Messages.cshtml" />
     <Content Include="Views\Setting\Bank.cshtml" />
     <Content Include="Views\Setting\BankEdit.cshtml" />
+    <Content Include="Views\MessageNotLogin\Message.cshtml" />
+    <Content Include="Views\MessageNotLogin\Messages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AjaxFuctions\" />

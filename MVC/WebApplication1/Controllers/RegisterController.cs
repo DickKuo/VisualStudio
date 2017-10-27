@@ -36,13 +36,24 @@ namespace WebApplication1.Controllers
                         "<br/>您的帳號:" + _Customer.Account +
                         "<br/>您的密碼:" + _Customer.PassWord +
                         "<br/>請您以這組帳號登入系統");
-                    return RedirectToAction("Messages", "Home", new {
-                        info = Resources.Resource.Register_Success,
-                        returnUrl = "../Login/LoginView"
+                    return RedirectToAction("Messages", "MessageNotLogin", new {
+                        MessageStr = Resources.Resource.Register_Success,
+                        returnUrl = "../Login/LoginView",
+                        MessageType= WebApplication1.Models.Code.BaseCode.MessageType.success
                     });
                 }
                 else {
-                    ModelState.AddModelError(string.Empty, Resources.Resource.Register_Error);
+                    string ErrorMessage =string.Empty;
+                    switch (Result)
+                    {
+                        case -1:
+                            ErrorMessage = Resources.Resource.Register_Error_ExsitAccount;
+                            break;
+                        default:
+                            ErrorMessage =Resources.Resource.Register_Error;
+                            break;
+                    }
+                    ModelState.AddModelError(string.Empty, ErrorMessage);
                     return View(RegisterView);
                 }
             }
