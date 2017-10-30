@@ -138,11 +138,17 @@
   <data name="Label_Account" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="Label_Adviser" xml:space="preserve">
+    <value>Adviser</value>
+  </data>
   <data name="Label_Audit" xml:space="preserve">
     <value>Audit</value>
   </data>
   <data name="Label_BirthDay" xml:space="preserve">
     <value>BirthDay</value>
+  </data>
+  <data name="Label_Commission" xml:space="preserve">
+    <value>Commission</value>
   </data>
   <data name="Label_EditTime" xml:space="preserve">
     <value>EditTime</value>

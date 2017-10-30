@@ -10,7 +10,6 @@ namespace Adviser.Controllers
 {
     public class CustomerController : BaseLoginController
     {
-
         public ActionResult Mangement()
         {
             CustomerViewModels.CustomerViewModel ViewModel = new CustomerViewModels.CustomerViewModel();
@@ -50,6 +49,10 @@ namespace Adviser.Controllers
                 CustomerDAO _CustomerDAO = new CustomerDAO();
                 ViewModel._Customer = _CustomerDAO.GetCustomerBySN(ViewModel.CustomerSN);
                 ViewBag.AuditList = base.GetAuditItems(ViewModel._Customer);
+                ViewBag.AdviserList = GetAdviserItems(ViewModel._Customer.HelperSN);
+                EWalletDAO WalletDAO = new EWalletDAO();
+                EWallet Wallet = WalletDAO.GetEWalletByCustomerSN(ViewModel._Customer.SN);
+                ViewModel._EWallet = Wallet;
                 return View(ViewModel);
             }
             else {

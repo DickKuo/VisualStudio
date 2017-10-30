@@ -138,11 +138,17 @@
   <data name="Label_Account" xml:space="preserve">
     <value>帳號</value>
   </data>
+  <data name="Label_Adviser" xml:space="preserve">
+    <value>所屬顧問</value>
+  </data>
   <data name="Label_Audit" xml:space="preserve">
     <value>審核狀態</value>
   </data>
   <data name="Label_BirthDay" xml:space="preserve">
     <value>生日</value>
+  </data>
+  <data name="Label_Commission" xml:space="preserve">
+    <value>傭金</value>
   </data>
   <data name="Label_EditTime" xml:space="preserve">
     <value>最後變更時間</value>

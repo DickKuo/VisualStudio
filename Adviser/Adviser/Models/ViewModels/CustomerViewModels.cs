@@ -14,6 +14,9 @@ namespace Adviser.Models.ViewModels {
             public Customer _Customer { set; get; }
 
             public List<Customer> ListCustomer { set; get; }
+
+            public EWallet _EWallet { set; get; }
+
         }
     }
 }

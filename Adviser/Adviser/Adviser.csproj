@@ -46,8 +46,9 @@
       <HintPath>..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="ObjectBase">
-      <HintPath>..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
+    <Reference Include="ObjectBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
     </Reference>
     <Reference Include="SQLHelper">
       <HintPath>..\..\..\..\Dropbox\Export\SQLHelper.dll</HintPath>
@@ -225,6 +226,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AjaxFunctionController.cs" />
     <Compile Include="Controllers\BaseLoginController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -379,6 +381,7 @@
     <Content Include="Views\Report\_ReportTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\AjaxFunction\" />
     <Folder Include="Views\BaseLogin\" />
   </ItemGroup>
   <ItemGroup>

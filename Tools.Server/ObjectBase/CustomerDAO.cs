@@ -40,6 +40,8 @@ namespace ObjectBase {
             public const string Remark = "Remark";
             public const string IsEnable = "IsEnable";
             public const string Name = "Name";
+            public const string Commission = "Commission";
+            public const string HelperSN = "HelperSN";
         }
 
         /// <summary>加入客戶</summary>
@@ -195,6 +197,8 @@ namespace ObjectBase {
             USP.AddParameter(SPParameter.BirthDay, _Customer.Member.BirthDay);
             USP.AddParameter(SPParameter.HomeAddr, _Customer.Member.HomeAddr);
             USP.AddParameter(SPParameter.IsEnable, _Customer.IsEnable);
+            USP.AddParameter(SPParameter.Commission, _Customer.Commission);
+            USP.AddParameter(SPParameter.HelperSN, _Customer.HelperSN);
             USP.AddParameter(SPParameter.Remark, _Customer.Member.Remark == null ? string.Empty : _Customer.Member.Remark);
             DataTable dt = USP.ExeProcedureGetDataTable(SP.UpdateCustomerByAccount);
             if (dt != null && dt.Rows.Count > 0) {

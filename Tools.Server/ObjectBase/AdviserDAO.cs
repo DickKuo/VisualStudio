@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace ObjectBase {
@@ -8,6 +9,7 @@ namespace ObjectBase {
             public const string AddAdviser = "AddAdviser";
             public const string LoginCheckAdviser = "LoginCheckAdviser";
             public const string GetAdviserBySN = "GetAdviserBySN";
+            public const string GetListAdviser = "GetListAdviser";
         }
 
         private class SParameter {
@@ -69,6 +71,14 @@ namespace ObjectBase {
             USP.AddParameter(CommBase.SN, SN);
             Adviser _ResultAdviser = USP.ExeProcedureGetObject(SP.GetAdviserBySN, new Adviser());
             return _ResultAdviser;
+        }
+
+        /// <summary>取得所有顧問</summary>
+        /// <returns></returns>
+        public List<Adviser> GetListAdviser() {
+            List<Adviser> ListAdviser = new List<Adviser>();
+            ListAdviser = USP.ExeProcedureGetObjectList(SP.GetListAdviser, new Adviser());
+            return ListAdviser;
         }
     }
 }

@@ -2,9 +2,9 @@
 @{
     ViewBag.Title = "CustomerDetail";
     IEnumerable<SelectListItem> SelectAuditList = ViewBag.AuditList;
+    IEnumerable<SelectListItem> SelectAdviserList = ViewBag.AdviserList;
 }
 <script src="~/Scripts/Code/CustomerDetail.js"></script>
-
 <h2>@Resources.ResourcePageTitle.Title_CustomerDetail</h2>
 <hr>
 @using (Html.BeginForm("CustomerModify", "Customer", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
@@ -36,9 +36,31 @@
                     </select>
                 </div>
             </div>
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_Commission
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Commission, new { id = "InputCommission", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_Commission })
+                </div>
+                <label class="col-lg-offset-1 col-xs-2  control-label">
+                    @Resources.ResourceCustomer.Label_Adviser
+                </label>
+                <div class='col-xs-3'>
+                    <select id="HelperSN" class="selectpicker form-control" data-live-search="true" name="_Customer.HelperSN">
+                        @foreach (var Item in SelectAdviserList) {
+                            if (Item.Selected) {
+                                <option value="@Item.Value" selected="selected">@Item.Text </option>
+                            }
+                            else {
+                                <option value="@Item.Value">@Item.Text </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
-
     <div class="panel panel-info">
         <div class="panel-heading">
             基本資料
@@ -58,7 +80,6 @@
                     @Html.TextBoxFor(M => M._Customer.Member.LastName, new { id = "InputLastName", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_LastName, @maxlength = "20" })
                 </div>
             </div>
-
             <div class="row" style="padding-bottom:20px">
                 <label class="col-xs-2  control-label">
                     @Resources.ResourceCustomer.Label_NickName
@@ -73,7 +94,6 @@
                     @Html.TextBoxFor(M => M._Customer.Member.ID, new { id = "InputID", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_ID, @maxlength = "10" })
                 </div>
             </div>
-
             <div class="row" style="padding-bottom:20px">
                 <label class="col-xs-2  control-label">
                     @Resources.ResourceCustomer.Label_Email
@@ -88,7 +108,6 @@
                     @Html.TextBoxFor(M => M._Customer.Member.HomeAddr, new { id = "InputHomeAddr", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_HomeAddr, @maxlength = "200" })
                 </div>
             </div>
-
             <div class="row" style="padding-bottom:20px">
                 <label class="col-xs-2  control-label">
                     @Resources.ResourceCustomer.Label_Phone
@@ -103,7 +122,6 @@
                     @Html.TextBoxFor(M => M._Customer.Member.BirthDay, new { id = "InputBirthDay", @class = "form-control", @required = "required", @placeholder = Resources.ResourceCustomer.Label_BirthDay })
                 </div>
             </div>
-
             <div class="row" style="padding-bottom:20px">
                 <label class="col-xs-2  control-label">
                     @Resources.ResourceCustomer.Label_Remark
@@ -118,7 +136,6 @@
                     @Html.CheckBoxFor(M => M._Customer.IsEnable, new { id = "InputIsEnable" })
                 </div>
             </div>
-
             <div class="row" style="padding-bottom:20px">
                 <label class="col-xs-2  control-label">
                     @Resources.ResourceCustomer.Label_EditTime
@@ -127,16 +144,49 @@
                     @Html.TextBoxFor(M => M._Customer.Member.EditTime, new { id = "InputEditTime", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_EditTime, @readonly = "readonly" })
                 </div>
             </div>
-
+        </div>
+    </div>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            客戶權益點數
+        </div>
+        <div class="panel-body" id="_CustomerInfo">
             <div class="row" style="padding-bottom:20px">
-                <div class='col-lg-offset-2 col-xs-3'>
-                    <input type="submit" value="@Resources.ResourceCustomer.Btn_Modify" class="btn btn-info" id="Infomodify" />
+                <label class="col-xs-3  control-label">
+                    權益總值
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.Balance</label>
                 </div>
-                <div class='col-lg-offset-2 col-xs-3'>
-                    <a class="btn btn-success" id="InfoBack" href="~/Customer/Mangement">@Resources.ResourceCustomer.Btn_Back</a>
+                <label class="col-xs-3  control-label">
+                    原始保證點數
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.Pyeongchang</label>
                 </div>
             </div>
-
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-3  control-label">
+                    可動用(點數)
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.Available</label>
+                </div>
+                <label class="col-xs-3  control-label">
+                    未入帳點數
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.TranscationDraw</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-bottom:20px">
+        <div class='col-lg-offset-2 col-xs-3'>
+            <input type="submit" value="@Resources.ResourceCustomer.Btn_Modify" class="btn btn-info" id="Infomodify" />
+        </div>
+        <div class='col-lg-offset-2 col-xs-3'>
+            <a class="btn btn-success" id="InfoBack" href="~/Customer/Mangement">@Resources.ResourceCustomer.Btn_Back</a>
         </div>
     </div>
 }

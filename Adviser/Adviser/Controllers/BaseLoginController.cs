@@ -4,10 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace Adviser.Controllers
-{
-    public class BaseLoginController : Controller
-    {
+namespace Adviser.Controllers {
+    public class BaseLoginController : Controller {
         /// <summary>
         /// 執行Action 之前會做的事情
         /// 驗證登入狀態
@@ -53,5 +51,24 @@ namespace Adviser.Controllers
             items.Add(new SelectListItem { Text = Resources.Resource.Gender_Fmale, Value = Convert.ToInt32(GenderType.Fmale).ToString() });
             return items;
         }//end  GetGenderItems   
-	}
+
+        /// <summary>顧問列舉</summary>
+        /// <returns></returns>
+        public List<SelectListItem> GetAdviserItems(int AdviserSN) {
+            AdviserDAO AdviserDB = new AdviserDAO();
+            List<SelectListItem> items = new List<SelectListItem>();
+            List<ObjectBase.Adviser> ListAdviser = AdviserDB.GetListAdviser();
+            foreach (var Item in ListAdviser) {
+                if (Item.SN == AdviserSN) {
+                    items.Add(new SelectListItem { Text = Item.LastName + Item.FirstName, Value = Item.SN.ToString(), Selected = true });
+                }
+                else {
+                    items.Add(new SelectListItem { Text = Item.LastName + Item.FirstName, Value = Item.SN.ToString() });
+                }
+            }
+            return items;
+        }//end GetAdviserItems
+
+
+    }
 }

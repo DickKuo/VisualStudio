@@ -41,5 +41,7 @@ namespace ObjectBase {
         public bool IsEnable { set; get; }
 
         public int HelperSN { set; get; }
+
+        public decimal Commission { set; get; }
     }
 }
