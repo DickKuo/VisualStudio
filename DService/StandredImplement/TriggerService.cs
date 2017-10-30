@@ -78,6 +78,7 @@ namespace StandredImplement
             public const string html = ".html";
             public const string IsTest = "IsTest";
             public const string PushCount = "PushCount";
+            public const string IsWorkBueaty = "IsWorkBueaty";
         }
 
         public GetBueaty() {
@@ -139,7 +140,12 @@ namespace StandredImplement
         /// <summary>執行trigger</summary>
         /// <param name="pCurrentTime"></param>
         public override void Execute(string pCurrentTime) {
-            work_DoWork(pCurrentTime);
+            string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
+            ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
+            bool IsWork = Convert.ToBoolean(configmanage.GetValue(Default.IsWorkBueaty));
+            if (IsWork) {
+                work_DoWork(pCurrentTime);
+            }
         }
 
         /// <summary>20141219 add by Dick for 取得時間單位轉換</summary>

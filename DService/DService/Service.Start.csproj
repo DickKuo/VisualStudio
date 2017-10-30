@@ -121,7 +121,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ServiceRegister.xml" />
+    <Content Include="ServiceRegister.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StandredImplement\Service.StandredImplement.csproj">
