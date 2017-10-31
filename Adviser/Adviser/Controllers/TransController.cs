@@ -19,18 +19,23 @@ namespace Adviser.Controllers
         public ActionResult Deposit()
         {
             TransactionViewModels.TransactionViewModel ViewModel = new TransactionViewModels.TransactionViewModel();
-            DateTime BeginTime = new DateTime(DateTime.Now.Year,DateTime.Now.Month,1);
-            DateTime EndTime = BeginTime.AddMonths(1).AddDays(-1);
+            ViewModel.BeginTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            ViewModel.EndTime = ViewModel.BeginTime.AddMonths(1).AddDays(-1); 
             TranscationDAO  TransDAO =new TranscationDAO();
             ViewModel.Page = 1;
-            List<TransInfo> ListTrans = TransDAO.GetTransactionsNotAuditByTradeType(BeginTime.ToString(Default.TimeFormat), EndTime.ToString(Default.TimeFormat), 10, 1, TranscationTypes.Deposit);
+            List<TransInfo> ListTrans = TransDAO.GetTransactionsNotAuditByTradeType(ViewModel.BeginTime.ToString(Default.TimeFormat), ViewModel.EndTime.ToString(Default.TimeFormat), 10, 1, TranscationTypes.Deposit);
             ViewModel.ListTransInfo = ListTrans;
             return View(ViewModel);
         }
-
-
-        public ActionResult Search() {
-            return View();
+        
+        /// <summary></summary>
+        /// <param name="ViewModel"></param>
+        /// <returns></returns>
+        public ActionResult Search(TransactionViewModels.TransactionViewModel ViewModel) {
+            TranscationDAO TransDAO = new TranscationDAO();
+            List<TransInfo> ListTrans = TransDAO.GetTransactionsNotAuditByTradeType(ViewModel.BeginTime.ToString(Default.TimeFormat), ViewModel.EndTime.ToString(Default.TimeFormat), 10, 1, TranscationTypes.Deposit);
+            ViewModel.ListTransInfo = ListTrans;
+            return View("Deposit", ViewModel);
         }
 
         /// <summary>交易明細</summary>

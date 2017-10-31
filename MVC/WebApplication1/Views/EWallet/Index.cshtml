@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = Resources.Menu.Menu_1003;
 }
-
 <h2>@Resources.Menu.Menu_1003</h2>
 <hr>
 
@@ -118,16 +117,16 @@
                                     Result = "獲利";
                                     break;
                             }
-                                }
-                                @Result
-                            </td>
-                            <td>@(Convert.ToInt32(Item.TradeType) == 1 ? Item.Detail.Draw : 0 - Item.Detail.Draw)</td>
-                            <td>@Item.Detail.Fee</td>
-                            <td>0</td>
-                            <td>@(Resources.Resource.ResourceManager.GetString("AuditTpyes_" + Item.AuditState.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
-                            <td>@(Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete) == "0001/01/01 00:00:00" ? string.Empty : Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete))</td>
-                            <td>
-                                @{
+                                    }
+                                    @Result
+                                </td>
+                                <td>@(Convert.ToInt32(Item.TradeType) == 1 ? Item.Detail.Draw : 0 - Item.Detail.Draw)</td>
+                                <td>@Item.Detail.Fee</td>
+                                <td>0</td>
+                                <td>@(Resources.Resource.ResourceManager.GetString("AuditTpyes_" + Item.AuditState.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
+                                <td>@(Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete) == "0001/01/01 00:00:00" ? string.Empty : Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete))</td>
+                                <td>
+                                    @{
                             switch (Convert.ToInt32(Item.TradeType)) {
                                 case 1:
                                     <a href="~/Deposit/Index?TransKey=@Item.TransKey"><i class='glyphicon glyphicon-search'></i></a>
@@ -140,10 +139,10 @@
 
                                     break;
                             }
-}
+                                    }
 
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                             RowID++;
                         }
 

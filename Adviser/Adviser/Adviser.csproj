@@ -294,6 +294,14 @@
     <Content Include="Scripts\Code\RegisterJs.js" />
     <Content Include="Scripts\Code\ReportJs.js" />
     <Content Include="Scripts\Code\TradeJs.js" />
+    <Content Include="Scripts\Code\TransDetailJs.js" />
+    <Content Include="Scripts\ColorBox\colorbox.css" />
+    <Content Include="Scripts\ColorBox\images\border.png" />
+    <Content Include="Scripts\ColorBox\images\controls.png" />
+    <Content Include="Scripts\ColorBox\images\loading.gif" />
+    <Content Include="Scripts\ColorBox\images\loading_background.png" />
+    <Content Include="Scripts\ColorBox\images\overlay.png" />
+    <Content Include="Scripts\ColorBox\jquery.colorbox-min.js" />
     <Content Include="Scripts\DatePicker\datepicker.common.js" />
     <Content Include="Scripts\DatePicker\datepicker.esm.js" />
     <Content Include="Scripts\DatePicker\datepicker.js" />
@@ -381,6 +389,7 @@
     <Content Include="Views\Report\_ReportTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\ColorBox\" />
     <Folder Include="Views\AjaxFunction\" />
     <Folder Include="Views\BaseLogin\" />
   </ItemGroup>

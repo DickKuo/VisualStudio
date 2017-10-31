@@ -7,7 +7,7 @@
 
 <h2>@Resources.ResourcePageTitle.Title_TransactionDetail</h2>
 <hr>
-
+<script src="~/Scripts/Code/TransDetailJs.js"></script>
 
 @using (Html.BeginForm("AuditTrans", "Trans", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
     <div class="panel panel-primary">
@@ -20,7 +20,7 @@
                     @Resources.ResourceCustomer.Label_Account
                 </label>
                 <div class='col-xs-3'>
-                    @Html.TextBoxFor(M => M._Customer.Account, new { id = "InputAccount", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                    @Html.TextBoxFor(M => M._Customer.Account, new { id = "InputAccount", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_Account, @readonly = "readonly" })
                 </div>
                 <label class="col-lg-offset-1 col-xs-2  control-label">
                     @Resources.ResourceCustomer.Label_Audit
@@ -68,13 +68,13 @@
                     @Resources.ResourceTransaction.Label_TransactionType
                 </label>
                 <div class='col-xs-3'>
-                    @Html.TextBoxFor(M => M.Trans.TradeType, new { id = "InputTradeType", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                    @Html.TextBoxFor(M => M.Trans.TradeType, new { id = "InputTradeType", @class = "form-control", @placeholder = Resources.ResourceTransaction.Label_TransactionType, @readonly = "readonly" })
                 </div>
                 <label class="col-lg-offset-1 col-xs-2  control-label">
                     @Resources.ResourceTransaction.Label_Draw
                 </label>
                 <div class='col-xs-3'>
-                    @Html.TextBoxFor(M => M.Trans.Detail.Draw, new { id = "InputLastName", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_LastName, @readonly = "readonly" })
+                    @Html.TextBoxFor(M => M.Trans.Detail.Draw, new { id = "InputLastName", @class = "form-control", @placeholder = Resources.ResourceTransaction.Label_Draw, @readonly = "readonly" })
                 </div>
             </div>
 
@@ -83,13 +83,13 @@
                     @Resources.ResourceTransaction.Label_BankName
                 </label>
                 <div class='col-xs-3'>
-                    @Html.TextBoxFor(M => M.Trans.Detail.BankName, new { id = "InputBankName", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                    @Html.TextBoxFor(M => M.Trans.Detail.BankName, new { id = "InputBankName", @class = "form-control", @placeholder = Resources.ResourceTransaction.Label_BankName, @readonly = "readonly" })
                 </div>
                 <label class="col-lg-offset-1 col-xs-2  control-label">
                     @Resources.ResourceTransaction.Label_BranchName
                 </label>
                 <div class='col-xs-3'>
-                    @Html.TextBoxFor(M => M.Trans.Detail.BranchName, new { id = "InputBranchName", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_LastName, @readonly = "readonly" })
+                    @Html.TextBoxFor(M => M.Trans.Detail.BankCode, new { id = "InputBankCode", @class = "form-control", @placeholder = Resources.ResourceTransaction.Label_BranchName, @readonly = "readonly" })
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
                     @Resources.ResourceTransaction.Label_BankAccount
                 </label>
                 <div class='col-xs-3'>
-                    @Html.TextBoxFor(M => M.Trans.Detail.BankAccount, new { id = "InputBankAccount", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_FirstName, @readonly = "readonly" })
+                    @Html.TextBoxFor(M => M.Trans.Detail.BankAccount, new { id = "InputBankAccount", @class = "form-control", @placeholder = Resources.ResourceTransaction.Label_BankAccount, @readonly = "readonly" })
                 </div>
                 <label class="col-lg-offset-1 col-xs-2  control-label">
                     @Resources.Resource.Register_Remark
@@ -108,6 +108,22 @@
                 </div>
             </div>
 
+            <div class="row" style="padding-bottom:20px">
+                @if (Model.Trans.AttachmentsList.Count > 0) {
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", Model.Trans.AttachmentsList[0].AttName);
+                    <img src="@imgSrc" onclick="ShowImage(this.getAttribute('src'))" style="max-width: 100px; max-height: 100px; " class="col-md-offset-3" />
+                }
+
+                @if (Model.Trans.AttachmentsList.Count > 1) {
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", Model.Trans.AttachmentsList[1].AttName);
+                    <img src="@imgSrc" onclick="ShowImage(this.getAttribute('src'))" style="max-width: 100px; max-height: 100px; " class="col-md-offset-3" />
+                }
+
+                @if (Model.Trans.AttachmentsList.Count > 2) {
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", Model.Trans.AttachmentsList[2].AttName);
+                    <img src="@imgSrc" onclick="ShowImage(this.getAttribute('src'))" style="max-width: 100px; max-height: 100px;" class="col-xs-3" />
+                }
+            </div>
 
             <div class="row" style="padding-bottom:20px">
                 <div class='col-lg-offset-2 col-xs-3'>

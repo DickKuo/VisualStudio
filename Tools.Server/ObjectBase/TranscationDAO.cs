@@ -77,6 +77,8 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.TransactionSN, SN);
                 Transaction _Result = USP.ExeProcedureGetObject(SP.GetTranscationBySN, new Transaction()) as Transaction;
                 _Result.Detail = GetDetailByTransactionSN(SN);
+                AttachmentsDAO AttachmentsDB = new AttachmentsDAO();
+                _Result.AttachmentsList = AttachmentsDB.GetAddAttachmentsByTransSN(_Result.SN);
                 return _Result;
             }
             catch (Exception ex) {
@@ -133,10 +135,12 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.EndTime, EndTime);
                 List<Transaction> ListTransaction = USP.ExeProcedureGetObjectList(SP.GetTop10TransactionByCustomerSN, new Transaction()) as List<Transaction>;
                 TranscationDAO DAO =new TranscationDAO();
+                AttachmentsDAO AttachmentsDB = new AttachmentsDAO();
                 foreach (Transaction Tran in ListTransaction)
                 {
                     TransactionDetail Detail = DAO.GetDetailByTransactionSN(Tran.SN);
                     Tran.Detail = Detail;
+                    Tran.AttachmentsList = AttachmentsDB.GetAddAttachmentsByTransSN(Tran.SN);
                 }
                 return ListTransaction;
             }
@@ -170,9 +174,11 @@ namespace ObjectBase {
                 if (USP.OutParameterValues.Any()) {
                     MaxPage = Convert.ToInt32(USP.OutParameterValues[0]);
                 }
+                AttachmentsDAO AttachmentsDB = new AttachmentsDAO();
                 foreach (Transaction Tran in ListTransaction) {
                     TransactionDetail Detail = DAO.GetDetailByTransactionSN(Tran.SN);
                     Tran.Detail = Detail;
+                    Tran.AttachmentsList = AttachmentsDB.GetAddAttachmentsByTransSN(Tran.SN);
                 }
                 return ListTransaction;
             }
@@ -218,8 +224,10 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.Page, Page);
                 List<Transaction> ListTransaction = USP.ExeProcedureGetObjectList(SP.GetTop10TransactionByCustomerSN, new Transaction()) as List<Transaction>;
                 TranscationDAO DAO = new TranscationDAO();
+                AttachmentsDAO AttachmentsDB = new AttachmentsDAO();
                 foreach (Transaction Tran in ListTransaction) {
                     TransactionDetail Detail = DAO.GetDetailByTransactionSN(Tran.SN);
+                    Tran.AttachmentsList = AttachmentsDB.GetAddAttachmentsByTransSN(Tran.SN);
                     Tran.Detail = Detail;
                 }
                 return ListTransaction;
