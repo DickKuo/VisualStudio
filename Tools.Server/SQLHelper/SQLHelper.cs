@@ -592,8 +592,17 @@ namespace SQLHelper {
     /// <summary>註冊檔物件</summary>
     public  class ObjectUtility
     {
-        private const string CC_HKEY_PATH3 = ".DEFAULT\\SOFTWARE\\DICK\\Server";
+        private string CC_HKEY_PATH3 =string.Empty;
         public const string LocalTempPath = "~/temp/";
+
+
+        public ObjectUtility()
+        {
+            if (!string.IsNullOrEmpty(Settings1.Default.CC_HKEY_PATH3))
+            {
+                CC_HKEY_PATH3 = Settings1.Default.CC_HKEY_PATH3;
+            }
+        }
 
         /// <summary>抓取註冊檔資訊</summary>
         /// <param name="KeyName"></param>
