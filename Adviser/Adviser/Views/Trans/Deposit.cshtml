@@ -4,7 +4,8 @@
 }
 <h2>@Resources.Menu.Menu_3002</h2>
 @using (Html.BeginForm("Search", "Trans")) {
-    <div class="panel panel-info">
+    <input hidden="hidden" name="TransType" value="@Model.TransType"/>
+        <div class="panel panel-info">
         <div class="panel-heading">基本查詢</div>
         <div class="panel-body">
             <div class="container">

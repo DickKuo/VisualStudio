@@ -22,7 +22,7 @@
             foreach (var Item in Model.ListTransInfo) {
                 <tr>
                     <th scope="row">@RowID</th>
-                    <td><a href="~/Trans/TransDetail?TransSN=@Item.TranSN">@Item.Account</a></td>
+                    <td><a href="~/Trans/TransDetail?TransSN=@Item.TranSN&TransType=@Model.TransType">@Item.Account</a></td>
                     <td>@Item.NickName</td>
                     <td>@(Resources.ResourceTransaction.ResourceManager.GetString("TransType_" + Item.TradeType.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
                     <td>@Item.Draw</td>
