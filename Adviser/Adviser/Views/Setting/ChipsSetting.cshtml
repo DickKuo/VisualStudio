@@ -1,0 +1,14 @@
+﻿@model Adviser.Models.ViewModels.SettingViewModels.ChipsSettingViewModel
+@{
+    ViewBag.Title = "ChipsSetting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>設定碼數</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading"></div>
+    <div class="panel-body" id="_MangementTable">
+        @Html.Partial("_ChipsSettingPartialView", @Model)
+    </div>
+</div>

@@ -95,17 +95,17 @@
     <div class="container body-content">        
         @RenderBody()             
     </div>
-    <div class="navbar-fixed-bottom" style="background-color: #c2c2c2; height:50px">
-
-        <div class="col-md-10">
-            Customer
-        </div>
-        <div class="col-md-2">
-            版本號：1.0.0.1
-        </div>
-    </div>   
+    <hr />
+    <footer>
+       <div class="col-md-10">
+           <p>  CopyRight&copy; Since 2016-2017  Desing by Dick </p> 
+       </div>
+       <div class="col-md-2">
+           版本號：1.0.0.1
+       </div>        
+    </footer>
     @RenderSection("scripts", required: false)
     @Html.RenderJavaScriptVars()
-    @Html.RenderJavaScripts()
+    @Html.RenderJavaScripts()   
 </body>
 </html>

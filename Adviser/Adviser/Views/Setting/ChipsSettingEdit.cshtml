@@ -1,0 +1,60 @@
+﻿@model Adviser.Models.ViewModels.SettingViewModels.ChipsSettingViewModel
+
+@{
+    ViewBag.Title = "ChipsSettingEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>設定碼數</h2>
+
+<hr />
+
+@using (Html.BeginForm("ChipsSettingEditPost", "Setting"))
+{
+    <input hidden="hidden" name="_Customer.Account" value="@Model._Customer.Account">
+    <div class="panel panel-primary">
+        <div class="panel-heading"></div>
+        <div class="panel-body" id="_MangementTable">
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-1  control-label">
+                    @Resources.ResourceCustomer.Label_Account
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Account, new { id = "InputAccount", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_Account, @maxlength = "20", @readonly = "readonly" })
+                </div>
+                <label class="col-xs-1 control-label">
+                    @(Resources.ResourceCustomer.Label_LastName + Resources.ResourceCustomer.Label_FirstName)
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.FirstName, new { id = "InputName", @class = "form-control", @placeholder = (Resources.ResourceCustomer.Label_LastName + Resources.ResourceCustomer.Label_FirstName), @maxlength = "50", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-1  control-label">
+                    @Resources.ResourceCustomer.Label_NickName
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Member.NickName, new { id = "InputAccount", @class = "form-control", @placeholder = Resources.ResourceCustomer.Label_NickName, @maxlength = "20", @readonly = "readonly" })
+                </div>
+                <label class="col-xs-1 control-label">
+                    碼數
+                </label>
+                <div class='col-xs-3'>
+                    @Html.TextBoxFor(M => M._Customer.Chips, new { id = "InputChips", @class = "form-control", @placeholder = "碼數" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-bottom:20px">
+        <div class='col-lg-offset-2 col-xs-3'>
+            <input type="submit" value="@Resources.Resource.Btn_Audit" class="btn btn-info" id="Infomodify" />
+        </div>
+        <div class='col-lg-offset-2 col-xs-3'>
+            <a class="btn btn-success" id="InfoBack" href="~/Setting/ChipsSetting">@Resources.ResourceCustomer.Btn_Back</a>
+        </div>
+    </div>
+
+}

@@ -48,7 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="ObjectBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Dropbox\Export\ObjectBase.dll</HintPath>
     </Reference>
     <Reference Include="SQLHelper, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -234,6 +234,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="Controllers\TradeController.cs" />
     <Compile Include="Controllers\TransController.cs" />
     <Compile Include="Global.asax.cs">
@@ -253,6 +254,7 @@
     <Compile Include="Models\ViewModels\MenuManagmentViewModels.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModels.cs" />
     <Compile Include="Models\ViewModels\ReportViewModels.cs" />
+    <Compile Include="Models\ViewModels\SettingViewModels.cs" />
     <Compile Include="Models\ViewModels\TradeViewModels.cs" />
     <Compile Include="Models\ViewModels\TransactionViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -388,6 +390,9 @@
     <Content Include="Views\Trans\_TransactonTablePartial.cshtml" />
     <Content Include="Views\Report\RecordReport.cshtml" />
     <Content Include="Views\Report\_ReportTable.cshtml" />
+    <Content Include="Views\Setting\ChipsSetting.cshtml" />
+    <Content Include="Views\Setting\_ChipsSettingPartialView.cshtml" />
+    <Content Include="Views\Setting\ChipsSettingEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ColorBox\" />

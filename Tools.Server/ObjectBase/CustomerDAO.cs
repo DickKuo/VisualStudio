@@ -14,6 +14,7 @@ namespace ObjectBase {
             public const string GetCustomerListByPage = "GetCustomerListByPage";
             public const string UpdateCustomerByAccount = "UpdateCustomerByAccount";
             public const string SearchCustomerList = "SearchCustomerList";
+            public const string UpdateCustomerChipsByAccount = "UpdateCustomerChipsByAccount";
         }
 
         private class SPParameter {
@@ -42,6 +43,7 @@ namespace ObjectBase {
             public const string Name = "Name";
             public const string Commission = "Commission";
             public const string HelperSN = "HelperSN";
+            public const string Chips = "Chips";
         }
 
         /// <summary>加入客戶</summary>
@@ -207,6 +209,17 @@ namespace ObjectBase {
             else {
                 return -1;
             }
+        }
+
+        /// <summary></summary>
+        /// <param name="_Customer"></param>
+        /// <returns></returns>
+        public int UpdateCustomerChipsByAccount(Customer _Customer)
+        {
+            USP.AddParameter(SPParameter.Account, _Customer.Account);
+            USP.AddParameter(SPParameter.Chips, _Customer.Chips);
+            int Result = USP.ExeProcedureHasResultReturnCode(SP.UpdateCustomerChipsByAccount);
+            return Result;
         }
 
         /// <summary>依條件搜尋客戶列表</summary>
