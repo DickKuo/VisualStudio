@@ -105,7 +105,7 @@ namespace Adviser.Controllers
             _TradeRecord.OP = ViewModel.Op;
             _TradeRecord.Type = ViewModel.Type;
             _TradeRecord.Price = Convert.ToDecimal(ViewModel.Clinch);
-            _TradeRecord.CustomerSN = LoginHelper.GetLoginInfo().Adviser.SN;
+            _TradeRecord.AdviserSN = LoginHelper.GetLoginInfo().Adviser.SN;
             int Result = 0;
             Result = _TradDAO.AddTradeRecord(_TradeRecord);
             if (Result > 0) {

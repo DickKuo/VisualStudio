@@ -42,6 +42,7 @@ namespace ObjectBase {
             public const string AuditAdviserSN = "AuditAdviserSN";
             public const string AttachmentsParamter = "AttachmentsParamter";
             public const string MaxPage = "MaxPage";
+            public const string Commission = "Commission";
 
         }
 
@@ -56,6 +57,7 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.BankAccount, _Transaction.Detail.BankAccount);
                 USP.AddParameter(SParameter.BankCode, _Transaction.Detail.BankCode);
                 USP.AddParameter(SParameter.Draw, _Transaction.Detail.Draw);
+                USP.AddParameter(SParameter.Commission, _Transaction.Detail.Commission);
                 USP.AddParameter(SParameter.Remark, string.IsNullOrEmpty(_Transaction.Detail.Remark) ? string.Empty : _Transaction.Detail.Remark);                
                 DataTable AttachmentTable = ObjectUtility.ToDataTable(_Transaction.AttachmentsList, Attachments.GetTableTypeColumn());
                 USP.AddParameter(SParameter.AttachmentsParamter, AttachmentTable); 

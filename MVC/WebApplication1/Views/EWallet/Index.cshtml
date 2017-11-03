@@ -120,15 +120,34 @@
                                     }
                                     @Result
                                 </td>
-                                <td>@(Convert.ToInt32(Item.TradeType) == 1 ? Item.Detail.Draw : 0 - Item.Detail.Draw)</td>
-                                <td>@Item.Detail.Fee</td>
-                                <td>0</td>
-                                <td>@(Resources.Resource.ResourceManager.GetString("AuditTpyes_" + Item.AuditState.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
-                                <td>@(Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete) == "0001/01/01 00:00:00" ? string.Empty : Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete))</td>
                                 <td>
                                     @{
+                            string DrawResult = string.Empty;
                             switch (Convert.ToInt32(Item.TradeType)) {
                                 case 1:
+                                    DrawResult = Item.Detail.Draw.ToString();
+                                    break;
+                                case 2:
+                                    DrawResult = (0 - Item.Detail.Draw).ToString();
+                                    break;
+                                default:
+                                    DrawResult = Item.Detail.Draw.ToString();
+                                    break;
+                            }
+                                }
+                                @DrawResult
+                            </td>
+                            <td>@Item.Detail.Fee</td>
+                            <td>
+                                @Item.Detail.Commission
+                            </td>
+                            <td>@(Resources.Resource.ResourceManager.GetString("AuditTpyes_" + Item.AuditState.ToString(), System.Threading.Thread.CurrentThread.CurrentUICulture))</td>
+                            <td>@(Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete) == "0001/01/01 00:00:00" ? string.Empty : Item.AuditTime.ToString(CommTool.BaseConst.TimeFormatComplete))</td>
+                            <td>
+                                @{
+                            switch (Convert.ToInt32(Item.TradeType)) {
+                                case 1:
+                                case 4:
                                     <a href="~/Deposit/Index?TransKey=@Item.TransKey"><i class='glyphicon glyphicon-search'></i></a>
                                     break;
                                 case 2:
@@ -139,10 +158,10 @@
 
                                     break;
                             }
-                                    }
+                                }
 
-                                </td>
-                            </tr>
+                            </td>
+                        </tr>
                             RowID++;
                         }
 

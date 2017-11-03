@@ -87,10 +87,13 @@ namespace UnitTest {
         }
 
         static void Main(string[] args) {
-            TranscationDAO DAO = new TranscationDAO();
-            CustomerDAO _CustDAO = new CustomerDAO();
-            Customer _Customer = new Customer();
-            
+            //TranscationDAO DAO = new TranscationDAO();
+            //CustomerDAO _CustDAO = new CustomerDAO();
+            //Customer _Customer = new Customer();
+
+            TradeRecordDAO TradDB = new TradeRecordDAO();
+
+            TradDB.CalculateResultReport();
         }
         
         private static bool IsQeury { set; get; }

@@ -37,6 +37,6 @@ namespace Stock {
 
         public bool IsMail { set; get; }
 
-        public int CustomerSN { set; get; }
+        public int AdviserSN { set; get; }
     }
 }

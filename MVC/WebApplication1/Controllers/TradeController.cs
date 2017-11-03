@@ -97,25 +97,25 @@ namespace WebApplication1.Controllers
         /// <summary>下單</summary>
         /// <param name="ViewModel"></param>
         /// <returns></returns>
-        public dynamic AddTrade(TradeViewModels.TradeViewModel ViewModel) {
-            TradeRecordDAO _TradDAO = new TradeRecordDAO();
-            TradeRecord _TradeRecord = new TradeRecord();
-            _TradeRecord.Contract = ViewModel.Contract;
-            _TradeRecord.DueMonth = ViewModel.DueMonth;
-            _TradeRecord.Lot = ViewModel.Lot;
-            _TradeRecord.OP = ViewModel.Op;
-            _TradeRecord.Type = ViewModel.Type;
-            _TradeRecord.Price = Convert.ToDecimal(ViewModel.Clinch);
-            _TradeRecord.CustomerSN = LoginHelper.GetLoginInfo().Customer.SN;
-            int Result = 0;
-            Result = _TradDAO.AddTradeRecord(_TradeRecord);
-            if (Result > 0) {
-                return "OK";
-            }
-            else {
-                return "Error";
-            }
-        }//end AddTrade
+        //public dynamic AddTrade(TradeViewModels.TradeViewModel ViewModel) {
+        //    TradeRecordDAO _TradDAO = new TradeRecordDAO();
+        //    TradeRecord _TradeRecord = new TradeRecord();
+        //    _TradeRecord.Contract = ViewModel.Contract;
+        //    _TradeRecord.DueMonth = ViewModel.DueMonth;
+        //    _TradeRecord.Lot = ViewModel.Lot;
+        //    _TradeRecord.OP = ViewModel.Op;
+        //    _TradeRecord.Type = ViewModel.Type;
+        //    _TradeRecord.Price = Convert.ToDecimal(ViewModel.Clinch);
+        //    _TradeRecord.CustomerSN = LoginHelper.GetLoginInfo().Customer.SN;
+        //    int Result = 0;
+        //    Result = _TradDAO.AddTradeRecord(_TradeRecord);
+        //    if (Result > 0) {
+        //        return "OK";
+        //    }
+        //    else {
+        //        return "Error";
+        //    }
+        //}//end AddTrade
 
 
         /// <summary>取得交易結算週期</summary>

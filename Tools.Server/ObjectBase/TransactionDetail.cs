@@ -19,6 +19,8 @@ namespace ObjectBase {
 
         public decimal Draw { set; get; }
 
+        public decimal Commission { set; get; }
+        
         public decimal Fee { set; get; }
 
         public string Remark { set; get; }

@@ -42,7 +42,7 @@ namespace ObjectBase {
 
         public int HelperSN { set; get; }
 
-        public decimal Commission { set; get; }
+        public decimal CommissionRate { set; get; }
 
         public decimal Chips { set; get; }
     }

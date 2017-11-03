@@ -15,6 +15,7 @@ namespace ObjectBase {
             public const string UpdateCustomerByAccount = "UpdateCustomerByAccount";
             public const string SearchCustomerList = "SearchCustomerList";
             public const string UpdateCustomerChipsByAccount = "UpdateCustomerChipsByAccount";
+            public const string GetCustomerByHelperSN = "GetCustomerByHelperSN";
         }
 
         private class SPParameter {
@@ -41,7 +42,7 @@ namespace ObjectBase {
             public const string Remark = "Remark";
             public const string IsEnable = "IsEnable";
             public const string Name = "Name";
-            public const string Commission = "Commission";
+            public const string CommissionRate = "CommissionRate";
             public const string HelperSN = "HelperSN";
             public const string Chips = "Chips";
         }
@@ -199,7 +200,7 @@ namespace ObjectBase {
             USP.AddParameter(SPParameter.BirthDay, _Customer.Member.BirthDay);
             USP.AddParameter(SPParameter.HomeAddr, _Customer.Member.HomeAddr);
             USP.AddParameter(SPParameter.IsEnable, _Customer.IsEnable);
-            USP.AddParameter(SPParameter.Commission, _Customer.Commission);
+            USP.AddParameter(SPParameter.CommissionRate, _Customer.CommissionRate);
             USP.AddParameter(SPParameter.HelperSN, _Customer.HelperSN);
             USP.AddParameter(SPParameter.Remark, _Customer.Member.Remark == null ? string.Empty : _Customer.Member.Remark);
             DataTable dt = USP.ExeProcedureGetDataTable(SP.UpdateCustomerByAccount);
@@ -234,6 +235,19 @@ namespace ObjectBase {
             List<Customer> ResultCustomer =new List<Customer>();
             foreach (Customer Item in CustomerList)
             {
+                ResultCustomer.Add(CombiCustomer(Item));
+            }
+            return ResultCustomer;
+        }
+
+        /// <summary>取的顧問底下的客戶</summary>
+        /// <param name="HelperSN"></param>
+        /// <returns></returns>
+        public List<Customer> GetCustomerByHelperSN(int HelperSN) {
+            USP.AddParameter(SPParameter.HelperSN, HelperSN);
+            List<Customer> CustomerList = USP.ExeProcedureGetObjectList(SP.GetCustomerByHelperSN, new Customer());
+            List<Customer> ResultCustomer = new List<Customer>();
+            foreach (Customer Item in CustomerList) {
                 ResultCustomer.Add(CombiCustomer(Item));
             }
             return ResultCustomer;
