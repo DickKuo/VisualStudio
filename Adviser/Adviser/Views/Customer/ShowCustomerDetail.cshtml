@@ -7,6 +7,17 @@
 <script src="~/Scripts/Code/CustomerDetail.js"></script>
 <h2>@Resources.ResourcePageTitle.Title_CustomerDetail</h2>
 <hr>
+
+<div class="alert well">
+    <h4 class="text-danger">注意</h4>
+    <ul>
+        <li><p>原始保證點數 : 未平昌的點數</p></li>
+        <li><p>可動用點數 : 表示可以出金或操作的點數。</p></li>
+        <li><p>未入帳點數: 表示入金或出金未審核的點數。</p></li>
+        <li><p>權益總值 : 原始保證點數及可動用點數總和</p></li>
+    </ul>
+</div>
+
 @using (Html.BeginForm("CustomerModify", "Customer", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
     <div class="panel panel-primary">
         <div class="panel-heading">
