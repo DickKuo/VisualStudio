@@ -546,10 +546,16 @@ namespace SQLHelper {
                     value = string.Empty;
                 }
             }
-            Scmd.Parameters.Add(parameterName, value);
+            SqlParameter SParamter = new SqlParameter(parameterName, value);
             if (Direction == System.Data.ParameterDirection.Output) {
+                SParamter.Direction = System.Data.ParameterDirection.Output;
                 _OutParameter.Add(parameterName);
             }
+            if (Direction == System.Data.ParameterDirection.InputOutput) {
+                SParamter.Direction = System.Data.ParameterDirection.InputOutput;
+                _OutParameter.Add(parameterName);
+            }
+            Scmd.Parameters.Add(SParamter);           
         }
         
     }
