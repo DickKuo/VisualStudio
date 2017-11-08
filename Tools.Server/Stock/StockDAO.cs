@@ -1021,8 +1021,8 @@ namespace Stock {
                                     dt = USP.ExeProcedureGetDataTable(SP.GetMaxVolume);
                                 }
                                 else {
-                                    USP.AddParameter(SPParameter.OP, OP);
-                                    USP.AddParameter(SPParameter.DueMonth, _Calendar.NearMonth1);
+                                    //USP.AddParameter(SPParameter.OP, OP);
+                                    //USP.AddParameter(SPParameter.DueMonth, _Calendar.NearMonth1);
                                     dt = USP.ExeProcedureGetDataTable(SP.GetMaxNumberOfContracts);
                                     #region 最大未平昌點數過小時，就使用最大交易量作為基準
                                     if (dt != null && dt.Rows.Count > 0)
@@ -1033,6 +1033,11 @@ namespace Stock {
                                             USP.AddParameter(SPParameter.DueMonth, _Calendar.NearMonth1);
                                             dt = USP.ExeProcedureGetDataTable(SP.GetMaxVolume);
                                         }
+                                    }
+                                    else {
+                                        USP.AddParameter(SPParameter.OP, OP);
+                                        USP.AddParameter(SPParameter.DueMonth, _Calendar.NearMonth1);
+                                        dt = USP.ExeProcedureGetDataTable(SP.GetMaxVolume);
                                     }
                                     #endregion
                                 }
