@@ -30,7 +30,7 @@ namespace WebApplication1.Controllers
             LoginInfo Info = LoginHelper.GetLoginInfo();
             TranscationDAO DAO = new TranscationDAO();
             Model.TransactionList = DAO.GetTransactionByCustomerSNPages(Model.BeginTime.ToString(Default.DateTimeFormat), Model.EndTime.ToString(Default.DateTimeFormat), Info.Customer.SN, Model.Page, Model.Range, Convert.ToInt32(Model.TradeType), Convert.ToInt32(Model.AuditState), out MaxPage);
-            Model.MaxPage = DAO.GetTranscationPagesByDueDay(Model.BeginTime.ToString(Default.DateTimeFormat), Model.EndTime.ToString(Default.DateTimeFormat), Info.Customer.SN, 10);
+            Model.MaxPage = MaxPage; // DAO.GetTranscationPagesByDueDay(Model.BeginTime.ToString(Default.DateTimeFormat), Model.EndTime.ToString(Default.DateTimeFormat), Info.Customer.SN, 10);
         }
 
         /// <summary>換頁</summary>
