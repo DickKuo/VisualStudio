@@ -40,11 +40,13 @@ namespace Adviser.Controllers
             DateTime TimeEnd = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, 1).AddDays(-1);
             DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), 10, 1);
             ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
-            TradeModel.BeginTime = NowTime;
-            TradeModel.EndTime = TimeEnd;
-            TradeModel.Page = 1;
-            MachResult(dt, TradeModel);
-            TradeModel.MaxPage = TradeDAO.GetTradeRecordPagesByDueDay(NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), 10);
+            if (dt != null && dt.Rows.Count > 0) {
+                TradeModel.BeginTime = NowTime;
+                TradeModel.EndTime = TimeEnd;
+                TradeModel.Page = 1;
+                MachResult(dt, TradeModel);
+                TradeModel.MaxPage = Convert.ToInt32(dt.Rows[0]["MaxPage"]);
+            }
             return View(TradeModel);
         }//end RecordReport
 
@@ -88,7 +90,9 @@ namespace Adviser.Controllers
                 TradeModel.BeginTime = _Request.BeginTime;
                 TradeModel.EndTime = _Request.EndTime;
                 TradeModel.Page = 1;
-                TradeModel.MaxPage = TradeDAO.GetTradeRecordPagesByDueDay(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 10);
+                if (dt != null && dt.Rows.Count > 0) {
+                    TradeModel.MaxPage = Convert.ToInt32(dt.Rows[0]["MaxPage"]);
+                }                
             }
             return View("RecordReport", TradeModel);
         }//end SearchRecord
@@ -102,7 +106,7 @@ namespace Adviser.Controllers
                 TradeModel.BeginTime = _Request.BeginTime;
                 TradeModel.EndTime = _Request.EndTime;
                 TradeModel.Page = _Request.Page;
-                TradeModel.MaxPage = TradeDAO.GetTradeRecordPagesByDueDay(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 10);
+                TradeModel.MaxPage = Convert.ToInt32(dt.Rows[0]["MaxPage"]);
             }
             return PartialView("_ReportTable", TradeModel);
         }//end ChagePage

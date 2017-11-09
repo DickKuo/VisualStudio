@@ -4,7 +4,7 @@ $(function () {
     $(".span_c1ick").on("click", function () {
         if (!$(this).hasClass("active"))
         {
-            CahgePage($(this).parent().attr('id'));
+          CahgePage($(this).parent().attr('id'));
         }      
     });
 
@@ -29,8 +29,8 @@ $(function () {
             url: Url + "ChagePage",
             //不用傳參數的話，放個大括弧就好
             data: {
-                BeginTime: $('#datetimepicker4').val(),
-                EndTime: $('#datetimepicker5').val(),
+                BeginTime: $('#BeginTimePicker').val(),
+                EndTime: $('#EndTimePicker').val(),
                 Page: Page
             },
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
