@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var Url = "http://192.168.1.127:8022/Setting/";    
+    var Url = "Setting/";    
 
     if ($("#hideMinimunLotLimit").val() == 999999) {       
         $("#SettingLot").hide();
