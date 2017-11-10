@@ -347,7 +347,7 @@ namespace Stock {
                 Trans.Detail = new TransactionDetail();
                 Trans.CustomerSN = Item.SN;
                 Trans.TradeTime = DateTime.Now;
-                Trans.TradeType = TranscationTypes.Dividend;
+                Trans.TradeType = Bouns > 0 ? TranscationTypes.Dividend : TranscationTypes.loss;
                 Trans.Detail.BankName =" ";
                 Trans.Detail.BankAccount = " ";
                 Trans.Detail.BankCode = " ";

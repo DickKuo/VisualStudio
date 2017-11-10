@@ -12,8 +12,8 @@ namespace ObjectBase {
 
         Bonus = 3,          //獎金
 
-        Dividend = 4        //紅利
+        Dividend = 4 ,      //紅利
 
-    }
-    
+        loss =5             //損失
+    }    
 }
