@@ -21,6 +21,7 @@ namespace Adviser.Controllers
             Adviser.Models.ViewModels.SettingViewModels.ChipsSettingViewModel ViewModel = new Models.ViewModels.SettingViewModels.ChipsSettingViewModel();
             CustomerDAO _CustomerDAO = new CustomerDAO();
             ViewModel.ListCustomer = _CustomerDAO.GetCustomerListByPage(1, 10);
+
             return View(ViewModel);
             
         }
@@ -30,6 +31,9 @@ namespace Adviser.Controllers
         {            
             CustomerDAO _CustomerDAO = new CustomerDAO();
             ViewModel._Customer = _CustomerDAO.GetCustomerBySN(ViewModel.CustomerSN);
+            EWalletDAO WalletDAO = new EWalletDAO();
+            EWallet Wallet = WalletDAO.GetEWalletByCustomerSN(ViewModel._Customer.SN);
+            ViewModel._EWallet = Wallet;
             return View(ViewModel);
         }
 

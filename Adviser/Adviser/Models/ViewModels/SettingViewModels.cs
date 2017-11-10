@@ -16,6 +16,8 @@ namespace Adviser.Models.ViewModels
 
             public List<Customer> ListCustomer { set; get; }
 
+            public EWallet _EWallet { set; get; }
+
             public ChipsSettingViewModel()
             {
                 ListCustomer = new List<Customer>();

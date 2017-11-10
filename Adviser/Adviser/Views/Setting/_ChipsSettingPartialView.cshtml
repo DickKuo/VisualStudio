@@ -6,6 +6,7 @@
         <tr>
             <th>序</th>
             <th>帳號</th>
+            <th>客戶設定碼數</th>
             <th>暱稱</th>
             <th>姓名</th>
             <th>碼數</th>             
@@ -22,6 +23,7 @@
                 <tr>
                     <th scope="row" id="@Item.SN">@RowID</th>
                     <td><a href="~/Setting/ChipsSettingEdit?CustomerSN=@Item.SN">@Item.Account</a></td>
+                    <td>@Item.MinimunLotLimit</td>
                     <td>@Item.Member.NickName</td>
                     <td>@(Item.Member.LastName + Item.Member.FirstName)</td>
                     <td>@Item.Chips</td>

@@ -48,6 +48,52 @@
         </div>
     </div>
 
+      <div class="panel panel-success">
+        <div class="panel-heading">
+            客戶權益點數
+        </div>
+        <div class="panel-body" id="_CustomerInfo">
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-3  control-label">
+                    權益總值
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.Balance</label>
+                </div>
+                <label class="col-xs-3  control-label">
+                    原始保證點數
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.Pyeongchang</label>
+                </div>
+            </div>
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-3  control-label">
+                    可動用(點數)
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.Available</label>
+                </div>
+                <label class="col-xs-3  control-label">
+                    未入帳點數
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._EWallet.TranscationDraw</label>
+                </div>
+            </div>
+
+            <div class="row" style="padding-bottom:20px">
+                <label class="col-xs-3  control-label">
+                    客戶設定碼數
+                </label>
+                <div class='col-xs-3'>
+                    <label class="col-xs-1  control-label">@Model._Customer.MinimunLotLimit</label>
+                </div> 
+            </div>
+
+        </div>
+    </div>
+    
     <div class="row" style="padding-bottom:20px">
         <div class='col-lg-offset-2 col-xs-3'>
             <input type="submit" value="@Resources.Resource.Btn_Audit" class="btn btn-info" id="Infomodify" />
