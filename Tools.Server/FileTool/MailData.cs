@@ -10,6 +10,7 @@ namespace CommTool {
         private class Default {           
             public const string MailAccount = "MailAccount";
             public const string MailPassWord = "MailPassWord";
+            public const string SMTP = "SMTP";
         }
 
         private class SP {
@@ -114,11 +115,13 @@ namespace CommTool {
             msg.IsBodyHtml = true;//是否是HTML郵件 
             msg.Priority = MailPriority.Normal;//郵件優先級 
             try {
-                //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
-                SmtpClient MySmtp = new SmtpClient("smtp.gmail.com", 587);
-                //設定你的帳號密碼
                 object Account = new object();
                 object PassWord = new object();
+                object SMTP = new object();
+                ObjectUtility.ReadRegistry(Default.SMTP, ref SMTP);
+                //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
+                SmtpClient MySmtp = new SmtpClient(SMTP.ToString(), 587);
+                //設定你的帳號密碼               
                 ObjectUtility.ReadRegistry(Default.MailAccount, ref Account);
                 ObjectUtility.ReadRegistry(Default.MailPassWord, ref PassWord);
                 msg.From = new MailAddress(Account.ToString(), "Dick股神系統", System.Text.Encoding.UTF8);
