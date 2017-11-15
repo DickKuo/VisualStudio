@@ -133,7 +133,7 @@ namespace CommTool {
                 MySmtp.Send(msg);
                 ToolLog.Log(LogType.Mail, "發送信件");
             }
-            catch (System.Net.Mail.SmtpException ex) {
+            catch (System.Net.Mail.SmtpException ex) {                
                 ToolLog.Log(ex);
             }           
         }
