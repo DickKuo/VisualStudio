@@ -223,13 +223,13 @@ namespace Stock {
                         }
                     }
 
-                    AdviserDAO AdviserDB = new AdviserDAO();
-                    List<Adviser> ListAdviser = AdviserDB.GetListAdviser();
-                    foreach (var Item in ListAdviser)
-                    {
-                        string BounsReport  = BounsTable(BeginDate, EndDate, Item.SN);
-                        MailDB.RegistrySend(Item.Email, "獲利報表", BounsReport); 
-                    }
+                    //AdviserDAO AdviserDB = new AdviserDAO();
+                    //List<Adviser> ListAdviser = AdviserDB.GetListAdviser();
+                    //foreach (var Item in ListAdviser)
+                    //{
+                    //    string BounsReport  = BounsTable(BeginDate, EndDate, Item.SN);
+                    //    MailDB.RegistrySend(Item.Email, "獲利報表", BounsReport); 
+                    //}
 
                     _Calendar.IsSettlement = true;
                     CalDAO.UpdateCalendar(_Calendar);
