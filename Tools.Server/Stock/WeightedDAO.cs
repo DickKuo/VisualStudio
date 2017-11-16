@@ -62,7 +62,7 @@ namespace Stock {
         /// <summary>取得大盤價格走勢</summary>
         /// <param name="Url"></param>
         /// <returns></returns>
-        public Weighted GetWeightedDaily(string Url) {
+        public Weighted GetWeightedDaily(string Url) {           
             DateTime TimeStamp = DateTime.Now;
             TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 59, 59));
             TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 30, 5));
@@ -92,14 +92,14 @@ namespace Stock {
                 HtmlNode NearMonth = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/table[3]").ChildNodes[11];
                 if (WeightedNode != null) {
                     try {
-                        _Weighted = new Weighted();
-                        _Weighted.Price = decimal.Parse(WeightedReplace(WeightedNode.ChildNodes[7].InnerText));
-                        _Weighted.Change = decimal.Parse(WeightedReplace(WeightedNode.ChildNodes[9].InnerText));
-                        _Weighted.HighestPrice = decimal.Parse(WeightedReplace(WeightedNode.ChildNodes[17].InnerText));
-                        _Weighted.LowestPrice = decimal.Parse(WeightedReplace(WeightedNode.ChildNodes[19].InnerText));
-                        _Weighted.Volume = WeightedReplace(WeightedNode.ChildNodes[15].InnerText);
+                        _Weighted = new Weighted();                        
+                        _Weighted.Price = WeightedReplace(WeightedNode.ChildNodes[7].InnerText);
+                        _Weighted.Change = WeightedReplace(WeightedNode.ChildNodes[9].InnerText);
+                        _Weighted.HighestPrice = WeightedReplace(WeightedNode.ChildNodes[17].InnerText);
+                        _Weighted.LowestPrice = WeightedReplace(WeightedNode.ChildNodes[19].InnerText);
+                        _Weighted.Volume = WeightedReplace(WeightedNode.ChildNodes[15].InnerText).ToString();
                         if (NearMonth != null) {
-                            _Weighted.Futures = decimal.Parse(WeightedReplace(NearMonth.ChildNodes[7].InnerText));
+                            _Weighted.Futures = WeightedReplace(NearMonth.ChildNodes[7].InnerText);
                             _Weighted.TradeDate = DateTime.Now;
                         }
                     }
@@ -112,9 +112,13 @@ namespace Stock {
             return _Weighted;
         }
 
-        private string WeightedReplace(string data)
+
+        private decimal WeightedReplace(string data)        
         {
-            return data.Replace(BaseData.BaseSParameter.Htmlnbsp, string.Empty).Replace("▽", "-").Replace("△",string.Empty);
+            decimal Result = 0;
+            string Chage = data.Replace(BaseData.BaseSParameter.Htmlnbsp, string.Empty).Replace("▽", "-").Replace("△", string.Empty).Replace("¡µ", string.Empty).Replace("&nbsp;", string.Empty);
+            decimal.TryParse(Chage, out Result);
+            return Result;
         }
 
         /// <summary>取得大盤價格走勢</summary>
