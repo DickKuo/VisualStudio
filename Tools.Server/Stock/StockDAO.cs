@@ -428,7 +428,8 @@ namespace Stock {
             WebInfo.WebInfo Info = new WebInfo.WebInfo();           
             List<Option> list = new List<Option>();
             string TempCode = System.Web.HttpUtility.UrlEncode("_台選", System.Text.Encoding.GetEncoding("BIG5")).ToUpper();//將繁體中文轉成Uri
-            string Temp = Contract.Replace(DateTime.Now.Year.ToString(), string.Empty).ToLower();
+            TempCode = TempCode.Replace("X", "x");
+            string Temp = Contract.Replace(DateTime.Now.Year.ToString(), string.Empty).Replace(DateTime.Now.AddYears(1).Year.ToString(),string.Empty).ToLower();
             string[] arr = Temp.Split('w');
             string GetParameter = string.Empty;
             int StartTag = 0;
@@ -438,7 +439,7 @@ namespace Stock {
                 StartTag = 11;
                 EndTag = 67;
             }
-            else {               
+            else {  
                 GetParameter = string.Format("Sname=TXO{0}{1}{0}&xy=1:7", Temp, TempCode);
                   StartTag = 91;
                   EndTag = 171;
