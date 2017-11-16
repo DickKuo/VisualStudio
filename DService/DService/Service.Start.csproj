@@ -11,7 +11,8 @@
     <RootNamespace>DService</RootNamespace>
     <AssemblyName>DService</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>發行\</PublishUrl>
     <Install>true</Install>
