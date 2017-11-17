@@ -23,6 +23,38 @@ $(function () {
             }
         });
     });
+
+    $(".btn-success").click(function () {
+
+        if (parseFloat($("#Draw").val()) <= 0 ) {
+            alert('請輸入金額');
+            return false;
+        }
+
+        if ($("#BankAccount").val() == "" || $("#BankAccount").val() == null) {
+            alert('銀行帳號未填寫');
+            return false;
+        }
+
+        if ($("#BankName").val() == "" || $("#BankName").val() == null) {
+            alert('銀行名稱未填寫');
+            return false;
+        }
+
+        if ($("#BankCode").val() == "" || $("#BankCode").val() == null) {
+            alert('銀行分行未填寫');
+            return false;
+        }
+
+        if (!$("#AgreeCheck").prop("checked")) {
+            alert(IsRead);
+            return false;
+        }
+
+        $("#WithdrawalForm").submit();       
+
+    });
+
 });
 
 ///------------------------------------------------------------------------------

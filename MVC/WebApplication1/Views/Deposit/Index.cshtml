@@ -13,8 +13,8 @@
 <script>
 
     $(function () {
-        $('#DepositFrom').submit(function () {
-            e.preventDefault();
+
+        $(".btn-success").click(function () { 
             if ($("#Draw").val() < 100) {
                 alert(MinVal);
                 return false;
@@ -23,8 +23,10 @@
                 alert(IsRead);
                 return false;
             }
-            return true;
+            $("#DepositFrom").submit();
         });
+
+
     });
 
     ///------------------------------------------------------------------------------
@@ -221,7 +223,7 @@
                 <div class="form-group" style="padding-top:180px; padding-right:250px">
                     <div class="text-danger text-center">
 
-                        <label><input type="checkbox" id="AgreeCheck" value="">入金必須要先匯入指定帳戶後，才可以進行申請，審核需要幾天的工作天，審核同意後，才算入金完成。</label>
+                        <label><input type="checkbox" id="AgreeCheck" value="">確認,入金必須要先匯入指定帳戶後，才可以進行申請，審核需要幾天的工作天，審核同意後，才算入金完成。</label>
 
                     </div>
                 </div>

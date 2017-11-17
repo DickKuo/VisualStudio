@@ -35,7 +35,7 @@ namespace WebApplication1.Controllers
                 }
             }
             catch(Exception ex){
-                Log(ex);
+                CommTool.ToolLog.Log(ex);
                 return ReturnMessage(Resources.ResourceDeposit.Deposit_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
             }
         }
@@ -81,7 +81,7 @@ namespace WebApplication1.Controllers
                             }
                         }
                         catch (Exception ex) {
-                            Log(ex);
+                            CommTool.ToolLog.Log(ex);
                             return ReturnMessage(Resources.ResourceDeposit.Deposit_Fail, "~/EWallet/Index", BaseCode.MessageType.danger);
                         }
                     }

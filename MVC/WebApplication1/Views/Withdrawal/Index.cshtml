@@ -3,11 +3,12 @@
 @{
     ViewBag.Title = Resources.Menu.Menu_2002;
     Html.AddJavaScript("~/Scripts/Code/WithdrawalJs.js");
+    Html.AddJavaScriptVar("IsRead", Resources.ResourceDeposit.IsRead);
 }
 <h2>@Resources.Menu.Menu_2002</h2>
 <hr>
 
-@using (Html.BeginForm("Withdrawal", "Withdrawal")) {
+@using (Html.BeginForm("Withdrawal", "Withdrawal", FormMethod.Post, new { @role = "form", id = "WithdrawalForm", enctype = "multipart/form-data" })) {
     <div class="panel panel-info">
         <div class="panel-heading">入金資料</div>
         <div class="panel-body">
@@ -28,10 +29,10 @@
                             出金金額
                         </span>
                         @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
-                            @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control" })
+                            @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control" ,@id="Draw" })
                         }
                         else {
-                            @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control", @ReadOnly = "ReadOnly" })
+                            @Html.TextBox("Draw", @Model._Transaction.Detail.Draw, new { @class = "form-control", @id = "Draw", @ReadOnly = "ReadOnly" })
                         }
                     </div>
                 </div>
@@ -114,10 +115,12 @@
                  }
             }
 
+            
+
             @if (Model._PageAction != WebApplication1.Models.Code.BaseCode.PageAction.View) {
                 <div class="form-group" style="padding-top:180px; padding-right:250px">
                     <div class="text-danger text-center">
-                        <label><input type="checkbox" id="AgreeCheck" value="">出金審請需要幾天的工作天，會依照申請單匯入指定的銀行帳戶。</label>
+                        <label><input type="checkbox" id="AgreeCheck" value="">確認，出金審請需要幾天的工作天，會依照申請單匯入指定的銀行帳戶。</label>  
                     </div>
                 </div>
             }
