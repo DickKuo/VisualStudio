@@ -475,6 +475,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   查詢類似 Loss 的當地語系化字串。
+        /// </summary>
+        internal static string TransTypes_Loss {
+            get {
+                return ResourceManager.GetString("TransTypes_Loss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類似 Settle 的當地語系化字串。
+        /// </summary>
+        internal static string TransTypes_Settle {
+            get {
+                return ResourceManager.GetString("TransTypes_Settle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查詢類似 Withdrawal 的當地語系化字串。
         /// </summary>
         internal static string TransTypes_Withdrawal {

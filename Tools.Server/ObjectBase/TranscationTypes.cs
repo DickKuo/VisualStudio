@@ -14,6 +14,8 @@ namespace ObjectBase {
 
         Dividend = 4 ,      //紅利
 
-        loss =5             //損失
+        Loss =5  ,          //損失
+
+        Settle =6           //結算
     }    
 }

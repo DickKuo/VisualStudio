@@ -128,8 +128,11 @@
                                     break;
                                 case 5:
                                     Result = "損失";
-                                    break;    
-                            }
+                                    break;
+                                case 6:
+                                    Result = "結清";
+                                    break; 
+                               }
                                     }
                                     @Result
                                 </td>
@@ -161,6 +164,7 @@
                             switch (Convert.ToInt32(Item.TradeType)) {
                                 case 1:
                                 case 4:
+                                case 5:
                                     <a href="~/Deposit/Index?TransKey=@Item.TransKey"><i class='glyphicon glyphicon-search'></i></a>
                                     break;
                                 case 2:

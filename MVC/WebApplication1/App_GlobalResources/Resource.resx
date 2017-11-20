@@ -258,4 +258,10 @@
   <data name="TransTypes_Dividend" xml:space="preserve">
     <value>Dividend</value>
   </data>
+  <data name="TransTypes_Loss" xml:space="preserve">
+    <value>Loss</value>
+  </data>
+  <data name="TransTypes_Settle" xml:space="preserve">
+    <value>Settle</value>
+  </data>
 </root>

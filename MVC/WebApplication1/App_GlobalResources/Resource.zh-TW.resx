@@ -255,4 +255,10 @@
   <data name="TransTypes_Dividend" xml:space="preserve">
     <value>股利</value>
   </data>
+  <data name="TransTypes_Loss" xml:space="preserve">
+    <value>損失</value>
+  </data>
+  <data name="TransTypes_Settle" xml:space="preserve">
+    <value>結清</value>
+  </data>
 </root>

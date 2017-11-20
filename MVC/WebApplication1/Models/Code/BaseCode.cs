@@ -61,6 +61,8 @@ namespace WebApplication1.Models.Code
             Items.Add(new SelectListItem { Text = Resources.Resource.TransTypes_Withdrawal, Value ="2"});
             Items.Add(new SelectListItem { Text = Resources.Resource.TransTypes_Bonus, Value = "3" });
             Items.Add(new SelectListItem { Text = Resources.Resource.TransTypes_Dividend, Value = "4" });
+            Items.Add(new SelectListItem { Text = Resources.Resource.TransTypes_Loss, Value = "5" });
+            Items.Add(new SelectListItem { Text = Resources.Resource.TransTypes_Settle, Value = "6" });
             return Items;
         }//end  GetTradTypeItems  
 
