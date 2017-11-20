@@ -223,13 +223,12 @@ namespace Stock {
                         }
                     }
 
-                    //AdviserDAO AdviserDB = new AdviserDAO();
-                    //List<Adviser> ListAdviser = AdviserDB.GetListAdviser();
-                    //foreach (var Item in ListAdviser)
-                    //{
-                    //    string BounsReport  = BounsTable(BeginDate, EndDate, Item.SN);
-                    //    MailDB.RegistrySend(Item.Email, "獲利報表", BounsReport); 
-                    //}
+                    AdviserDAO AdviserDB = new AdviserDAO();
+                    List<Adviser> ListAdviser = AdviserDB.GetListAdviser();
+                    foreach (var Item in ListAdviser) {
+                        string BounsReport = BounsTable(BeginDate, EndDate, Item.SN);
+                        MailDB.RegistrySend(Item.Email, "獲利報表", BounsReport);
+                    }
 
                     _Calendar.IsSettlement = true;
                     CalDAO.UpdateCalendar(_Calendar);
@@ -331,8 +330,11 @@ namespace Stock {
 
             foreach (var Item in ListCustomer) {
                 decimal Bouns = RecordSettlement * (Item.Chips / TotalChips);
-                decimal Commission = Bouns > 0 ? Bouns * (Item.CommissionRate / 100) : 0;
+                decimal Commission = 0; // Bouns > 0 ? Bouns * (Item.CommissionRate / 100) : 0;  
                 decimal Result = Bouns - Commission;
+                if (Result == 0) {
+                    continue;
+                }
                 TotalCommission += Commission;
                 Html.AppendLine("<tr>");
                 Html.AppendLine("<td>" + Item.Account + "</td>");
@@ -347,7 +349,7 @@ namespace Stock {
                 Trans.Detail = new TransactionDetail();
                 Trans.CustomerSN = Item.SN;
                 Trans.TradeTime = DateTime.Now;
-                Trans.TradeType = Bouns > 0 ? TranscationTypes.Dividend : TranscationTypes.loss;
+                Trans.TradeType = Bouns >= 0 ? TranscationTypes.Dividend : TranscationTypes.Loss;
                 Trans.Detail.BankName =" ";
                 Trans.Detail.BankAccount = " ";
                 Trans.Detail.BankCode = " ";
@@ -366,5 +368,6 @@ namespace Stock {
             return Html.ToString();
 
         }
+
     }
 }
