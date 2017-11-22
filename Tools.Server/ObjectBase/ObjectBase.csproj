@@ -65,6 +65,8 @@
     <Compile Include="ExtraTag.cs" />
     <Compile Include="ExtraTagDAO.cs" />
     <Compile Include="ExtraTagEnum.cs" />
+    <Compile Include="SettleTime.cs" />
+    <Compile Include="SettleTimeDAO.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberDAO.cs" />

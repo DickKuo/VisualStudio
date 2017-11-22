@@ -1,0 +1,31 @@
+﻿
+@model Adviser.Models.ViewModels.SettingViewModels.SettleSettingViewModel
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>序</th>
+            <th>啟始日期</th>
+            <th>結束日期</th>
+            <th>啟用</th>             
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int RowID = 1;
+        }
+        @if (@Model.ListSettleTime != null && Model.ListSettleTime.Any())
+        {
+            foreach (var Item in Model.ListSettleTime)
+            {
+                <tr>
+                    <th scope="row" id="@Item.SN"> <a href="~/Setting/SettleSettingEdit?SettleTimeSN=@Item.SN">@Item.SN</a></th>                    
+                    <td>@Item.BeginTime.ToString("yyyy/MM/dd")</td>
+                    <td>@Item.EndTime.ToString("yyyy/MM/dd")</td>                   
+                    <td>@Item.IsSettle</td>
+                </tr>
+                RowID++;
+            }
+        }
+    </tbody>
+</table>

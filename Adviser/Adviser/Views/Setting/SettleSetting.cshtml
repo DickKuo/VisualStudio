@@ -1,0 +1,24 @@
+﻿@model Adviser.Models.ViewModels.SettingViewModels.SettleSettingViewModel
+@{
+    ViewBag.Title = "ChipsSetting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>設定結清時間 </h2>
+<hr/>
+
+ @using (Html.BeginForm("SettleSettingEdit", "Setting", new { PageAction = "Add" }, FormMethod.Post, new { @class = "form-signin", @style = "padding-bottom:50px", @role = "form" })) {
+    <div class="form-group pull-right" >
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon-plus"></span>
+            新增
+        </button>
+    </div>
+} 
+
+<div class="panel panel-default" >
+    <div class="panel-heading"></div>
+    <div class="panel-body" id="_MangementTable">
+        @Html.Partial("_SettleSettingPartialView", @Model)
+    </div>
+</div>

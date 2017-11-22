@@ -17,5 +17,14 @@ namespace ObjectBase {
         Loss =5  ,          //損失
 
         Settle =6           //結算
-    }    
+    }
+
+    public enum BounsTypes { 
+    
+        Deposit =1,         
+
+        WithDrawal =2,
+
+    }
+
 }

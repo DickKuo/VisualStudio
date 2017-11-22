@@ -393,6 +393,9 @@
     <Content Include="Views\Setting\ChipsSetting.cshtml" />
     <Content Include="Views\Setting\_ChipsSettingPartialView.cshtml" />
     <Content Include="Views\Setting\ChipsSettingEdit.cshtml" />
+    <Content Include="Views\Setting\SettleSetting.cshtml" />
+    <Content Include="Views\Setting\_SettleSettingPartialView.cshtml" />
+    <Content Include="Views\Setting\SettleSettingEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ColorBox\" />
