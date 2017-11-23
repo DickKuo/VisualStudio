@@ -1,0 +1,53 @@
+﻿@model Adviser.Models.ReportViewModels.BounsViewModel
+@{
+    ViewBag.Title = "CustomerMangement";
+}
+
+<h2>獎金</h2>
+<hr>
+
+@using (Html.BeginForm("BounsSearch", "Report")) {
+      @*<input hidden="hidden" name="TransType" value="@Model.TransType"/>*@
+    <div class="panel panel-info">
+        <div class="panel-heading">基本查詢</div>
+        <div class="panel-body">
+            <div class="container">
+                <div class="row">
+                    <label class="col-xs-1  control-label">
+                        開始日期
+                    </label>
+                    <div class='col-xs-3'>
+                        <input type='text' class="form-control" id='BeginTimePicker' name="BeginTime" value="@Model.BeginTime.ToString(CommTool.BaseConst.TimeFormatComplete)" />
+                    </div>
+                    <label class="col-xs-1 control-label">
+                        結束日期
+                    </label>
+                    <div class='col-xs-3'>
+                        <input type='text' class="form-control" id='EndTimePicker' name="EndTime" value="@Model.EndTime.ToString(CommTool.BaseConst.TimeFormatToMinute)" />
+                    </div>
+                    <div class="col-xs-4">
+                        <input type="submit" value="查詢" class="btn btn-info" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-heading"></div>
+        <div class="panel-body" id="_MangementTable">
+            @Html.Partial("_BounsTablePartial", @Model)
+        </div>
+    </div>    
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#BeginTimePicker").datepicker({
+            format: "yyyy/mm/dd"
+        });
+        $("#EndTimePicker").datepicker({
+            format: "yyyy/mm/dd"
+        });
+    });
+</script>

@@ -1,6 +1,7 @@
 ﻿using Adviser.Helpers;
 using Adviser.Models;
 using Adviser.Models.Code;
+using ObjectBase;
 using Resources;
 using Stock;
 using System;
@@ -110,6 +111,29 @@ namespace Adviser.Controllers
             }
             return PartialView("_ReportTable", TradeModel);
         }//end ChagePage
+
+
+        public ActionResult Bouns() {
+            Adviser.Models.ReportViewModels.BounsViewModel ViewModel = new Adviser.Models.ReportViewModels.BounsViewModel();
+            BounsDAO BounsDB = new BounsDAO();
+            ViewModel.BeginTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            ViewModel.EndTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
+            ViewModel.Page = 1;
+            int PageCount = 0;
+            ViewModel.ListBouns = BounsDB.GetListBouns(ViewModel.BeginTime.ToString(Default.DateTimeFormat), ViewModel.EndTime.ToString(Default.DateTimeFormat), LoginHelper.GetLoginInfo().Adviser.SN, ViewModel.Page, out PageCount);
+            ViewModel.MaxPage = PageCount;
+            return View(ViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult BounsSearch(Adviser.Models.ReportViewModels.BounsViewModel ViewModel) {
+            BounsDAO BounsDB = new BounsDAO();
+            int PageCount = 0;
+            ViewModel.Page = 1;
+            ViewModel.ListBouns = BounsDB.GetListBouns(ViewModel.BeginTime.ToString(Default.DateTimeFormat), ViewModel.EndTime.ToString(Default.DateTimeFormat), LoginHelper.GetLoginInfo().Adviser.SN, ViewModel.Page, out PageCount);
+            ViewModel.MaxPage = PageCount;
+            return View("Bouns", ViewModel);
+        }
 
 
         /// <summary>平昌</summary>

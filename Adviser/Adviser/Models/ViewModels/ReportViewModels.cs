@@ -1,4 +1,6 @@
-﻿using Stock;
+﻿using Adviser.Models.ViewModels;
+using ObjectBase;
+using Stock;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,5 +28,15 @@ namespace Adviser.Models {
         public class FormatTableViewModel {
             public DataTable dt { set; get; }
         }
+
+        public class BounsViewModel : BaseViewModel {
+
+            public BounsViewModel() {
+                ListBouns = new List<Bouns>();
+            }
+
+            public List<Bouns> ListBouns { set; get; }
+        }
+
     }
 }

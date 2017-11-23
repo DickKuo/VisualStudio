@@ -12,7 +12,7 @@ namespace ObjectBase {
 
         public DateTime TradeDate { set; get; }
 
-        public TranscationTypes TransType { set; get; }
+        public BounsTypes BounsType { set; get; }
 
         public int AdviserSN { set; get; }
 

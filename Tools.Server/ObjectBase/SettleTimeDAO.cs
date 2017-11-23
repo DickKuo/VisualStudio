@@ -18,6 +18,9 @@ namespace ObjectBase {
             public const string IsSettle = "IsSettle";
         }
 
+        /// <summary></summary>
+        /// <param name="_SettleTime"></param>
+        /// <returns></returns>
         public int AddSettleTime(SettleTime _SettleTime) {
             USP.AddParameter(CommBase.SN, 0,SqlDbType.Int,20,ParameterDirection.Output);
             USP.AddParameter(SParamter.BeginTime,_SettleTime.BeginTime);
@@ -26,6 +29,9 @@ namespace ObjectBase {
             return Resut;
         }
         
+        /// <summary></summary>
+        /// <param name="_SettleTime"></param>
+        /// <returns></returns>
         public int UpdateSettleTime(SettleTime _SettleTime) {
             USP.AddParameter(CommBase.SN, _SettleTime.SN);
             USP.AddParameter(SParamter.BeginTime, _SettleTime.BeginTime);
@@ -41,7 +47,9 @@ namespace ObjectBase {
             return USP.ExeProcedureGetObjectList(SP.GetListSettleTime, new SettleTime()) as List<SettleTime>;
         }
 
-
+        /// <summary></summary>
+        /// <param name="SN"></param>
+        /// <returns></returns>
         public SettleTime GetSettleTimeBySN(int SN) {
             USP.AddParameter(CommBase.SN, SN);
             SettleTime Resut = USP.ExeProcedureGetObject(SP.GetSettleTimeBySN, new SettleTime());

@@ -19,5 +19,9 @@ namespace Adviser.Models.ViewModels {
             public Customer _Customer { set; get; }
 
         }
+
+
+   
+
     }
 }

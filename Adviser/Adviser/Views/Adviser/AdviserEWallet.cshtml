@@ -1,0 +1,22 @@
+﻿@model Adviser.Models.ViewModels.AdviserViewModels.EWalletViewModel
+@{
+    ViewBag.Title = "AdviserEWallet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>電子錢包</h2>
+<hr />
+
+<div class="panel panel-default">
+    <div class="panel-heading"></div>
+    <div class="panel-body" id="_MangementTable">      
+        <div class="row" style="padding-bottom:20px">
+            <label class="col-xs-1  control-label">
+                金額
+            </label>
+            <div class='col-xs-3'>
+                <input type="text" name="_SettleTime.BeginTime" id="BeginTimePicker" class="form-control" value="@Model.EWallte.Balance" readonly="readonly">               
+            </div>
+        </div>
+    </div>
+</div>  

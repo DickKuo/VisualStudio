@@ -19,11 +19,11 @@ namespace ObjectBase {
         Settle =6           //結算
     }
 
-    public enum BounsTypes { 
-    
-        Deposit =1,         
+    public enum BounsTypes {
 
-        WithDrawal =2,
+        Deposit = 1,
+
+        WithDrawal = 2,
 
     }
 

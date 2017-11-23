@@ -12,6 +12,11 @@ namespace ObjectBase
         protected const string CustomerSN = "CustomerSN";
         protected const string SParamter_IsEnable = "IsEnable";
         protected const string SParamter_Seq = "Seq";
+        protected const string SParamter_BeginDate = "BeginDate";
+        protected const string SParamter_EndDate = "EndDate";
+        protected const string SParamter_Page = "Page";
+        protected const string SParamter_PageCount = "PageCount";
+        protected const string SParamter_PageSize = "PageSize";
     }
     public enum SQLExecResultCode {
         Success = 99,

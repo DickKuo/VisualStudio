@@ -227,6 +227,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AdviserController.cs" />
     <Compile Include="Controllers\AjaxFunctionController.cs" />
     <Compile Include="Controllers\BaseLoginController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Models\Code\Menu.cs" />
     <Compile Include="Models\Code\OptionQuotes.cs" />
     <Compile Include="Models\Code\ReportRequest.cs" />
+    <Compile Include="Models\ViewModels\AdviserViewModels.cs" />
     <Compile Include="Models\ViewModels\BaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CustomerViewModels.cs" />
     <Compile Include="Models\ViewModels\LoginViewModels.cs" />
@@ -396,6 +398,9 @@
     <Content Include="Views\Setting\SettleSetting.cshtml" />
     <Content Include="Views\Setting\_SettleSettingPartialView.cshtml" />
     <Content Include="Views\Setting\SettleSettingEdit.cshtml" />
+    <Content Include="Views\Report\Bouns.cshtml" />
+    <Content Include="Views\Report\_BounsTablePartial.cshtml" />
+    <Content Include="Views\Adviser\AdviserEWallet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ColorBox\" />

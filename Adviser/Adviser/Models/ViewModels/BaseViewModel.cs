@@ -5,6 +5,9 @@ using System.Web;
 
 namespace Adviser.Models.ViewModels {
     public class BaseViewModel {
+
+        public int SN { set; get; }
+
         public DateTime BeginTime { set; get; }
 
         public DateTime EndTime { set; get; }

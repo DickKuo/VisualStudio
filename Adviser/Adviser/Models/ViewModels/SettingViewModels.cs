@@ -39,7 +39,6 @@ namespace Adviser.Models.ViewModels
 
             public List<SettleTime> ListSettleTime { set; get; }
 
-
         }
 
     }
