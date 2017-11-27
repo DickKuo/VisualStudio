@@ -18,6 +18,7 @@ namespace ObjectBase {
             public const string AuditTranscation = "AuditTranscation";
             public const string GetTransactionByCustomerSNPages = "GetTransactionByCustomerSNPages";
             public const string GetTranscationByTranskey = "GetTranscationByTranskey";
+            public const string GetTransactionsByCondition = "GetTransactionsByCondition";
         }
 
         public class SParameter {
@@ -212,6 +213,32 @@ namespace ObjectBase {
                 return new List<TransInfo>();
             } 
         }
+
+        /// <summary>取得指定交易類別的交易單</summary>
+        /// <param name="BeginTime"></param>
+        /// <param name="EndTime"></param>
+        /// <param name="Range"></param>
+        /// <param name="Page"></param>
+        /// <param name="TradeType"></param>
+        /// <param name="AuditState"></param>
+        /// <returns></returns>
+        public List<TransInfo> GetTransactionsByCondition(string BeginTime, string EndTime, int Range, int Page, TranscationTypes TradeType, AuditTypes AuditState) {
+            try {
+                USP.AddParameter(SParameter.BeginTime, BeginTime);
+                USP.AddParameter(SParameter.EndTime, EndTime);
+                USP.AddParameter(SParameter.Range, Range);
+                USP.AddParameter(SParameter.TradeType, TradeType);
+                USP.AddParameter(SParameter.Page, Page);
+                USP.AddParameter(SParameter.AuditState, AuditState);
+                List<TransInfo> ListTransaction = USP.ExeProcedureGetObjectList(SP.GetTransactionsByCondition, new TransInfo()) as List<TransInfo>;
+                return ListTransaction;
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+                return new List<TransInfo>();
+            } 
+        }
+
 
         /// <summary>取得交易單</summary>
         /// <param name="BeginTime"></param>

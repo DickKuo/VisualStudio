@@ -10,6 +10,7 @@ namespace ObjectBase {
             public const string UpdateSettleTime = "UpdateSettleTime";
             public const string GetListSettleTime = "GetListSettleTime";
             public const string GetSettleTimeBySN = "GetSettleTimeBySN";
+            public const string GetNearlySettleTime = "GetNearlySettleTime";
         }
 
         private class SParamter {
@@ -54,6 +55,20 @@ namespace ObjectBase {
             USP.AddParameter(CommBase.SN, SN);
             SettleTime Resut = USP.ExeProcedureGetObject(SP.GetSettleTimeBySN, new SettleTime());
             return Resut;
+        }
+        
+        /// <summary>取得目前的結算時間區間</summary>
+        /// <returns></returns>
+        public SettleTime GetNearlySettleTime() {
+            SettleTime Resut = USP.ExeProcedureGetObject(SP.GetNearlySettleTime, new SettleTime());
+            return Resut;
+        }
+
+        /// <summary>計算結清</summary>
+        public void CalculateSettle() {
+            SettleTime Currcy = GetNearlySettleTime();
+
+
         }
 
     }

@@ -1,7 +1,9 @@
 ﻿@model Adviser.Models.ViewModels.TransactionViewModels.TransactionViewModel
 @{
+    IEnumerable<SelectListItem> SelectAuditList = ViewBag.AuditList;
     ViewBag.Title = "CustomerMangement";
 }
+
 <h2>@Resources.Menu.Menu_3002</h2>
 @using (Html.BeginForm("Search", "Trans")) {
     <input hidden="hidden" name="TransType" value="@Model.TransType"/>
@@ -21,6 +23,18 @@
                     </label>
                     <div class='col-xs-3'>
                         <input type='text' class="form-control" id='EndTimePicker' name="EndTime" value="@Model.EndTime.ToString(CommTool.BaseConst.TimeFormatToMinute)" />
+                    </div>
+                    <div class='col-xs-3'>
+                        <select id="Audit" class="selectpicker form-control" data-live-search="true" name="Audit">
+                            @foreach (var Item in SelectAuditList) {
+                                if (Item.Selected) {
+                                    <option value="@Item.Value" selected="selected">@Item.Text </option>
+                                }
+                                else {
+                                    <option value="@Item.Value">@Item.Text </option>
+                                }
+                            }
+                        </select>
                     </div>
                     <div class="col-xs-4">
                         <input type="submit" value="查詢" class="btn btn-info" />

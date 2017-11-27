@@ -14,7 +14,7 @@
     <SubItem Seq ="3" Name="會員提取資金申請" MenuNo="3003" Permission="10" Url="Trans/Withdrawal"></SubItem>    
   </Item>
   <Item Seq="4" Name="報表" MenuNo="4000" Permission="10" Url="#">
-    <SubItem Seq ="1" Name="歷史交易資料" MenuNo="4001" Permission="10" Url="Report/TransRecord"></SubItem>
+    <SubItem Seq ="1" Name="結算查詢" MenuNo="4001" Permission="10" Url="Report/WeekPoint"></SubItem>
     <SubItem Seq ="2" Name="操作紀錄" MenuNo="4002" Permission="10" Url="Report/RecordReport"></SubItem>
     <SubItem Seq ="3" Name="獎金" MenuNo="4003" Permission="10" Url="Report/Bouns"></SubItem>
   </Item>  

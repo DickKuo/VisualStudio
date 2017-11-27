@@ -2,8 +2,6 @@
 @{
     ViewBag.Title = "CustomerMangement";
 }
- 
- 
 
 <h2>@Resources.Menu.Menu_1003</h2>
 @using (Html.BeginForm("SearchRecord", "Customer")) {
@@ -11,28 +9,26 @@
         <div class="panel-heading">基本查詢</div>
         <div class="panel-body">
             <div class="container">
-
                 <div class="row" style="padding-bottom:20px">
                     <label class="col-xs-1  control-label">
                         @Resources.Resource.Login_Account
                     </label>
                     <div class='col-xs-3'>
-                        @Html.TextBoxFor(M => M._Customer.Account, new { id = "InputAccount", @class = "form-control", @placeholder = Resources.Resource.Login_Account, @maxlength = "20" })                         
+                        @Html.TextBoxFor(M => M._Customer.Account, new { id = "InputAccount", @class = "form-control", @placeholder = Resources.Resource.Login_Account, @maxlength = "20" })
                     </div>
                     <label class="col-xs-1 control-label">
                         @(Resources.Resource.Register_LastName + Resources.Resource.Register_FirstName)
                     </label>
                     <div class='col-xs-3'>
-                        @Html.TextBoxFor(M => M._Customer.Member.FirstName, new { id = "InputName", @class = "form-control", @placeholder = (Resources.Resource.Register_LastName + Resources.Resource.Register_FirstName), @maxlength = "50" })                         
-                    </div> 
+                        @Html.TextBoxFor(M => M._Customer.Member.FirstName, new { id = "InputName", @class = "form-control", @placeholder = (Resources.Resource.Register_LastName + Resources.Resource.Register_FirstName), @maxlength = "50" })
+                    </div>
                     <div class="col-xs-4">
                         <input type="submit" value="查詢" class="btn btn-info" />
-                    </div>                
+                    </div>
                 </div>
-
                 <div class="row" style="padding-bottom:20px">
                     <label class="col-xs-1  control-label">
-                        @Resources.Resource.Register_NickName                        
+                        @Resources.Resource.Register_NickName
                     </label>
                     <div class='col-xs-3'>
                         @Html.TextBoxFor(M => M._Customer.Member.NickName, new { id = "InputNickName", @class = "form-control", @placeholder = Resources.Resource.Register_NickName, @maxlength = "20" })
@@ -41,17 +37,17 @@
                         @Resources.Resource.Register_Phone
                     </label>
                     <div class='col-xs-3'>
-                        @Html.TextBoxFor(M => M._Customer.Member.Phone, new { id = "InputPhone", @class = "form-control", @placeholder = Resources.Resource.Register_Phone, @maxlength = "20" })                         
+                        @Html.TextBoxFor(M => M._Customer.Member.Phone, new { id = "InputPhone", @class = "form-control", @placeholder = Resources.Resource.Register_Phone, @maxlength = "20" })
                     </div>
-                </div>  
-                  
+                </div>
+
             </div>
         </div>
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading"></div>
-        <div class="panel-body" id="_MangementTable">   
+        <div class="panel-body" id="_MangementTable">
             @Html.Partial("_MangerTablePartial", @Model)
         </div>
     </div>

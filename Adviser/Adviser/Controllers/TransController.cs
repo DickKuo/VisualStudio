@@ -17,7 +17,7 @@ namespace Adviser.Controllers
         /// <summary>會員入金</summary>
         /// <returns></returns>
         public ActionResult Deposit()
-        {
+        {           
             TransactionViewModels.TransactionViewModel ViewModel = new TransactionViewModels.TransactionViewModel();
             ViewModel.TransType = TranscationTypes.Deposit;
             ViewModel.BeginTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -26,6 +26,7 @@ namespace Adviser.Controllers
             ViewModel.Page = 1;
             List<TransInfo> ListTrans = TransDAO.GetTransactionsNotAuditByTradeType(ViewModel.BeginTime.ToString(Default.TimeFormat), ViewModel.EndTime.ToString(Default.TimeFormat), 10, 1, ViewModel.TransType);
             ViewModel.ListTransInfo = ListTrans;
+            ViewBag.AuditList= GetAuditItemsNoSelected();
             return View(ViewModel);
         }
         
@@ -34,8 +35,9 @@ namespace Adviser.Controllers
         /// <returns></returns>
         public ActionResult Search(TransactionViewModels.TransactionViewModel ViewModel) {
             TranscationDAO TransDAO = new TranscationDAO();
-            List<TransInfo> ListTrans = TransDAO.GetTransactionsNotAuditByTradeType(ViewModel.BeginTime.ToString(Default.TimeFormat), ViewModel.EndTime.ToString(Default.TimeFormat), 10, 1, ViewModel.TransType);
+            List<TransInfo> ListTrans = TransDAO.GetTransactionsByCondition(ViewModel.BeginTime.ToString(Default.TimeFormat), ViewModel.EndTime.ToString(Default.TimeFormat), 10, 1, ViewModel.TransType, ViewModel.Audit);
             ViewModel.ListTransInfo = ListTrans;
+            ViewBag.AuditList = GetAuditItemsNoSelected();
             return View(ViewModel.TransType.ToString(), ViewModel);
         }
 
@@ -68,6 +70,7 @@ namespace Adviser.Controllers
             ViewModel.Page = 1;
             List<TransInfo> ListTrans = TransDAO.GetTransactionsNotAuditByTradeType(ViewModel.BeginTime.ToString(Default.TimeFormat), ViewModel.EndTime.ToString(Default.TimeFormat), 10, 1, ViewModel.TransType);
             ViewModel.ListTransInfo = ListTrans;
+            ViewBag.AuditList = GetAuditItemsNoSelected();
             return View(ViewModel);
         }
 

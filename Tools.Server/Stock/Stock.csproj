@@ -82,6 +82,7 @@
     <Compile Include="TradeRecordDAO.cs" />
     <Compile Include="TradeType.cs" />
     <Compile Include="WeekPoint.cs" />
+    <Compile Include="WeekPointDAO.cs" />
     <Compile Include="Weighted.cs" />
     <Compile Include="WeightedDAO.cs" />
   </ItemGroup>

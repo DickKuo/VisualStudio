@@ -165,8 +165,8 @@
     <comment>報表</comment>
   </data>
   <data name="Menu_4001" xml:space="preserve">
-    <value>歷史交易資料</value>
-    <comment>歷史交易資料</comment>
+    <value>結算查詢</value>
+    <comment>結算查詢</comment>
   </data>
   <data name="Menu_4002" xml:space="preserve">
     <value>操作紀錄</value>
