@@ -108,7 +108,7 @@ $(function () {
                 "<div class='form-group'  style='padding-top:25px;'>" +
                        "<label class='col-xs-4 control-label'>Lot</label>" +
                    "<div class='col-xs-8'>" +
-                       "<input class='form-control'  id='Lot'    type='text' value='1'>" +
+                       "<input class='form-control'  id='Lot'    type='text' value='" + $(this).parent().parent().children().eq(6).html() + "'>" +
                    "</div>" +
                "</div>" +
 
