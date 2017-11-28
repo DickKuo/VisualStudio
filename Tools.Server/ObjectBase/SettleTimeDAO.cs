@@ -63,13 +63,7 @@ namespace ObjectBase {
             SettleTime Resut = USP.ExeProcedureGetObject(SP.GetNearlySettleTime, new SettleTime());
             return Resut;
         }
-
-        /// <summary>計算結清</summary>
-        public void CalculateSettle() {
-            SettleTime Currcy = GetNearlySettleTime();
-
-
-        }
-
+        
+        
     }
 }

@@ -230,6 +230,8 @@ namespace Stock {
                         MailDB.RegistrySend(Item.Email, "獲利報表", BounsReport);
                     }
 
+
+
                     _Calendar.IsSettlement = true;
                     CalDAO.UpdateCalendar(_Calendar);
                 }
@@ -324,10 +326,13 @@ namespace Stock {
             Html.AppendLine("<th>Commission</th>");
             Html.AppendLine("<th>Result</th>");
             Html.AppendLine("</tr>");
+            
+            SettleTimeDAO SettleDB = new SettleTimeDAO();
+            SettleTime SeT = SettleDB.GetNearlySettleTime();
 
             TranscationDAO TransDB = new TranscationDAO();
             decimal TotalCommission = 0; 
-
+            
             foreach (var Item in ListCustomer) {
                 decimal Bouns = RecordSettlement * (Item.Chips / TotalChips);
                 decimal Commission = 0; // Bouns > 0 ? Bouns * (Item.CommissionRate / 100) : 0;  
@@ -357,6 +362,10 @@ namespace Stock {
                 Trans.Detail.Draw = Result;
                 Trans.Detail.Commission = Commission;
                 TransDB.AddTranscation(Trans);
+
+                if (SeT.EndTime.Day == DateTime.Now.Day && SeT.EndTime.Month == DateTime.Now.Month) {
+                    TransDB.CaculateTransactionByCustomerSN(AdviserSN, Item.SN, SeT.BeginTime, SeT.EndTime);
+                }
             }
 
             Html.AppendLine("<tr>");
@@ -368,6 +377,7 @@ namespace Stock {
             return Html.ToString();
 
         }
-
+ 
+        
     }
 }

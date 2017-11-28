@@ -19,6 +19,7 @@ namespace ObjectBase {
             public const string GetTransactionByCustomerSNPages = "GetTransactionByCustomerSNPages";
             public const string GetTranscationByTranskey = "GetTranscationByTranskey";
             public const string GetTransactionsByCondition = "GetTransactionsByCondition";
+            public const string CaculateTransactionByCustomerSN = "CaculateTransactionByCustomerSN";
         }
 
         public class SParameter {
@@ -44,6 +45,7 @@ namespace ObjectBase {
             public const string AttachmentsParamter = "AttachmentsParamter";
             public const string MaxPage = "MaxPage";
             public const string Commission = "Commission";
+            public const string AdviserSN = "AdviserSN";
 
         }
 
@@ -302,6 +304,25 @@ namespace ObjectBase {
                 USP.AddParameter(SParameter.AuditState, Audit);
                 USP.AddParameter(SParameter.AuditAdviserSN, AuditAdviserSN);
                 DataTable dt = USP.ExeProcedureGetDataTable(SP.AuditTranscation);
+                int Result = 0;
+                if (dt != null && dt.Rows.Count > 0) {
+                    Result = Convert.ToInt32(dt.Rows[0][0]);
+                }
+                return Result;
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+                return 0;
+            }
+        }
+
+        public int CaculateTransactionByCustomerSN(int AdviserSN,int CustomerSN,DateTime BeginTime,DateTime EndTime) {
+            try {
+                USP.AddParameter(SParameter.AdviserSN, AdviserSN);
+                USP.AddParameter(SParameter.CustomerSN, CustomerSN);
+                USP.AddParameter(SParameter.BeginTime, BeginTime);
+                USP.AddParameter(SParameter.EndTime, EndTime);
+                DataTable dt = USP.ExeProcedureGetDataTable(SP.CaculateTransactionByCustomerSN);
                 int Result = 0;
                 if (dt != null && dt.Rows.Count > 0) {
                     Result = Convert.ToInt32(dt.Rows[0][0]);
