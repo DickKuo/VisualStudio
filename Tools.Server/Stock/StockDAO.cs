@@ -1216,6 +1216,9 @@ namespace Stock {
         public void CalculateStopPoint(TradeRecordDAO RecordDB, TradeRecord Recorde, Weighted _Weighted, Option Result) {
             decimal StopPrice = 0m;
             string WarningMessage = string.Empty;
+            if (Convert.ToDecimal(Recorde.Price) == 0m) {
+                return;
+            }
             if (Recorde.Type == TradeType.Sell.ToString()) {
                 StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);
                 decimal DynamicStopPrice = StopPrice;

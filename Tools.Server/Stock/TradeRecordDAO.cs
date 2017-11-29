@@ -151,9 +151,10 @@ namespace Stock {
         /// <param name="Range"></param>
         /// <param name="Page"></param>
         /// <returns></returns>
-        public DataTable GetTradeRecordByDueDayPage(string BeginDate, string EndDate, int Range, int Page) {
+        public DataTable GetTradeRecordByDueDayPage(int AdviserSN,string BeginDate, string EndDate, int Range, int Page) {
             USP.AddParameter(BaseData.BaseSParameter.BeginDate, BeginDate);
             USP.AddParameter(BaseData.BaseSParameter.EndDate, EndDate);
+            USP.AddParameter(SPParameter.AdviserSN, AdviserSN);
             USP.AddParameter(SPParameter.Range, Range);
             USP.AddParameter(SPParameter.Page, Page);
             DataTable dt = USP.ExeProcedureGetDataTable(SP.GetTradeRecordByDueDayPage);

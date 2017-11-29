@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "TransactionDetail";
-    IEnumerable<SelectListItem> SelectAuditList = ViewBag.AuditList;
+    IEnumerable<SelectListItem> SelectAuditList = ViewBag.AuditList;    
 }
 
 <h2>@Resources.ResourcePageTitle.Title_TransactionDetail</h2>
@@ -12,7 +12,7 @@
 @using (Html.BeginForm("AuditTrans", "Trans", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
     <div class="panel panel-primary">
         <div class="panel-heading">
-            客戶資訊
+            客戶資訊                                                                                                                                                                                                                                                                                                                                                                                                                                  
         </div>
         <div class="panel-body" id="_CustomerInfo">
             <div class="row" style="padding-bottom:20px">
@@ -27,8 +27,7 @@
                 </label>
                 <div class='col-xs-3'>
                     @Html.DropDownListFor(M => M.Audit, SelectAuditList, new { @class = "form-control" })
-                </div>
-
+                </div>    
                 <input name="TransSN" hidden="hidden" value="@Model.TransSN">
             </div>
         </div>
@@ -126,9 +125,11 @@
             </div>
 
             <div class="row" style="padding-bottom:20px">
+                @if (Model.Trans.AuditState == ObjectBase.AuditTypes.NotYet) { 
                 <div class='col-lg-offset-2 col-xs-3'>
                     <input type="submit" value="@Resources.Resource.Btn_Audit" class="btn btn-info" id="Infomodify" />
                 </div>
+                }
                 <div class='col-lg-offset-2 col-xs-3'>                  
                     <a class="btn btn-success" id="InfoBack" href="~/Trans/@Model.TransType.ToString()">@Resources.ResourceCustomer.Btn_Back</a>
                 </div>

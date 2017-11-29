@@ -1,18 +1,23 @@
 ﻿using ObjectBase;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace WebApplication1.Controllers
 {
     public class RegisterController : Controller
     {
+        public const string App_Data = "~\\App_Data";
+
         /// <summary>註冊畫面</summary>
         /// <param name="RegisterView"></param>
         /// <returns></returns>
         public ActionResult Index(WebApplication1.Models.RegisterViewModels.RegisterViewModel RegisterView)
         {
             ViewBag.GenderList = GetGenderItems();
+            ViewBag.Role = RoleList();            
             if (RegisterView.Account != null) {
                 int Result = 0;
                 CustomerDAO _CustomerDAO = new CustomerDAO();
@@ -57,8 +62,8 @@ namespace WebApplication1.Controllers
                     return View(RegisterView);
                 }
             }
-            else {              
-                return View();
+            else {
+                return View(RegisterView);
             }         
         }//end Index
 
@@ -71,5 +76,19 @@ namespace WebApplication1.Controllers
             return items;
         }//end  GetGenderItems           
 
+        /// <summary>取得規則說明</summary>
+        /// <returns></returns>
+        public string RoleList() {
+            StringBuilder SB = new StringBuilder();
+            System.Xml.XmlDocument XDoc = new System.Xml.XmlDocument();
+            XDoc.Load(System.Web.HttpContext.Current.Server.MapPath(App_Data) + "\\Roles.xml");
+            System.Xml.XmlNodeList XNodeList = XDoc.GetElementsByTagName("Role");
+            if (XNodeList != null) {
+                foreach (System.Xml.XmlNode Item in XNodeList) {
+                    SB.AppendFormat("<li style='padding：10px；'>{0} ", Item.InnerText);
+                }
+            }
+            return SB.ToString();
+        }
 	}
 }

@@ -49,7 +49,8 @@ $(function () {
         });
     }//end fancyconfirm
 
-    $(".btn-primary").on("click", function () {
+    $("#QuotesTable").on("click", ".btn-primary", function (e) {
+        e.preventDefault();
         BtnName = $(this).attr("name");
         Contract = $(this).attr("data-Contract")
         var ChildIndex = 0;
@@ -128,17 +129,21 @@ $(function () {
     }//end Commd
     
     $("#Btn_Search").on("click", function () {
-
+        $.fancybox.showLoading();
         $.ajax({
             type: "POST",
             url: Url + "QuotesSearch",
-            data: { 
+            data: {
                 "DueMonth": $("#Drop_DueMonth").val()
             },
+
             success: function (Model) {
                 $("#QuotesTable").html(Model);
+                $.fancybox.hideLoading();
             }
-        })
+
+        });
+
     });
 
 });

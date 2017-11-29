@@ -3,8 +3,7 @@
 @{
     Layout = null;
     ViewBag.Title = "Index";
-    IEnumerable<SelectListItem> GenderList = ViewBag.GenderList;
-    
+    IEnumerable<SelectListItem> GenderList = ViewBag.GenderList;   
 }
 
 @Styles.Render("~/Content/css")
@@ -16,9 +15,18 @@
 <script src="~/Scripts/bootstrap.js"></script>
 <script src="~/Scripts/Bootstrap3/bootstrap-datetimepicker.js"></script>
 <link href="~/Content/DatePicker/datepicker.css" rel="stylesheet" />
-<script src="~/Scripts/DatePicker/datepicker.js"></script>
+<script src="~/Scripts/DatePicker/datepicker.js"></script>  
+
+<link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.fancybox.pack.js"></script>
+<script src="~/Scripts/jquery.mousewheel-3.0.6.pack.js"></script>
+
 
 <script src="~/Scripts/RegisterJs.js"></script>
+
+<script>
+    var Role = @Html.Raw(Json.Encode(ViewBag.Role))
+</script>
 
 <div class="panel panel-success container body-content">
     <div class="panel-heading">
@@ -28,7 +36,7 @@
     </div>
 
     <div class="panel-body" id="_ReportTable">
-        @using (Html.BeginForm("Index", "Register", new { Id = "Register_Form" })) {
+        @using (Html.BeginForm("Index", "Register", FormMethod.Post, new { @id = "Register_Form", enctype = "multipart/form-data" })) {
             <div class="container">
                 <form class="form-signin" role="form">
                     <div class="col-md-6 col-md-offset-4">  
@@ -103,7 +111,7 @@
                                 @Resources.Resource.Register_HomeAddr
                             </label>
                             @Html.TextBoxFor(M => M.HomeAddr, new { id = "InputHomeAddr", @required = "required", @class = "form-control", @placeholder = Resources.Resource.Register_HomeAddr, @maxlength = "50" })
-                        </div>
+                        </div>                         
 
                         @if (!ViewData.ModelState.IsValid) {
                             <div class="alert alert-danger" role="alert">
@@ -126,3 +134,7 @@
         }
     </div>
 </div>
+
+
+  
+<div id="confirm" style="background-position: top right;background-repeat:no-repeat;padding-top:10px;display:none;width:600px;"></div>

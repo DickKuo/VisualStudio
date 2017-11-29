@@ -11,6 +11,7 @@ namespace WebApplication1.Controllers
     public class AjaxFuctionsController : BaseLoginController
     {
         
+        
         /// <summary></summary>
         /// <returns></returns>
         [HttpPost]
@@ -20,8 +21,7 @@ namespace WebApplication1.Controllers
             BankDAO BankDB=new BankDAO();
             ListBank = BankDB.GetBankByCustomerSN(LoginHelper.GetLoginInfo().Customer.SN);
             return Newtonsoft.Json.JsonConvert.SerializeObject(ListBank);
-        }
-
+        }       
 
     }
 }

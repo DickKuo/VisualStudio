@@ -7,7 +7,7 @@
 
 <h2>@Resources.Menu.Menu_4002</h2>
 
-@using (Html.BeginForm("SearchRecord", "Report")) {
+@using (Html.BeginForm("SearchRecord", "Report", FormMethod.Post, new {@id= "ReportForm" , @class = "form-horizontal", role = "form" })) {
     <div class="panel panel-info">
         <div class="panel-heading">基本查詢</div>
         <div class="panel-body">
