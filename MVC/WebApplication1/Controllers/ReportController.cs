@@ -32,19 +32,19 @@ namespace WebApplication1.Controllers
 
         /// <summary></summary>
         /// <returns></returns>
-        public ActionResult RecordReport() {
-            Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
-            DateTime NowTime =new DateTime(DateTime.Now.Year,DateTime.Now.Month,1);
-            DateTime TimeEnd =new DateTime(DateTime.Now.Year,DateTime.Now.AddMonths(1).Month,1).AddDays(-1);
-            DataTable  dt = TradeDAO.GetTradeRecordByDueDayPage(NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), 10, 1);
-            ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
-            TradeModel.BeginTime = NowTime;
-            TradeModel.EndTime = TimeEnd;
-            TradeModel.Page = 1;
-            MachResult(dt, TradeModel);
-            TradeModel.MaxPage = TradeDAO.GetTradeRecordPagesByDueDay(NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), 10);
-            return View(TradeModel);
-        }//end RecordReport
+        //public ActionResult RecordReport() {
+        //    Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
+        //    DateTime NowTime =new DateTime(DateTime.Now.Year,DateTime.Now.Month,1);
+        //    DateTime TimeEnd =new DateTime(DateTime.Now.Year,DateTime.Now.AddMonths(1).Month,1).AddDays(-1);
+        //    DataTable  dt = TradeDAO.GetTradeRecordByDueDayPage(NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), 10, 1);
+        //    ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
+        //    TradeModel.BeginTime = NowTime;
+        //    TradeModel.EndTime = TimeEnd;
+        //    TradeModel.Page = 1;
+        //    MachResult(dt, TradeModel);
+        //    TradeModel.MaxPage = TradeDAO.GetTradeRecordPagesByDueDay(NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), 10);
+        //    return View(TradeModel);
+        //}//end RecordReport
         
         private void MachResult(DataTable dt, ReportViewModels.TradeRecordReportModel TradeModel) {
             LoginInfo Info = LoginHelper.GetLoginInfo();
@@ -77,33 +77,33 @@ namespace WebApplication1.Controllers
             }
         } //end MachResult
         
-        public ActionResult SearchRecord(ReportRequest _Request) {
-            Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
-            ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
-            if (_Request.BeginTime > DateTime.MinValue && _Request.EndTime > DateTime.MinValue) {
-                DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 10, _Request.Page == 0 ? 1 : _Request.Page);                
-                MachResult(dt, TradeModel);
-                TradeModel.BeginTime = _Request.BeginTime;
-                TradeModel.EndTime = _Request.EndTime;
-                TradeModel.Page = 1;
-                TradeModel.MaxPage =  TradeDAO.GetTradeRecordPagesByDueDay(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat) ,10);
-            }
-            return View("RecordReport", TradeModel);
-        }//end SearchRecord
+        //public ActionResult SearchRecord(ReportRequest _Request) {
+        //    Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
+        //    ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
+        //    if (_Request.BeginTime > DateTime.MinValue && _Request.EndTime > DateTime.MinValue) {
+        //        DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 10, _Request.Page == 0 ? 1 : _Request.Page);                
+        //        MachResult(dt, TradeModel);
+        //        TradeModel.BeginTime = _Request.BeginTime;
+        //        TradeModel.EndTime = _Request.EndTime;
+        //        TradeModel.Page = 1;
+        //        TradeModel.MaxPage =  TradeDAO.GetTradeRecordPagesByDueDay(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat) ,10);
+        //    }
+        //    return View("RecordReport", TradeModel);
+        //}//end SearchRecord
 
-        public dynamic ChagePage(ReportRequest _Request) {
-            Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
-            ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
-            if (_Request.BeginTime > DateTime.MinValue && _Request.EndTime > DateTime.MinValue) {
-                DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 10, _Request.Page == 0 ? 1 : _Request.Page);
-                MachResult(dt, TradeModel);
-                TradeModel.BeginTime = _Request.BeginTime;
-                TradeModel.EndTime = _Request.EndTime;
-                TradeModel.Page = _Request.Page;
-                TradeModel.MaxPage = TradeDAO.GetTradeRecordPagesByDueDay(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat),10);
-            }
-            return PartialView("_ReportTable", TradeModel);  
-        }//end ChagePage
+        //public dynamic ChagePage(ReportRequest _Request) {
+        //    Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
+        //    ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
+        //    if (_Request.BeginTime > DateTime.MinValue && _Request.EndTime > DateTime.MinValue) {
+        //        DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 10, _Request.Page == 0 ? 1 : _Request.Page);
+        //        MachResult(dt, TradeModel);
+        //        TradeModel.BeginTime = _Request.BeginTime;
+        //        TradeModel.EndTime = _Request.EndTime;
+        //        TradeModel.Page = _Request.Page;
+        //        TradeModel.MaxPage = TradeDAO.GetTradeRecordPagesByDueDay(_Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat),10);
+        //    }
+        //    return PartialView("_ReportTable", TradeModel);  
+        //}//end ChagePage
 
         /// <summary>平昌</summary>
         /// <param name="_TradeRecord"></param>

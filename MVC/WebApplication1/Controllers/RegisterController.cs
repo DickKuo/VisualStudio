@@ -25,14 +25,14 @@ namespace WebApplication1.Controllers
                 _Customer.Account = RegisterView.Account;
                 _Customer.PassWord = RegisterView.PassWord;
                 _Customer.Member = new Member();
-                _Customer.Member.BirthDay = RegisterView.BirthDay;
+                _Customer.Member.BirthDay = RegisterView.BirthDay == DateTime.MinValue ? DateTime.Now : RegisterView.BirthDay;
                 _Customer.Member.Email = RegisterView.Account;
-                _Customer.Member.FirstName = RegisterView.FirstName;
-                _Customer.Member.LastName = RegisterView.LastName;
+                _Customer.Member.FirstName = RegisterView.FirstName == null ? "Default" : RegisterView.FirstName;
+                _Customer.Member.LastName = RegisterView.LastName == null ? "Default" : RegisterView.LastName;
                 _Customer.Member.NickName = RegisterView.NickName;
-                _Customer.Member.Phone = RegisterView.Phone;
-                _Customer.Member.ID = RegisterView.ID;
-                _Customer.Member.HomeAddr = RegisterView.HomeAddr;
+                _Customer.Member.Phone = RegisterView.Phone == null ? "Default" : RegisterView.Phone;
+                _Customer.Member.ID = RegisterView.ID == null ? "Default" : RegisterView.ID;
+                _Customer.Member.HomeAddr = RegisterView.HomeAddr == null ? "Default" : RegisterView.HomeAddr;
                 _Customer.Member.Gender = RegisterView.Gender;              
                 Result = _CustomerDAO.AddCustomer(_Customer);
                 if (Result > 0) {

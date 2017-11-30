@@ -52,11 +52,29 @@ $(function () {
        
         var Isemail = false;
 
-        Isemail =   validateEmail($("#InputAccount").val());
+        Isemail = validateEmail($("#InputAccount").val());
               
         if (!Isemail) {
             alert('Email 格式錯誤');
             return false;
+        }
+
+        if ($("#InputNickName").val() == "")
+        {
+            alert('請填寫暱稱');
+            return false;
+        }
+            
+        if ($("#InputPassword").val() == "") {
+            alert('請填寫密碼');
+            return false;
+        }
+        else {
+            if ($("#InputPassword").val().length < 8)
+            {
+                alert('密碼長度請大於8碼');
+                return false;
+            }
         }
        
           //ChkMobile();                
