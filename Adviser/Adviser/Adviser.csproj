@@ -301,6 +301,7 @@
     <Content Include="Scripts\Code\ReportJs.js" />
     <Content Include="Scripts\Code\TradeJs.js" />
     <Content Include="Scripts\Code\TransDetailJs.js" />
+    <Content Include="Scripts\Code\WeekPoint.js" />
     <Content Include="Scripts\ColorBox\colorbox.css" />
     <Content Include="Scripts\ColorBox\images\border.png" />
     <Content Include="Scripts\ColorBox\images\controls.png" />
@@ -402,6 +403,8 @@
     <Content Include="Views\Report\Bouns.cshtml" />
     <Content Include="Views\Report\_BounsTablePartial.cshtml" />
     <Content Include="Views\Adviser\AdviserEWallet.cshtml" />
+    <Content Include="Views\Report\WeekPoint.cshtml" />
+    <Content Include="Views\Report\_WeekPointPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ColorBox\" />

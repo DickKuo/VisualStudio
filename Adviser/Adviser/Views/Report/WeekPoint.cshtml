@@ -1,0 +1,54 @@
+﻿@model  Adviser.Models.ReportViewModels.WeekPointViewModel
+@{
+    ViewBag.Title = "WeekPoint";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int Max = DateTime.Now.Year;
+    List<SelectListItem> ListYear = new List<SelectListItem>();
+    for (int i = 2016; i <= Max; i++) {        
+        SelectListItem Item = new SelectListItem();
+        Item.Text = i.ToString();
+        Item.Value = i.ToString();
+        if (i == Max) {
+            Item.Selected = true;
+        }
+        ListYear.Add(Item);
+    }
+    IEnumerable<SelectListItem> ListSelectYear = ListYear;   
+}
+<script src="~/Scripts/Code/WeekPoint.js"></script>
+
+<h2>每周結算</h2>
+<hr />
+<div class="panel panel-info">
+    <div class="panel-heading">基本查詢</div>
+    <div class="panel-body">
+        <div class="container">
+            <div class="row">    
+                <div class='col-xs-3'>
+                    <select id="ListYear" class="selectpicker form-control" data-live-search="true" name="ListYear">
+                        @foreach (var Item in ListSelectYear) {
+                            if (Item.Selected) {
+                                <option value="@Item.Value" selected="selected">@Item.Text </option>
+                            }
+                            else {
+                                <option value="@Item.Value">@Item.Text </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-xs-4">
+                    <input type="submit" value="查詢" class="btn btn-info" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading"></div>
+    <div class="panel-body" id="WeekPointPartial">
+        @Html.Partial("_WeekPointPartial", @Model)
+    </div>
+</div>
+

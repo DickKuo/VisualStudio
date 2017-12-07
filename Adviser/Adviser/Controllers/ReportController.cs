@@ -80,8 +80,7 @@ namespace Adviser.Controllers
                 }
             }
         } //end MachResult
-
-
+        
         public ActionResult SearchRecord(ReportRequest _Request) {
             Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
             ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
@@ -111,8 +110,7 @@ namespace Adviser.Controllers
             }
             return PartialView("_ReportTable", TradeModel);
         }//end ChagePage
-
-
+        
         public ActionResult Bouns() {
             Adviser.Models.ReportViewModels.BounsViewModel ViewModel = new Adviser.Models.ReportViewModels.BounsViewModel();
             BounsDAO BounsDB = new BounsDAO();
@@ -134,8 +132,7 @@ namespace Adviser.Controllers
             ViewModel.MaxPage = PageCount;
             return View("Bouns", ViewModel);
         }
-
-
+        
         /// <summary>平昌</summary>
         /// <param name="_TradeRecord"></param>
         /// <returns></returns>
@@ -155,5 +152,19 @@ namespace Adviser.Controllers
                 return "Error";
             }
         }//end Pyeongchang
+
+        public ActionResult WeekPoint() {
+            Adviser.Models.ReportViewModels.WeekPointViewModel WeekView = new ReportViewModels.WeekPointViewModel();
+            WeekPointDAO WeekDB = new WeekPointDAO();
+            WeekView.ListWeekPoint = WeekDB.GetListWeekPointByYear(DateTime.Now.Year);
+            return View(WeekView);
+        }
+
+        [HttpPost]
+        public ActionResult SearchWeekPoint(Adviser.Models.ReportViewModels.WeekPointViewModel WeekView) {
+            WeekPointDAO WeekDB = new WeekPointDAO();
+            WeekView.ListWeekPoint = WeekDB.GetListWeekPointByYear(WeekView.Year);
+            return PartialView("_WeekPointPartial", WeekView);
+        }
 	}
 }

@@ -1,0 +1,78 @@
+﻿@model  Adviser.Models.ReportViewModels.WeekPointViewModel
+@{
+    double Total = 0;
+    double TotalFee = 0;
+    double TotalTax = 0;
+}
+<table class="table table-hover ">
+    <thead>
+        <tr>
+            <th>交易日期</th>
+            <th>方向</th>
+            <th>履約價格</th>
+            <th>點數</th>
+            <th>成交量</th>
+            <th>建議停損點數</th>
+            <th>契約時間</th>
+            <th>轉買方停損點數</th>
+            <th>最後結算點數</th>
+            <th>手續費</th>
+            <th>稅</th>
+            <th>獲利</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListWeekPoint != null && Model.ListWeekPoint.Any()) {
+            foreach (var Item in Model.ListWeekPoint) {
+                <tr>
+                    <td>@Item.TradeDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@Item.OP</td>
+                    <td>@Item.Contract</td>
+                    <td>@Item.Price</td>
+                    <td>@Item.Volume</td>
+                    <td>@Item.StopPrice</td>
+                    <td>@Item.DueMonth</td>
+                    <td>@Item.BuyStopPrice</td>
+                    <td>@Item.ClosePrice</td>
+                    <td>
+                        @{
+                TotalFee += 60;
+                    }
+                    60
+                </td>
+                <td>
+                    @{
+                double Tax = 0;
+                double TaxPrice = 0;
+                double.TryParse(Item.Price, out TaxPrice);
+                Tax = TaxPrice * (0.3 / 100) * 50;
+                TotalTax += Tax;
+                }
+                @Tax
+            </td>
+            <td>
+                @{
+                double result = 0;
+                double Price = 0;
+                double ClosePrice = 0;
+                double.TryParse(Item.Price, out Price);
+                double.TryParse(Item.ClosePrice, out ClosePrice);
+                result = Price - ClosePrice - 1;
+                Total += result;
+                }
+                @result
+            </td>
+        </tr>
+            }
+        }
+    </tbody>
+    <tr>
+        <td colspan="8"></td>
+        <td>結算 NTD</td>
+        <td>@TotalFee.ToString("#,0")</td>
+        <td>@TotalTax.ToString("#,0")</td>
+        <td>@{Total = Total * 50;} @Total.ToString("#,0")</td>
+    </tr>
+</table>
+
+

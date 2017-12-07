@@ -38,5 +38,12 @@ namespace Adviser.Models {
             public List<Bouns> ListBouns { set; get; }
         }
 
+        public class WeekPointViewModel {
+
+            public int Year { set; get; }
+
+            public List<WeekPoint> ListWeekPoint { set; get; }
+        }
+        
     }
 }

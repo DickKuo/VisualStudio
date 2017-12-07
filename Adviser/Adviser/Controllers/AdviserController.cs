@@ -20,5 +20,7 @@ namespace Adviser.Controllers
             ViewModel.EWallte = EWalletDB.GetAdviserEWalletByAdviserSN(AdviserSN);
             return View(ViewModel);
         }
+
+      
 	}
 }
