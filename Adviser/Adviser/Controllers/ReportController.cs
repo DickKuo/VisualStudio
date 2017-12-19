@@ -39,7 +39,7 @@ namespace Adviser.Controllers
             Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
             DateTime NowTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime TimeEnd = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, 1).AddDays(-1);
-            DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(LoginHelper.GetLoginInfo().Adviser.SN, NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), 10, 1);
+            DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(LoginHelper.GetLoginInfo().Adviser.SN, NowTime.ToString(Default.DateTimeFormat), TimeEnd.ToString(Default.DateTimeFormat), 300, 1);
             ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
             if (dt != null && dt.Rows.Count > 0) {
                 TradeModel.BeginTime = NowTime;
@@ -85,7 +85,7 @@ namespace Adviser.Controllers
             Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
             ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
             if (_Request.BeginTime > DateTime.MinValue && _Request.EndTime > DateTime.MinValue) {
-                DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(LoginHelper.GetLoginInfo().Adviser.SN, _Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 10, _Request.Page == 0 ? 1 : _Request.Page);
+                DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(LoginHelper.GetLoginInfo().Adviser.SN, _Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 300, _Request.Page == 0 ? 1 : _Request.Page);
                 MachResult(dt, TradeModel);
                 TradeModel.BeginTime = _Request.BeginTime;
                 TradeModel.EndTime = _Request.EndTime;
@@ -101,7 +101,7 @@ namespace Adviser.Controllers
             Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
             ReportViewModels.TradeRecordReportModel TradeModel = new ReportViewModels.TradeRecordReportModel();
             if (_Request.BeginTime > DateTime.MinValue && _Request.EndTime > DateTime.MinValue) {
-                DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(LoginHelper.GetLoginInfo().Adviser.SN, _Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 10, _Request.Page == 0 ? 1 : _Request.Page);
+                DataTable dt = TradeDAO.GetTradeRecordByDueDayPage(LoginHelper.GetLoginInfo().Adviser.SN, _Request.BeginTime.ToString(Default.DateTimeFormat), _Request.EndTime.ToString(Default.DateTimeFormat), 300, _Request.Page == 0 ? 1 : _Request.Page);
                 MachResult(dt, TradeModel);
                 TradeModel.BeginTime = _Request.BeginTime;
                 TradeModel.EndTime = _Request.EndTime;
