@@ -274,7 +274,13 @@ namespace WebInfo {
                         int month = Month[spl[1]];
                         string[] sptime = spl[3].Split(':');
                         if (sptime.Length > 2) {
-                            Info.PostDate = new DateTime(Convert.ToInt32(spl[4]), month, Convert.ToInt32(spl[2]), Convert.ToInt32(sptime[0]), Convert.ToInt32(sptime[1]), Convert.ToInt32(sptime[2]));
+                            try {
+                                Info.PostDate = new DateTime(Convert.ToInt32(spl[4]), month, Convert.ToInt32(spl[2]), Convert.ToInt32(sptime[0]), Convert.ToInt32(sptime[1]), Convert.ToInt32(sptime[2]));
+                            }
+                            catch (Exception ex) {
+                                Info.PostDate = DateTime.Now;
+                                ToolLog.Log(ex.Message);
+                            }
                         }
                         else {
                             sptime = spl[4].Split(':');
@@ -286,7 +292,13 @@ namespace WebInfo {
                                 else {
                                     year = DateTime.Now.Year;
                                 }
-                                Info.PostDate = new DateTime(year, month, Convert.ToInt32(spl[3]), Convert.ToInt32(sptime[0]), Convert.ToInt32(sptime[1]), Convert.ToInt32(sptime[2]));
+                                try {
+                                    Info.PostDate = new DateTime(year, month, Convert.ToInt32(spl[3]), Convert.ToInt32(sptime[0]), Convert.ToInt32(sptime[1]), Convert.ToInt32(sptime[2]));
+                                }
+                                catch (Exception ex) {
+                                    Info.PostDate = DateTime.Now;
+                                    ToolLog.Log(ex.Message);
+                                }
                             }
                         }
                     }
