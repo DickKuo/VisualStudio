@@ -8,7 +8,8 @@ using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Web; 
+using System.Web;
+using CommTool; 
 namespace Stock {
     public class StockDAO : BaseData{
 
@@ -1296,12 +1297,18 @@ namespace Stock {
 
         /// <summary>警告信件</summary>
         /// <param name="WarningMessage"></param>
-        private void WarningMail(string WarningMessage,string Title) {           
+        private void WarningMail(string WarningMessage,string Title,bool IsLine=false) {           
             CommTool.MailData MailDB = new CommTool.MailData();
             DataTable MaillDataTable = MailDB.GetSendMail();
             if (MaillDataTable != null && MaillDataTable.Rows.Count > 0) {
                 foreach (DataRow dr in MaillDataTable.Rows) {
-                    MailDB.RegistrySend(dr[1].ToString(), Title, WarningMessage);
+                    if (IsLine) {
+                        MailDB.RegistrySend(dr[1].ToString(), Title, WarningMessage);
+                    }
+                    else {
+                        MessageObj Obj = new MessageObj();
+                        Obj.SendLineMessage(WarningMessage);
+                    }
                 }
             }
         }
@@ -1325,6 +1332,83 @@ namespace Stock {
             return OptionList;
         }
 
-         
+
+
+        /// <summary></summary>
+        /// <param name="RecordDB"></param>
+        /// <param name="Recorde"></param>
+        /// <param name="_Weighted"></param>
+        /// <param name="Result"></param>
+        public void CalculateStopPointSimulation(TradeRecord Recorde, Weighted _Weighted, Option Result, DateTime BeginTime, DateTime EndTime) {
+            TradeRecordDAO RecordDB = new TradeRecordDAO();
+            decimal StopPrice = 0m;
+            string WarningMessage = string.Empty;
+            if (Convert.ToDecimal(Recorde.Price) == 0m) {
+                return;
+            }
+            if (Recorde.Type == TradeType.Sell.ToString()) {
+                StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);
+                decimal DynamicStopPrice = StopPrice;
+
+                #region 隨時間讓停損價格流失
+                CalendarDAO CalendarDB = new CalendarDAO();
+                Calendar _Calendar = CalendarDB.GetDueMonthWeekStart(Recorde.DueMonth);
+                int Days = EndTime.Subtract(BeginTime).Days == 0 ? 1 : EndTime.Subtract(BeginTime).Days;
+                if (Days > 1) {
+                    DynamicStopPrice = StopPrice - (1.1m * Days * 1.5m);
+                }
+                #endregion
+
+                if ((Result.Clinch + 5) > DynamicStopPrice) {
+                    SendWarningMail(Recorde, DynamicStopPrice, Result, WarningMessage, Default.StopWarning);
+                }
+                else {
+                    Recorde.Settlement = ((Recorde.Price - Result.Clinch) * Convert.ToInt32(Recorde.Lot)) - 2;
+                    //RecordDB.UpdateTradeRecord(Recorde);
+                }
+            }
+            else {
+                ///這邊要做停損跟停利的計算
+                StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(Recorde.Price));
+                if ((Result.Clinch) < (StopPrice + 2)) {
+                    SendWarningMail(Recorde, StopPrice, Result, WarningMessage, Default.StopWarning);
+                }
+                else {
+                    int NewLevel = 0;
+                    decimal ButtomStopPrice = 0m;
+                    decimal TopStopPrice = 0m;
+                    for (int i = 0; i <= 50; i++) {
+                        ButtomStopPrice = ((StopPrice * ((1.1m) + (i * 0.1m))) - 1);
+                        TopStopPrice = ((StopPrice * ((1.1m) + (i * 0.1m))) + 1m);
+                        if (ButtomStopPrice < Result.Clinch && Result.Clinch < TopStopPrice) {
+                            NewLevel = i;
+                        }
+                    }
+                    if (Recorde.Level == 0) {
+                        StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(Recorde.Price));
+                    }
+                    else {
+                        StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(((StopPrice * ((1.1m) + (Recorde.Level * 0.1m))) + 1)));
+                    }
+                    if (NewLevel < Recorde.Level) {
+                        if (Result.Clinch <= StopPrice + 2) {
+                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯停利", NewLevel));
+                        }
+                        //if ((StopPrice + 8) > Result.Clinch) {
+                        //    //SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯", NewLevel));
+                        //}
+                    }
+                    else {
+                        if (NewLevel > Recorde.Level) {
+                            Recorde.Level = NewLevel;
+                            Recorde.Settlement = ((Result.Clinch - Recorde.Price) * Convert.ToInt32(Recorde.Lot)) - 2;
+                            //RecordDB.UpdateTradeRecord(Recorde);
+                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("目前到第{0}階梯", Recorde.Level));
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -145,6 +145,13 @@ namespace Stock {
             return dt;
         }
 
+        public List<TradeRecord> GetListTradeRecordByDueDay(string BeginDate, string EndDate) {
+            USP.AddParameter(BaseData.BaseSParameter.BeginDate, BeginDate);
+            USP.AddParameter(BaseData.BaseSParameter.EndDate, EndDate);
+            List<TradeRecord> ListTradeRecord = USP.ExeProcedureGetObjectList(SP.GetTradeRecordByDueDay,new TradeRecord());
+            return ListTradeRecord;
+        }
+
         /// <summary>取得時間區間的操作紀錄(分頁)</summary>
         /// <param name="BeginDate"></param>
         /// <param name="EndDate"></param>
@@ -214,33 +221,37 @@ namespace Stock {
                 if (!_Calendar.IsSettlement) {
                     Calendar Last_Calendar = CalDAO.GetDueMonthWeekLasDay(Begin);
                     string BeginDate = Last_Calendar.Daily.ToString(BaseData.BaseSParameter.DataTimeFormat);
-                    string EndDate = _Calendar.Daily.ToString(BaseData.BaseSParameter.DataTimeFormat);
-                    string ReportText = RecordTable(BeginDate, EndDate);
+                    string EndDate = _Calendar.Daily.ToString(BaseData.BaseSParameter.DataTimeFormat);                 
                     CommTool.MailData MailDB = new CommTool.MailData();
-                    DataTable MaillDataTable = MailDB.GetSendMail();
-                    if (MaillDataTable != null && MaillDataTable.Rows.Count > 0) {
-                        foreach (DataRow dr in MaillDataTable.Rows) {
-                            MailDB.RegistrySend(dr[1].ToString(), "本月操作報表", ReportText);
-                        }
-                    }
+
+                    //DataTable MaillDataTable = MailDB.GetSendMail();
+                    //if (MaillDataTable != null && MaillDataTable.Rows.Count > 0) {
+                    //    foreach (DataRow dr in MaillDataTable.Rows) {
+                    //        MailDB.RegistrySend(dr[1].ToString(), "本月操作報表", ReportText);
+                    //    }
+                    //}
 
                     AdviserDAO AdviserDB = new AdviserDAO();
                     List<Adviser> ListAdviser = AdviserDB.GetListAdviser();
                     foreach (var Item in ListAdviser) {
-                        string BounsReport = BounsTable(BeginDate, EndDate, Item.SN);
+
+                        string ReportText = RecordTable(BeginDate, EndDate, Item.SN);
+                        MailDB.RegistrySend(Item.Email, "本月操作報表", ReportText);
+
+                        System.Threading.Thread.Sleep(2000);
+
+                        string BounsReport = BounsTable(BeginDate, EndDate, Item.SN);                     
                         MailDB.RegistrySend(Item.Email, "獲利報表", BounsReport);
                     }
-
-
-
+                    
                     _Calendar.IsSettlement = true;
                     CalDAO.UpdateCalendar(_Calendar);
                 }
             }           
         }
 
-        private string RecordTable(string BeginDate, string EndDate) {
-            decimal RecordSettlement = GetDueDateSettlement(BeginDate,EndDate);
+        private string RecordTable(string BeginDate, string EndDate, int AdviserSN) {
+            decimal RecordSettlement = GetDueDateSettlementByAdviserSN(BeginDate, EndDate, AdviserSN);    //GetDueDateSettlement(BeginDate,EndDate);
             decimal Result = this.CalculateReward(RecordSettlement);
             DataTable RecordTable = GetTradeRecordByDueDay(BeginDate, EndDate);
             StringBuilder Html = new StringBuilder();
@@ -267,21 +278,24 @@ namespace Stock {
             Html.AppendLine("<th>Spreads</th>");            
             Html.AppendLine("<th>PyeongchangTime</th>");
             Html.AppendLine("<th>Fee</th>");
+            Html.AppendLine("<th>Subtotal</th>");
             Html.AppendLine("</tr>");
             if (RecordTable != null && RecordTable.Rows.Count > 0) {
                 foreach (DataRow dr in RecordTable.Rows)
                 {
                     Html.AppendLine("<tr>");
-                    decimal Spreads = 0;
+                    double Spreads = 0;
                     if (dr[5].ToString() == "Buy") {
-                        Spreads = Convert.ToDecimal(dr[8]) - Convert.ToDecimal(dr[7]);
+                        Spreads = Convert.ToDouble(dr[8]) - Convert.ToDouble(dr[7]);
                     }
                     else {
-                        Spreads = Convert.ToDecimal(dr[7]) - Convert.ToDecimal(dr[8]);
+                        Spreads = Convert.ToDouble(dr[7]) - Convert.ToDouble(dr[8]);
                     }
-                    Spreads = Spreads * Convert.ToInt32(dr[6]);
-                    Html.AppendFormat("<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td><td>{7}</td><td>{8}</td><td>{9}</td><td>{10}</td><td{11}></td>",
-                        dr[0], Convert.ToDateTime(dr[1]).ToString(BaseSParameter.DateTimeFormat2), dr[2], dr[3], dr[4], dr[5], dr[6], dr[7], dr[8], Spreads, Convert.ToDateTime(dr[9]).ToString(BaseSParameter.DateTimeFormat2), Convert.ToInt32(dr[6])*2
+                    double Lot = Convert.ToInt32(dr[6]) ;
+                    Spreads = Spreads * Lot;
+                    Html.AppendFormat("<td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td><td>{7}</td><td>{8}</td><td>{9}</td><td>{10}</td><td>{11}</td><td>{12}</td>",
+                        dr[0], Convert.ToDateTime(dr[1]).ToString(BaseSParameter.DateTimeFormat2), dr[2], dr[3], dr[4], dr[5], dr[6], dr[7], dr[8], Spreads,                        
+                          Convert.ToDateTime(dr[9]).ToString(BaseSParameter.DateTimeFormat2), Lot * 2 ,  Spreads - (Lot * 2)
                         );
                     Html.AppendLine("</tr>");
                 } 
@@ -290,7 +304,7 @@ namespace Stock {
             Html.Append("<td colspan='2'> 結算點數 </td>");
             Html.AppendFormat("<td colspan='3'>NP {0}</td>", RecordSettlement);
             Html.Append("<td colspan='3'> 結算獎金 </td>");
-            Html.AppendFormat("<td colspan='3'>$ {0}</td>", Result);
+            Html.AppendFormat("<td colspan='5'>$ {0}</td>", Result);
             Html.AppendLine("</tr>");
             Html.AppendLine("</table> </body></html>");      
             return Html.ToString();
@@ -315,8 +329,8 @@ namespace Stock {
             Html.AppendLine("<table  style='border:3px #FFAC55 double;padding:5px;' rules='all' cellpadding='5';>");
 
             Html.AppendLine("<tr>");
-            Html.Append("<td colspan='2'> 本月獲利: </td>");
-            Html.AppendFormat("<td colspan='3'>NP {0}</td>", TotalChips.ToString("##.00"));  
+            Html.AppendFormat("<td colspan='5'> 本月獲利(NP): {0} </td>", RecordSettlement.ToString("##.00"));
+            //Html.AppendFormat("<td colspan='3'>NP {0}</td>", RecordSettlement.ToString("##.00"));  
             Html.AppendLine("</tr>");
 
             Html.AppendLine("<tr>");
@@ -324,30 +338,29 @@ namespace Stock {
             Html.AppendLine("<th>Name</th>");
             Html.AppendLine("<th>Chips</th>");
             Html.AppendLine("<th>Bouns</th>");
-            Html.AppendLine("<th>Commission</th>");
-            Html.AppendLine("<th>Result</th>");
+            //Html.AppendLine("<th>Commission</th>");
+            //Html.AppendLine("<th>Result</th>");
             Html.AppendLine("</tr>");
             
             SettleTimeDAO SettleDB = new SettleTimeDAO();
             SettleTime SeT = SettleDB.GetNearlySettleTime();
 
             TranscationDAO TransDB = new TranscationDAO();
-            decimal TotalCommission = 0; 
+          
             
             foreach (var Item in ListCustomer) {
-                decimal Bouns = RecordSettlement * (Item.Chips / TotalChips);
-                decimal Commission = 0; // Bouns > 0 ? Bouns * (Item.CommissionRate / 100) : 0;  
-                decimal Result = Bouns - Commission;
+                decimal Result = RecordSettlement * (Item.Chips / TotalChips);
+                //decimal Commission = 0; // Bouns > 0 ? Bouns * (Item.CommissionRate / 100) : 0;                
                 if (Result == 0) {
                     continue;
                 }
-                TotalCommission += Commission;
+                //TotalCommission += Commission;
                 Html.AppendLine("<tr>");
                 Html.AppendLine("<td>" + Item.Account + "</td>");
                 Html.AppendLine("<td>"+Item.Member.NickName+"</td>");
                 Html.AppendLine("<td>" + Item.Chips + "</td>");
-                Html.AppendLine("<td>" + Bouns.ToString("##.00") + "</td>");
-                Html.AppendLine("<td>" + Commission.ToString("##.00") + "</td>");
+                //Html.AppendLine("<td>" + Bouns.ToString("##.00") + "</td>");
+                //Html.AppendLine("<td>" + Commission.ToString("##.00") + "</td>");
                 Html.AppendLine("<th>" + Result.ToString("##.00") + "</th>");
                 Html.AppendLine("</tr>");
 
@@ -355,13 +368,13 @@ namespace Stock {
                 Trans.Detail = new TransactionDetail();
                 Trans.CustomerSN = Item.SN;
                 Trans.TradeTime = DateTime.Now;
-                Trans.TradeType = Bouns >= 0 ? TranscationTypes.Dividend : TranscationTypes.Loss;
+                Trans.TradeType = Result >= 0 ? TranscationTypes.Dividend : TranscationTypes.Loss;
                 Trans.Detail.BankName =" ";
                 Trans.Detail.BankAccount = " ";
                 Trans.Detail.BankCode = " ";
                 Trans.Detail.Remark = " ";
                 Trans.Detail.Draw = Result;
-                Trans.Detail.Commission = Commission;
+                Trans.Detail.Commission = 0;// Commission;
                 TransDB.AddTranscation(Trans);
 
                 if (SeT.EndTime.Day == DateTime.Now.Day && SeT.EndTime.Month == DateTime.Now.Month) {
@@ -369,10 +382,10 @@ namespace Stock {
                 }
             }
 
-            Html.AppendLine("<tr>");
-            Html.Append("<td colspan='2'> 傭金: </td>");
-            Html.AppendFormat("<td colspan='3'>NP {0}</td>", TotalCommission.ToString("##.00"));            
-            Html.AppendLine("</tr>");
+            //Html.AppendLine("<tr>");
+            //Html.Append("<td colspan='2'> 傭金: </td>");
+            //Html.AppendFormat("<td colspan='3'>NP {0}</td>", TotalCommission.ToString("##.00"));            
+            //Html.AppendLine("</tr>");
 
             Html.AppendLine("</table> </body></html>");
             return Html.ToString();

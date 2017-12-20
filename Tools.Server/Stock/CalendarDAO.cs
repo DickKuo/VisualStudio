@@ -21,6 +21,7 @@ namespace Stock {
             public const string UpdateCalendar = "UpdateCalendar";
             public const string GetDueMonthWeekStart = "GetDueMonthWeekStart";
             public const string GetDueMonthWeekLasDay = "GetDueMonthWeekLasDay";
+            public const string GetWeeks = "GetWeeks";
         }
 
         private class SPParameter {
@@ -227,6 +228,21 @@ namespace Stock {
             USP.AddParameter(BaseData.BaseSParameter.DueMonth, DueMonth);
             Calendar _Calendar = USP.ExeProcedureGetObject(SP.GetDueMonthWeekLasDay, new Calendar());
             return _Calendar;
+        }
+
+        /// <summary></summary>
+        /// <returns></returns>
+        public List<string> GetWeeks() {
+            List<string> ListResult = new List<string>();
+            USP.AddParameter(BaseData.BaseSParameter.EndDate, DateTime.Now.ToString(BaseData.BaseSParameter.DataTimeFormat));
+            DataTable dt =  USP.ExeProcedureGetDataTable(SP.GetWeeks) ;
+            if (dt != null && dt.Rows.Count > 0) {
+                foreach (DataRow dr in dt.Rows) {
+                    string re = dr[0].ToString();
+                    ListResult.Add(re);
+                }
+            }
+            return ListResult;
         }
 
     }
