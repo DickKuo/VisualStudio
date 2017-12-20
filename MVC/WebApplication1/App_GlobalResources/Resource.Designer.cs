@@ -385,7 +385,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   查詢類似 Member 的當地語系化字串。
+        ///   查詢類似 Register Member 的當地語系化字串。
         /// </summary>
         internal static string Register_Member {
             get {
