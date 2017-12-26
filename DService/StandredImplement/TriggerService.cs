@@ -426,4 +426,58 @@ namespace StandredImplement
     #endregion
 
 
+
+    #region  監控價格
+    /// <summary>
+    /// 此為標準trigger 範例
+    /// </summary>
+    public class BackUpHistoryService : AutoTrigger {
+        BackgroundWorker _work;
+
+        public BackUpHistoryService() {
+            _work = new BackgroundWorker();
+            _work.DoWork += new DoWorkEventHandler(work_DoWork);
+            _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
+        }
+
+        private static object IsBusy = new object();
+
+        private void work_DoWork(object sender, DoWorkEventArgs e) {
+            try {
+                lock (IsBusy) {
+                    DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 30, 0);
+                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 35, 0);
+                    while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0) {
+                        OptionDAO DB = new OptionDAO();
+                        DB.StoreToHistory();
+                        Thread.Sleep(1000 * 20);
+                    }                                      
+                }
+            }
+            catch (Exception ex) {
+                ToolLog.Log(ex.Message);
+            }
+        }
+
+        private void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+
+        }
+
+        /// <summary>
+        /// 執行trigger 
+        /// </summary>
+        /// <param name="pCurrentTime"></param>
+        public override void Execute(string pCurrentTime) {
+            try {
+                if (!_work.IsBusy) {
+                    _work.RunWorkerAsync();
+                }
+            }
+            catch (Exception ex) {
+                CommTool.ToolLog.Log(ex);
+            }
+        }
+
+    }
+    #endregion
 }
