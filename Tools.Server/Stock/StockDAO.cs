@@ -1297,17 +1297,17 @@ namespace Stock {
 
         /// <summary>警告信件</summary>
         /// <param name="WarningMessage"></param>
-        private void WarningMail(string WarningMessage,string Title,bool IsLine=false) {           
+        private void WarningMail(string WarningMessage, string Title, bool IsLine = true) {           
             CommTool.MailData MailDB = new CommTool.MailData();
             DataTable MaillDataTable = MailDB.GetSendMail();
             if (MaillDataTable != null && MaillDataTable.Rows.Count > 0) {
                 foreach (DataRow dr in MaillDataTable.Rows) {
                     if (IsLine) {
-                        MailDB.RegistrySend(dr[1].ToString(), Title, WarningMessage);
-                    }
-                    else {
                         MessageObj Obj = new MessageObj();
                         Obj.SendLineMessage(WarningMessage);
+                    }
+                    else {                       
+                        MailDB.RegistrySend(dr[1].ToString(), Title, WarningMessage);
                     }
                 }
             }
@@ -1353,7 +1353,7 @@ namespace Stock {
                 #region 隨時間讓停損價格流失
                 CalendarDAO CalendarDB = new CalendarDAO();
                 Calendar _Calendar = CalendarDB.GetDueMonthWeekStart(Recorde.DueMonth);
-                int Days = EndTime.Subtract(BeginTime).Days == 0 ? 1 : EndTime.Subtract(BeginTime).Days;
+                int Days = EndTime.Subtract(Convert.ToDateTime( Result.Time )).Days == 0 ? 1 : EndTime.Subtract(Convert.ToDateTime(BeginTime)).Days;
                 if (Days > 1) {
                     DynamicStopPrice = StopPrice - (1.1m * Days * 1.5m);
                 }
@@ -1409,6 +1409,9 @@ namespace Stock {
                 }
             }
         }
+
+
+
 
     }
 }

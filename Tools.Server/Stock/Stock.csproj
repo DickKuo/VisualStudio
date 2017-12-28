@@ -75,6 +75,7 @@
     <Compile Include="HistoryOption.cs" />
     <Compile Include="Open_Interest.cs" />
     <Compile Include="Option.cs" />
+    <Compile Include="OptionDAO.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockDAO.cs" />

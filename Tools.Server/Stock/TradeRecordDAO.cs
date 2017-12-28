@@ -309,8 +309,7 @@ namespace Stock {
             Html.AppendLine("</table> </body></html>");      
             return Html.ToString();
         }
-
-
+        
         private string BounsTable(string BeginDate, string EndDate,int AdviserSN) {           
             decimal RecordSettlement = GetDueDateSettlementByAdviserSN(BeginDate, EndDate, AdviserSN);           
             CustomerDAO CustomerDB = new CustomerDAO();
@@ -391,7 +390,6 @@ namespace Stock {
             return Html.ToString();
 
         }
- 
-        
+         
     }
 }
