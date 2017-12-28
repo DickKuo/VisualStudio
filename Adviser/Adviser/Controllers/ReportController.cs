@@ -31,6 +31,7 @@ namespace Adviser.Controllers
             public const string Sell = "Sell";
             public const string Buy = "Buy";
             public const string SN = "SN";
+            public const string IsMail = "IsMail";
         }
 
         /// <summary></summary>
@@ -68,6 +69,7 @@ namespace Adviser.Controllers
                     _TradeRecord.StopPrice = dr[Default.StopPrice].ToString() == string.Empty ? 0 : Convert.ToDecimal(dr[Default.StopPrice]);
                     _TradeRecord.PyeongchangTime = dr[Default.PyeongchangTime].ToString() == string.Empty ? DateTime.MinValue : Convert.ToDateTime(dr[Default.PyeongchangTime]);
                     _TradeRecord.IsPyeongchang = Convert.ToBoolean(dr[Default.IsPyeongchang]);
+                    _TradeRecord.IsMail = Convert.ToBoolean(dr[Default.IsMail]);
                     decimal Point = 0;
                     if (_TradeRecord.Type == Default.Sell) {
                         Point = (_TradeRecord.Price - _TradeRecord.StopPrice) * Convert.ToDecimal(_TradeRecord.Lot);
@@ -152,6 +154,17 @@ namespace Adviser.Controllers
                 return "Error";
             }
         }//end Pyeongchang
+
+        [HttpPost]
+        public dynamic ChangeAlertSetting(TradeRecord _TradeRecord) {
+            if (_TradeRecord.SN > 0) {
+                Stock.TradeRecordDAO TradeDAO = new Stock.TradeRecordDAO();
+                TradeRecord Result = TradeDAO.GetTradeRecordBySN(_TradeRecord.SN);
+                Result.IsMail = _TradeRecord.IsMail;
+                TradeDAO.UpdateTradeRecord(Result);
+            }
+            return "OK";
+        }
 
         public ActionResult WeekPoint() {
             Adviser.Models.ReportViewModels.WeekPointViewModel WeekView = new ReportViewModels.WeekPointViewModel();

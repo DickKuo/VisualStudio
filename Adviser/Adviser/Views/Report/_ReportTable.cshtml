@@ -14,8 +14,9 @@
             <th>入昌點數</th>
             <th>平昌點數</th>
             <th>修改時間</th>
-            <th>平昌</th>
+            <th>平昌</th>           
             <th>損益</th>
+            <th>通知</th>
         </tr>
     </thead>
     <tbody>
@@ -49,7 +50,7 @@
                             @(Item.IsPyeongchang == true ? "平昌" : "未平昌")
                             }
                         }
-                    </td>
+                    </td>                    
                     <td>
                         @{
                             if (Item.Type == "Buy") {
@@ -59,7 +60,25 @@
                             @( Item.IsPyeongchang == true ? (Item.Price - Item.StopPrice) * Convert.ToDecimal(Item.Lot) : 0);
                         }
                         }
+                    </td> 
+                    
+                    <td>
+                        @{
+                          if (Model.Permission <= 3) {
+                                if (Item.IsMail) {
+                                     <label class="checkbox-inline">
+                                         <input type="checkbox" class="checkchange" data-sn="@Item.SN" checked data-toggle="toggle">
+                                    </label>
+                                }
+                                else {
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" class="checkchange" data-sn="@Item.SN" data-toggle="toggle">
+                                    </label>
+                                 }
+                          }
+                        }
                     </td>
+
                 </tr>
                 RowID++;
             }

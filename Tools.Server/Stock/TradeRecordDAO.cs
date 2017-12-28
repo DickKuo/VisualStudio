@@ -23,6 +23,7 @@ namespace Stock {
             public const string GetTradeRecordPagesByDueDay = "GetTradeRecordPagesByDueDay";
             public const string PyeongchangTrade = "PyeongchangTrade";
             public const string GetDueDateSettlementByAdviserSN = "GetDueDateSettlementByAdviserSN";
+            public const string GetTradeRecordBySN = "GetTradeRecordBySN";
         }
 
         private class SPParameter {
@@ -166,6 +167,15 @@ namespace Stock {
             USP.AddParameter(SPParameter.Page, Page);
             DataTable dt = USP.ExeProcedureGetDataTable(SP.GetTradeRecordByDueDayPage);
             return dt;
+        }
+
+        /// <summary>依據SN取得交易單</summary>
+        /// <param name="SN"></param>
+        /// <returns></returns>
+        public TradeRecord GetTradeRecordBySN(int SN) {
+            USP.AddParameter(BaseData.BaseSParameter.SN, SN);
+            TradeRecord Result = USP.ExeProcedureGetObject<TradeRecord>(SP.GetTradeRecordBySN,new TradeRecord());
+            return Result;
         }
 
         /// <summary>取得時間區間紀錄的總筆數</summary>

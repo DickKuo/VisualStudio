@@ -40,10 +40,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommTool">
-      <HintPath>..\..\..\Dropbox\Export\CommTool.dll</HintPath>
+      <HintPath>..\..\..\..\Dropbox\Export\CommTool.dll</HintPath>
     </Reference>
     <Reference Include="CommTool.Service">
-      <HintPath>..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
+      <HintPath>..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="ObjectBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -268,6 +268,8 @@
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-select.css" />
+    <Content Include="Content\bootstrap-toggle.css" />
+    <Content Include="Content\bootstrap-toggle.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Code\Carousel.css" />
@@ -288,6 +290,8 @@
     <Content Include="Scripts\bootstrap-datetimepicker.fr.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
+    <Content Include="Scripts\bootstrap-toggle.js" />
+    <Content Include="Scripts\bootstrap-toggle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Bootstrap3\bootstrap-datetimepicker.js" />
