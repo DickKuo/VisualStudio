@@ -81,14 +81,11 @@ namespace ServerApplication
             string StockUrl = "https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=";
             string Result   = _StockData.GetOptionEveryDay(StockUrl);           
         }
- 
-   
 
         static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             server.Run(DateTime.Now.ToString(configmanage.GetValue("ShortTimeFormat")));
         }
-
 
         private static void Lessner()
         {
@@ -96,16 +93,13 @@ namespace ServerApplication
             execute.Start();
         }
 
-
         private static List<string> _timelist = new List<string>();
-
-
+        
         private static TriggerService GetTriggerServices()
         {
             ServerImplement service = new ServerImplement();
             return service.GetAutoTriggerService();
         }
-
 
         /// <summary>20141219 add by Dick for 更新DLL</summary>
         /// 20170210 修改讓就算一個檔案無法搬移其他檔案還是可以正常運作 modified by Dick
@@ -169,8 +163,6 @@ namespace ServerApplication
                     ToolLog.Log(ex);
                 }
             }
-        }
-
-
+        }        
     }
 }

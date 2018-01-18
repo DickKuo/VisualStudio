@@ -63,7 +63,7 @@ namespace DService
         }
 
 
-        protected override void OnStart(string[] args) {           
+        protected override void OnStart(string[] args) {
             ServiceLog.ToolLog.Log("服務啟動");
             Init();
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");

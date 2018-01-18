@@ -17,7 +17,7 @@ namespace ServiceLog
             public const string MessageFormat = "【{0}】 {1}{2}\r\n";
             public const string Record = "_Record";
             public const string FileNameFormat = "{0}-{1}-{2}";
-            public const string BasePath = @"C:\Log";
+            public const string BasePath = @"C:\SLog";
         }
 
         private static string _path = Default.BasePath;
@@ -252,6 +252,5 @@ namespace ServiceLog
             }
             return found;
         }
-
     }
 }

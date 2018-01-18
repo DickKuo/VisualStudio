@@ -268,8 +268,8 @@ namespace StandredImplement
         void work_DoWork(object sender, DoWorkEventArgs e) {
             try {
                 lock (IsBusy) {
-                    DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,8,44,40);
-                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 46 , 0);
+                    DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,8,44,50);
+                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 45 ,20);
                     while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0)
                     {
                         StockDAO StockContext = new StockDAO();
