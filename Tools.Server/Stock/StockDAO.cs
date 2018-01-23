@@ -9,7 +9,8 @@ using HtmlAgilityPack;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
-using CommTool; 
+using CommTool;
+using System.Threading; 
 namespace Stock {
     public class StockDAO : BaseData{
 
@@ -31,22 +32,23 @@ namespace Stock {
         }
 
         private class SP {
-            public const string SaveOption = "SaveOption";
-            public const string SaveOptionHistory = "SaveOptionHistory";
+            public const string AddOption = "AddOption";
+            public const string AddWeekPoint = "AddWeekPoint";
             public const string GetDueMonth = "GetDueMonth";
             public const string GetOptionHistory = "GetOptionHistory";
-            public const string SaveOpenInterest = "SaveOpenInterest";
             public const string GetMaxNumberOfContracts = "GetMaxNumberOfContracts";
-            public const string GetMaxVolume = "GetMaxVolume";         
-            public const string AddWeekPoint = "AddWeekPoint";
+            public const string GetMaxVolume = "GetMaxVolume";   
             public const string GetWeekPointByDueMonthAndOP = "GetWeekPointByDueMonthAndOP";
             public const string GetOptionByDueMonthAndOP = "GetOptionByDueMonthAndOP";
-            public const string GetOptionByMonthAndContractAndOP = "GetOptionByMonthAndContractAndOP";
-            public const string UpdateWeekPoint = "UpdateWeekPoint";
-            public const string GetListOption = "GetListOption";
-            public const string GetOptionQuotesByDuMonthAndTime = "GetOptionQuotesByDuMonthAndTime";
-            public const string AddOption = "AddOption";
+            public const string GetOptionByMonthAndContractAndOP = "GetOptionByMonthAndContractAndOP";         
+            public const string GetListOptionCondition = "GetListOptionCondition";
+            public const string GetOptionQuotesByDuMonthAndTime = "GetOptionQuotesByDuMonthAndTime";           
             public const string GetListOptionByWeekPoint = "GetListOptionByWeekPoint";
+            public const string GetListOption = "GetListOption";
+            public const string UpdateWeekPoint = "UpdateWeekPoint";
+            public const string SaveOpenInterest = "SaveOpenInterest";
+            public const string SaveOption = "SaveOption";
+            public const string SaveOptionHistory = "SaveOptionHistory";
         }
 
         private class SPParameter {
@@ -312,12 +314,14 @@ namespace Stock {
                         string TradeTimestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
                         var tasks = new List<Task<int>>();
                         List<Option> ListOption = new List<Option>();
-                        //Task Task1 = Task.Factory.StartNew(() => {  ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8, TradeTimestamp));   });//周選 
+                        //Task Task1 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8, TradeTimestamp)); });//周選 
                         //Task Task2 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); });//近月選1   
-                        //Task Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2   
+                        //Task Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2  
+                        
                         Task Task1 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.Week, Encoding.UTF8, TradeTimestamp)); });//周選 
                         Task Task2 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); });//近月選1   
                         Task Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2                                 
+
                         Task Task4 = Task.Factory.StartNew(() => {
                             WeightedDAO WeightedDAO = new WeightedDAO();
                             Weighted _Weighted = WeightedDAO.GetWeightedDaily(WeightedUrl);
@@ -326,8 +330,9 @@ namespace Stock {
                                 WeightedDAO.SaveWeighted(_Weighted);
                             }
                         });
-                        Task.WaitAll(Task1, Task2, Task3,Task4);
-                        //SaveOpionData(ListOption);
+
+                        Task.WaitAll(Task1, Task2, Task3, Task4);
+                        SaveOpionData(ListOption);
                         AddOption(ListOption);
                         Message = "GetOptionOK";
                         CommTool.ToolLog.Log(Message);
@@ -1148,7 +1153,7 @@ namespace Stock {
         /// <param name="EndTime"></param>
         /// <param name="_WeekPoint"></param>
         /// <returns></returns>
-        public List<Option> GetListOption(DateTime BeginTime, DateTime EndTime, WeekPoint _WeekPoint) {
+        public List<Option> GetListOptionCondition(DateTime BeginTime, DateTime EndTime, WeekPoint _WeekPoint) {
             List<Option> ListOption = new List<Option>();
             try {
                 USP.AddParameter(SPParameter.BeginTime, BeginTime);
@@ -1156,10 +1161,24 @@ namespace Stock {
                 USP.AddParameter(SPParameter.Contract, _WeekPoint.Contract);
                 USP.AddParameter(SPParameter.DueMonth, _WeekPoint.DueMonth);
                 USP.AddParameter(SPParameter.OP, _WeekPoint.OP);
-                ListOption = USP.ExeProcedureGetObjectList(SP.GetListOption, new Option());
+                ListOption = USP.ExeProcedureGetObjectList(SP.GetListOptionCondition, new Option());
             }
             catch (Exception ex) {
                 CommTool.ToolLog.Log(ex);
+            }
+            return ListOption;
+        }
+
+        public List<Option> GetListOption(DateTime BeginTime, DateTime EndTime) {
+            List<Option> ListOption = new List<Option>();
+            try {
+                USP.AddParameter(SPParameter.BeginTime, BeginTime);
+                USP.AddParameter(SPParameter.EndTime, EndTime);
+                ListOption = USP.ExeProcedureGetObjectList(SP.GetListOption, new Option());
+            }
+            catch (Exception ex)
+            {
+              CommTool.ToolLog.Log(ex);
             }
             return ListOption;
         }
@@ -1229,7 +1248,7 @@ namespace Stock {
                 Calendar _Calendar =  CalendarDB.GetDueMonthWeekStart(Recorde.DueMonth);
                 int Days = DateTime.Now.Subtract(_Calendar.Daily).Days == 0 ? 1 : DateTime.Now.Subtract(_Calendar.Daily).Days;               
                 if (Days > 1) {
-                    DynamicStopPrice = StopPrice - (1.1m * Days * 1.5m);
+                    DynamicStopPrice = StopPrice - (1.1m * Days * 1.7m);
                 }                  
                 #endregion
 
@@ -1253,7 +1272,7 @@ namespace Stock {
                     decimal TopStopPrice = 0m;
                     for (int i = 0; i <= 50; i++) {
                         ButtomStopPrice = ((StopPrice * ((1.1m) + (i * 0.1m))) - 1);
-                        TopStopPrice = ((StopPrice * ((1.1m) + (i * 0.1m))) + 1m);
+                        TopStopPrice = ((StopPrice * ((1.1m) + (i * 0.1m))) + 1m) + i * 3;
                         if (ButtomStopPrice < Result.Clinch && Result.Clinch < TopStopPrice) {
                             NewLevel = i;
                         }
@@ -1334,84 +1353,87 @@ namespace Stock {
 
 
 
-        /// <summary></summary>
+        /// <summary>抓取反轉訊號(未完成)</summary>
         /// <param name="RecordDB"></param>
         /// <param name="Recorde"></param>
         /// <param name="_Weighted"></param>
         /// <param name="Result"></param>
-        public void CalculateStopPointSimulation(TradeRecord Recorde, Weighted _Weighted, Option Result, DateTime BeginTime, DateTime EndTime) {
-            TradeRecordDAO RecordDB = new TradeRecordDAO();
-            decimal StopPrice = 0m;
+        public void CalculateStopPointSimulation(WeekPoint CallRecorde, WeekPoint PutRecorde, Weighted _Weighted, Option Result, Option PutResult, DateTime BeginTime, ref string WinOp) {
+           
+            bool Trans = false;
             string WarningMessage = string.Empty;
-            if (Convert.ToDecimal(Recorde.Price) == 0m) {
+            if (Convert.ToDecimal(CallRecorde.Price) == 0m || Convert.ToDecimal(PutRecorde.Price) == 0m) {
                 return;
             }
-            if (Recorde.Type == TradeType.Sell.ToString()) {
-                StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);
-                decimal DynamicStopPrice = StopPrice;
 
-                #region 隨時間讓停損價格流失
-                CalendarDAO CalendarDB = new CalendarDAO();
-                Calendar _Calendar = CalendarDB.GetDueMonthWeekStart(Recorde.DueMonth);
-                int Days = EndTime.Subtract(Convert.ToDateTime( Result.Time )).Days == 0 ? 1 : EndTime.Subtract(Convert.ToDateTime(BeginTime)).Days;
-                if (Days > 1) {
-                    DynamicStopPrice = StopPrice - (1.1m * Days * 1.5m);
-                }
-                #endregion
-
-                if ((Result.Clinch + 5) > DynamicStopPrice) {
-                    SendWarningMail(Recorde, DynamicStopPrice, Result, WarningMessage, Default.StopWarning);
-                }
-                else {
-                    Recorde.Settlement = ((Recorde.Price - Result.Clinch) * Convert.ToInt32(Recorde.Lot)) - 2;
-                    //RecordDB.UpdateTradeRecord(Recorde);
-                }
+            string NowWinOp = string.Empty;
+            if (Result.Clinch > PutResult.Clinch) {
+                NowWinOp = "Call";
             }
             else {
-                ///這邊要做停損跟停利的計算
-                StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(Recorde.Price));
-                if ((Result.Clinch) < (StopPrice + 2)) {
-                    SendWarningMail(Recorde, StopPrice, Result, WarningMessage, Default.StopWarning);
+                NowWinOp = "Put";
+            }            
+
+            if (NowWinOp != WinOp) {
+                Trans = true;
+                WinOp = NowWinOp;
+            }           
+
+            int Days = Convert.ToDateTime(Result.Time).Subtract(BeginTime).Days == 0 ? 1 : Convert.ToDateTime(Result.Time).Subtract(BeginTime).Days;
+            
+            if (Days > 1) {
+
+                Console.WriteLine(string.Format(" Time :{0}  ,Call : {1}  , Put : {2} ",Result.Time,Result.Clinch , PutResult.Clinch));
+                Thread.Sleep(1000);
+
+                if (WinOp == "Call") {
+                    decimal CallPrice = Convert.ToDecimal(CallRecorde.Price);
+                    decimal Sub = 0;
+                    if (30 > CallPrice && CallPrice > 20) {
+                        Sub = CallPrice - (decimal)(Days * 1.5);
+                    }
+                    if (50 > CallPrice && CallPrice > 30) {
+                        Sub = CallPrice - (decimal)(Days * 2.7);
+                    }
+                    if (70 > CallPrice && CallPrice > 50) {
+                        Sub = CallPrice - (decimal)(Days * 4.9);
+                    }
+                    if (PutResult.Clinch > Result.Clinch  ) {
+
+                    }
+
+                    if (Sub != 0 && PutResult.Clinch > Sub && ((PutResult.Clinch - Result.Clinch) > Sub) && Trans) {
+                        MessageObj Obj = new MessageObj();
+                        Obj.SendLineMessage("Call →  Put ");
+                    }
+
                 }
                 else {
-                    int NewLevel = 0;
-                    decimal ButtomStopPrice = 0m;
-                    decimal TopStopPrice = 0m;
-                    for (int i = 0; i <= 50; i++) {
-                        ButtomStopPrice = ((StopPrice * ((1.1m) + (i * 0.1m))) - 1);
-                        TopStopPrice = ((StopPrice * ((1.1m) + (i * 0.1m))) + 1m);
-                        if (ButtomStopPrice < Result.Clinch && Result.Clinch < TopStopPrice) {
-                            NewLevel = i;
-                        }
+                    decimal PutPrice = Convert.ToDecimal(PutRecorde.Price);
+                    decimal Sub = 0;
+                    if (30 > PutPrice && PutPrice > 20) {
+                        Sub = PutPrice - (decimal)(Days * 1.5);
                     }
-                    if (Recorde.Level == 0) {
-                        StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(Recorde.Price));
+                    if (50 > PutPrice && PutPrice > 30) {
+                        Sub = PutPrice - (decimal)(Days * 2.7);
                     }
-                    else {
-                        StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(((StopPrice * ((1.1m) + (Recorde.Level * 0.1m))) + 1)));
+                    if (70 > PutPrice && PutPrice > 50) {
+                        Sub = PutPrice - (decimal)(Days * 4.9);
                     }
-                    if (NewLevel < Recorde.Level) {
-                        if (Result.Clinch <= StopPrice + 2) {
-                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯停利", NewLevel));
-                        }
-                        //if ((StopPrice + 8) > Result.Clinch) {
-                        //    //SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯", NewLevel));
-                        //}
+
+                    if (Result.Clinch > PutResult.Clinch) { 
+                    
                     }
-                    else {
-                        if (NewLevel > Recorde.Level) {
-                            Recorde.Level = NewLevel;
-                            Recorde.Settlement = ((Result.Clinch - Recorde.Price) * Convert.ToInt32(Recorde.Lot)) - 2;
-                            //RecordDB.UpdateTradeRecord(Recorde);
-                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("目前到第{0}階梯", Recorde.Level));
-                        }
+
+                    if (Sub != 0 && Result.Clinch > Sub && ((Result.Clinch - PutResult.Clinch) > Sub) && Trans) {
+                        MessageObj Obj = new MessageObj();
+                        Obj.SendLineMessage("Put → Call ");
                     }
+
                 }
             }
+
         }
-
-
-
-
+ 
     }
 }
