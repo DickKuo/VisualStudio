@@ -420,8 +420,7 @@ namespace Stock {
             }
             return list;
         }
-
-
+        
         /// <summary>抓取周選資料</summary>
         /// 20170518 add by Dick
         /// 20170519 modifed by Dick 修正抓取資料錯誤
@@ -443,7 +442,7 @@ namespace Stock {
             if (arr.Length > 1) {
                 GetParameter = string.Format("Sname=TX{0}{1}{2}W{0}{1}&xy=1:7", arr[1], arr[0], TempCode);
                 StartTag = 11;
-                EndTag = 67;
+                EndTag = 87;
             }
             else {  
                 GetParameter = string.Format("Sname=TXO{0}{1}{0}&xy=1:7", Temp, TempCode);
@@ -1350,9 +1349,7 @@ namespace Stock {
             }
             return OptionList;
         }
-
-
-
+        
         /// <summary>抓取反轉訊號(未完成)</summary>
         /// <param name="RecordDB"></param>
         /// <param name="Recorde"></param>
