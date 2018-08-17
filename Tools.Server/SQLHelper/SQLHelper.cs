@@ -481,6 +481,7 @@ namespace SQLHelper {
             DataTable dt = new DataTable();
             try {
                 con.Open();
+                Scmd.CommandTimeout = 300;
                 dt.Load(Scmd.ExecuteReader());
                 CommandResult = MessageType.Sucess;
                 OutParameterValues.Clear();

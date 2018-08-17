@@ -22,6 +22,7 @@ namespace Stock {
             public const string GetDueMonthWeekStart = "GetDueMonthWeekStart";
             public const string GetDueMonthWeekLasDay = "GetDueMonthWeekLasDay";
             public const string GetWeeks = "GetWeeks";
+            public const string GetCalendarByMonth = "GetCalendarByMonth";
         }
 
         private class SPParameter {
@@ -245,5 +246,17 @@ namespace Stock {
             return ListResult;
         }
 
+        /// <summary>取得行事曆月份</summary>
+        /// <param name="DayTime"></param>
+        /// <returns></returns>
+        public List<Calendar> GetCalendarByMonth(DateTime DayTime) {
+            DateTime BeginDate = new DateTime(DayTime.Year, DayTime.Month, 1);
+            DateTime EndDate = BeginDate.AddMonths(1).AddDays(-1);
+            USP.AddParameter(BaseData.BaseSParameter.BeginDate, BeginDate);
+            USP.AddParameter(BaseData.BaseSParameter.EndDate, EndDate);
+            List<Calendar> _ListCalendar = USP.ExeProcedureGetObjectList(SP.GetCalendarByMonth, new Calendar());
+            return _ListCalendar;
+        }
+        
     }
 }

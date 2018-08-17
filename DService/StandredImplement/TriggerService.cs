@@ -253,6 +253,7 @@ namespace StandredImplement
             public const string DService = "DService";
             public const string YahooStock = "YahooStock";
             public const string Capitalfutures = "Capitalfutures";
+            public const string Channel = "Channel";
         }
 
         public OptionTrigger() {
@@ -276,8 +277,17 @@ namespace StandredImplement
                         string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
                         ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
                         string WeigthedUrl = configmanage.GetValue(Default.YahooStock);
-                        string CapitalfuturesUrl = configmanage.GetValue(Default.Capitalfutures);
-                        StockContext.GetOptionEveryDay(CapitalfuturesUrl, WeigthedUrl);
+                        string CapitalfuturesUrl = string.Empty;
+                        int Channel = Convert.ToInt32(configmanage.GetValue(Default.Channel));
+
+                        if (Channel == 1) {
+                            CapitalfuturesUrl = configmanage.GetValue(Default.YahooStock);
+                        }
+                        if (Channel == 2) {
+                            CapitalfuturesUrl = configmanage.GetValue(Default.Capitalfutures);
+                        }
+
+                        StockContext.GetOptionEveryDay(CapitalfuturesUrl, WeigthedUrl, Channel);
                         Thread.Sleep(5000);
                     }
 

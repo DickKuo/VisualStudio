@@ -300,7 +300,7 @@ namespace Stock {
         /// 20170914 modified by Dick for 大盤跟期貨資訊換網站抓取
         /// <param name="Url"></param>
         /// <returns></returns>
-        public dynamic GetOptionEveryDay(string CapitalfuturesUrl,string WeightedUrl) {
+        public dynamic GetOptionEveryDay(string CapitalfuturesUrl,string WeightedUrl,int Channel = 2) {
             CalendarDAO CalendarDB = new CalendarDAO();
             DateTime TimeStamp =DateTime.Now ;
             Calendar _Calendar = CalendarDB.GetCalendar(TimeStamp);
@@ -314,13 +314,19 @@ namespace Stock {
                         string TradeTimestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
                         var tasks = new List<Task<int>>();
                         List<Option> ListOption = new List<Option>();
-                        //Task Task1 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(Url, _Calendar.Week, Encoding.UTF8, TradeTimestamp)); });//周選 
-                        //Task Task2 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); });//近月選1   
-                        //Task Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(Url, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2  
-                        
-                        Task Task1 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.Week, Encoding.UTF8, TradeTimestamp)); });//周選 
-                        Task Task2 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); });//近月選1   
-                        Task Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2                                 
+                        Task Task1 = null; Task Task2 = null; Task Task3 = null;
+
+                        if (Channel == 1) {
+                             Task1 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(CapitalfuturesUrl, _Calendar.Week, Encoding.UTF8, TradeTimestamp)); });//周選 
+                             Task2 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(CapitalfuturesUrl, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); });//近月選1   
+                             Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDaily(CapitalfuturesUrl, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2  
+                        }
+
+                        if (Channel == 2) {
+                            Task1 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.Week, Encoding.UTF8, TradeTimestamp)); });//周選 
+                            Task2 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.NearMonth1, Encoding.UTF8, TradeTimestamp)); });//近月選1   
+                            Task3 = Task.Factory.StartNew(() => { ListOption.AddRange(GetOptionDailyCapitalfutures(CapitalfuturesUrl, _Calendar.NearMonth2, Encoding.UTF8, TradeTimestamp)); }); //近月選2                                 
+                        }
 
                         Task Task4 = Task.Factory.StartNew(() => {
                             WeightedDAO WeightedDAO = new WeightedDAO();
@@ -330,7 +336,7 @@ namespace Stock {
                                 WeightedDAO.SaveWeighted(_Weighted);
                             }
                         });
-
+                        
                         Task.WaitAll(Task1, Task2, Task3, Task4);
                         SaveOpionData(ListOption);
                         AddOption(ListOption);
@@ -364,7 +370,7 @@ namespace Stock {
             return GetOptionDaily(Url, Contract, Encoding.Default, TradeTimestamp);
         }
         
-        /// <summary>取得選擇權價格清單</summary>
+        /// <summary>取得選擇權價格清單 (yahoo)</summary>
         /// 20161110 add by Dick
         /// 20170126 modifed by Dick
         /// 20170202 修正網頁上資訊不足時出現陣列長度錯誤  modifed by Dick
@@ -421,9 +427,9 @@ namespace Stock {
             return list;
         }
         
-        /// <summary>抓取周選資料</summary>
+        /// <summary>抓取周選資料(群益)</summary>
         /// 20170518 add by Dick
-        /// 20170519 modifed by Dick 修正抓取資料錯誤
+        /// 20170519 modifed by Dick 修正抓取資料錯誤         
         /// <param name="Url"></param>
         /// <param name="Contract"></param>
         /// <param name="UrlEncoding"></param>

@@ -12,6 +12,7 @@ namespace Stock {
             public const string GetWeighted = "GetWeighted";
             public const string GetWeightedByDay = "GetWeightedByDay";
             public const string SaveWeighted = "SaveWeighted";
+            public const string GetWeightedHistoryByDueMonth = "GetWeightedHistoryByDueMonth";
         }
 
         private class SPParameter {
@@ -28,6 +29,7 @@ namespace Stock {
             public const string Volume = "Volume";
             public const string Remark = "Remark";
             public const string TradeTimestamp = "TradeTimestamp";
+            public const string DueMonth = "DueMonth";
         }
 
         /// <summary>取得最新一筆大盤資訊</summary>
@@ -88,25 +90,31 @@ namespace Stock {
             DateTime TimeStamp = DateTime.Now;
             Weighted _Weighted = null;
             if (Doc != null) {
-                HtmlNode WeightedNode = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/table[3]").ChildNodes[7];
-                HtmlNode NearMonth = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/table[3]").ChildNodes[11];
-                if (WeightedNode != null) {
-                    try {
-                        _Weighted = new Weighted();                        
-                        _Weighted.Price = WeightedReplace(WeightedNode.ChildNodes[7].InnerText);
-                        _Weighted.Change = WeightedReplace(WeightedNode.ChildNodes[9].InnerText);
-                        _Weighted.HighestPrice = WeightedReplace(WeightedNode.ChildNodes[17].InnerText);
-                        _Weighted.LowestPrice = WeightedReplace(WeightedNode.ChildNodes[19].InnerText);
-                        _Weighted.Volume = WeightedReplace(WeightedNode.ChildNodes[15].InnerText).ToString();
-                        if (NearMonth != null) {
-                            _Weighted.Futures = WeightedReplace(NearMonth.ChildNodes[7].InnerText);
-                            _Weighted.TradeDate = DateTime.Now;
+                try {
+                    HtmlNode WeightedNode = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/table[3]").ChildNodes[7];
+                    HtmlNode NearMonth = Doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/table[3]").ChildNodes[11];
+                    if (WeightedNode != null) {
+                        try {
+                            _Weighted = new Weighted();
+                            _Weighted.Price = WeightedReplace(WeightedNode.ChildNodes[7].InnerText);
+                            _Weighted.Change = WeightedReplace(WeightedNode.ChildNodes[9].InnerText);
+                            _Weighted.HighestPrice = WeightedReplace(WeightedNode.ChildNodes[17].InnerText);
+                            _Weighted.LowestPrice = WeightedReplace(WeightedNode.ChildNodes[19].InnerText);
+                            _Weighted.Volume = WeightedReplace(WeightedNode.ChildNodes[15].InnerText).ToString();
+                            if (NearMonth != null) {
+                                _Weighted.Futures = WeightedReplace(NearMonth.ChildNodes[7].InnerText);
+                                _Weighted.TradeDate = DateTime.Now;
+                            }
+                        }
+                        catch (Exception ex) {
+                            CommTool.ToolLog.Log(ex);
+                            _Weighted = null;
                         }
                     }
-                    catch (Exception ex) {
-                        CommTool.ToolLog.Log(ex);
-                        _Weighted = null;
-                    }
+                }
+                catch (Exception ex) {
+                    CommTool.ToolLog.Log(ex);
+                    _Weighted = null;
                 }
             }
             return _Weighted;
@@ -161,6 +169,11 @@ namespace Stock {
                 }
             }
             return _Weighted;
+        }
+
+        public List<Weighted> GetWeightedHistoryByDueMonth(string DueMonth) {
+            USP.AddParameter(SPParameter.DueMonth, DueMonth);
+            return USP.ExeProcedureGetObjectList(SP.GetWeightedHistoryByDueMonth, new Weighted());
         }
 
         /// <summary>儲存大盤歷史資料</summary>

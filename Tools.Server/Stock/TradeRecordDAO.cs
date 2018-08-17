@@ -24,6 +24,8 @@ namespace Stock {
             public const string PyeongchangTrade = "PyeongchangTrade";
             public const string GetDueDateSettlementByAdviserSN = "GetDueDateSettlementByAdviserSN";
             public const string GetTradeRecordBySN = "GetTradeRecordBySN";
+            public const string GetDueMonthList = "GetDueMonthList";
+            public const string GetTradeRecordeByDueMonth = "GetTradeRecordeByDueMonth";
         }
 
         private class SPParameter {
@@ -133,8 +135,7 @@ namespace Stock {
                 return 0;
             }
         }
-
-
+        
         /// <summary>取得時間區間的操作紀錄</summary>
         /// <param name="BeginDate"></param>
         /// <param name="EndDate"></param>
@@ -400,6 +401,27 @@ namespace Stock {
             return Html.ToString();
 
         }
-         
+
+        /// <summary></summary>
+        /// <returns></returns>
+        public List<string> GetDueMonthList() {
+            DataTable dt = USP.ExeProcedureGetDataTable(SP.GetDueMonthList);
+            List<string> Li = new List<string>();
+            foreach(DataRow dr in dt.Rows)
+            {
+                string str = dr[0].ToString();
+                Li.Add(str);
+            }
+            return Li;
+        }
+
+        /// <summary>取得未平昌的交易紀錄</summary>
+        /// <returns></returns>
+        public List<TradeRecord> GetTradeRecordeByDueMonth(string DueMonth) {
+            List<TradeRecord> TradeList = new List<TradeRecord>();
+            USP.AddParameter(BaseData.BaseSParameter.DueMonth, DueMonth);
+            TradeList = USP.ExeProcedureGetObjectList(SP.GetTradeRecordeByDueMonth, new TradeRecord());
+            return TradeList;
+        }
     }
 }

@@ -8,11 +8,13 @@ namespace Stock {
 
         private class SP {
             public const string GetListWeekPointByYear = "GetListWeekPointByYear";
+            public const string GetWeekPointByDueMonth = "GetWeekPointByDueMonth";
         }
 
         private class SParamter {
             public const string BeginDate = "BeginDate";
             public const string EndDate = "EndDate";
+            public const string DueMonth = "DueMonth";
         }
         
         /// <summary>取得每周的結算結果</summary>
@@ -24,6 +26,13 @@ namespace Stock {
             USP.AddParameter(SParamter.BeginDate, BeginDate);
             USP.AddParameter(SParamter.EndDate, EndDate);
             List<WeekPoint> Result = USP.ExeProcedureGetObjectList(SP.GetListWeekPointByYear, new WeekPoint());
+            return Result;
+        }
+
+
+        public List<WeekPoint> GetWeekPointByDueMonth(string DueMonth) {
+            USP.AddParameter(SParamter.DueMonth, DueMonth);
+            List<WeekPoint> Result = USP.ExeProcedureGetObjectList(SP.GetWeekPointByDueMonth, new WeekPoint());
             return Result;
         }
 
