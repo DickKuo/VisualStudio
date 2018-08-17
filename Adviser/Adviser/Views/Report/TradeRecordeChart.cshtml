@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "TradeRecordeChart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<SelectListItem> DueMonthList = ViewBag.DueMonthList;  
+}
+<h2>歷史交易紀錄圖表</h2>
+<hr>
+
+<script>
+    $(function () {
+        $('#Search').on('click', function () {
+        
+            $.ajax({
+                type: "post",
+                url:  "../Report/TradeChart",
+                //不用傳參數的話，放個大括弧就好
+                data: {
+                    //BeginTime: $('#BeginTimePicker').val(),
+                    //EndTime: $('#EndTimePicker').val(),
+                    //Page: Page
+
+                    DueMonth: $("#DueMonth").val()
+                },
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                async: false,//由於最後需要使用ajax取得的result的數值，必須設定為false(才會變成sync同步執行）
+                cache: false, //防止ie8一直取到舊資料的話，請設定為false
+                success: function (result) {
+                    //$("#_ReportTable").html(result);
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+
+        });
+    });
+</script>
+
+<div class="panel panel-info">
+    <div class="panel-heading">基本查詢</div>
+    <div class="panel-body">
+        <div class="container">
+            <div class="row">
+                <label class="col-xs-1  control-label">
+                    周期
+                </label>
+                <div class='col-xs-3'>
+                    <select class="form-control" id="DueMonth" name="DueMonth">
+                        @foreach (SelectListItem Item in DueMonthList) {
+                            <option value="@Item.Value">@Item.Text</option>
+                        }
+                    </select>
+                </div>                 
+                <div class="col-xs-4">
+                    <input type="submit" id="Search" value="查詢" class="btn btn-info" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

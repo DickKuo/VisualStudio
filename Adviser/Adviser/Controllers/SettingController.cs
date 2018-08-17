@@ -82,6 +82,10 @@ namespace Adviser.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        
+
+        public ActionResult CalendarSetting() {
+            return View();
+        }
+
     }
 }

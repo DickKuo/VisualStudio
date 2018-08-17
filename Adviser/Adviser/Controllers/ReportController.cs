@@ -179,5 +179,37 @@ namespace Adviser.Controllers
             WeekView.ListWeekPoint = WeekDB.GetListWeekPointByYear(WeekView.Year);
             return PartialView("_WeekPointPartial", WeekView);
         }
+        
+        public ActionResult TradeRecordeChart() {
+            TradeRecordDAO DB = new TradeRecordDAO();
+            List<string> Li = DB.GetDueMonthList();
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (string str in Li) {
+                items.Add(new SelectListItem { Text = str, Value = str });
+            }
+            ViewBag.DueMonthList = items;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TradeChart() {
+                                                                                                                                                                                        
+            var DueMonth = Request["DueMonth"].ToString();
+            TradeRecordDAO DB = new TradeRecordDAO();
+            WeekPointDAO WeekDB = new WeekPointDAO();
+            OptionDAO OpDB = new OptionDAO();
+
+            List<TradeRecord> ListTrade = DB.GetTradeRecordeByDueMonth(DueMonth);
+            List<WeekPoint> LiWeek = WeekDB.GetWeekPointByDueMonth(DueMonth);
+
+            WeekPoint _Callweekpoion = LiWeek.Where(x => x.OP == "Call").ToList()[0];
+            List<Option> ListCall = OpDB.GetHistoryOption(_Callweekpoion);
+
+
+
+
+            return View();
+        }
+
 	}
 }

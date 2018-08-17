@@ -17,10 +17,12 @@
     <SubItem Seq ="1" Name="結算查詢" MenuNo="4001" Permission="10" Url="Report/WeekPoint"></SubItem>
     <SubItem Seq ="2" Name="操作紀錄" MenuNo="4002" Permission="10" Url="Report/RecordReport"></SubItem>
     <SubItem Seq ="3" Name="獎金" MenuNo="4003" Permission="10" Url="Report/Bouns"></SubItem>
+    <SubItem Seq ="4" Name="歷史交易紀錄圖表" MenuNo="4004" Permission="10" Url="Report/TradeRecordeChart"></SubItem>
   </Item>  
   <Item Seq="5" Name="設定" MenuNo="5000" Permission="10" Url="Setting/Index">
     <SubItem Seq ="1" Name="參予的碼數設定" MenuNo="5001" Permission="10" Url="Setting/ChipsSetting"></SubItem>
     <SubItem Seq ="2" Name="結清時間設定" MenuNo="5002" Permission="10" Url="Setting/SettleSetting"></SubItem>
+    <SubItem Seq ="3" Name="行事曆設定" MenuNo="5003" Permission="10" Url="Setting/CalendarSetting"></SubItem>
   </Item>  
   <Item Seq="6" Name="登出" MenuNo="6000" Permission="10" Url="Login/LogOut">
   </Item>  
