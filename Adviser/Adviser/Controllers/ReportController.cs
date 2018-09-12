@@ -49,7 +49,7 @@ namespace Adviser.Controllers
                 MachResult(dt, TradeModel);
                 TradeModel.MaxPage = Convert.ToInt32(dt.Rows[0]["MaxPage"]);
             }
-            return View(TradeModel);
+            return Views(TradeModel);
         }//end RecordReport
 
         private void MachResult(DataTable dt, ReportViewModels.TradeRecordReportModel TradeModel) {
@@ -96,7 +96,7 @@ namespace Adviser.Controllers
                     TradeModel.MaxPage = Convert.ToInt32(dt.Rows[0]["MaxPage"]);
                 }                
             }
-            return View("RecordReport", TradeModel);
+            return Views("RecordReport", TradeModel);
         }//end SearchRecord
 
         public dynamic ChagePage(ReportRequest _Request) {

@@ -91,12 +91,28 @@ $(function () {
     }
     
     $(".btn-primary").on("click", function () {
+        var Contract;
+        if ($(this).parent().parent().children().eq(2).html() != null) {
+            Contract = $(this).parent().parent().children().eq(2).html();
+        }
+        else {
+            Contract = $(this).parent().parent().parent().children().eq(2).children().eq(1).html();
+        }
+
+        var Lot;
+        if ($(this).parent().parent().children().eq(6).html() != null) {
+            Lot = $(this).parent().parent().children().eq(6).html();
+        }
+        else {
+            Lot = $(this).parent().parent().parent().children().eq(6).children().eq(1).html();
+        }
+          
         fancyconfirm("Do you wish to continue?<br>" +
                "<label class='col-xs-12 control-label'> 201707 </label>" +
                "<div class='form-group'  style='padding-top:25px;'>" +
                        "<label class='col-xs-4 control-label'>Contract</label>" +
                    "<div class='col-xs-8'>" +
-                       "<input class='form-control'  id='Contract' readonly='true'  type='text' value='" + $(this).parent().parent().children().eq(2).html() + "'>" +
+                       "<input class='form-control'  id='Contract' readonly='true'  type='text' value='" + Contract + "'>" +
                    "</div>" +
                "</div>" +
                "<input   id='BtnSN' hidden='hidden' type='text' value='" + $(this).attr('id')+ "' >" +
@@ -109,7 +125,7 @@ $(function () {
                 "<div class='form-group'  style='padding-top:25px;'>" +
                        "<label class='col-xs-4 control-label'>Lot</label>" +
                    "<div class='col-xs-8'>" +
-                       "<input class='form-control'  id='Lot'    type='text' value='" + $(this).parent().parent().children().eq(6).html() + "'>" +
+                       "<input class='form-control'  id='Lot'    type='text' value='" + Lot + "'>" +
                    "</div>" +
                "</div>" +
 

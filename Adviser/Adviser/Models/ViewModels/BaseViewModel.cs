@@ -15,5 +15,8 @@ namespace Adviser.Models.ViewModels {
         public int Page { set; get; }
 
         public int MaxPage { set; get; }
+
+        public bool IsPartial { set; get; }
+
     }
 }

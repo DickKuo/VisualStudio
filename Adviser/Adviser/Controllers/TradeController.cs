@@ -10,36 +10,38 @@ using System.Web.Mvc;
 
 namespace Adviser.Controllers
 {
-    public class TradeController : BaseLoginController {  
-        
-        /// <summary></summary>
+    public class TradeController : BaseLoginController {
+
+        /// <summary>報價表</summary>
         /// <returns></returns>
-        public ActionResult Quotes(string DueMonth) {
+        public ActionResult Quotes(TradeViewModels.TradeViewModel ViewModel) {
+            if (ViewModel == null) {
+                ViewModel = new TradeViewModels.TradeViewModel();
+            }
             DateTime NowTime = DateTime.Now;
             DateTime TimeEnd = NowTime.AddDays(1);
-            TradeViewModels.TradeViewModel ViewModel = new TradeViewModels.TradeViewModel();
+
             CalendarDAO _CalendarDAO = new CalendarDAO();
             Calendar _Calendar = _CalendarDAO.GetCalendar(DateTime.Now);
             ViewBag.DueMonthList = GetDueMonthItems(_Calendar);
             ViewModel.BeginTime = NowTime;
             ViewModel.EndTime = TimeEnd;
             ViewModel.Page = 1;
-            ViewModel.DueMonth = string.IsNullOrEmpty(DueMonth) == false ? DueMonth : _Calendar.Week;
+            ViewModel.DueMonth = string.IsNullOrEmpty(ViewModel.DueMonth) == false ? ViewModel.DueMonth : _Calendar.Week;
             ViewModel = SearchQuotes(ViewModel);
-            return View(ViewModel);
+            if (ViewModel.IsPartial) {
+                if (ChkIsMobile()) {
+                    return PartialView("../Trade/_QuotesTableM", ViewModel);
+                }
+                else {
+                    return PartialView("../Trade/_QuotesTable", ViewModel);
+                }
+            }
+            else {
+                return Views(ViewModel);
+            }
         }//end Quotes
-
-        public ActionResult QuotesSearch(TradeViewModels.TradeViewModel ViewModel) {
-            TradeViewModels.TradeViewModel ResultView = new TradeViewModels.TradeViewModel();
-            DateTime NowTime = DateTime.Now;
-            DateTime TimeEnd = NowTime.AddDays(1);
-            ViewModel.BeginTime = NowTime;
-            ViewModel.EndTime = TimeEnd;
-            ViewModel.Page = 1;
-            ResultView = SearchQuotes(ViewModel);
-            return PartialView("_QuotesTable", ResultView);
-        }
-
+  
         /// <summary></summary>
         /// <param name="ViewModel"></param>
         /// <returns></returns>

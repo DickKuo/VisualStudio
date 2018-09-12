@@ -10,8 +10,7 @@ namespace Adviser.Controllers
 {
     public class AdviserController : BaseLoginController
     {
-        //
-        // GET: /Adviser/
+
         public ActionResult AdviserEWallet()
         {
             Adviser.Models.ViewModels.AdviserViewModels.EWalletViewModel ViewModel = new Models.ViewModels.AdviserViewModels.EWalletViewModel();

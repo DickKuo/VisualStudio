@@ -1,16 +1,23 @@
 ﻿@model Adviser.Models.ViewModels.TradeViewModels.TradeViewModel
 
-@{
+@{ 
+  
     ViewBag.Title = Resources.Menu.Menu_3001;
     IEnumerable<SelectListItem> DueMonthList = ViewBag.DueMonthList;
-    
 }
 <h2>@Resources.Menu.Menu_3001</h2>
-<hr>
+<hr> 
 
 
 <script src="~/Scripts/Code/TradeJs.js"></script>
- 
+
+@*<link href="~/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet" />*@
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="~/Scripts/fancybox/jquery.fancybox.js"></script> 
 
 <div class="panel panel-success">
     <div class=" panel panel-heading">
@@ -18,7 +25,7 @@
     </div>
     <div class="panel panel-body">
         <div class="form-group">
-            <div class="col-xs-3">
+            <div >
                 @Html.DropDownListFor(M => M.DueMonth, DueMonthList, new { @class = "form-control", @id = "Drop_DueMonth" })
             </div>
             <div class="col-xs-3">
@@ -30,8 +37,6 @@
 
 
 <div id="QuotesTable">
-    @Html.Partial("_QuotesTable", Model)
+    @Html.Partial("_QuotesTableM", Model)
 </div>
-
-
 

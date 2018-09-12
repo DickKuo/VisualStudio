@@ -1,0 +1,101 @@
+﻿@model Adviser.Models.ViewModels.TradeViewModels.TradeViewModel
+
+<div class="container">
+    <input id="DueMonth" hidden="hidden" value="@Model.DueMonth" />
+    @Model.DueMonth
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Call</a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>履約價</th>
+                                <th>買進</th>
+                                <th>賣出</th>
+                                <th>成交</th>
+                                <th>漲跌</th>
+                                <th>總量</th>
+                                <th>下單</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int RowID = 1;
+                            }
+                            @if (@Model.QuotesList != null && @Model.QuotesList.Count > 0) {
+
+                                foreach (var Item in Model.QuotesList) {
+                                    <tr id="@RowID">
+                                        <td>@Item.Contract</td>
+                                        <td>@Item.CallBuy</td>
+                                        <td>@Item.CallSell</td>
+                                        <td>@Item.CallClinch</td>
+                                        <td>@Item.CallChagne</td>
+                                        <td>@Item.CallVolume</td>
+                                        <td><input class="btn btn-primary" type="button" name="Call" data-contract="@(Item.Contract)" value="Call"></td>
+                                    </tr>
+                                    RowID++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Put</a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>履約價</th>
+                                <th>買進</th>
+                                <th>賣出</th>
+                                <th>成交</th>
+                                <th>漲跌</th>
+                                <th>總量</th>
+                                <th>下單</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                RowID = 1;
+                            }
+                            @if (@Model.QuotesList != null && @Model.QuotesList.Count > 0) {
+
+                                foreach (var Item in Model.QuotesList) {
+                                    <tr id="@RowID">
+                                        <td>@Item.Contract</td>
+                                        <td>@Item.PutBuy</td>
+                                        <td>@Item.PutSell</td>
+                                        <td>@Item.PutClinch</td>
+                                        <td>@Item.PutChagne</td>
+                                        <td>@Item.PutVolume</td>
+                                        <td><input class="btn btn-primary" type="button" name="Put" data-contract="@(Item.Contract)" value="Put"></td>
+                                    </tr>
+                                    RowID++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="confirm" style="background-position: top right;background-repeat:no-repeat;padding-top:10px;display:none;width:600px;"></div>

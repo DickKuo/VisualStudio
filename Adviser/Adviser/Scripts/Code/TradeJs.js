@@ -52,7 +52,9 @@ $(function () {
     $("#QuotesTable").on("click", ".btn-primary", function (e) {
         e.preventDefault();
         BtnName = $(this).attr("name");
-        Contract = $(this).attr("data-Contract")
+        Contract = $(this).attr("data-Contract");
+         
+
         var ChildIndex = 0;
         if (BtnName == "Put") {
             ChildIndex = 9;
@@ -60,6 +62,14 @@ $(function () {
         else {
             ChildIndex = 3;
         }
+
+        if ($(this).parent().parent().children().eq(ChildIndex).html() == null)
+        {
+            ChildIndex = 3;           
+        }
+
+        var values = $(this).parent().parent().children().eq(ChildIndex).html();
+
         fancyconfirm("Do you wish to continue?<br>" +
                 "<label class='col-xs-12 control-label'> " + $("#DueMonth").text() + " </label>" +
                 "<div class='form-group'  style='padding-top:25px;'>" +
@@ -71,7 +81,7 @@ $(function () {
                 "<div class='form-group' style='padding-top:25px;'>" +
                     "<label class='col-xs-4 control-label'> Price </label>" +
                     "<div class='col-xs-8'>" +
-                        "<input class='form-control' id='Price'  type='text' value='" + $(this).parent().parent().children().eq(ChildIndex).html() + "'>" +
+                        "<input class='form-control' id='Price'  type='text' value='" + values + "'>" +
                     "</div>" +
                 "</div>" +
 
@@ -108,7 +118,15 @@ $(function () {
     });
     
     function Commd(BtnName) {       
-        var BuyType = $('input[name="optradio"]:checked').val();  
+        var BuyType = $('input[name="optradio"]:checked').val();
+        var DueMonth;        
+        if ($("#DueMonth").html() != '') {
+            DueMonth = $("#DueMonth").html();
+        }
+        else {
+            DueMonth = $("#DueMonth").val();
+        }
+
         $.ajax({
             type: "POST",
             url: Url + "AddTrade",
@@ -117,7 +135,7 @@ $(function () {
                 "Contract": Contract,
                 "Type": BuyType,
                 "Clinch": $("#Price").val(),
-                "DueMonth": $("#DueMonth").html(),
+                "DueMonth": DueMonth,
                 "Lot": $("#Lot").val()
             },
             success: function (Model) {
@@ -129,19 +147,19 @@ $(function () {
     }//end Commd
     
     $("#Btn_Search").on("click", function () {
-        $.fancybox.showLoading();
+        //$.fancybox.showLoading();       
         $.ajax({
             type: "POST",
-            url: Url + "QuotesSearch",
+            url: Url + "Quotes",
             data: {
-                "DueMonth": $("#Drop_DueMonth").val()
+                "DueMonth": $("#Drop_DueMonth").val(),
+                IsPartial :true
             },
 
             success: function (Model) {
                 $("#QuotesTable").html(Model);
-                $.fancybox.hideLoading();
+               //$.fancybox.hideLoading();
             }
-
         });
 
     });
