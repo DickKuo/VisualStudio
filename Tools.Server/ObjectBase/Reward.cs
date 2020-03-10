@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace ObjectBase {
-    public class Reward {
-
+namespace ObjectBase
+{
+    public class Reward
+    {
         public int SN { set; get; }
 
         public int CustomerSN { set; get; }
 
-        public DateTime RewardTime { set;get; }
+        public DateTime RewardTime { set; get; }
 
         public decimal Money { set; get; }
 

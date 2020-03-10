@@ -95,5 +95,14 @@
     <Setting Name="IsWorkBueaty" Type="System.String" Scope="User">
       <Value Profile="(Default)">true</Value>
     </Setting>
+    <Setting Name="Channel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="WeigthedUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.capitalfutures.com.tw/quotations/list.asp?xy=1&amp;xt=1</Value>
+    </Setting>
+    <Setting Name="Remark" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1.yahoo ,2.群益</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -1,10 +1,7 @@
-﻿using System;
+﻿using WebInfo.Business.DataEntities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using WebInfo.Business.DataEntities;
 using System.Xml;
+using System.IO;
 
 namespace WebInfo.Business.Services
 {
@@ -33,8 +30,7 @@ namespace WebInfo.Business.Services
         /// <param name="BaseUrl">起始網址Url</param>
         /// <returns></returns>
         SitePlus GetUrlList(string BaseUrl);
-
-
+        
         /// <summary>
         /// 20150410 針對網址解析
         /// 解析表特版文章內容。

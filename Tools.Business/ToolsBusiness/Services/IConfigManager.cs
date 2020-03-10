@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace CommTool.Business
 {
     public interface IConfigManager
-    {        
-
+    {
         /// <summary>
         /// 設定參數的值
         /// </summary>
         /// <param name="pParameter">參數名稱</param>
         /// <param name="value">值</param>
         void SetValue(string pParameter, string value);
-
 
         /// <summary>
         /// 取得參數的值

@@ -1,5 +1,4 @@
-﻿
-namespace ObjectBase
+﻿namespace ObjectBase
 {
     public class CommBase
     {
@@ -18,19 +17,21 @@ namespace ObjectBase
         protected const string SParamter_PageCount = "PageCount";
         protected const string SParamter_PageSize = "PageSize";
     }
-    public enum SQLExecResultCode {
+    public enum SQLExecResultCode
+    {
         Success = 99,
         Fail = -1
     }
 
-    public enum GenderType {
+    public enum GenderType
+    {
         Male = 1,
         Fmale = 2
     }
 
-    public enum TradeType { 
-       Deposit=1,
-       Withdrawal=2
+    public enum TradeType
+    {
+        Deposit = 1,
+        Withdrawal = 2
     }
-
 }

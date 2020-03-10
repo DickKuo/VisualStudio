@@ -1,13 +1,14 @@
 ﻿using System;
 
-namespace ObjectBase {
-    public class Member {
-
+namespace ObjectBase
+{
+    public class Member
+    {
         /// <summary>Primary</summary>
         public int SN { set; get; }
 
         public int CustomerSN { set; get; }
-        
+
         public string FirstName { set; get; }
 
         public string LastName { set; get; }

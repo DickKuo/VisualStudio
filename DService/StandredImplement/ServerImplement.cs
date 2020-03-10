@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using StandredImplement;
 using CommTool;
-using StandredImplement;
 
 namespace DStandardServer
 {
@@ -14,7 +10,6 @@ namespace DStandardServer
             TriggerService trs = base.GetAutoTriggerService();
             //trs.AddTriggers(new SampleService());  //Sample
             //trs.AddTriggers(new GetGoldTrigger()); 
-
             trs.AddTriggers(new GetBueaty());            
             trs.AddTriggers(new OptionTrigger());
             trs.AddTriggers(new ControlPriceService());

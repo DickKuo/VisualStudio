@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CommTool.Business
+﻿namespace CommTool.Business
 {
     public interface IOwnerObject
     {

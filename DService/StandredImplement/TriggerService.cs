@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using CommTool;
-using System.ComponentModel;
-using System.Xml;
-using WebInfo;
-using System.IO;
-using WebInfo.Business.DataEntities;
+﻿using WebInfo.Business.DataEntities;
 using DService.Business.Entities;
-using Stock;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
+using System.Xml;
+using System.IO;
+using CommTool;
+using WebInfo;
+using System;
+using Stock;
 
 namespace StandredImplement
 {
@@ -43,14 +43,14 @@ namespace StandredImplement
     //    /// <param name="pCurrentTime"></param>
     //    public override void Execute(string pCurrentTime)
     //    {
-            //try {
-            //    if (!_work.IsBusy) {
-            //        _work.RunWorkerAsync();
-            //    }   
-            //}
-            //catch (Exception ex) {
-            //    CommTool.ToolLog.Log(ex);
-            //}
+    //try {
+    //    if (!_work.IsBusy) {
+    //        _work.RunWorkerAsync();
+    //    }   
+    //}
+    //catch (Exception ex) {
+    //    CommTool.ToolLog.Log(ex);
+    //}
     //    }
     //}
     #endregion
@@ -61,7 +61,8 @@ namespace StandredImplement
         private string _shortFormat;
         private object locker = new Object();
 
-        private class Default {
+        private class Default
+        {
             public const string LogPath = "LogPath";
             public const string DateTimeFormat = "yyyy/MM/dd HH:mm:ss";
             public const string DService = "DService";
@@ -81,7 +82,8 @@ namespace StandredImplement
             public const string IsWorkBueaty = "IsWorkBueaty";
         }
 
-        public GetBueaty() {
+        public GetBueaty()
+        {
             DateTime BaseTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime FlagTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 0);
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
@@ -89,28 +91,34 @@ namespace StandredImplement
             int interval = Convert.ToInt32(configmanage.GetValue(Default.Interval));
             ToolLog.ToolPath = configmanage.GetValue(Default.LogPath);
             _shortFormat = configmanage.GetValue(Default.ShortTimeFormat);
-            while (BaseTime <= FlagTime) {
+            while (BaseTime <= FlagTime)
+            {
                 _timelist.Add(BaseTime.ToString(_shortFormat));
                 BaseTime = BaseTime.AddSeconds(GetTime(configmanage.GetValue(Default.IntervalUnit)) * interval);
             }
         }
 
-
-        private void work_DoWork(string Time) {
-            lock (locker) {
-                if (_timelist.Contains(Time)) {
+        private void work_DoWork(string Time)
+        {
+            lock (locker)
+            {
+                if (_timelist.Contains(Time))
+                {
                     string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
-                    ConfigManager configmanage = new ConfigManager(configiPath,Default.DService);
+                    ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
                     int currentTag = Convert.ToInt32(configmanage.GetValue(Default.StartTag));
-                    if (currentTag <= Convert.ToInt32(configmanage.GetValue(Default.StartPoint))) {
+                    if (currentTag <= Convert.ToInt32(configmanage.GetValue(Default.StartPoint)))
+                    {
                         currentTag = Convert.ToInt32(configmanage.GetValue(Default.StartPoint));
                     }
-                    try {
+                    try
+                    {
                         ToolLog.Log("執行" + DateTime.Now.ToString(_shortFormat));
                         string LogPath = configmanage.GetValue(Default.LogPath);
                         GetSite site = new GetSite(LogPath);
                         string RecordXml = Path.Combine(LogPath, Default.FileName);
-                        if (!File.Exists(RecordXml)) {
+                        if (!File.Exists(RecordXml))
+                        {
                             XmlFile xml = new XmlFile();
                             xml.CreateBaseXml(RecordXml, string.Empty, true);
                         }
@@ -127,10 +135,12 @@ namespace StandredImplement
                         List<SiteInfo> SiteInfoList = new List<SiteInfo>();
                         site.Recursive(ref currentTag, siteplus, SiteInfoList, Site, "/bbs/" + Site + Default.Index, configmanage.GetValue("Condition"), doc, root);
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex)
+                    {
                         ToolLog.Log(ex.Message);
                     }
-                    finally {
+                    finally
+                    {
                         configmanage.SetValue(Default.StartTag, (currentTag - 2).ToString());
                     }
                 }
@@ -139,20 +149,24 @@ namespace StandredImplement
 
         /// <summary>執行trigger</summary>
         /// <param name="pCurrentTime"></param>
-        public override void Execute(string pCurrentTime) {
+        public override void Execute(string pCurrentTime)
+        {
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
             ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
             bool IsWork = Convert.ToBoolean(configmanage.GetValue(Default.IsWorkBueaty));
-            if (IsWork) {
+            if (IsWork)
+            {
                 work_DoWork(pCurrentTime);
             }
         }
 
         /// <summary>20141219 add by Dick for 取得時間單位轉換</summary>
         /// <returns></returns>
-        private static int GetTime(string ptype) {
+        private static int GetTime(string ptype)
+        {
             int Result = 0;
-            switch (ptype.ToLower()) {
+            switch (ptype.ToLower())
+            {
                 case "s":
                     Result = 1;
                     break;
@@ -176,21 +190,27 @@ namespace StandredImplement
     {
         BackgroundWorker _work;
 
-        public GetGoldTrigger() {
+        public GetGoldTrigger()
+        {
             _work = new BackgroundWorker();
             _work.DoWork += new DoWorkEventHandler(work_DoWork);
             _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
         }
 
-        void work_DoWork(object sender, DoWorkEventArgs e) {
-            try {
+        void work_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
                 Gold gold = GetGold();
-                if (gold != null) {
+                if (gold != null)
+                {
                     string record = Path.Combine(@"C:\GoldLog", "GoldRecord.xml");
-                    if (!File.Exists(record)) {
+                    if (!File.Exists(record))
+                    {
                         XmlFile.CreateBaseXml(record, true);
                     }
-                    else {
+                    else
+                    {
                         XmlDocument doc = XmlFile.LoadXml(record);
                         XmlNode root = doc.SelectSingleNode(AutoTrigger.Default.Root);
                         XmlElement Xmlrecord = doc.CreateElement(AutoTrigger.Default.Record);
@@ -202,14 +222,16 @@ namespace StandredImplement
                     }
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ToolLog.Log(ex.Message);
             }
         }
 
         /// <summary></summary>
         /// <returns></returns>
-        private Gold GetGold() {
+        private Gold GetGold()
+        {
             WebInfo.WebInfo web = new WebInfo.WebInfo(@"C:\GoldLog");
             StreamReader sq = web.GetResponse("http://rate.bot.com.tw/Pages/Static/UIP005.zh-TW.htm");
             string line = string.Empty;
@@ -228,35 +250,41 @@ namespace StandredImplement
         /// <summary></summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
         }
 
         /// <summary>執行trigger</summary>
         /// <param name="pCurrentTime"></param>
-        public override void Execute(string pCurrentTime) {
-            if (pCurrentTime == "16:00:00") {
-                if (!_work.IsBusy) {
+        public override void Execute(string pCurrentTime)
+        {
+            if (pCurrentTime == "16:00:00")
+            {
+                if (!_work.IsBusy)
+                {
                     _work.RunWorkerAsync();
                 }
             }
         }
-
     }
     #endregion
 
-
     #region 20170126 抓取選擇權資料
-    public class OptionTrigger : AutoTrigger {
+    public class OptionTrigger : AutoTrigger
+    {
         BackgroundWorker _work;
-        private class Default {
+        private class Default
+        {
             public const string DServiceConfig = "DService.exe.config";
             public const string DService = "DService";
             public const string YahooStock = "YahooStock";
             public const string Capitalfutures = "Capitalfutures";
             public const string Channel = "Channel";
+            public const string WeigthedUrl = "WeigthedUrl";
         }
 
-        public OptionTrigger() {
+        public OptionTrigger()
+        {
             _work = new BackgroundWorker();
             _work.DoWork += new DoWorkEventHandler(work_DoWork);
             _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
@@ -266,24 +294,29 @@ namespace StandredImplement
         /// 20170208 修改成一個Thread來執行到底 modified by Dick
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void work_DoWork(object sender, DoWorkEventArgs e) {
-            try {
-                lock (IsBusy) {
-                    DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,8,44,50);
-                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 45 ,20);
+        void work_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                lock (IsBusy)
+                {
+                    DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 44, 50);
+                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 45, 20);
                     while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0)
                     {
                         StockDAO StockContext = new StockDAO();
                         string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
                         ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
-                        string WeigthedUrl = configmanage.GetValue(Default.YahooStock);
+                        string WeigthedUrl = configmanage.GetValue(Default.WeigthedUrl);
                         string CapitalfuturesUrl = string.Empty;
                         int Channel = Convert.ToInt32(configmanage.GetValue(Default.Channel));
 
-                        if (Channel == 1) {
+                        if (Channel == 1)
+                        {
                             CapitalfuturesUrl = configmanage.GetValue(Default.YahooStock);
                         }
-                        if (Channel == 2) {
+                        if (Channel == 2)
+                        {
                             CapitalfuturesUrl = configmanage.GetValue(Default.Capitalfutures);
                         }
 
@@ -291,40 +324,53 @@ namespace StandredImplement
                         Thread.Sleep(5000);
                     }
 
-                    if (DateTime.Now.Day == 1) {
-                        DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30,50 );
-                        DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 31, 0);
-                        while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0) {
-                            CalendarDAO CalendarContext = new CalendarDAO();
-                            CalendarContext.CreateNextMonthCalendar(DateTime.Now);
+                    if (DateTime.Now.Day == 1)
+                    {
+                        try
+                        {
+                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 50);
+                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 31, 0);
+                            while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0)
+                            {
+                                CalendarDAO CalendarContext = new CalendarDAO();
+                                CalendarContext.CreateNextMonthCalendar(DateTime.Now);
+                            }
+                        }
+                        catch
+                        {
                         }
                     }
-
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ToolLog.Log(ex.Message);
             }
-        }        
+        }
 
         /// <summary></summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
         }
 
-        private static object IsBusy = new object();               
+        private static object IsBusy = new object();
 
         /// <summary>執行trigger</summary>
         /// 20170202 修正這邊單純執行，將時間判斷交給Object    modified by Dick 
         /// <param name="pCurrentTime"></param>
-        public override void Execute(string pCurrentTime) {
-            try {
-                if (!_work.IsBusy) {
+        public override void Execute(string pCurrentTime)
+        {
+            try
+            {
+                if (!_work.IsBusy)
+                {
                     _work.RunWorkerAsync();
-                }   
+                }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
             }
         }
@@ -332,109 +378,127 @@ namespace StandredImplement
     #endregion
 
     /// <summary> 20170208 抓取摩托車資訊 </summary>
-    public class MotorTrigger : AutoTrigger {
+    public class MotorTrigger : AutoTrigger
+    {
         BackgroundWorker _work;
-        private static object IsBusy = new object();      
-        public MotorTrigger() {
+        private static object IsBusy = new object();
+        public MotorTrigger()
+        {
             _work = new BackgroundWorker();
             _work.DoWork += new DoWorkEventHandler(work_DoWork);
             _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
         }
 
-        void work_DoWork(object sender, DoWorkEventArgs e) {
-            try {
-                lock (IsBusy) {
+        void work_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                lock (IsBusy)
+                {
                     WebInfo.MotorData _MotorDB = new MotorData();
-                    _MotorDB.GetMotorData();                                   
+                    _MotorDB.GetMotorData();
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ToolLog.Log(ex.Message);
             }
         }
 
-        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-
+        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
         }
 
         /// <summary>
         /// 執行trigger 
         /// </summary>
         /// <param name="pCurrentTime"></param>
-        public override void Execute(string pCurrentTime) {
-            try {
-                if (!_work.IsBusy) {
+        public override void Execute(string pCurrentTime)
+        {
+            try
+            {
+                if (!_work.IsBusy)
+                {
                     _work.RunWorkerAsync();
                 }
             }
-            catch (Exception ex) {
-                CommTool.ToolLog.Log(ex);
+            catch (Exception ex)
+            {
+                ToolLog.Log(ex);
             }
         }
     }
-
 
     #region  監控價格
     /// <summary>
     /// 此為標準trigger 範例
     /// </summary>
-    public class ControlPriceService : AutoTrigger {
+    public class ControlPriceService : AutoTrigger
+    {
         BackgroundWorker _work;
 
-        public ControlPriceService() {
+        public ControlPriceService()
+        {
             _work = new BackgroundWorker();
             _work.DoWork += new DoWorkEventHandler(work_DoWork);
             _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
         }
 
-        private static object IsBusy = new object(); 
+        private static object IsBusy = new object();
 
-        void work_DoWork(object sender, DoWorkEventArgs e) {
-            try {
-                lock (IsBusy) {
-                    DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 44, 40);
-                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 46, 0);
-                    while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0) {
+        void work_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                lock (IsBusy)
+                {
+                    DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 44, 50);
+                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 45, 40);
+                    while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0)
+                    {
                         StockDAO StockContext = new StockDAO();
                         StockContext.ControlPrice();
-                        Thread.Sleep(1000*20);
+                        Thread.Sleep(1000 * 20);
                     }
 
                     DateTime ReportStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 50, 0);
                     DateTime ReportEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 55, 0);
-                    while (DateTime.Now.Subtract(ReportStart).TotalSeconds >= 0 && DateTime.Now.Subtract(ReportEnd).TotalSeconds <= 0) {
+                    while (DateTime.Now.Subtract(ReportStart).TotalSeconds >= 0 && DateTime.Now.Subtract(ReportEnd).TotalSeconds <= 0)
+                    {
                         TradeRecordDAO RecordDAO = new TradeRecordDAO();
                         RecordDAO.CalculateResultReport();
                         Thread.Sleep(1000 * 20);
                     }
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ToolLog.Log(ex.Message);
             }
         }
 
-        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-
+        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
         }
 
         /// <summary>
         /// 執行trigger 
         /// </summary>
         /// <param name="pCurrentTime"></param>
-        public override void Execute(string pCurrentTime) {
-            try {
-                if (!_work.IsBusy) {
+        public override void Execute(string pCurrentTime)
+        {
+            try
+            {
+                if (!_work.IsBusy)
+                {
                     _work.RunWorkerAsync();
                 }
             }
-            catch (Exception ex) {
-                CommTool.ToolLog.Log(ex);
+            catch (Exception ex)
+            {
+                ToolLog.Log(ex);
             }
         }
     }
-    #endregion
-
-
-
+    #endregion        
 }

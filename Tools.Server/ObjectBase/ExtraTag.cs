@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ObjectBase {
-    public class ExtraTag {
-
+﻿namespace ObjectBase
+{
+    public class ExtraTag
+    {
         public int SN { set; get; }
 
         public int Class { set; get; }

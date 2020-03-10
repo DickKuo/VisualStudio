@@ -1,15 +1,16 @@
-﻿using Adviser.Models.ViewModels;
-using ObjectBase;
-using Stock;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Adviser.Models.ViewModels;
 using System.Data;
+using ObjectBase;
+using System;
+using Stock;
 
-namespace Adviser.Models {
-    public class ReportViewModels {
-
-        public class TradeRecordReportModel {
-
+namespace Adviser.Models
+{
+    public class ReportViewModels
+    {
+        public class TradeRecordReportModel
+        {
             public int MaxPage { set; get; }
 
             public DateTime BeginTime { set; get; }
@@ -25,25 +26,28 @@ namespace Adviser.Models {
             public int Permission { set; get; }
         }
 
-        public class FormatTableViewModel {
+        public class FormatTableViewModel
+        {
             public DataTable dt { set; get; }
         }
 
-        public class BounsViewModel : BaseViewModel {
+        public class BounsViewModel : BaseViewModel
+        {
 
-            public BounsViewModel() {
+            public BounsViewModel()
+            {
                 ListBouns = new List<Bouns>();
             }
 
             public List<Bouns> ListBouns { set; get; }
         }
 
-        public class WeekPointViewModel {
+        public class WeekPointViewModel
+        {
 
             public int Year { set; get; }
 
             public List<WeekPoint> ListWeekPoint { set; get; }
         }
-        
     }
 }

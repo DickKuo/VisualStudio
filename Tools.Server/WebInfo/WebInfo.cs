@@ -1,14 +1,13 @@
-﻿using System;
+﻿using WebInfo.Business.DataEntities;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Net;
-using Newtonsoft.Json;
-using CommTool;
-using WebInfo.Business.DataEntities;
 using WebInfo.Business;
-using System.Xml;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
+using System.Text;
+using System.Net;
+using System.IO;
+using CommTool;
+using System;
 
 namespace WebInfo
 {
@@ -37,12 +36,14 @@ namespace WebInfo
 
         private string _pLogPath;
 
-        public WebInfo(string pLogPath) {
+        public WebInfo(string pLogPath)
+        {
             ToolLog.ToolPath = pLogPath;
             _pLogPath = pLogPath;
         }
 
-        public WebInfo() {
+        public WebInfo()
+        {
             ToolLog.ToolPath = Default.DefaultLogPath;
         }
 
@@ -50,26 +51,30 @@ namespace WebInfo
         /// <param name="Data"></param>
         /// <param name="Url"></param>
         /// <returns></returns>
-        public string HttpPostMethod(string Data, string Url) {
-            try {
+        public string HttpPostMethod(string Data, string Url)
+        {
+            try
+            {
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Data);
                 var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
                 request.Method = Default.Post;
                 request.ContentType = Default.ContentType;
-                request.ContentLength = bytes.Length;                
+                request.ContentLength = bytes.Length;
                 Stream requestStream = request.GetRequestStream();
                 requestStream.Write(bytes, Default.Zero, bytes.Length);
                 requestStream.Close();
                 HttpWebResponse response;
                 response = (HttpWebResponse)request.GetResponse();
                 string responseStr = string.Empty;
-                if (response.StatusCode == HttpStatusCode.OK) {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
                     Stream responseStream = response.GetResponseStream();
                     responseStr = new StreamReader(responseStream).ReadToEnd();
                 }
                 return responseStr;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
                 return "Error";
             }
@@ -79,8 +84,10 @@ namespace WebInfo
         /// <param name="Data"></param>
         /// <param name="Url"></param>
         /// <returns></returns>
-        public string HttpPostMethod(string Data, string Url,Encoding PEncoding) {
-            try {
+        public string HttpPostMethod(string Data, string Url, Encoding PEncoding)
+        {
+            try
+            {
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Data);
                 var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
                 request.Method = Default.Post;
@@ -92,33 +99,39 @@ namespace WebInfo
                 HttpWebResponse response;
                 response = (HttpWebResponse)request.GetResponse();
                 string responseStr = string.Empty;
-                if (response.StatusCode == HttpStatusCode.OK) {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
                     Stream responseStream = response.GetResponseStream();
                     responseStr = new StreamReader(responseStream, PEncoding).ReadToEnd();
                 }
                 return responseStr;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
                 return "Error";
             }
         }
-         
+
         /// <summary>PostHttp資料給指定位置</summary>
         /// <param name="Data"></param>
         /// <param name="Url"></param>
         /// <param name="IsSSL">過驗證</param>
         /// <returns></returns>
-        public string HttpPostMethod(string Data, string Url ,bool IsSSL=false) {
-            try {
-                if (IsSSL) {
+        public string HttpPostMethod(string Data, string Url, bool IsSSL = false)
+        {
+            try
+            {
+                if (IsSSL)
+                {
+                    ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
                     ServicePointManager.ServerCertificateValidationCallback =
                         delegate { return true; };
                 }
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Data);
                 var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
                 request.Method = Default.Post;
-                request.ContentType = Default.ContentType;                
+                request.ContentType = Default.ContentType;
                 request.ContentLength = bytes.Length;
                 Stream requestStream = request.GetRequestStream();
                 requestStream.Write(bytes, Default.Zero, bytes.Length);
@@ -126,13 +139,15 @@ namespace WebInfo
                 HttpWebResponse response;
                 response = (HttpWebResponse)request.GetResponse();
                 string responseStr = string.Empty;
-                if (response.StatusCode == HttpStatusCode.OK) {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
                     Stream responseStream = response.GetResponseStream();
                     responseStr = new StreamReader(responseStream).ReadToEnd();
                 }
                 return responseStr;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
                 return "Error";
             }
@@ -144,16 +159,20 @@ namespace WebInfo
         /// <param name="Url"></param>
         /// <param name="_ContentType">發送形態</param>
         /// <returns></returns>
-        public string HttpPostMethod(string Data, string Url, string _ContentType = "") {
-            try {
+        public string HttpPostMethod(string Data, string Url, string _ContentType = "")
+        {
+            try
+            {
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Data);
                 var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
                 request.Method = Default.Post;
-                if (!string.IsNullOrEmpty(_ContentType)) {
+                if (!string.IsNullOrEmpty(_ContentType))
+                {
                     request.ContentType = _ContentType;
                 }
-                else {
-                    request.ContentType = Default.ContentType; 
+                else
+                {
+                    request.ContentType = Default.ContentType;
                 }
                 request.ContentLength = bytes.Length;
                 Stream requestStream = request.GetRequestStream();
@@ -162,13 +181,15 @@ namespace WebInfo
                 HttpWebResponse response;
                 response = (HttpWebResponse)request.GetResponse();
                 string responseStr = string.Empty;
-                if (response.StatusCode == HttpStatusCode.OK) {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
                     Stream responseStream = response.GetResponseStream();
                     responseStr = new StreamReader(responseStream).ReadToEnd();
                 }
                 return responseStr;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
                 return "Error";
             }
@@ -180,19 +201,24 @@ namespace WebInfo
         /// <param name="_ContentType">發送形態</param>
         /// <param name="IsSSL"></param>
         /// <returns></returns>
-        public string HttpPostMethod(string Data, string Url,string _ContentType="", bool IsSSL = false) {
-            try {
-                if (IsSSL) {
+        public string HttpPostMethod(string Data, string Url, string _ContentType = "", bool IsSSL = false)
+        {
+            try
+            {
+                if (IsSSL)
+                {
                     ServicePointManager.ServerCertificateValidationCallback =
                         delegate { return true; };
                 }
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Data);
                 var request = System.Net.HttpWebRequest.Create(Url) as System.Net.HttpWebRequest;
                 request.Method = Default.Post;
-                if (!string.IsNullOrEmpty(_ContentType)) {
+                if (!string.IsNullOrEmpty(_ContentType))
+                {
                     request.ContentType = _ContentType;
                 }
-                else {
+                else
+                {
                     request.ContentType = Default.ContentType;
                 }
                 request.ContentLength = bytes.Length;
@@ -202,36 +228,39 @@ namespace WebInfo
                 HttpWebResponse response;
                 response = (HttpWebResponse)request.GetResponse();
                 string responseStr = string.Empty;
-                if (response.StatusCode == HttpStatusCode.OK) {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
                     Stream responseStream = response.GetResponseStream();
                     responseStr = new StreamReader(responseStream).ReadToEnd();
                 }
                 return responseStr;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
                 return "Error";
             }
         }
 
-        
         /// <summary> 抓取網頁資訊</summary>
         /// <param name="pUrl">網址</param>
         /// <returns></returns>
-        public StreamReader GetResponse(string pUrl) {
-            WebRequest myWebRequest = WebRequest.Create( pUrl);
+        public StreamReader GetResponse(string pUrl)
+        {
+            WebRequest myWebRequest = WebRequest.Create(pUrl);
             myWebRequest.Credentials = CredentialCache.DefaultCredentials;
             HttpWebResponse response = (HttpWebResponse)myWebRequest.GetResponse();
             Stream DataStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(DataStream, Encoding.Default);
             return reader;
         }
-        
+
         /// <summary>抓取網頁資訊</summary>
         /// <param name="pUrl"></param>
         /// <param name="Code"></param>
         /// <returns></returns>
-        public StreamReader GetResponse(string pUrl,Encoding Coding) { 
+        public StreamReader GetResponse(string pUrl, Encoding Coding)
+        {
             WebRequest myWebRequest = WebRequest.Create(pUrl);
             myWebRequest.Credentials = CredentialCache.DefaultCredentials;
             HttpWebResponse response = (HttpWebResponse)myWebRequest.GetResponse();
@@ -239,51 +268,61 @@ namespace WebInfo
             StreamReader reader = new StreamReader(DataStream, Coding);
             return reader;
         }
-              
+
         /// <summary> 抓取網頁資訊To String </summary>
         /// <param name="pUrl">網址</param>
         /// <returns></returns>
-        public virtual string GetStringResponse(string pUrl) {
+        public virtual string GetStringResponse(string pUrl)
+        {
             string result = string.Empty;
-            try {
+            try
+            {
                 StreamReader reader = GetResponse(pUrl);
                 result = reader.ReadToEnd();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 result = ex.Message;
             }
             return result;
         }
-        
+
         /// <summary>抓取網頁資訊To String  </summary>
         /// <param name="pUrl"></param>
         /// <param name="Code"></param>
         /// <returns></returns>
-        public virtual string GetStringResponse(string pUrl, Encoding Code) {
+        public virtual string GetStringResponse(string pUrl, Encoding Code)
+        {
             string result = string.Empty;
-            try {
+            try
+            {
                 StreamReader reader = GetResponse(pUrl, Code);
                 result = reader.ReadToEnd();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 result = ex.Message;
             }
             return result;
         }
-        
+
         /// <summary>Post功能</summary>
         /// 20160909 加入紀錄POST的JSON資料 By Dick 
         /// <param name="Address">網址</param>
         /// <param name="SiteInfoList">文章列</param>
         /// <returns></returns>
-        public long POST(string Address, List<SiteInfo> SiteInfoList) {
+        public long POST(string Address, List<SiteInfo> SiteInfoList, bool IsTLS = false)
+        {
             long length = Default.Zero;
             SiteInfo info = new SiteInfo();
-            if (SiteInfoList.Count > Default.Zero) {
+            if (SiteInfoList.Count > Default.Zero)
+            {
                 info = SiteInfoList[Default.FirstItem];
             }
-            try {
-                if (info != null) {
+            try
+            {
+                if (info != null)
+                {
                     ToolLog.Log(Default.PostMessage + info.Title);
                     Beauty Data = new Beauty();
                     Data.Author = info.Author;
@@ -291,11 +330,12 @@ namespace WebInfo
                     Data.Title = info.Title;
                     Data.Guid = info.Address.Replace(Default.ResourceAddress, string.Empty).Replace(Default.HTML, string.Empty);
                     string strJson = string.Format(Default.JSonStringFormat, Default.JsonKey, JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented));
-                    string response = this.HttpPostMethod(strJson, Address);
+                    string response = this.HttpPostMethod(strJson, Address, IsTLS);
                     ToolLog.Record(strJson);
                 }
             }
-            catch (WebException ex) {
+            catch (WebException ex)
+            {
                 ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);
                 length = 8055;
             }
@@ -305,12 +345,15 @@ namespace WebInfo
         /// <summary>用GET方式PO文</summary>
         /// <param name="Address"></param>
         /// <param name="SiteInfoList"></param>
-        public void BueatyPostContentByGetMothed(string Address, List<SiteInfo> SiteInfoList) {
+        public void BueatyPostContentByGetMothed(string Address, List<SiteInfo> SiteInfoList)
+        {
             SiteInfo info = new SiteInfo();
-            if (SiteInfoList.Count > Default.Zero) {
+            if (SiteInfoList.Count > Default.Zero)
+            {
                 info = SiteInfoList[Default.FirstItem];
             }
-            try {
+            try
+            {
                 ToolLog.Log(Default.PostMessage + info.Title);
                 Beauty Data = new Beauty();
                 Data.Author = SiteInfoList[Default.MinItem].Author;
@@ -318,11 +361,12 @@ namespace WebInfo
                 Data.Title = SiteInfoList[Default.MinItem].Title;
                 string strJson = string.Format(Default.JSonStringFormat, Default.JsonKey, JsonConvert.SerializeObject(Data, Newtonsoft.Json.Formatting.Indented));
                 string FullPath = Address + strJson;
-                GetStringResponse(FullPath);        
+                GetStringResponse(FullPath);
                 ToolLog.Record(strJson);
             }
-            catch (Exception ex) {
-                ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);  
+            catch (Exception ex)
+            {
+                ToolLog.Log(CommTool.LogType.Error, Default.PostError + ex.Message);
             }
         }
 
@@ -332,14 +376,18 @@ namespace WebInfo
         /// <param name="pCondition">標題限制必須包含字串</param>
         /// <param name="PushCount">推文數量</param>
         /// <param name="PostAdress">分析後傳送位址</param>
-        public void GetBueatyDirtory(string Url, string pCondition, int PushCount, string PostAdress) {
+        public void GetBueatyDirtory(string Url, string pCondition, int PushCount, string PostAdress)
+        {
             List<SiteInfo> li = new List<SiteInfo>();
             GetSite info = new GetSite(_pLogPath);
             SiteInfo SiteInfo = info.GetInfo(Url);
-            if (SiteInfo.Title != null) {
-                if (SiteInfo.Title.IndexOf(pCondition) != -1 && SiteInfo.PushList.Count > PushCount) {
+            if (SiteInfo.Title != null)
+            {
+                if (SiteInfo.Title.IndexOf(pCondition) != -1 && SiteInfo.PushList.Count > PushCount)
+                {
                     SiteInfo.PushList.Clear();
-                    if (SiteInfo.Title.IndexOf(Default.Re) == -1) {
+                    if (SiteInfo.Title.IndexOf(Default.Re) == -1)
+                    {
                         li.Add(SiteInfo);
                         long length = POST(PostAdress, li);
                         ToolLog.Log(string.Format(Default.RecordFormat, SiteInfo.Title));
@@ -356,14 +404,18 @@ namespace WebInfo
         /// <param name="Url">指定網址</param>
         /// <param name="PushCount">推文數量</param>
         /// <param name="PostAdress">分析後傳送位址</param>
-        public void GetBueatyDirtory(string Url, int PushCount, string PostAdress) {
+        public void GetBueatyDirtory(string Url, int PushCount, string PostAdress)
+        {
             List<SiteInfo> li = new List<SiteInfo>();
             GetSite info = new GetSite(_pLogPath);
             SiteInfo SiteInfo = info.GetInfo(Url);
-            if (SiteInfo.Title != null) {
-                if (SiteInfo.PushList.Count > PushCount) {
+            if (SiteInfo.Title != null)
+            {
+                if (SiteInfo.PushList.Count > PushCount)
+                {
                     SiteInfo.PushList.Clear();
-                    if (SiteInfo.Title.IndexOf(Default.Re) == -1) {
+                    if (SiteInfo.Title.IndexOf(Default.Re) == -1)
+                    {
                         li.Add(SiteInfo);
                         long length = POST(PostAdress, li);
                         ToolLog.Log(string.Format(Default.RecordFormat, SiteInfo.Title));
@@ -377,7 +429,8 @@ namespace WebInfo
         /// <summary>取得網站的HtmlDocument</summary>
         /// <param name="ppweburl"></param>
         /// <returns></returns>
-        public HtmlDocument GetWebHtmlDocument(string ppweburl, Encoding Encode) {
+        public HtmlDocument GetWebHtmlDocument(string ppweburl, Encoding Encode)
+        {
             HttpWebRequest MyHttpWebRequest = HttpWebRequest.Create(ppweburl) as HttpWebRequest;
             HttpWebResponse MyHttpWebResponse = MyHttpWebRequest.GetResponse() as HttpWebResponse;
             StreamReader myStreamReader = new StreamReader(MyHttpWebResponse.GetResponseStream(), Encode);
@@ -398,18 +451,18 @@ namespace WebInfo
         {
             HtmlAgilityPack.HtmlDocument _HtmlDocument = GetWebHtmlDocument(Url, Code);
             HtmlAgilityPack.HtmlNodeCollection anchors = _HtmlDocument.DocumentNode.SelectNodes(Tag);
-            return anchors;             
+            return anchors;
         }
 
         /// <summary>取得網站的Tag陣列</summary>
         /// <param name="Url"></param>
         /// <param name="Tag"></param>
         /// <returns></returns>
-        public HtmlNodeCollection GetWebHtmlDocumentNodeCollection(string Url, string Tag) {
+        public HtmlNodeCollection GetWebHtmlDocumentNodeCollection(string Url, string Tag)
+        {
             HtmlAgilityPack.HtmlDocument _HtmlDocument = GetWebHtmlDocument(Url, Encoding.Default);
             HtmlAgilityPack.HtmlNodeCollection anchors = _HtmlDocument.DocumentNode.SelectNodes(Tag);
             return anchors;
         }
     }
 }
-

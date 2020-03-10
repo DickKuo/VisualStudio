@@ -1,11 +1,12 @@
-﻿using ObjectBase;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ObjectBase;
 
-namespace Adviser.Models.ViewModels {
-    public class TransactionViewModels  {
-
-        public class TransactionViewModel : BaseViewModel {             
-
+namespace Adviser.Models.ViewModels
+{
+    public class TransactionViewModels
+    {
+        public class TransactionViewModel : BaseViewModel
+        {
             public int TransSN { set; get; }
 
             public TranscationTypes TransType { set; get; }
@@ -17,11 +18,6 @@ namespace Adviser.Models.ViewModels {
             public Transaction Trans { set; get; }
 
             public Customer _Customer { set; get; }
-
         }
-
-
-   
-
     }
 }

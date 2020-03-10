@@ -1,7 +1,7 @@
-﻿
-namespace ObjectBase {
-    public class Bank {
-
+﻿namespace ObjectBase
+{
+    public class Bank
+    {
         public int SN { set; get; }
 
         public int CustomerSN { set; get; }

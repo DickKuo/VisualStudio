@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ObjectBase {
-    public  class TransactionDetail {
-
+﻿namespace ObjectBase
+{
+    public class TransactionDetail
+    {
         public int SN { set; get; }
 
         public int TransactionSN { set; get; }
@@ -20,7 +16,7 @@ namespace ObjectBase {
         public decimal Draw { set; get; }
 
         public decimal Commission { set; get; }
-        
+
         public decimal Fee { set; get; }
 
         public string Remark { set; get; }

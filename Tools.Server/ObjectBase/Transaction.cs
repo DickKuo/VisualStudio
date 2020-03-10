@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using System;
 
-namespace ObjectBase {
-    public class Transaction {
-
-        public int SN { set; get;}
+namespace ObjectBase
+{
+    public class Transaction
+    {
+        public int SN { set; get; }
 
         public int CustomerSN { set; get; }
 

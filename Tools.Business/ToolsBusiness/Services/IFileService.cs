@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Data;
-using System.Drawing;
+﻿using System.IO;
 
 namespace CommTool.Business
 {
@@ -16,7 +10,5 @@ namespace CommTool.Business
         /// <param name="pFilePath">資料夾路徑</param>
         /// <param name="IsReadOnly">是否唯獨 true:唯獨 ; false :不唯獨</param>
         void FileReadOnly(DirectoryInfo dirInfo, bool IsReadOnly);
- 
-
-    }
+     }
 }

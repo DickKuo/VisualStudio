@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace ObjectBase {
-    public  class TransInfo {
-
+namespace ObjectBase
+{
+    public class TransInfo
+    {
         public int TranSN { set; get; }
 
         public int CustomerSN { set; get; }
@@ -27,6 +25,5 @@ namespace ObjectBase {
         public string AdviserName { set; get; }
 
         public DateTime AuditeTime { set; get; }
-
     }
 }

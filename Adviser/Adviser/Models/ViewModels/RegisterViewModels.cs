@@ -1,10 +1,12 @@
 ﻿using ObjectBase;
 using System;
-namespace Adviser.Models.ViewModels {
-    public class RegisterViewModels {
 
-        public class RegisterViewModel {
-
+namespace Adviser.Models.ViewModels
+{
+    public class RegisterViewModels
+    {
+        public class RegisterViewModel
+        {
             public string Account { set; get; }
 
             public string PassWord { set; get; }
@@ -27,6 +29,5 @@ namespace Adviser.Models.ViewModels {
 
             public string Remark { set; get; }
         }
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace CommTool.Business.Metadata
 {
     public class SimplePropertyAttribute : MetadataInfoAttribute
@@ -25,14 +24,14 @@ namespace CommTool.Business.Metadata
         public GeneralDbType DbType { get; set; }
 
         public SimplePropertyAttribute()
-        { 
-        
+        {
         }
 
         public SimplePropertyAttribute(GeneralDbType pDbType)
         {
             this.DbType = pDbType;
         }
+
         public SimplePropertyAttribute(GeneralDbType pDbType, int pSize)
         {
             this.DbType = pDbType;

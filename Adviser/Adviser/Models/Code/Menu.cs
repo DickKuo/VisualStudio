@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
-namespace Adviser.Models.Code {
-    public class Menu {
+namespace Adviser.Models.Code
+{
+    public class Menu
+    {
         public string MenuNo { set; get; }
 
         public string Url { set; get; }

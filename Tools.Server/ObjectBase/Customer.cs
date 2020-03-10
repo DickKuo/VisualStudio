@@ -1,8 +1,9 @@
-﻿
-using System;
-namespace ObjectBase {
-    public class Customer {
+﻿using System;
 
+namespace ObjectBase
+{
+    public class Customer
+    {
         /// <summary>Primary</summary>        
         public int SN { set; get; }
 

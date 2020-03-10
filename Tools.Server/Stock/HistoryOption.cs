@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Stock {
-    public class HistoryOption {
-
+namespace Stock
+{
+    public class HistoryOption
+    {
         /// <summary>交易日期</summary>
         public DateTime TradeDate { set; get; }
 
@@ -56,7 +54,5 @@ namespace Stock {
 
         /// <summary>是否因訊息面暫停交易</summary>
         public string Remark { set; get; }
-
-
     }
 }

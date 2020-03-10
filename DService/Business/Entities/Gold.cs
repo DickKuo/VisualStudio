@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using CommTool.Business.Metadata;
 using System.ComponentModel;
-using System.Data;
-using CommTool.Business;
-using CommTool.Business.Metadata;
 
 namespace DService.Business.Entities
 {
-     public class Gold
+    public class Gold
     {
         #region Private Member
         private System.Guid _goldId;
@@ -17,7 +11,9 @@ namespace DService.Business.Entities
         private System.Decimal _bankBuy;
         private System.DateTime _date;
         #endregion
+
         #region Parameter
+
         /// <summary>
         ///黃金存摺
         /// </summary>
@@ -38,6 +34,7 @@ namespace DService.Business.Entities
                 }
             }
         }
+
         /// <summary>
         ///銀行賣出
         /// </summary>
@@ -58,6 +55,7 @@ namespace DService.Business.Entities
                 }
             }
         }
+
         /// <summary>
         ///銀行買入
         /// </summary>
@@ -78,6 +76,7 @@ namespace DService.Business.Entities
                 }
             }
         }
+
         /// <summary>
         ///日期
         /// </summary>
@@ -99,6 +98,5 @@ namespace DService.Business.Entities
             }
         }
         #endregion 
-
     }
 }

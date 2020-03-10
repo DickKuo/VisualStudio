@@ -1,26 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using System;
 
-namespace Stock {
-    public class WeekPointDAO : BaseData {
-
-        private class SP {
+namespace Stock
+{
+    public class WeekPointDAO : BaseData
+    {
+        private class SP
+        {
             public const string GetListWeekPointByYear = "GetListWeekPointByYear";
             public const string GetWeekPointByDueMonth = "GetWeekPointByDueMonth";
         }
 
-        private class SParamter {
+        private class SParamter
+        {
             public const string BeginDate = "BeginDate";
             public const string EndDate = "EndDate";
             public const string DueMonth = "DueMonth";
         }
-        
+
         /// <summary>取得每周的結算結果</summary>
         /// <param name="Year"></param>
         /// <returns></returns>
-        public List<WeekPoint> GetListWeekPointByYear(int Year) {
+        public List<WeekPoint> GetListWeekPointByYear(int Year)
+        {
             DateTime BeginDate = new DateTime(Year, 1, 1);
             DateTime EndDate = new DateTime(Year, 12, 31);
             USP.AddParameter(SParamter.BeginDate, BeginDate);
@@ -29,12 +31,11 @@ namespace Stock {
             return Result;
         }
 
-
-        public List<WeekPoint> GetWeekPointByDueMonth(string DueMonth) {
+        public List<WeekPoint> GetWeekPointByDueMonth(string DueMonth)
+        {
             USP.AddParameter(SParamter.DueMonth, DueMonth);
             List<WeekPoint> Result = USP.ExeProcedureGetObjectList(SP.GetWeekPointByDueMonth, new WeekPoint());
             return Result;
         }
-
     }
 }

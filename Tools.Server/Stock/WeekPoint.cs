@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Stock {
-    public class WeekPoint {
-
+namespace Stock
+{
+    public class WeekPoint
+    {
         /// <summary>Primary</summary>
         public int SN { set; get; }
 

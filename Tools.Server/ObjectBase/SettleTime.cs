@@ -1,8 +1,9 @@
 ﻿using System;
 
-namespace ObjectBase {
-    public class SettleTime {
-
+namespace ObjectBase
+{
+    public class SettleTime
+    {
         public int SN { set; get; }
 
         public DateTime BeginTime { set; get; }
@@ -10,6 +11,5 @@ namespace ObjectBase {
         public DateTime EndTime { set; get; }
 
         public bool IsSettle { set; get; }
-
     }
 }

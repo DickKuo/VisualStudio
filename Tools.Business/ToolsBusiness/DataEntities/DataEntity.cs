@@ -101,12 +101,7 @@ namespace CommTool.Business
         //public virtual string GetObjectDescription();
         //
         //protected virtual void OnDirtyChanged(EventArgs e);
-        //protected virtual void OnInitialized(EventArgs e);
-       
-        //public void SetPropertyError(string pPropertyName, string pErrorInfo);
-       
+        //protected virtual void OnInitialized(EventArgs e);       
+        //public void SetPropertyError(string pPropertyName, string pErrorInfo);       
     }
-
-
 }
-

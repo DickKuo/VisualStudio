@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Stock {
-    public class Option {
-
+﻿namespace Stock
+{
+    public class Option
+    {
         public string OP { set; get; }
-        
-        public decimal Buy {set;get;}
+
+        public decimal Buy { set; get; }
 
         public decimal Sell { set; get; }
 
@@ -34,18 +30,7 @@ namespace Stock {
 
         public static string[] GetTableTypeColumn()
         {
-            return new string[] { "OP",
-                                  "Buy",
-								  "Sell",
-								  "Clinch",
-                                  "Change",
-                                  "Time",
-                                  "Contract",
-                                  "DueMonth",
-                                  "NumberOfContracts",
-                                  "Volume",
-                                  "TradeTimestamp"
-								 };
-        } 
+            return new string[] { "OP", "Buy", "Sell", "Clinch", "Change", "Time", "Contract", "DueMonth", "NumberOfContracts", "Volume", "TradeTimestamp" };
+        }
     }
 }

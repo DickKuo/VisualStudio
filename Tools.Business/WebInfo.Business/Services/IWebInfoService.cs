@@ -1,9 +1,6 @@
-﻿using System;
+﻿using WebInfo.Business.DataEntities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using WebInfo.Business.DataEntities;
 
 namespace WebInfo.Business
 {
@@ -22,15 +19,14 @@ namespace WebInfo.Business
         /// <param name="pUrl">網址</param>
         /// <returns></returns>
         string GetStringResponse(string pUrl);
-
-
+        
         /// <summary>
         /// Post功能
         /// </summary>
         /// <param name="Address">網址</param>
         /// <param name="SiteInfoList">文章列</param>
         /// <returns></returns>
-        long POST(string Address, List<SiteInfo> SiteInfoList);
+        long POST(string Address, List<SiteInfo> SiteInfoList, bool IsSSL = false);
 
         /// <summary>
         /// 20150410 add by Dick for 直接針對網址進行解析內容及傳輸。

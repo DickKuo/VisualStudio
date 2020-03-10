@@ -1,32 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Net.Mail;
 using System.Data;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
 
-namespace CommTool {
-    public class MailData {
-        private class Default {           
+namespace CommTool
+{
+    public class MailData
+    {
+        private class Default
+        {
             public const string MailAccount = "MailAccount";
             public const string MailPassWord = "MailPassWord";
             public const string SMTP = "SMTP";
         }
 
-        private class SP {
+        private class SP
+        {
             public const string GetSendMail = "GetSendMail";
         }
 
         SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
 
-        private string _logPath=@"D:\Log";
+        private string _logPath = @"D:\Log";
 
-        private string _account= string.Empty;
+        private string _account = string.Empty;
 
         private string _password = string.Empty;
 
-        public string PassWord {
-            set {
+        public string PassWord
+        {
+            set
+            {
                 _password = value;
             }
         }
@@ -39,16 +41,20 @@ namespace CommTool {
             }
         }
 
-        public string LogPath {
-            set {
+        public string LogPath
+        {
+            set
+            {
                 _logPath = value;
             }
-            get {
+            get
+            {
                 return _logPath;
             }
         }
 
-        public MailData() {
+        public MailData()
+        {
         }
 
         public MailData(string _LogPath)
@@ -63,7 +69,7 @@ namespace CommTool {
             _logPath = _LogPath;
         }
 
-        public void Send(string receiver,string subject,string body)
+        public void Send(string receiver, string subject, string body)
         {
             MailMessage msg = new MailMessage();
             msg.To.Add(receiver);//收件者，以逗號分隔不同收件者
@@ -92,7 +98,7 @@ namespace CommTool {
             }
             catch (System.Net.Mail.SmtpException ex)
             {
-                ToolLog.Log(ex);           
+                ToolLog.Log(ex);
             }
         }
 
@@ -100,7 +106,8 @@ namespace CommTool {
         /// <param name="receiver"></param>
         /// <param name="subject"></param>
         /// <param name="body"></param>
-        public void RegistrySend(string receiver, string subject, string body) {
+        public void RegistrySend(string receiver, string subject, string body)
+        {
             MailMessage msg = new MailMessage();
             msg.To.Add(receiver);//收件者，以逗號分隔不同收件者
             //msg.CC.Add("c@msn.com");//副本
@@ -114,7 +121,8 @@ namespace CommTool {
             msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
             msg.IsBodyHtml = true;//是否是HTML郵件 
             msg.Priority = MailPriority.Normal;//郵件優先級 
-            try {
+            try
+            {
                 object Account = new object();
                 object PassWord = new object();
                 object SMTP = new object();
@@ -133,16 +141,17 @@ namespace CommTool {
                 MySmtp.Send(msg);
                 ToolLog.Log(LogType.Mail, "發送信件");
             }
-            catch (System.Net.Mail.SmtpException ex) {                
+            catch (System.Net.Mail.SmtpException ex)
+            {
                 ToolLog.Log(ex);
-            }           
+            }
         }
 
         /// <summary>取得要發送的Maill</summary>
         /// <returns></returns>
-        public DataTable GetSendMail() {
+        public DataTable GetSendMail()
+        {
             return USP.ExeProcedureGetDataTable(SP.GetSendMail);
         }
-
     }
 }

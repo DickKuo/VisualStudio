@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CommTool.Business.Services
 {
     public interface IServiceEntry
     {
-        System.Type ServiceInterface
+        Type ServiceInterface
         {
             get;
         }
-        System.Type ServiceClass
+        Type ServiceClass
         {
             get;
         }
@@ -25,6 +22,5 @@ namespace CommTool.Business.Services
         Instance,
         Callback,
         Startup
-    }
-   
+    }   
 }

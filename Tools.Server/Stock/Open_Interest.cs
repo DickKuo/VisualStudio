@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Stock {
-    public class Open_Interest {
-
+namespace Stock
+{
+    public class Open_Interest
+    {
         public int SN { set; get; }
 
         public DateTime TradeDate { set; get; }
@@ -19,8 +17,7 @@ namespace Stock {
         public int PutOpenInterest { set; get; }
 
         public int CallOpenInterest { set; get; }
-        
-        public decimal OpenInterestRatios { set; get; }
 
+        public decimal OpenInterestRatios { set; get; }
     }
 }

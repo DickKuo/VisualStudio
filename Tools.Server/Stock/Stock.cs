@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System;
 
 namespace Stock
 {
@@ -90,7 +90,6 @@ namespace Stock
             }
         }
 
-
         /// <summary>
         /// 開盤
         /// </summary>       
@@ -109,7 +108,6 @@ namespace Stock
                 }
             }
         }
-
 
         /// <summary>
         /// 昨收
@@ -130,7 +128,6 @@ namespace Stock
             }
         }
 
-
         /// <summary>
         /// 張數
         /// </summary>       
@@ -149,7 +146,6 @@ namespace Stock
                 }
             }
         }
-
 
         /// <summary>
         /// 漲跌
@@ -170,7 +166,6 @@ namespace Stock
             }
         }
 
-
         /// <summary>
         /// 賣價
         /// </summary>       
@@ -189,7 +184,6 @@ namespace Stock
                 }
             }
         }
-
 
         /// <summary>
         /// 買價
@@ -229,7 +223,6 @@ namespace Stock
             }
         }
 
-
         /// <summary>
         /// 股票代號
         /// </summary>       
@@ -249,7 +242,6 @@ namespace Stock
             }
         }
 
-
         /// <summary>
         /// 時間
         /// </summary>       
@@ -268,9 +260,5 @@ namespace Stock
                 }
             }
         }
-
     }
-
-
-
 }

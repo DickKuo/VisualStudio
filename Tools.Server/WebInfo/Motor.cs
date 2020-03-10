@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace WebInfo {
-    public class Motor {
-
+﻿namespace WebInfo
+{
+    public class Motor
+    {
         public int SN { set; get; }
 
         /// <summary>來源的編碼</summary>
@@ -22,7 +18,7 @@ namespace WebInfo {
 
         /// <summary>內文</summary>
         public string Context { set; get; }
-        
+
         /// <summary>地區</summary>
         public string Location { set; get; }
 
@@ -43,6 +39,5 @@ namespace WebInfo {
 
         /// <summary>備註</summary>
         public string Remark { set; get; }
-
     }
 }

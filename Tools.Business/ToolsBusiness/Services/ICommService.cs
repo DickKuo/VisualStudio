@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CommTool.Business
+﻿namespace CommTool.Business
 {
     public interface ICommService
     {
-
         /// <summary>
         /// 20150108 add by Dick for 取得固定長度的字串 單位為Byte
         /// </summary>

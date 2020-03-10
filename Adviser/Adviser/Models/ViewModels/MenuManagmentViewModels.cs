@@ -1,13 +1,12 @@
-﻿using Adviser.Models.Code;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using Adviser.Models.Code;
 
-namespace Adviser.Models.ViewModels {
-    public class MenuManagmentViewModels {
-        
-        public class MenuViewModel {
+namespace Adviser.Models.ViewModels
+{
+    public class MenuManagmentViewModels
+    {
+        public class MenuViewModel
+        {
             public Menu MainMenu { set; get; }
 
             private List<Menu> _MenuList = new List<Menu>();

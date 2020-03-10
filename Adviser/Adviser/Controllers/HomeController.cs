@@ -1,21 +1,24 @@
 ﻿using System.Web.Mvc;
 
-namespace Adviser.Controllers {
-    public class HomeController : BaseLoginController {
-
-        public ActionResult Index() {
+namespace Adviser.Controllers
+{
+    public class HomeController : BaseLoginController
+    {
+        public ActionResult Index()
+        {
             return View();
         }
 
-        public ActionResult About() {
+        public ActionResult About()
+        {
             ViewBag.Message = "Your application description page.";
             return View();
         }
 
-        public ActionResult Contact() {
+        public ActionResult Contact()
+        {
             ViewBag.Message = "Your contact page.";
             return View();
         }
-        
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Adviser.Models.Code {
-    public class OptionQuotes {
+﻿namespace Adviser.Models.Code
+{
+    public class OptionQuotes
+    {
         public string DueMonth { set; get; }
 
         public string Time { set; get; }

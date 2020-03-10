@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace Adviser.Models.ViewModels {
-    public class BaseViewModel {
-
+namespace Adviser.Models.ViewModels
+{
+    public class BaseViewModel
+    {
         public int SN { set; get; }
 
         public DateTime BeginTime { set; get; }
@@ -17,6 +15,5 @@ namespace Adviser.Models.ViewModels {
         public int MaxPage { set; get; }
 
         public bool IsPartial { set; get; }
-
     }
 }

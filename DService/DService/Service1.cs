@@ -37,19 +37,16 @@ namespace DService
         private CommTool.ConfigManager configmanage;
         private List<string> _timelist = new List<string>();
         Dictionary<string, string> DicParameters = new Dictionary<string, string>();   //參數設定 
-
-
+        
         public Service1() {
             InitializeComponent();
         }
-
-
+        
         private void Init() {
             ServiceLog.ToolLog.ToolPath = Settings1.Default.LogPath;
             InitParamter();
         }
-
-
+        
         private void InitParamter() {
             try {
                 foreach (SettingsProperty PropertyName in Settings1.Default.Properties) {
@@ -61,8 +58,7 @@ namespace DService
                 ServiceLog.ToolLog.Log(ex);
             }
         }
-
-
+        
         protected override void OnStart(string[] args) {
             ServiceLog.ToolLog.Log("服務啟動");
             Init();
@@ -76,7 +72,8 @@ namespace DService
                 time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
                 time.Interval = Default.Interval;
                 time.Start();
-            }
+            }//end if
+
             server = GetTriggerServices();
             Thread t1 = new Thread(Lessner);
             t1.Start();
@@ -84,14 +81,12 @@ namespace DService
             time2.Elapsed += new System.Timers.ElapsedEventHandler(time2_Elapsed);
             time2.Interval = Default.Interval;
             time2.Start();
-        }
-
+        }//end  OnStart
 
         private TriggerService GetTriggerServices() {
             ServerImplement service = new ServerImplement();
             return service.GetAutoTriggerService();
-        }
-
+        }//end GetTriggerServices
 
         private void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
             string time = DateTime.Now.ToString(configmanage.GetValue(Default.ShortTimeFormat));
@@ -102,17 +97,14 @@ namespace DService
             }
         }
 
-
         private void time2_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
             string time = DateTime.Now.ToString(configmanage.GetValue(Default.ShortTimeFormat));
             server.Run(time);
         }
 
-
         protected override void OnStop() {
             ServiceLog.ToolLog.Log("服務停止");
         }
-
 
         private void Lessner() {
             DExecute.DExecute execute = new DExecute.DExecute(DicParameters);
@@ -129,7 +121,8 @@ namespace DService
             List<string> LocalFileList = new List<string>();
             foreach (FileInfo FiInfo in LocalDir.GetFiles()) {
                 LocalFileList.Add(FiInfo.Name);
-            }
+            }//end foreach
+
             DirectoryInfo RemoveDir = new DirectoryInfo(UpdatePath);
             foreach (FileInfo FiInfo in RemoveDir.GetFiles()) {
                 try {
@@ -172,15 +165,17 @@ namespace DService
                                 if (!SourceFile.FileVersion.Equals(Info.FileVersion)) {
                                     File.Copy(Info.FileName, ServerBakPath, true);//先備份
                                     File.Copy(SourceFile.FileName, Info.FileName, true);
-                                }
-                            }
+                                }//end if
+                            }//end if
                         }
                     }
                 }
                 catch (Exception ex) {
                     ServiceLog.ToolLog.Log(ex);
                 }
-            }
-        }
+            }//end foreach
+
+        }//end UpdateDll
+
     }
 }

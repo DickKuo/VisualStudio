@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Stock {
-    public class TradeRecord {
-
+namespace Stock
+{
+    public class TradeRecord
+    {
         public int SN { set; get; }
 
         public DateTime TradeDate { set; get; }
@@ -25,7 +23,7 @@ namespace Stock {
 
         /// <summary>停損價格</summary>
         public decimal StopPrice { set; get; }
-        
+
         /// <summary>結算點數</summary>
         public decimal Settlement { set; get; }
 
@@ -38,5 +36,7 @@ namespace Stock {
         public bool IsMail { set; get; }
 
         public int AdviserSN { set; get; }
+
+        public int ChangeTimes { set; get; }
     }
 }

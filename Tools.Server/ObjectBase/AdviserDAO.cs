@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
+using System;
 
-namespace ObjectBase {
-    public class AdviserDAO : CommBase {
-
-        private class SP {
+namespace ObjectBase
+{
+    public class AdviserDAO : CommBase
+    {
+        private class SP
+        {
             public const string AddAdviser = "AddAdviser";
             public const string LoginCheckAdviser = "LoginCheckAdviser";
             public const string GetAdviserBySN = "GetAdviserBySN";
             public const string GetListAdviser = "GetListAdviser";
         }
 
-        private class SParameter {
+        private class SParameter
+        {
             public const string SN = "SN";
             public const string Account = "Account";
             public const string PassWord = "PassWord";
@@ -33,7 +36,8 @@ namespace ObjectBase {
         /// <summary>建立顧問</summary>
         /// <param name="_Adviser"></param>
         /// <returns></returns>
-        public int AddAdviser(Adviser _Adviser) {
+        public int AddAdviser(Adviser _Adviser)
+        {
             USP.AddParameter(SParameter.Account, _Adviser.Account);
             USP.AddParameter(SParameter.PassWord, _Adviser.PassWord);
             USP.AddParameter(SParameter.FirstName, _Adviser.FirstName);
@@ -46,28 +50,32 @@ namespace ObjectBase {
             USP.AddParameter(SParameter.Address, _Adviser.Address);
             USP.AddParameter(SParameter.Remark, _Adviser.Remark == null ? string.Empty : _Adviser.Remark);
             DataTable dt = USP.ExeProcedureGetDataTable(SP.AddAdviser);
-            if (dt != null && dt.Rows.Count > 0) {
+            if (dt != null && dt.Rows.Count > 0)
+            {
                 return Convert.ToInt32(dt.Rows[0][0]);
             }
-            else {
+            else
+            {
                 return -1;
             }
-        }//end AddAdviser
+        }
 
         /// <summary>顧問登入</summary>
         /// <param name="_Adviser"></param>
         /// <returns></returns>
-        public Adviser LoginCheckAdviser(Adviser _Adviser) {
+        public Adviser LoginCheckAdviser(Adviser _Adviser)
+        {
             USP.AddParameter(SParameter.Account, _Adviser.Account);
             USP.AddParameter(SParameter.PassWord, _Adviser.PassWord);
             Adviser _ResultAdviser = USP.ExeProcedureGetObject(SP.LoginCheckAdviser, new Adviser());
             return _ResultAdviser;
-        }//end LoginCheckAdviser
-        
+        }
+
         /// <summary>依據SN取得顧問</summary>
         /// <param name="SN"></param>
         /// <returns></returns>
-        public Adviser GetAdviserBySN(int SN) {
+        public Adviser GetAdviserBySN(int SN)
+        {
             USP.AddParameter(CommBase.SN, SN);
             Adviser _ResultAdviser = USP.ExeProcedureGetObject(SP.GetAdviserBySN, new Adviser());
             return _ResultAdviser;
@@ -75,7 +83,8 @@ namespace ObjectBase {
 
         /// <summary>取得所有顧問</summary>
         /// <returns></returns>
-        public List<Adviser> GetListAdviser() {
+        public List<Adviser> GetListAdviser()
+        {
             List<Adviser> ListAdviser = new List<Adviser>();
             ListAdviser = USP.ExeProcedureGetObjectList(SP.GetListAdviser, new Adviser());
             return ListAdviser;

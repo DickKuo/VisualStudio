@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
+using System;
 
-namespace ObjectBase {
-    public class CustomerDAO : CommBase {
-
-        private class SP {
+namespace ObjectBase
+{
+    public class CustomerDAO : CommBase
+    {
+        private class SP
+        {
             public const string AddCustomer = "AddCustomer";
             public const string GetCustomerBySN = "GetCustomerBySN";
             public const string GetCustomerByAccount = "GetCustomerByAccount";
@@ -18,7 +20,8 @@ namespace ObjectBase {
             public const string GetCustomerByHelperSN = "GetCustomerByHelperSN";
         }
 
-        private class SPParameter {
+        private class SPParameter
+        {
             public const string Account = "Account";
             public const string PassWord = "PassWord";
             public const string State = "State";
@@ -50,8 +53,10 @@ namespace ObjectBase {
         /// <summary>加入客戶</summary>
         /// <param name="_Customer"></param>
         /// <returns></returns>
-        public int AddCustomer(Customer _Customer) {
-            try {
+        public int AddCustomer(Customer _Customer)
+        {
+            try
+            {
                 USP.AddParameter(SPParameter.PassWord, _Customer.PassWord);
                 USP.AddParameter(CommBase.Remark, _Customer.Remark == null ? string.Empty : _Customer.Remark);
                 USP.AddParameter(SPParameter.FirstName, _Customer.Member.FirstName);
@@ -64,14 +69,17 @@ namespace ObjectBase {
                 USP.AddParameter(SPParameter.HomeAddr, _Customer.Member.HomeAddr);
                 USP.AddParameter(SPParameter.NickName, _Customer.Member.NickName == null ? string.Empty : _Customer.Member.NickName);
                 DataTable dt = USP.ExeProcedureGetDataTable(SP.AddCustomer);
-                if (dt != null && dt.Rows.Count > 0) {
+                if (dt != null && dt.Rows.Count > 0)
+                {
                     return Convert.ToInt32(dt.Rows[0][0]);
                 }
-                else {
+                else
+                {
                     return -1;
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
                 return -1;
             }
@@ -80,17 +88,21 @@ namespace ObjectBase {
         /// <summary>由SN取得帳戶</summary>
         /// <param name="SN"></param>
         /// <returns></returns>
-        public Customer GetCustomerBySN(int SN) {
+        public Customer GetCustomerBySN(int SN)
+        {
             Customer _Customer = new Customer();
-            try {
+            try
+            {
                 USP.AddParameter(CommBase.SN, SN);
                 _Customer = USP.ExeProcedureGetObject(SP.GetCustomerBySN, _Customer) as Customer;
-                if (_Customer != null) {
+                if (_Customer != null)
+                {
                     _Customer = CombiCustomer(_Customer);
                 }
                 return _Customer;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
                 _Customer.Member = new Member();
                 return _Customer;
@@ -100,16 +112,20 @@ namespace ObjectBase {
         /// <summary>由帳號取得客戶資料</summary>
         /// <param name="Account"></param>
         /// <returns></returns>
-        public Customer GetCustomerByAccount(string Account) {
-            try {
+        public Customer GetCustomerByAccount(string Account)
+        {
+            try
+            {
                 USP.AddParameter(SPParameter.Account, Account);
                 Customer _Customer = USP.ExeProcedureGetObject(SP.GetCustomerByAccount, new Customer());
-                if (_Customer != null) {
+                if (_Customer != null)
+                {
                     _Customer = CombiCustomer(_Customer);
                 }
                 return _Customer;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 CommTool.ToolLog.Log(ex);
                 return new Customer();
             }
@@ -119,11 +135,13 @@ namespace ObjectBase {
         /// <param name="Account"></param>
         /// <param name="PassWord"></param>
         /// <returns></returns>
-        public Customer LoginCheck(string Account, string PassWord) {
+        public Customer LoginCheck(string Account, string PassWord)
+        {
             USP.AddParameter(SPParameter.Account, Account);
             USP.AddParameter(SPParameter.PassWord, PassWord);
             Customer _Customer = USP.ExeProcedureGetObject(SP.LoginCheck, new Customer());
-            if (_Customer != null) {
+            if (_Customer != null)
+            {
                 _Customer = CombiCustomer(_Customer);
             }
             return _Customer;
@@ -132,7 +150,8 @@ namespace ObjectBase {
         /// <summary>整合客戶的所有物件</summary>
         /// <param name="_Customer"></param>
         /// <returns></returns>
-        private Customer CombiCustomer(Customer _Customer) {
+        private Customer CombiCustomer(Customer _Customer)
+        {
             MemberDAO _MemberDAO = new MemberDAO();
             RoleDAO _RoleDAO = new RoleDAO();
             ExtraTagDAO _ExtraTagDAO = new ExtraTagDAO();
@@ -146,7 +165,8 @@ namespace ObjectBase {
         /// <param name="_Customer"></param>
         /// <param name="Tag"></param>
         /// <returns></returns>
-        public int SetMinimunLotLimit(Customer _Customer, int Tag) {
+        public int SetMinimunLotLimit(Customer _Customer, int Tag)
+        {
             ExtraTagDAO _ExtraTagDAO = new ExtraTagDAO();
             return _ExtraTagDAO.UpdateExtraTag(ExtraUserType.Customer, ExtraClass.MinimunLot, _Customer.SN, Tag);
         }
@@ -155,15 +175,18 @@ namespace ObjectBase {
         /// <param name="_Customer"></param>
         /// <param name="NewPassWord"></param>
         /// <returns></returns>
-        public int UpdatePassWord(Customer _Customer, string NewPassWord) {
+        public int UpdatePassWord(Customer _Customer, string NewPassWord)
+        {
             USP.AddParameter(SPParameter.SN, _Customer.SN);
             USP.AddParameter(SPParameter.NowPassWord, _Customer.PassWord);
             USP.AddParameter(SPParameter.NewPassWord, NewPassWord);
             DataTable dt = USP.ExeProcedureGetDataTable(SP.UpdatePassWord);
-            if (dt != null && dt.Rows.Count > 0) {
+            if (dt != null && dt.Rows.Count > 0)
+            {
                 return Convert.ToInt32(dt.Rows[0][0]);
             }
-            else {
+            else
+            {
                 return -1;
             }
         }
@@ -172,13 +195,15 @@ namespace ObjectBase {
         /// <param name="Page">指定頁</param>
         /// <param name="Records">一頁列出筆數</param>
         /// <returns></returns>
-        public List<Customer> GetCustomerListByPage(int Page, int Range) {
+        public List<Customer> GetCustomerListByPage(int Page, int Range)
+        {
             List<Customer> CustomerList = new List<Customer>();
             USP.AddParameter(SPParameter.Range, Range);
             USP.AddParameter(SPParameter.Page, Page);
             List<Customer> ResultList = new List<Customer>();
             CustomerList = USP.ExeProcedureGetObjectList(SP.GetCustomerListByPage, new Customer());
-            foreach (Customer Item in CustomerList) {
+            foreach (Customer Item in CustomerList)
+            {
                 ResultList.Add(CombiCustomer(Item));
             }
             return ResultList;
@@ -187,7 +212,8 @@ namespace ObjectBase {
         /// <summary>變更客戶資料</summary>
         /// <param name="_Customer"></param>
         /// <returns></returns>
-        public int UpdateCustomerByAccount(Customer _Customer) {
+        public int UpdateCustomerByAccount(Customer _Customer)
+        {
             USP.AddParameter(SPParameter.Account, _Customer.Account);
             USP.AddParameter(SPParameter.Audit, _Customer.Audit);
             USP.AddParameter(SPParameter.FirstName, _Customer.Member.FirstName);
@@ -204,10 +230,12 @@ namespace ObjectBase {
             USP.AddParameter(SPParameter.HelperSN, _Customer.HelperSN);
             USP.AddParameter(SPParameter.Remark, _Customer.Member.Remark == null ? string.Empty : _Customer.Member.Remark);
             DataTable dt = USP.ExeProcedureGetDataTable(SP.UpdateCustomerByAccount);
-            if (dt != null && dt.Rows.Count > 0) {
+            if (dt != null && dt.Rows.Count > 0)
+            {
                 return Convert.ToInt32(dt.Rows[0][0]);
             }
-            else {
+            else
+            {
                 return -1;
             }
         }
@@ -226,13 +254,14 @@ namespace ObjectBase {
         /// <summary>依條件搜尋客戶列表</summary>
         /// <param name="_Customer"></param>
         /// <returns></returns>
-        public List<Customer> SearchCustomerList(Customer _Customer) {
+        public List<Customer> SearchCustomerList(Customer _Customer)
+        {
             USP.AddParameter(SPParameter.Account, _Customer.Account == null ? string.Empty : _Customer.Account);
             USP.AddParameter(SPParameter.Name, _Customer.Member.FirstName == null ? string.Empty : _Customer.Member.FirstName);
             USP.AddParameter(SPParameter.NickName, _Customer.Member.NickName == null ? string.Empty : _Customer.Member.NickName);
             USP.AddParameter(SPParameter.Phone, _Customer.Member.Phone == null ? string.Empty : _Customer.Member.Phone);
-            List<Customer> CustomerList = USP.ExeProcedureGetObjectList(SP.SearchCustomerList,new Customer());
-            List<Customer> ResultCustomer =new List<Customer>();
+            List<Customer> CustomerList = USP.ExeProcedureGetObjectList(SP.SearchCustomerList, new Customer());
+            List<Customer> ResultCustomer = new List<Customer>();
             foreach (Customer Item in CustomerList)
             {
                 ResultCustomer.Add(CombiCustomer(Item));
@@ -243,15 +272,16 @@ namespace ObjectBase {
         /// <summary>取的顧問底下的客戶</summary>
         /// <param name="HelperSN"></param>
         /// <returns></returns>
-        public List<Customer> GetCustomerByHelperSN(int HelperSN) {
+        public List<Customer> GetCustomerByHelperSN(int HelperSN)
+        {
             USP.AddParameter(SPParameter.HelperSN, HelperSN);
             List<Customer> CustomerList = USP.ExeProcedureGetObjectList(SP.GetCustomerByHelperSN, new Customer());
             List<Customer> ResultCustomer = new List<Customer>();
-            foreach (Customer Item in CustomerList) {
+            foreach (Customer Item in CustomerList)
+            {
                 ResultCustomer.Add(CombiCustomer(Item));
             }
             return ResultCustomer;
         }
-
     }
 }

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace ObjectBase {
-    public class Bouns {
-
+namespace ObjectBase
+{
+    public class Bouns
+    {
         public int SN { set; get; }
 
         public decimal Draw { set; get; }
@@ -17,6 +15,5 @@ namespace ObjectBase {
         public int AdviserSN { set; get; }
 
         public int CustomerSN { set; get; }
-
     }
 }

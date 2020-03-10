@@ -20,7 +20,8 @@ namespace ServerApplication
 {
     class Program
     {
-        private class Default {
+        private class Default
+        {
             public const int Second = 1000;
             public const int Interval = Second * 1;
             public const string Root = "root";
@@ -31,30 +32,31 @@ namespace ServerApplication
             public const string ServerBakPath = "ServerBakPath";
         }
 
-        //private static  TriggerService server = null;
+        //private static TriggerService server = null;
         //private static ConfigManager configmanage;
+
         static void Main(string[] args)
         {
             string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DService.exe.config");
 
             Stock.StockDAO StockContext = new Stock.StockDAO();
-            StockContext.GetOptionEveryDay("http://www.capitalfutures.com.tw/option/default.asp?", 
-                "https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&amp;opmr=optionpart&amp;opcm=WTXO&amp;opym=");
+            StockContext.GetOptionEveryDay("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=",
+                "http://www.capitalfutures.com.tw/quotations/list.asp?xy=1&xt=1", 2);
 
-            //configmanage = new ConfigManager(configiPath, "DService");
+            configmanage = new ConfigManager(configiPath, "DService");
 
-            //UpdateDll(configmanage.GetValue(Default.UpDateGradPath));
+            UpdateDll(configmanage.GetValue(Default.UpDateGradPath));
 
-            //Console.WriteLine("服務啟動");
-            //Thread.Sleep(50000);
-            //AssemblyLoader load = new AssemblyLoader();
-            //CallService.CurrentServiceProvider = load;
-            //load.Load();
-            //Assembly ii =      Assembly.LoadFile(@"C:\Users\Dick\Desktop\Clinet\bin\Debug\WithoutRemote.dll");
-            //ITestService Itest = CallService.GetService<ITestService>();
-            //Itest.HelloWord();
-            //System.Type[] types = ii.GetTypes();
-            
+            Console.WriteLine("服務啟動");
+            Thread.Sleep(50000);
+            AssemblyLoader load = new AssemblyLoader();
+            CallService.CurrentServiceProvider = load;
+            load.Load();
+            Assembly ii = Assembly.LoadFile(@"C:\Users\Dick\Desktop\Clinet\bin\Debug\WithoutRemote.dll");
+            ITestService Itest = CallService.GetService<ITestService>();
+            Itest.HelloWord();
+            System.Type[] types = ii.GetTypes();
+
             #region 20150609加入顯示字樣 #63
             //Console.WriteLine(string.Format("ServerIP:{0}",configmanage.GetValue("AppIP")));
             //Console.WriteLine(string.Format("ServerPort:{0}",configmanage.GetValue("AppPort")));
@@ -67,16 +69,15 @@ namespace ServerApplication
             //t.AutoReset = true;//設置是執行一次（false）還是一直執行(true)； 
             //t.Enabled = true;//是否執行System.Timers.Timer.Elapsed事件； 
             #endregion
-            
+
             #region  等候客戶端連線
             //Thread t1 = new Thread(Lessner);
             //t1.Start();
-            #endregion               
-    
+            #endregion
             
             //System.Timers.Timer StockTimer = new System.Timers.Timer(20*1000);
             //StockTimer.Elapsed += StockTimer_Elapsed;
-         
+
             //StockTimer.Start();
 
             Console.Read();
@@ -100,7 +101,7 @@ namespace ServerApplication
         //}
 
         //private static List<string> _timelist = new List<string>();
-        
+
         //private static TriggerService GetTriggerServices()
         //{
         //    ServerImplement service = new ServerImplement();

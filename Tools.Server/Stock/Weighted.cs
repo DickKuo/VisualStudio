@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Stock {
-    public class Weighted {
-
+namespace Stock
+{
+    public class Weighted
+    {
         public int SN { set; get; }
 
         /// <summary>日期</summary>
         public DateTime TradeDate { set; get; }
-        
+
         /// <summary>現貨</summary>
         public decimal Price { set; get; }
 
@@ -40,6 +38,5 @@ namespace Stock {
 
         /// <summary>時間戳章</summary>
         public string TradeTimestamp { set; get; }
-
     }
 }

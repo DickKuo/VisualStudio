@@ -3,10 +3,10 @@
 namespace CommTool.Business.Metadata
 {
     [Serializable]
-    public abstract class MetadataInfoAttribute :Attribute
+    public abstract class MetadataInfoAttribute : Attribute
     {
-        protected MetadataInfoAttribute() { 
-        
+        protected MetadataInfoAttribute()
+        {
         }
 
         public string Alias { get; set; }
@@ -33,5 +33,4 @@ namespace CommTool.Business.Metadata
         Int64 = 10,
         BigObject = 11,
     }
- 
 }

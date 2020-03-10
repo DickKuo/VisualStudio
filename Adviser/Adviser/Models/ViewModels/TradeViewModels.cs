@@ -1,14 +1,12 @@
-﻿using Adviser.Models.Code;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using Adviser.Models.Code;
 
-namespace Adviser.Models.ViewModels {
-    public class TradeViewModels {
-
-        public class TradeViewModel : BaseViewModel {
-
+namespace Adviser.Models.ViewModels
+{
+    public class TradeViewModels
+    {
+        public class TradeViewModel : BaseViewModel
+        {
             public string DueMonth { set; get; }
 
             public List<OptionQuotes> QuotesList { set; get; }
