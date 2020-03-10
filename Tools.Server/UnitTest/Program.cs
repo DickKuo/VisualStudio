@@ -98,19 +98,19 @@ namespace UnitTest
         static void Main(string[] args)
         {
             //TranscationDAO DAO = new TranscationDAO();
-            StockDAO STDB = new StockDAO();
-            //STDB.GetOptionDailyCapitalfutures("http://www.capitalfutures.com.tw/option/default.asp?", "201808W4", Encoding.Default, "");
+            //StockDAO STDB = new StockDAO();
+            ////STDB.GetOptionDailyCapitalfutures("http://www.capitalfutures.com.tw/option/default.asp?", "201808W4", Encoding.Default, "");
 
-            //STDB.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "10800", "");
+            ////STDB.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "10800", "");
             
-            STDB.GetOptionEveryDay("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "", 1);
+            //STDB.GetOptionEveryDay("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "", 1);
             
-            WeightedDAO WeighDB = new WeightedDAO();
-            WeekPointDAO WeekDB = new WeekPointDAO();
-            //CustomerDAO _CustDAO = new CustomerDAO();
-            //Customer _Customer = new Customer();
-            OptionDAO OpDB = new OptionDAO();
-            TradeRecordDAO TradDB = new TradeRecordDAO();
+            //WeightedDAO WeighDB = new WeightedDAO();
+            //WeekPointDAO WeekDB = new WeekPointDAO();
+            ////CustomerDAO _CustDAO = new CustomerDAO();
+            ////Customer _Customer = new Customer();
+            //OptionDAO OpDB = new OptionDAO();
+            //TradeRecordDAO TradDB = new TradeRecordDAO();
             //TradDB.CalculateResultReport();
             //InsertToDB();
             //LoDBback();

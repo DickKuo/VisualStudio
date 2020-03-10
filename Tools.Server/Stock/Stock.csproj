@@ -34,15 +34,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommTool, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Dropbox\Export\CommTool.dll</HintPath>
-    </Reference>
     <Reference Include="CommTool.Business, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Dropbox\Export\CommTool.Business.dll</HintPath>
     </Reference>
-    <Reference Include="CommTool.Service, Version=1.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CommTool.Service, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Dropbox\Export\CommTool.Service.dll</HintPath>
     </Reference>

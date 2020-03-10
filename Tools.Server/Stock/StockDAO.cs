@@ -494,7 +494,7 @@ namespace Stock
             if (_Calendar.IsWorkDay)
             {
                 TimeSpan StartTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 8, 44, 59));
-                TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 20, 45, 10));
+                TimeSpan EndTimeSpan = TimeStamp.Subtract(new DateTime(TimeStamp.Year, TimeStamp.Month, TimeStamp.Day, 13, 45, 20));
                 if (StartTimeSpan.TotalSeconds >= 0 && EndTimeSpan.TotalSeconds <= 0)
                 {
                     try
@@ -1247,7 +1247,7 @@ namespace Stock
             {
                 dt.Columns.Add(info.Name);
             }
-            CommTool.Files.ReadCSV(DataResource, dt);
+            CommTool.CommToolFiles.ReadCSV(DataResource, dt);
             this.SaveOptionHistoryData(dt);
         }
 
@@ -1262,7 +1262,7 @@ namespace Stock
                 if (!info.Name.Equals(SPParameter.SN))
                     dt.Columns.Add(info.Name);
             }
-            CommTool.Files.ReadCSV(DataResource, dt);
+            CommTool.CommToolFiles.ReadCSV(DataResource, dt);
             SaveOpenInterestData(dt);
         }
 

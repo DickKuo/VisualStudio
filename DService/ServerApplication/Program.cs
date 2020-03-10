@@ -10,11 +10,11 @@ using WebInfo;
 using WebInfo.Business.DataEntities;
 using DService.Business.Entities;
 using DService.Business.Services;
-//using DStandardServer;
+using DStandardServer;
 using System.Runtime.Remoting.Channels;
 using System.Reflection;
 using System.Diagnostics;
-//using Stock;
+using Stock;
 
 namespace ServerApplication
 {
@@ -43,7 +43,7 @@ namespace ServerApplication
             StockContext.GetOptionEveryDay("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=",
                 "http://www.capitalfutures.com.tw/quotations/list.asp?xy=1&xt=1", 2);
 
-            configmanage = new ConfigManager(configiPath, "DService");
+            configmanage = new  ConfigManager(configiPath, "DService");
 
             UpdateDll(configmanage.GetValue(Default.UpDateGradPath));
 

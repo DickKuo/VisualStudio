@@ -35,6 +35,10 @@
       <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net40\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Stock, Version=1.0.0.38, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Dropbox\Export\Stock.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,10 +55,6 @@
     <ProjectReference Include="..\FileTool\CommTool.csproj">
       <Project>{E9D26E84-C166-48CC-854E-99372DF4EB3C}</Project>
       <Name>CommTool</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Stock\Stock.csproj">
-      <Project>{6BD4C474-7A0D-4E83-821B-AA9D1CBA1E24}</Project>
-      <Name>Stock</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
