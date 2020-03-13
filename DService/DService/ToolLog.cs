@@ -86,7 +86,9 @@ namespace ServiceLog
             }
         }
 
-        public ToolLog() { }
+        public ToolLog()
+        {
+        }
 
         public static string ToolPath
         {
@@ -138,6 +140,8 @@ namespace ServiceLog
             using (StreamWriter SW = new StreamWriter(TempPath, true))
             {
                 SW.WriteLine(RecordString);
+                SW.Close();
+                SW.Dispose();
             }
             Console.WriteLine(RecordString);
         }
@@ -261,7 +265,6 @@ namespace ServiceLog
         public bool Remove(Exception item)
         {
             bool result = false;
-
             for (int i = 0; i < ExcetionCollectionList.Count; i++)
             {
                 Exception Ex = (Exception)ExcetionCollectionList[i];

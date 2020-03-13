@@ -98,10 +98,12 @@ namespace UnitTest
         static void Main(string[] args)
         {
             //TranscationDAO DAO = new TranscationDAO();
-            StockDAO STDB = new StockDAO();
+            //StockDAO STDB = new StockDAO();
             ////STDB.GetOptionDailyCapitalfutures("http://www.capitalfutures.com.tw/option/default.asp?", "201808W4", Encoding.Default, "");
 
-            STDB.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "10600", "");
+            //STDB.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "10600", "");
+
+
 
 
 
@@ -119,8 +121,8 @@ namespace UnitTest
             //InsertToDB();
             //LoDBback();
 
-            //CalendarDAO _CalendarDB = new CalendarDAO();
-
+            CalendarDAO _CalendarDB = new CalendarDAO();
+            _CalendarDB.CreateYearsCalendar(2020);
             //List<Calendar> LisCalendar = _CalendarDB.GetCalendarByMonth(new DateTime(2018, 2, 8));
 
 

@@ -15,6 +15,8 @@ namespace Stock
             public const string Sunday = "Sunday";
             public const string Saturday = "Saturday";
             public const string ContractTimeFormat = "yyyyMM";
+            public const string Friday = "Friday";
+            public const string Thursday = "Thursday";
         }
 
         private class SP
@@ -26,6 +28,7 @@ namespace Stock
             public const string GetDueMonthWeekLasDay = "GetDueMonthWeekLasDay";
             public const string GetWeeks = "GetWeeks";
             public const string GetCalendarByMonth = "GetCalendarByMonth";
+            public const string StoreToHistory = "StoreToHistory";
         }
 
         private class SPParameter
@@ -190,10 +193,15 @@ namespace Stock
             DateTime Startday = new DateTime(Year, 1, 1);
             DateTime EndDay = new DateTime(Year, 12, 31);
             DateTime NowDay = Startday;
+            bool IsNextWorkDay = true;
             while (NowDay <= EndDay)
             {
                 Calendar _Calendar = new Calendar();
                 _Calendar.Daily = NowDay;
+                _Calendar.Week = string.Empty;
+                _Calendar.NearMonth1 = string.Empty;
+                _Calendar.NearMonth2 = string.Empty;
+                _Calendar.Remark = string.Empty;
                 if (NowDay.DayOfWeek.ToString() != Default.Sunday && NowDay.DayOfWeek.ToString() != Default.Saturday)
                 {
                     _Calendar.IsWorkDay = true;
@@ -202,21 +210,53 @@ namespace Stock
                 {
                     _Calendar.IsWorkDay = false;
                 }
+
+                if (IsNextWorkDay == false)
+                {
+                    _Calendar.IsWorkDay = false;
+                    IsNextWorkDay = true;
+                    _Calendar.Remark = "彈性放假";
+                }
+
                 _Calendar.Remark = string.Empty;
                 if ((NowDay.Month == 1 && NowDay.Day == 1))
                 {
                     _Calendar.IsWorkDay = false;
                     _Calendar.Remark = "元但";
+                    if (NowDay.DayOfWeek.ToString() == Default.Thursday)
+                    {
+                        IsNextWorkDay = false;
+                    }
                 }
-                if ((NowDay.Month == 10 && NowDay.Day == 10))
-                {
-                    _Calendar.IsWorkDay = false;
-                    _Calendar.Remark = "雙十國慶";
-                }
+
                 if ((NowDay.Month == 2 && NowDay.Day == 28))
                 {
                     _Calendar.IsWorkDay = false;
                     _Calendar.Remark = "228紀念日";
+                    if (NowDay.DayOfWeek.ToString() == Default.Thursday)
+                    {
+                        IsNextWorkDay = false;
+                    }
+                }
+
+                if ((NowDay.Month == 5 && NowDay.Day == 1))
+                {
+                    _Calendar.IsWorkDay = false;
+                    _Calendar.Remark = "勞動節";
+                    if (NowDay.DayOfWeek.ToString() == Default.Thursday)
+                    {
+                        IsNextWorkDay = false;
+                    }
+                }
+
+                if ((NowDay.Month == 10 && NowDay.Day == 10))
+                {
+                    _Calendar.IsWorkDay = false;
+                    _Calendar.Remark = "雙十國慶";
+                    if (NowDay.DayOfWeek.ToString() == Default.Thursday)
+                    {
+                        IsNextWorkDay = false;
+                    }
                 }
 
                 SaveCalendar(_Calendar);
@@ -296,6 +336,12 @@ namespace Stock
             USP.AddParameter(BaseData.BaseSParameter.EndDate, EndDate);
             List<Calendar> _ListCalendar = USP.ExeProcedureGetObjectList(SP.GetCalendarByMonth, new Calendar());
             return _ListCalendar;
+        }
+
+        /// <summary>將資料儲存到歷史資料庫內</summary>
+        public void StoreToHistory()
+        {
+            USP.ExeProcedureGetDataTable(SP.StoreToHistory);
         }
     }
 }

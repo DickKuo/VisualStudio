@@ -294,7 +294,7 @@ namespace StandredImplement
         /// 20170208 修改成一個Thread來執行到底 modified by Dick
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void work_DoWork(object sender, DoWorkEventArgs e)
+        private void work_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
@@ -302,11 +302,13 @@ namespace StandredImplement
                 {
                     DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 44, 50);
                     DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 45, 30);
+                   
+                    string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
+                    ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
+                    StockDAO StockContext = new StockDAO();
+
                     while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0)
-                    {
-                        StockDAO StockContext = new StockDAO();
-                        string configiPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Default.DServiceConfig);
-                        ConfigManager configmanage = new ConfigManager(configiPath, Default.DService);
+                    {         
                         string WeigthedUrl = configmanage.GetValue(Default.WeigthedUrl);
                         string CapitalfuturesUrl = string.Empty;
                         int Channel = Convert.ToInt32(configmanage.GetValue(Default.Channel));
@@ -315,28 +317,34 @@ namespace StandredImplement
                         {
                             CapitalfuturesUrl = configmanage.GetValue(Default.YahooStock);
                         }
+
                         if (Channel == 2)
                         {
                             CapitalfuturesUrl = configmanage.GetValue(Default.Capitalfutures);
                         }
 
                         StockContext.GetOptionEveryDay(CapitalfuturesUrl, WeigthedUrl, Channel);
-                        Thread.Sleep(5000);
+                        Thread.Sleep(1000 * 20);
                     }
 
                     if (DateTime.Now.Day == 1)
                     {
                         try
                         {
-                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 50);
-                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 31, 0);
+                            bool IsDo = false;
+                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 10);
+                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 50);
                             while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0)
                             {
-                                CalendarDAO CalendarContext = new CalendarDAO();
-                                CalendarContext.CreateNextMonthCalendar(DateTime.Now);
+                                if (!IsDo)
+                                {
+                                    IsDo = true;
+                                    CalendarDAO CalendarContext = new CalendarDAO();
+                                    CalendarContext.CreateNextMonthCalendar(DateTime.Now);
+                                }
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             ToolLog.Log(ex);
                         }
@@ -352,7 +360,7 @@ namespace StandredImplement
         /// <summary></summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
         }
 
@@ -372,7 +380,7 @@ namespace StandredImplement
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
     }
@@ -390,7 +398,7 @@ namespace StandredImplement
             _work.RunWorkerCompleted += new RunWorkerCompletedEventHandler(work_RunWorkerCompleted);
         }
 
-        void work_DoWork(object sender, DoWorkEventArgs e)
+        private void work_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
@@ -406,7 +414,7 @@ namespace StandredImplement
             }
         }
 
-        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
         }
 
@@ -447,14 +455,14 @@ namespace StandredImplement
 
         private static object IsBusy = new object();
 
-        void work_DoWork(object sender, DoWorkEventArgs e)
+        private void work_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
                 lock (IsBusy)
-                {
+                { 
                     DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 44, 50);
-                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 45, 40);
+                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 45, 20);
                     while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0)
                     {
                         StockDAO StockContext = new StockDAO();
@@ -478,7 +486,7 @@ namespace StandredImplement
             }
         }
 
-        void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
         }
 
