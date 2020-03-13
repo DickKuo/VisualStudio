@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceProcess;
-using System.Text;
-using System.IO;
-using System.Xml;
-using System.Threading;
 using System.Configuration;
-using WebInfo;
-using WebInfo.Business.DataEntities;
+using System.Diagnostics;
+using System.Threading;
 using DStandardServer;
-using ServiceLog;
+using System.Xml;
+using System.IO;
 using CommTool;
-
+using System;
 
 namespace DService
 {
@@ -80,7 +72,7 @@ namespace DService
                 time.Elapsed += new System.Timers.ElapsedEventHandler(time_Elapsed);
                 time.Interval = Default.Interval;
                 time.Start();
-            }//end if
+            }
 
             server = GetTriggerServices();
             Thread t1 = new Thread(Lessner);
@@ -89,13 +81,13 @@ namespace DService
             time2.Elapsed += new System.Timers.ElapsedEventHandler(time2_Elapsed);
             time2.Interval = Default.Interval;
             time2.Start();
-        }//end  OnStart
+        }
 
         private TriggerService GetTriggerServices()
         {
             ServerImplement service = new ServerImplement();
             return service.GetAutoTriggerService();
-        }//end GetTriggerServices
+        }
 
         private void time_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -136,7 +128,7 @@ namespace DService
             foreach (FileInfo FiInfo in LocalDir.GetFiles())
             {
                 LocalFileList.Add(FiInfo.Name);
-            }//end foreach
+            }
 
             DirectoryInfo RemoveDir = new DirectoryInfo(UpdatePath);
             foreach (FileInfo FiInfo in RemoveDir.GetFiles())
@@ -196,8 +188,8 @@ namespace DService
                                 {
                                     File.Copy(Info.FileName, ServerBakPath, true);//先備份
                                     File.Copy(SourceFile.FileName, Info.FileName, true);
-                                }//end if
-                            }//end if
+                                }
+                            }
                         }
                     }
                 }

@@ -2,6 +2,7 @@
 using CommTool;
 using System.IO;
 using System.Net;
+using System.Linq;
 using System.Data;
 using System.Text;
 using HtmlAgilityPack;
@@ -52,8 +53,6 @@ namespace Stock
             public const string SaveOpenInterest = "SaveOpenInterest";
             public const string SaveOption = "SaveOption";
             public const string SaveOptionHistory = "SaveOptionHistory";
-            public const string UpdateWarningMessage = "UpdateWarningMessage";
-            public const string GetWarningMessage = "GetWarningMessage";
             public const string GetAllWeekPointByYear = "GetAllWeekPointByYear";
         }
 
@@ -250,6 +249,7 @@ namespace Stock
             {
                 CommTool.ToolLog log = new CommTool.ToolLog();
                 CommTool.ToolLog.Log(CommTool.LogType.Error, _stockNum.ToString());
+                ToolLog.Log(ex);
                 return "error";
             }
         }
@@ -1558,10 +1558,10 @@ namespace Stock
                             Recorde.PyeongchangTime = DateTime.Now;
                         }
                         CalculateStopPoint(RecordDB, Recorde, _Weighted, Result);
-                    }//end if
-                }//end foreach
-            }//end if
-        }//end ControlPrice
+                    }
+                }
+            }
+        }
 
         /// <summary>計算停損及移動停利</summary>
         /// 20170316 add by Dick 加入功能。
@@ -1594,7 +1594,6 @@ namespace Stock
 
                 if ((Result.Clinch + 5) > DynamicStopPrice)
                 {
-                    ////SendWarningMail(Recorde, DynamicStopPrice, Result, WarningMessage, Default.StopWarning);
                     Console.WriteLine("Warning");
                 }
                 else
@@ -1632,6 +1631,9 @@ namespace Stock
                     else
                     {
                         StopPrice = this.CalculateBuyStopPrice(Convert.ToDecimal(((StopPrice * ((1.1m) + (Recorde.Level * 0.1m))) + 1)));
+                        //過10額外加乘
+                        int OverTen = Recorde.Level / 10;
+                        StopPrice += OverTen * 5 * 1.7m;
                     }
                     if (NewLevel < Recorde.Level)
                     {
@@ -1639,9 +1641,6 @@ namespace Stock
                         {
                             SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯停利", NewLevel));
                         }
-                        //if ((StopPrice + 8) > Result.Clinch) {
-                        //    //SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯", NewLevel));
-                        //}
                     }
                     else
                     {
@@ -1655,7 +1654,7 @@ namespace Stock
                     }
                 }
             }
-        }//end CalculateStopPoint
+        }
 
         /// <summary>寄送警告信件</summary>
         /// <param name="Recorde"></param>
@@ -1664,47 +1663,10 @@ namespace Stock
         /// <param name="WarningMessage"></param>
         private void SendWarningMail(TradeRecord Recorde, decimal StopPrice, Option Result, string WarningMessage, string Title)
         {
-            WarningMessage = string.Format(" ## 操作價格: {3} ,目前價格: {4} ,停損價格: {5} ,買/賣: {1} ,方向: {2} ,契約: {0} ", Recorde.Contract, Recorde.Type, Recorde.OP,
+            WarningMessage = string.Format(" 操作價格: {3} 目前價格: {4} 停損價格: {5} 買/賣: {1} 方向: {2} 契約: {0}", Recorde.Contract, Recorde.Type, Recorde.OP,
                 Convert.ToDecimal(Recorde.Price).ToString("#.00"), Result.Clinch.ToString("#.00"), StopPrice.ToString("#.00"));
-            DataTable dt = GetWarningMessage(WarningMessage);
-            if (dt.Rows.Count == 0)
-            {
-                WarningMail(WarningMessage, Title);
-                UpdateWarningMessage(WarningMessage);
-            }
-        }//end SendWarningMail
-
-        /// <summary>更新訊息通知</summary>
-        /// <param name="Message"></param>
-        private void UpdateWarningMessage(string Message)
-        {
-            List<WarningMessage> OptionList = new List<WarningMessage>();
-            try
-            {
-                USP.AddParameter(SPParameter.Message, Message);
-                OptionList = USP.ExeProcedureGetObjectList(SP.UpdateWarningMessage, new WarningMessage()) as List<WarningMessage>;
-            }
-            catch (Exception ex)
-            {
-                CommTool.ToolLog.Log(ex);
-            }
-        }//end UpdateWarningMessage
-
-        /// <summary>取得警告訊息</summary>
-        /// <returns></returns>
-        public DataTable GetWarningMessage(string Message)
-        {
-            try
-            {
-                USP.AddParameter(SPParameter.Message, Message);
-                return USP.ExeProcedureGetDataTable(SP.GetWarningMessage);
-            }
-            catch (Exception ex)
-            {
-                ToolLog.Log(ex);
-                return null;
-            }
-        }//end GetWarningMessage
+            WarningMail(WarningMessage, Title);
+        }
 
         /// <summary>警告信件</summary>
         /// <param name="WarningMessage"></param>
@@ -1716,18 +1678,25 @@ namespace Stock
             {
                 foreach (DataRow dr in MaillDataTable.Rows)
                 {
-                    if (IsLine)
+                    WarningMessage = string.Format("發送位置  {0} 』 {1}", dr.ItemArray[3], WarningMessage);
+                    DataTable MessageLog = MailDB.GetSendMessageLog(DateTime.Now);
+                    var Temp = MessageLog.Select(string.Format("Message ='{0}'", WarningMessage)).ToList();
+                    if (!Temp.Any())
                     {
-                        MessageObj Obj = new MessageObj();
-                        Obj.SendLineMessage(WarningMessage);
-                    }
-                    else
-                    {
-                        MailDB.RegistrySend(dr[1].ToString(), Title, WarningMessage);
+                        if (IsLine)
+                        {
+                            MessageObj Obj = new MessageObj();
+                            Obj.SendLineMessage(WarningMessage);
+                            MailDB.AddSendMessageLog(DateTime.Now, WarningMessage);
+                        }
+                        else
+                        {
+                            MailDB.RegistrySend(dr[1].ToString(), Title, WarningMessage);
+                        }
                     }
                 }
             }
-        }//end WarningMail
+        }
 
         /// <summary>取得當前報價</summary>
         /// <param name="BeginTime"></param>
@@ -1853,7 +1822,6 @@ namespace Stock
             {
                 return;
             }
-
             if (Recorde.Type == TradeType.Sell.ToString())
             {
                 StopPrice = this.CalculateStopPrice(Convert.ToDecimal(Recorde.Price), Recorde.Contract, _Weighted.Futures);
@@ -1912,7 +1880,7 @@ namespace Stock
                 else
                 {
                     Recorde.Settlement = ((Recorde.Price - Result.Clinch) * Convert.ToInt32(Recorde.Lot)) - 2;
-                    //RecordDB.UpdateTradeRecord(Recorde);
+                    RecordDB.UpdateTradeRecord(Recorde);
                 }
             }
             else
@@ -1935,12 +1903,12 @@ namespace Stock
                     }
                     else
                     {
-                        string st = string.Format("Warning.... 價格到停損或停利=> {0} ", StopPrice);
+                        string st = string.Format("Warning....The price changed, it neans you need to do some thing => {0} ", StopPrice);
                         SB.AppendLine(st);
                         Console.WriteLine(st);
                         Thread.Sleep(300);
                     }
-                    //SendWarningMail(Recorde, StopPrice, Result, WarningMessage, Default.StopWarning);
+                    SendWarningMail(Recorde, StopPrice, Result, WarningMessage, SB.ToString());
                 }
                 else
                 {
@@ -1972,12 +1940,10 @@ namespace Stock
                             {
                                 decimal TempPoint = ((Recorde.Price - StopPrice) * 50 - 18) * Convert.ToInt32(Recorde.Lot);
                                 MyAccount += TempPoint;
-
                                 Recorde.Type = "Sell";
                                 Recorde.Price = StopPrice;
                                 Recorde.ChangeTimes++;
                                 Recorde.Lot = Convert.ToString(3);
-
                                 string str = string.Format("To exchange from buy to sell then the price is {0} ", StopPrice);
                                 SB.AppendLine(str);
                                 Console.WriteLine(str);
@@ -1985,14 +1951,15 @@ namespace Stock
                             }
                             else
                             {
-                                string str = string.Format("跌落到第{0}階梯停利", NewLevel);
+                                string str = string.Format("It downs to level{0}, it needs to be stopping", NewLevel);
                                 SB.AppendLine(str);
                                 Console.WriteLine(str);
                                 Thread.Sleep(1500);
                             }
-                            //SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯停利", NewLevel));
+                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, SB.ToString());
                         }
-                        //if ((StopPrice + 8) > Result.Clinch) {
+                        //if ((StopPrice + 8) > Result.Clinch)
+                        //{
                         //    //SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("跌落到第{0}階梯", NewLevel));
                         //}
                     }
@@ -2002,12 +1969,13 @@ namespace Stock
                         {
                             Recorde.Level = NewLevel;
                             Recorde.Settlement = ((Result.Clinch - Recorde.Price) * Convert.ToInt32(Recorde.Lot)) - 2;
-                            //RecordDB.UpdateTradeRecord(Recorde);
-                            string str = string.Format("It's new level =>{0}", NewLevel);
+                            RecordDB.UpdateTradeRecord(Recorde);
+                            string str = string.Format("It rise to new level =>{0}", NewLevel);
                             SB.AppendLine(str);
-                            Console.WriteLine(str);
-                            Thread.Sleep(2000);
+                            //Console.WriteLine(str);                            
                             //SendWarningMail(Recorde, StopPrice, Result, WarningMessage, string.Format("目前到第{0}階梯", Recorde.Level));
+                            SendWarningMail(Recorde, StopPrice, Result, WarningMessage, SB.ToString());
+                            Thread.Sleep(2000);
                         }
                     }
                 }

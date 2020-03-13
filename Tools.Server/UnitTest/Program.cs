@@ -98,13 +98,17 @@ namespace UnitTest
         static void Main(string[] args)
         {
             //TranscationDAO DAO = new TranscationDAO();
-            //StockDAO STDB = new StockDAO();
+            StockDAO STDB = new StockDAO();
             ////STDB.GetOptionDailyCapitalfutures("http://www.capitalfutures.com.tw/option/default.asp?", "201808W4", Encoding.Default, "");
 
-            ////STDB.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "10800", "");
-            
+            STDB.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "10600", "");
+
+
+
+            //STDB.ControlPrice();
+
             //STDB.GetOptionEveryDay("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "", 1);
-            
+
             //WeightedDAO WeighDB = new WeightedDAO();
             //WeekPointDAO WeekDB = new WeekPointDAO();
             ////CustomerDAO _CustDAO = new CustomerDAO();
@@ -123,57 +127,50 @@ namespace UnitTest
             //TradeRecord CallRecord =   TradDB.GetTradeRecordBySN(2);
             //TradeRecord PutRecord = TradDB.GetTradeRecordBySN(3);
 
-            string WinOP = "Call";
-            //DataTable dt = OpDB.GetDueMonthHistory();
+            //string WinOP = "Call";
+            ////DataTable dt = OpDB.GetDueMonthHistory();
 
-            //"201712W1", "201712W2","201712",
-            string[] DueMonthArray = new string[] { "201712W4", "201801W1", "201801W2" };
+            ////"201712W1", "201712W2","201712",
+            //string[] DueMonthArray = new string[] { "201712W4", "201801W1", "201801W2" };
 
-            foreach (var dr in DueMonthArray)
-            {
-
-                string DueMonth = dr;
-
-                List<WeekPoint> LiWeek = WeekDB.GetWeekPointByDueMonth(DueMonth);
-                Console.WriteLine(string.Format(" Dumonth :{0} , Count :{1}  ", DueMonth, LiWeek.Count));
-
-                if (LiWeek.Any())
-                {
-                    WeekPoint _Callweekpoion = LiWeek.Where(x => x.OP == "Call").ToList()[0];
-                    WeekPoint _Putweekpoion = LiWeek.Where(x => x.OP == "Put").ToList()[0];
-
-                    Console.WriteLine("Loading Option ...");
-
-                    List<Option> ListCall = OpDB.GetHistoryOption(_Callweekpoion);
-                    List<Option> ListPut = OpDB.GetHistoryOption(_Putweekpoion);
-
-                    Console.WriteLine("Any....");
-
-                    if (ListCall.Any())
-                    {
-                        DateTime BeginTime = Convert.ToDateTime(ListCall[0].Time);
-                        DateTime EndTime = Convert.ToDateTime(ListCall[ListCall.Count - 1].Time);
-                        List<Weighted> ListWeighted = WeighDB.GetWeightedHistoryByDueMonth(_Callweekpoion.DueMonth);
-                        foreach (Option Opt in ListCall)
-                        {
-                            List<Weighted> ListWe = ListWeighted.Where(x => x.TradeTimestamp == Opt.TradeTimestamp).ToList();
-                            if (ListWe.Any())
-                            {
-                                List<Option> lisPut = ListPut.Where(x => x.TradeTimestamp == Opt.TradeTimestamp).ToList();
-                                if (lisPut.Any())
-                                {
-                                    STDB.CalculateStopPointSimulation(_Callweekpoion, _Putweekpoion, ListWe[0], Opt, lisPut[0], BeginTime, ref WinOP);
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
+            //foreach (var dr in DueMonthArray)
+            //{
+            //    string DueMonth = dr;
+            //    List<WeekPoint> LiWeek = WeekDB.GetWeekPointByDueMonth(DueMonth);
+            //    Console.WriteLine(string.Format(" Dumonth :{0} , Count :{1}  ", DueMonth, LiWeek.Count));
+            //    if (LiWeek.Any())
+            //    {
+            //        WeekPoint _Callweekpoion = LiWeek.Where(x => x.OP == "Call").ToList()[0];
+            //        WeekPoint _Putweekpoion = LiWeek.Where(x => x.OP == "Put").ToList()[0];
+            //        Console.WriteLine("Loading Option ...");
+            //        List<Option> ListCall = OpDB.GetHistoryOption(_Callweekpoion);
+            //        List<Option> ListPut = OpDB.GetHistoryOption(_Putweekpoion);
+            //        if (ListCall.Any())
+            //        {
+            //            DateTime BeginTime = Convert.ToDateTime(ListCall[0].Time);
+            //            DateTime EndTime = Convert.ToDateTime(ListCall[ListCall.Count - 1].Time);
+            //            List<Weighted> ListWeighted = WeighDB.GetWeightedHistoryByDueMonth(_Callweekpoion.DueMonth);
+            //            foreach (Option Opt in ListCall)
+            //            {
+            //                List<Weighted> ListWe = ListWeighted.Where(x => x.TradeTimestamp == Opt.TradeTimestamp).ToList();
+            //                if (ListWe.Any())
+            //                {
+            //                    List<Option> lisPut = ListPut.Where(x => x.TradeTimestamp == Opt.TradeTimestamp).ToList();
+            //                    if (lisPut.Any())
+            //                    {
+            //                        STDB.CalculateStopPointSimulation(_Callweekpoion, _Putweekpoion, ListWe[0], Opt, lisPut[0], BeginTime, ref WinOP);
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
 
             //WebInfo.WebInfo Web = new WebInfo.WebInfo();
             //string Form = string.Format("searchYearMonth={0}&searchArea={1}", 201801, 01);
             //Web.HttpPostMethod(string.Empty, "https://ft.entrust.com.tw/entrustFutures/calendar/index.do?" + Form, true);
+
+            Console.WriteLine("Press Any Key");            
         }
 
         private static void InsertToDB()

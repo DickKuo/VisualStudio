@@ -301,7 +301,7 @@ namespace StandredImplement
                 lock (IsBusy)
                 {
                     DateTime Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 44, 50);
-                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 45, 20);
+                    DateTime End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 45, 30);
                     while (DateTime.Now.Subtract(Start).TotalSeconds >= 0 && DateTime.Now.Subtract(End).TotalSeconds <= 0)
                     {
                         StockDAO StockContext = new StockDAO();
@@ -336,8 +336,9 @@ namespace StandredImplement
                                 CalendarContext.CreateNextMonthCalendar(DateTime.Now);
                             }
                         }
-                        catch
+                        catch(Exception ex)
                         {
+                            ToolLog.Log(ex);
                         }
                     }
                 }

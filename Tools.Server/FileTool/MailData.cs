@@ -1,25 +1,32 @@
 ﻿using System.Net.Mail;
 using System.Data;
+using System;
 
 namespace CommTool
 {
     public class MailData
-    {
+    { 
         private class Default
         {
             public const string MailAccount = "MailAccount";
             public const string MailPassWord = "MailPassWord";
             public const string SMTP = "SMTP";
+            public const string LogPath = "LogPath";
+            public const string DayTime = "DayTime";
+            public const string SendTime = "SendTime";
+            public const string Message = "Message";
         }
 
         private class SP
         {
             public const string GetSendMail = "GetSendMail";
+            public const string AddSendMessageLog = "AddSendMessageLog";
+            public const string GetSendMessageLog = "GetSendMessageLog";
         }
 
         SQLHelper.UseStoreProcedure USP = new SQLHelper.UseStoreProcedure();
 
-        private string _logPath = @"D:\Log";
+        private string _logPath ;
 
         private string _account = string.Empty;
 
@@ -55,6 +62,9 @@ namespace CommTool
 
         public MailData()
         {
+            object RegLogPath = new object();
+            ObjectUtility.ReadRegistry(Default.LogPath, ref RegLogPath);
+            LogPath = RegLogPath.ToString();
         }
 
         public MailData(string _LogPath)
@@ -152,6 +162,19 @@ namespace CommTool
         public DataTable GetSendMail()
         {
             return USP.ExeProcedureGetDataTable(SP.GetSendMail);
+        }
+
+        public DataTable GetSendMessageLog(DateTime DayTime)
+        {
+            USP.AddParameter(Default.DayTime, DayTime);
+            return USP.ExeProcedureGetDataTable(SP.GetSendMessageLog);
+        }
+
+        public DataTable AddSendMessageLog(DateTime SendTime,string Message)
+        {
+            USP.AddParameter(Default.SendTime, SendTime);
+            USP.AddParameter(Default.Message, Message);
+            return USP.ExeProcedureGetDataTable(SP.AddSendMessageLog);
         }
     }
 }
