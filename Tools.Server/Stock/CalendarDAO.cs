@@ -320,7 +320,6 @@ namespace Stock
                             _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
                         }
                         break;
-
                     case 2:                    
                         if ((_Calendar.IsSettlement || IsNextSettlement) & _Calendar.IsWorkDay)
                         {                          
@@ -356,9 +355,7 @@ namespace Stock
                             }                            
                         }
                         break;
-
-                    case 3:
-                      
+                    case 3:                      
                         if ((_Calendar.IsSettlement || IsNextSettlement) & _Calendar.IsWorkDay)
                         {                         
                             if (arr.Length > 1)
@@ -410,7 +407,6 @@ namespace Stock
                             }
                         }
                         break;
-
                     case 4:
                         if ((_Calendar.IsSettlement || IsNextSettlement) & _Calendar.IsWorkDay)
                         {
@@ -450,7 +446,6 @@ namespace Stock
                             }
                         }
                         break;
-
                     default:
                         if ((_Calendar.IsSettlement || IsNextSettlement) & _Calendar.IsWorkDay)
                         {
