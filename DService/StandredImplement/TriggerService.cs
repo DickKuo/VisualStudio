@@ -336,7 +336,7 @@ namespace StandredImplement
                             DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 00, 30);
                             while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0)
                             {
-                                if (!IsDo)
+                                if (!IsDo)  //產生明年度的年曆
                                 {
                                     IsDo = true;
                                     CalendarDAO CalendarContext = new CalendarDAO();
@@ -344,30 +344,7 @@ namespace StandredImplement
                                 }
                                 Thread.Sleep(1000 * 20);
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            ToolLog.Log(ex);
-                        }
-                    }
-
-                    if (DateTime.Now.Day == 1)
-                    {
-                        try
-                        {
-                            bool IsDoNextWeekData = false;
-                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 30, 10);
-                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 30, 50);
-                            while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0)
-                            {
-                                if (!IsDoNextWeekData)
-                                {
-                                    IsDoNextWeekData = true;
-                                    CalendarDAO CalendarContext = new CalendarDAO();
-                                    //CalendarContext.CreateYearsCalendar(DateTime.Now.AddYears(1).Year);
-                                }
-                                Thread.Sleep(1000 * 20);
-                            }
+                            Thread.Sleep(1000 * 60);
                         }
                         catch (Exception ex)
                         {
