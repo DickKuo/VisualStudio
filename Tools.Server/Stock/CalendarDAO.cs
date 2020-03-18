@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using HtmlAgilityPack;
 using System.Text;
@@ -17,6 +18,7 @@ namespace Stock
             public const string ContractTimeFormat = "yyyyMM";
             public const string Friday = "Friday";
             public const string Thursday = "Thursday";
+            public const string Wednesday = "Wednesday";
         }
 
         private class SP
@@ -190,18 +192,19 @@ namespace Stock
         /// <param name="Year"></param>
         public void CreateYearsCalendar(int Year)
         {
-            DateTime Startday = new DateTime(Year, 1, 1);
+            DateTime Startday = new DateTime(Year, 01, 01);
             DateTime EndDay = new DateTime(Year, 12, 31);
             DateTime NowDay = Startday;
             bool IsNextWorkDay = true;
+            bool IsNextSettlement = false;
+            string WeekString = string.Empty;
+
             while (NowDay <= EndDay)
             {
                 Calendar _Calendar = new Calendar();
                 _Calendar.Daily = NowDay;
-                _Calendar.Week = string.Empty;
-                _Calendar.NearMonth1 = string.Empty;
-                _Calendar.NearMonth2 = string.Empty;
-                _Calendar.Remark = string.Empty;
+                _Calendar.Remark = string.Empty;               
+                
                 if (NowDay.DayOfWeek.ToString() != Default.Sunday && NowDay.DayOfWeek.ToString() != Default.Saturday)
                 {
                     _Calendar.IsWorkDay = true;
@@ -259,9 +262,238 @@ namespace Stock
                     }
                 }
 
+                if (IsNextSettlement)
+                {
+                    _Calendar.IsSettlement = true;
+                    IsNextSettlement = false;
+                }
+
+                if (NowDay.DayOfWeek.ToString() == Default.Wednesday)
+                {
+                    if (!_Calendar.IsWorkDay)
+                    {
+                        _Calendar.IsSettlement = false;
+                        IsNextSettlement = true;
+                    }
+                    else
+                    {
+                        _Calendar.IsSettlement = true;
+                        IsNextSettlement = false;
+                    }
+                }
+                                                
+                int Weeks = getWeekNumInMonth(NowDay); 
+
+                if (string.IsNullOrEmpty(WeekString))
+                {
+                    switch (Weeks)
+                    {
+                        case 3:
+                            _Calendar.Week = string.Format("{0}{1}", NowDay.Year, NowDay.Month.ToString("00"));
+                            break;
+                        case 5:
+                            WeekString = string.Format("{0}{1}W{2}", NowDay.Year, NowDay.AddMonths(1).Month.ToString("00"), 1);
+                            break;
+                        default:
+                            WeekString = string.Format("{0}{1}W{2}", NowDay.Year, NowDay.Month.ToString("00"), Weeks);
+                            break;
+                    }
+                }
+
+                _Calendar.Week = WeekString;
+                DateTime NextMonth = NowDay.AddMonths(1);
+                DateTime NextTwoMonth = NowDay.AddMonths(2);
+                string[] arr = WeekString.Split('W');
+
+                switch (Weeks)
+                {
+                    case 1:
+                        if ((_Calendar.IsSettlement || IsNextSettlement) & _Calendar.IsWorkDay)
+                        {
+                            _Calendar.NearMonth1 = string.Format("{0}{1}W{2}", NowDay.Year, NowDay.Month.ToString("00"), (Weeks + 1).ToString());
+                            _Calendar.NearMonth2 = string.Format("{0}{1}", NowDay.Year, NowDay.Month.ToString("00"));
+                            WeekString = _Calendar.NearMonth1;
+                        }
+                        else
+                        {
+                            _Calendar.NearMonth1 = string.Format("{0}{1}", NowDay.Year, NowDay.Month.ToString("00"));
+                            _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                        }
+                        break;
+
+                    case 2:                    
+                        if ((_Calendar.IsSettlement || IsNextSettlement) & _Calendar.IsWorkDay)
+                        {                          
+                            if (arr.Length > 1)
+                            {
+                                if (Convert.ToInt32(arr[1]) == 1)
+                                {
+                                    _Calendar.NearMonth1 = string.Format("{0}{1}W{2}", NowDay.Year, NowDay.Month.ToString("00"), Weeks.ToString());
+                                    _Calendar.NearMonth2 = string.Format("{0}{1}", NowDay.Year, NowDay.Month.ToString("00"));
+                                    WeekString = _Calendar.NearMonth1;
+                                }
+                                else
+                                {
+                                    _Calendar.NearMonth1 = string.Format("{0}{1}", NowDay.Year, NowDay.Month.ToString("00"));
+                                    _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                    WeekString = _Calendar.NearMonth1;
+                                }
+                            }
+                            else
+                            {
+                                _Calendar.NearMonth1 = string.Format("{0}{1}W{2}", NowDay.Year, NowDay.Month.ToString("00"), (Weeks + 1).ToString());
+                                _Calendar.NearMonth2 = string.Format("{0}{1}", NowDay.Year, NowDay.Month.ToString("00"));
+                            }
+                        }
+                        else
+                        {
+                            _Calendar.NearMonth1 = string.Format("{0}{1}", NowDay.Year, NowDay.Month.ToString("00"));
+                            _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                            if (_Calendar.Week == _Calendar.NearMonth1)
+                            {
+                                _Calendar.NearMonth1 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                            }                            
+                        }
+                        break;
+
+                    case 3:
+                      
+                        if ((_Calendar.IsSettlement || IsNextSettlement) & _Calendar.IsWorkDay)
+                        {                         
+                            if (arr.Length > 1)
+                            {
+                                if (Convert.ToInt32(arr[1]) == 2)
+                                {
+                                    _Calendar.NearMonth1 = string.Format("{0}{1}", NowDay.Year, NowDay.Month.ToString("00"));
+                                    _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                    WeekString = _Calendar.NearMonth1;
+                                }
+                                else
+                                {
+                                    _Calendar.NearMonth1 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                    _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                                    WeekString = _Calendar.NearMonth1;
+                                }
+                            }                           
+                            else
+                            {
+                                _Calendar.NearMonth1 = string.Format("{0}{1}W{2}", NowDay.Year, NowDay.Month.ToString("00"), (Weeks + 1).ToString());
+                                _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                WeekString = _Calendar.NearMonth1;
+                            }
+                        }
+                        else
+                        {
+                            if (arr.Length > 1)
+                            {
+                                if (Convert.ToInt32(arr[1]) == 2)
+                                {
+                                    _Calendar.NearMonth1 = string.Format("{0}{1}", NowDay.Year, NowDay.Month.ToString("00"));
+                                    _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                }
+                                else
+                                {
+                                    _Calendar.NearMonth1 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                    _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                                }                                  
+                            }
+                            else
+                            {
+                                _Calendar.NearMonth1 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                                if (_Calendar.Week == _Calendar.NearMonth1)
+                                {
+                                    _Calendar.NearMonth1 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                    _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                                }
+                            }
+                        }
+                        break;
+
+                    case 4:
+                        if ((_Calendar.IsSettlement || IsNextSettlement) & _Calendar.IsWorkDay)
+                        {
+                            if (arr.Length > 1)
+                            {
+                                if (Convert.ToInt32(arr[1]) == 4)
+                                {
+                                    if (_Calendar.Daily.Month == _Calendar.Daily.AddDays(7).Month)
+                                    {
+                                        _Calendar.NearMonth1 = string.Format("{0}{1}W{2}", NowDay.Year, NowDay.Month.ToString("00"), (Weeks + 1).ToString());
+                                        _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                        WeekString = _Calendar.NearMonth1;
+                                    }
+                                    else
+                                    {
+                                        _Calendar.NearMonth1 = string.Format("{0}{1}W{2}", NextMonth.Year, NextMonth.Month.ToString("00"), (1).ToString());
+                                        _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                        WeekString = _Calendar.NearMonth1;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                _Calendar.NearMonth1 = string.Format("{0}{1}W{2}", NowDay.Year, NowDay.Month.ToString("00"), Weeks.ToString());
+                                _Calendar.NearMonth2 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                WeekString = _Calendar.NearMonth1;
+                            }
+                        }
+                        else
+                        {
+                            _Calendar.NearMonth1 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                            _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                            if (_Calendar.Week == _Calendar.NearMonth1)
+                            {
+                                _Calendar.NearMonth1 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                            }
+                        }
+                        break;
+
+                    default:
+                        if ((_Calendar.IsSettlement || IsNextSettlement) & _Calendar.IsWorkDay)
+                        {
+                           
+                            _Calendar.NearMonth1 = string.Format("{0}{1}W{2}", NextMonth.Year, NextMonth.Month.ToString("00"), (1).ToString());
+                            _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                            WeekString = _Calendar.NearMonth1;
+                        }
+                        else
+                        {
+                            _Calendar.NearMonth1 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                            _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                            if (_Calendar.Week == _Calendar.NearMonth1)
+                            {
+                                _Calendar.NearMonth1 = string.Format("{0}{1}", NextMonth.Year, NextMonth.Month.ToString("00"));
+                                _Calendar.NearMonth2 = string.Format("{0}{1}", NextTwoMonth.Year, NextTwoMonth.Month.ToString("00"));
+                            }
+                        }
+                        break;
+                }                                
+
                 SaveCalendar(_Calendar);
                 NowDay = NowDay.AddDays(1);
             }
+        }
+        
+        private int getWeekNumInMonth(DateTime daytime)
+        {
+            int dayInMonth = daytime.Day;
+            //本月第一天  
+            DateTime firstDay = daytime.AddDays(1 - daytime.Day);
+            //本月第一天是周幾  
+            int weekday = (int)firstDay.DayOfWeek == 0 ? 7 : (int)firstDay.DayOfWeek;
+            //本月第一周有幾天  
+            int firstWeekEndDay = 7 - (weekday - 1);
+            //當前日期和第一周之差  
+            int diffday = dayInMonth - firstWeekEndDay;
+            diffday = diffday > 0 ? diffday : 1;
+            //當前是第幾周,如果整除7就減一天  
+            int WeekNumInMonth = ((diffday % 7) == 0
+             ? (diffday / 7 - 1)
+             : (diffday / 7)) + 1 + (dayInMonth > firstWeekEndDay ? 1 : 0);
+            return WeekNumInMonth ;
         }
 
         /// <summary>更新行事曆</summary>

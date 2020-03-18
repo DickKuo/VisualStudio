@@ -327,21 +327,46 @@ namespace StandredImplement
                         Thread.Sleep(1000 * 20);
                     }
 
-                    if (DateTime.Now.Day == 1)
+                    if (DateTime.Now.Month == 10 && DateTime.Now.Day == 1)
                     {
                         try
                         {
                             bool IsDo = false;
-                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 10);
-                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 50);
+                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 00, 10);
+                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 00, 30);
                             while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0)
                             {
                                 if (!IsDo)
                                 {
                                     IsDo = true;
                                     CalendarDAO CalendarContext = new CalendarDAO();
-                                    CalendarContext.CreateNextMonthCalendar(DateTime.Now);
+                                    CalendarContext.CreateYearsCalendar(DateTime.Now.AddYears(1).Year);
                                 }
+                                Thread.Sleep(1000 * 20);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ToolLog.Log(ex);
+                        }
+                    }
+
+                    if (DateTime.Now.Day == 1)
+                    {
+                        try
+                        {
+                            bool IsDoNextWeekData = false;
+                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 30, 10);
+                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 30, 50);
+                            while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0)
+                            {
+                                if (!IsDoNextWeekData)
+                                {
+                                    IsDoNextWeekData = true;
+                                    CalendarDAO CalendarContext = new CalendarDAO();
+                                    //CalendarContext.CreateYearsCalendar(DateTime.Now.AddYears(1).Year);
+                                }
+                                Thread.Sleep(1000 * 20);
                             }
                         }
                         catch (Exception ex)

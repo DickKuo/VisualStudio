@@ -364,7 +364,6 @@ namespace Stock
                 sb.AppendLine(string.Format(" EPS_First :{0} ,EPS_Second :{1},EPS_Third :{2},EPS_Fourth :{3} ", EPS_Array[0], EPS_Array[1], EPS_Array[2], EPS_Array[3]));
                 bool IsImport = false;
 
-
                 if (EPS_Array[3] < EPS_Array[2] & EPS_Array[2] < EPS_Array[1] & EPS_Array[1] < EPS_Array[0])
                 {
                     IsImport = true; ///最佳進步獎
@@ -389,6 +388,7 @@ namespace Stock
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
+                ToolLog.Log(ex);
                 //CommTool.ToolLog.Log(CommTool.LogType.Error, _stockNum.ToString());
                 return "error";
             }
@@ -603,7 +603,7 @@ namespace Stock
                                 Call.Change = Nodes[i].ChildNodes[7].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[7].InnerText);
                                 Call.NumberOfContracts = Nodes[i].ChildNodes[9].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[9].InnerText);
                                 Call.Volume = Nodes[i].ChildNodes[11].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[11].InnerText);
-                                Call.Time = Nodes[i].ChildNodes[13].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[13].InnerText).ToString(CommTool.BaseConst.TimeFormatComplete);
+                                Call.Time = Nodes[i].ChildNodes[13].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[13].InnerText).ToString(BaseConst.TimeFormatComplete);
                                 Call.Contract = Nodes[i].ChildNodes[15].InnerText.Trim();
                                 Call.TradeTimestamp = TradeTimestamp;
                                 list.Add(Call);
@@ -617,7 +617,7 @@ namespace Stock
                                 Put.Change = Nodes[i].ChildNodes[23].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToDecimal(Nodes[i].ChildNodes[23].InnerText);
                                 Put.NumberOfContracts = Nodes[i].ChildNodes[25].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[25].InnerText);
                                 Put.Volume = Nodes[i].ChildNodes[27].InnerText.Trim() == Default.NullSing ? 0 : Convert.ToInt32(Nodes[i].ChildNodes[27].InnerText);
-                                Put.Time = Nodes[i].ChildNodes[29].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[29].InnerText).ToString(CommTool.BaseConst.TimeFormatComplete);
+                                Put.Time = Nodes[i].ChildNodes[29].InnerText.Trim() == Default.NullSing ? DateTime.Now.ToString(BaseConst.TimeFormatComplete) : Convert.ToDateTime(Nodes[i].ChildNodes[29].InnerText).ToString(BaseConst.TimeFormatComplete);
                                 Put.TradeTimestamp = TradeTimestamp;
                                 list.Add(Put);
                             }
@@ -640,7 +640,7 @@ namespace Stock
         {
             WebInfo.WebInfo Info = new WebInfo.WebInfo();
             List<Option> list = new List<Option>();
-            string TempCode = System.Web.HttpUtility.UrlEncode("_台選", System.Text.Encoding.GetEncoding("BIG5")).ToUpper();//將繁體中文轉成Uri
+            string TempCode = System.Web.HttpUtility.UrlEncode("_台選", Encoding.GetEncoding("BIG5")).ToUpper();//將繁體中文轉成Uri
             TempCode = TempCode.Replace("X", "x");
             string Temp = Contract.Replace(DateTime.Now.Year.ToString(), string.Empty).Replace(DateTime.Now.AddYears(1).Year.ToString(), string.Empty).ToLower();
             string[] arr = Temp.Split('w');
@@ -659,8 +659,9 @@ namespace Stock
                 StartTag = 91;
                 EndTag = 171;
             }
+
             string FullUrl = string.Format("{0}{1}", Url, GetParameter);
-            HtmlAgilityPack.HtmlNodeCollection anchors = Info.GetWebHtmlDocumentNodeCollection(FullUrl, "//table[@class='type-03']", Encoding.Default);
+            HtmlNodeCollection anchors = Info.GetWebHtmlDocumentNodeCollection(FullUrl, "//table[@class='type-03']", Encoding.Default);
             if (anchors != null)
             {
                 if (EndTag > anchors[0].ChildNodes.Count)
@@ -711,7 +712,7 @@ namespace Stock
                         Put.Contract = Call.Contract;
                         Put.TradeTimestamp = TradeTimestamp;
                         Put.DueMonth = Contract;
-                        Put.Time = DateTime.Now.ToString(CommTool.BaseConst.TimeFormatComplete);
+                        Put.Time = DateTime.Now.ToString(BaseConst.TimeFormatComplete);
                         if (Put.Volume > 0)
                         {
                             list.Add(Put);
@@ -719,7 +720,7 @@ namespace Stock
                     }
                     catch (Exception ex)
                     {
-                        CommTool.ToolLog.Log(ex.StackTrace.ToString());
+                        ToolLog.Log(ex.StackTrace.ToString());
                     }
                     StartTag = StartTag + 4;
                 }
@@ -754,9 +755,9 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
-        } //end SaveOpionData
+        }
 
         /// <summary>結構方式儲存選擇權交易歷史資訊</summary>
         /// <param name="Options"></param>
@@ -770,7 +771,7 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
 
@@ -787,7 +788,7 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
                 return null;
             }
         }
@@ -826,7 +827,7 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
 
@@ -850,7 +851,7 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
 
@@ -866,7 +867,7 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
                 return null;
             }
         }
@@ -881,6 +882,7 @@ namespace Stock
             }
             catch (Exception ex)
             {
+                ToolLog.Log(ex);
                 return null;
             }
         }
@@ -1057,7 +1059,7 @@ namespace Stock
                                 {
                                     StartPrice = temp;
                                     StopPrice = CalculateStopPrice(StartPrice, row.ItemArray[3].ToString(), Convert.ToDecimal(row.ItemArray[6].ToString()));
-                                    CommTool.ToolLog.Log(string.Format("契約:{0} , 日期:{1} , Option :{2} , 價格:{3} ,停損價格 {4}", Due, row.ItemArray[0].ToString(), OP, temp, StopPrice));
+                                    ToolLog.Log(string.Format("契約:{0} , 日期:{1} , Option :{2} , 價格:{3} ,停損價格 {4}", Due, row.ItemArray[0].ToString(), OP, temp, StopPrice));
                                 }
                                 else
                                 {
@@ -1097,7 +1099,7 @@ namespace Stock
                                 DataRow row = Report.Rows[i];
                                 decimal TempPrice = Convert.ToDecimal(row.ItemArray[4].ToString());
                                 decimal HighPrice = Convert.ToDecimal(row.ItemArray[7].ToString());
-                                CommTool.ToolLog.Log(string.Format("契約:{0} , 日期:{1} , Option :{2} , 契約價格:{3} , 點數:{4} , 最高點{5}", Due, row.ItemArray[0].ToString(), OP, row.ItemArray[3].ToString(), TempPrice, HighPrice));
+                                ToolLog.Log(string.Format("契約:{0} , 日期:{1} , Option :{2} , 契約價格:{3} , 點數:{4} , 最高點{5}", Due, row.ItemArray[0].ToString(), OP, row.ItemArray[3].ToString(), TempPrice, HighPrice));
                                 if (!IsOver)
                                 {
                                     if (TempPrice > (StopPrice + StartPrice) || HighPrice > (StopPrice + StartPrice))
@@ -1144,7 +1146,7 @@ namespace Stock
                     }
                     Report.Rows.Clear();
                     IsPass = false;
-                    CommTool.ToolLog.Log(string.Empty);
+                    ToolLog.Log(string.Empty);
                 }
                 Result += (week + buyPoint);
                 buyPoint = 0;
@@ -1153,10 +1155,10 @@ namespace Stock
                     win++;
                 }
                 string Message = string.Format("契約:{0} ,賺賠:{1},總賺賠：{2}", Due, week.ToString("00000.##"), Result.ToString("00000.##"));
-                CommTool.ToolLog.Log(Message);
-                CommTool.ToolLog.Log(string.Empty);
+                ToolLog.Log(Message);
+                ToolLog.Log(string.Empty);
             }
-            CommTool.ToolLog.Log(string.Format("勝率:{0}%", (win * 100 / weekcount)));
+            ToolLog.Log(string.Format("勝率:{0}%", (win * 100 / weekcount)));
         }
 
         /// <summary>計算Sell停損價格</summary>
@@ -1247,7 +1249,7 @@ namespace Stock
             {
                 dt.Columns.Add(info.Name);
             }
-            CommTool.CommToolFiles.ReadCSV(DataResource, dt);
+            CommToolFiles.ReadCSV(DataResource, dt);
             this.SaveOptionHistoryData(dt);
         }
 
@@ -1262,7 +1264,7 @@ namespace Stock
                 if (!info.Name.Equals(SPParameter.SN))
                     dt.Columns.Add(info.Name);
             }
-            CommTool.CommToolFiles.ReadCSV(DataResource, dt);
+            CommToolFiles.ReadCSV(DataResource, dt);
             SaveOpenInterestData(dt);
         }
 
@@ -1442,7 +1444,7 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
         }
 
@@ -1471,7 +1473,7 @@ namespace Stock
             }
             catch (Exception ex)
             {
-                CommTool.ToolLog.Log(ex);
+                ToolLog.Log(ex);
             }
             return ListWeekPoint;
         }//end GetAllWeekPointByYear
