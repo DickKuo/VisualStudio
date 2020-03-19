@@ -2,10 +2,5 @@
 $(function () {
 
     $("#InputBirthDay").datetimepicker();
-   
-    
-
-
-
-
+       
 });

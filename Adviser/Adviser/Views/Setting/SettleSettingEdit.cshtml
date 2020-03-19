@@ -1,5 +1,4 @@
 ﻿@model Adviser.Models.ViewModels.SettingViewModels.SettleSettingViewModel
-
 @{
     ViewBag.Title = "SettleSettingEdit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,10 +7,11 @@
 <h2>設定結清時間</h2>
 
 <hr />
+@using (Html.BeginForm("SettleSettingEditPost", "Setting", new { PageAction = Model.PageAction }))
+{
 
-@using (Html.BeginForm("SettleSettingEditPost", "Setting", new { PageAction = Model.PageAction })) {
-
-    if (Model._SettleTime != null) {
+    if (Model._SettleTime != null)
+    {
         <input type="text" hidden="hidden" name="_SettleTime.SN" value="@Model._SettleTime.SN">
     }
 
@@ -26,7 +26,7 @@
                 <div class='col-xs-3'>
                     <input type="text" name="_SettleTime.BeginTime" id="BeginTimePicker" class="form-control" value="@Model._SettleTime.BeginTime.ToString(CommTool.BaseConst.DateFormat)">
                     @*@Html.TextBoxFor(M => M._SettleTime.BeginTime, new { id = "BeginTimePicker", @class = "form-control", @placeholder = "啟始日期" })*@
-                </div> 
+                </div>
             </div>
 
             <div class="row" style="padding-bottom:20px">
@@ -36,7 +36,7 @@
                 <div class='col-xs-3'>
                     <input type="text" name="_SettleTime.EndTime" id="EndTimePicker" class="form-control" value="@Model._SettleTime.EndTime.ToString(CommTool.BaseConst.DateFormat)">
                     @*@Html.TextBoxFor(M => M._SettleTime.EndTime, new { id = "EndTimePicker", @class = "form-control", @placeholder = "結束日期" })*@
-                </div> 
+                </div>
             </div>
 
             <div class="row" style="padding-bottom:20px">
@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-     
+
     <div class="row" style="padding-bottom:20px">
         <div class='col-lg-offset-2 col-xs-3'>
             <input type="submit" value="@Resources.Resource.Btn_Change" class="btn btn-info" id="Infomodify" />
@@ -58,7 +58,6 @@
             <a class="btn btn-success" id="InfoBack" href="~/Setting/SettleSetting">@Resources.ResourceCustomer.Btn_Back</a>
         </div>
     </div>
-
 }
 
 <script type="text/javascript">

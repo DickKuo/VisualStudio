@@ -1,6 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using ObjectBase;
-using System;
+using System; 
 
 namespace Adviser.Controllers
 {
@@ -92,7 +93,28 @@ namespace Adviser.Controllers
 
         public ActionResult CalendarSetting()
         {
-            return View();
+            Models.ViewModels.SettingViewModels.CalendarSetting Model = new Models.ViewModels.SettingViewModels.CalendarSetting();
+            Stock.CalendarDAO _DB = new Stock.CalendarDAO();
+            List<Stock.Calendar> ListCalendar = new List<Stock.Calendar>();
+            ListCalendar = _DB.GetCalendarByMonth(DateTime.Now);
+            foreach (var item in ListCalendar)
+            {
+                Models.Code.CalendarSet _Week = new Models.Code.CalendarSet();
+                _Week.Title = item.Week;
+                _Week.NowDay = item.Daily;
+                Model.listCalendar.Add(_Week);               
+
+                Models.Code.CalendarSet NearMonth1 = new Models.Code.CalendarSet();
+                NearMonth1.Title = item.NearMonth1;
+                NearMonth1.NowDay = item.Daily;
+                Model.listCalendar.Add(NearMonth1);               
+
+                Models.Code.CalendarSet NearMonth2 = new Models.Code.CalendarSet();
+                NearMonth2.Title = item.NearMonth2;
+                NearMonth2.NowDay = item.Daily;
+                Model.listCalendar.Add(NearMonth2);              
+            }
+            return View(Model);
         }
     }
 }

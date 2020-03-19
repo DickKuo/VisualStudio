@@ -1,25 +1,42 @@
-﻿
+﻿@model Adviser.Models.ViewModels.SettingViewModels.CalendarSetting
 @{
     ViewBag.Title = "CalendarSetting";
-    Layout = null;// "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var JsonMode = Newtonsoft.Json.JsonConvert.SerializeObject(Model.listCalendar);    
+    Html.AddJavaScriptVar("JsonMode", JsonMode);
 }
-
 
 <link href="~/Content/fullcalendar.css" rel="stylesheet" />
 <link href="~/Content/fullcalendar.print.css" rel="stylesheet" />
 <script src="~/Scripts/moment.min.js"></script>
 <script src="~/Scripts/jquery.min.js"></script>
-
 <script src="~/Scripts/fullcalendar.min.js"></script>
+<script src="~/Scripts/Code/CalendarJs.js"></script>
 
-
-<h2>CalendarSetting</h2>
+<h2>行事曆</h2>
 
 <div id='calendar' class="fc fc-unthemed fc-ltr"></div>
 
 <script>
+    var Today = new Date();   
 
     $(document).ready(function () {
+
+        var eventlist = [];
+
+        for (i = 0, length = jQuery.parseJSON(JsonMode).length; i < length; i++) {
+            if (jQuery.parseJSON(JsonMode)[i] != null) {
+                eventlist.push(
+                    {
+                        'title': jQuery.parseJSON(JsonMode)[i].Title,
+                        'start': jQuery.parseJSON(JsonMode)[i].NowDay.substring(0, 10)
+                    }
+                )
+            }
+            else {
+                console.log(i);
+            }
+        }
 
         $('#calendar').fullCalendar({
             header: {
@@ -27,66 +44,11 @@
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay,listWeek'
             },
-            defaultDate: '2018-01-08',
+            defaultDate: Today,
             navLinks: true, // can click day/week names to navigate views
             editable: true,
             eventLimit: true, // allow "more" link when too many events
-            events: [
-            {
-                  title: 'All Day Event',
-                  start: '2017-12-01',
-            },
-            {
-                  title: 'Long Event',
-                  start: '2017-12-07',
-                  end: '2017-12-10'
-            },
-              {
-                  id: 999,
-                  title: 'Repeating Event',
-                  start: '2017-12-09T16:00:00'
-              },
-              {
-                  id: 999,
-                  title: 'Repeating Event',
-                  start: '2017-12-16T16:00:00'
-              },
-              {
-                  title: 'Conference',
-                  start: '2017-12-11',
-                  end: '2017-12-13'
-              },
-              {
-                  title: 'Meeting',
-                  start: '2017-12-12T10:30:00',
-                  end: '2017-12-12T12:30:00'
-              },
-              {
-                  title: 'Lunch',
-                  start: '2017-12-12T12:00:00'
-              },
-              {
-                  title: 'Meeting',
-                  start: '2017-12-12T14:30:00'
-              },
-              {
-                  title: 'Happy Hour',
-                  start: '2017-12-12T17:30:00'
-              },
-              {
-                  title: 'Dinner',
-                  start: '2017-12-12T20:00:00'
-              },
-              {
-                  title: 'Birthday Party',
-                  start: '2017-12-13T07:00:00'
-              },
-              {
-                  title: 'Click for Google',
-                  url: 'http://google.com/',
-                  start: '2017-12-28'
-              }
-            ]
+            events: eventlist
         });
 
     });

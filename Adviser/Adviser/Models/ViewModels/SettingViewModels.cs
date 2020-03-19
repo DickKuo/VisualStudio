@@ -35,5 +35,15 @@ namespace Adviser.Models.ViewModels
             }
             public List<SettleTime> ListSettleTime { set; get; }
         }
+
+        public class CalendarSetting : BaseViewModel
+        {
+            public CalendarSetting()
+            {
+                listCalendar = new List<Adviser.Models.Code.CalendarSet>();
+            }
+
+            public List<Adviser.Models.Code.CalendarSet> listCalendar { set; get; }
+        }
     }
 }
