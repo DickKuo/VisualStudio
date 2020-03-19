@@ -104,7 +104,7 @@ namespace UnitTest
             //STDB.GetOptionDaily("https://tw.screener.finance.yahoo.net/future/aa03?fumr=futurepart&opmr=optionpart&opcm=WTXO&opym=", "10600", "");
 
 
-
+            //int weeks = getWeekNumInMonth(new DateTime(2020, 3, 31));
 
 
             //STDB.ControlPrice();
@@ -123,6 +123,7 @@ namespace UnitTest
 
             CalendarDAO _CalendarDB = new CalendarDAO();
             _CalendarDB.CreateYearsCalendar(2020);
+
             //List<Calendar> LisCalendar = _CalendarDB.GetCalendarByMonth(new DateTime(2018, 2, 8));
 
 
@@ -173,6 +174,25 @@ namespace UnitTest
             //Web.HttpPostMethod(string.Empty, "https://ft.entrust.com.tw/entrustFutures/calendar/index.do?" + Form, true);
 
             Console.WriteLine("Press Any Key");            
+        }
+
+        private static int getWeekNumInMonth(DateTime daytime)
+        {
+            int dayInMonth = daytime.Day;
+            //本月第一天  
+            DateTime firstDay = daytime.AddDays(1 - daytime.Day);
+            //本月第一天是周幾  
+            int weekday = (int)firstDay.DayOfWeek == 0 ? 7 : (int)firstDay.DayOfWeek;
+            //本月第一周有幾天  
+            int firstWeekEndDay = 7 - (weekday - 1);
+            //當前日期和第一周之差  
+            int diffday = dayInMonth - firstWeekEndDay;
+            diffday = diffday > 0 ? diffday : 1;
+            //當前是第幾周,如果整除7就減一天  
+            int WeekNumInMonth = ((diffday % 7) == 0
+             ? (diffday / 7 - 1)
+             : (diffday / 7)) + 1 + (dayInMonth > firstWeekEndDay ? 1 : 0);
+            return WeekNumInMonth-1;
         }
 
         private static void InsertToDB()

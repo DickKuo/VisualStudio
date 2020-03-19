@@ -332,8 +332,8 @@ namespace StandredImplement
                         try
                         {
                             bool IsDo = false;
-                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 00, 10);
-                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 00, 30);
+                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 00, 00);
+                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 01, 00);
                             while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0)
                             {
                                 if (!IsDo)  //產生明年度的年曆
@@ -342,9 +342,33 @@ namespace StandredImplement
                                     CalendarDAO CalendarContext = new CalendarDAO();
                                     CalendarContext.CreateYearsCalendar(DateTime.Now.AddYears(1).Year);
                                 }
-                                Thread.Sleep(1000 * 20);
+                                Thread.Sleep(1000 * 60);
                             }
-                            Thread.Sleep(1000 * 60);
+                        }
+                        catch (Exception ex)
+                        {
+                            ToolLog.Log(ex);
+                        }
+                    }
+
+                    ///雙數月的一號收盤 儲存資料
+                    if (DateTime.Now.Month % 2 == 0 && DateTime.Now.Day == 1)
+                    {
+                        try
+                        {
+                            bool IsDo = false;
+                            DateTime CalendarStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 30, 00);
+                            DateTime CalendarEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 15, 31, 00);
+                            while (DateTime.Now.Subtract(CalendarStart).TotalSeconds >= 0 && DateTime.Now.Subtract(CalendarEnd).TotalSeconds <= 0)
+                            {
+                                if (!IsDo)  //產生明年度的年曆
+                                {
+                                    IsDo = true;
+                                    StockDAO _StockDB = new StockDAO();
+                                    _StockDB.StoreToHistory();
+                                }
+                                Thread.Sleep(1000 * 60);
+                            }
                         }
                         catch (Exception ex)
                         {

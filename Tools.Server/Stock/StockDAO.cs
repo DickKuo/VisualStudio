@@ -54,6 +54,7 @@ namespace Stock
             public const string SaveOption = "SaveOption";
             public const string SaveOptionHistory = "SaveOptionHistory";
             public const string GetAllWeekPointByYear = "GetAllWeekPointByYear";
+            public const string StoreToHistory = "StoreToHistory";
         }
 
         private class SPParameter
@@ -1251,6 +1252,12 @@ namespace Stock
             }
             CommToolFiles.ReadCSV(DataResource, dt);
             this.SaveOptionHistoryData(dt);
+        }
+
+        /// <summary>將資料儲存到歷史表資料表內</summary>
+        public void StoreToHistory()
+        {
+            USP.ExeProcedureNotQuery(SP.StoreToHistory);
         }
 
         /// <summary>儲存買賣未平昌</summary>

@@ -203,8 +203,9 @@ namespace Stock
             {
                 Calendar _Calendar = new Calendar();
                 _Calendar.Daily = NowDay;
-                _Calendar.Remark = string.Empty;               
-                
+                _Calendar.Remark = string.Empty;
+                int Weeks = getWeekNumInMonth(NowDay);
+
                 if (NowDay.DayOfWeek.ToString() != Default.Sunday && NowDay.DayOfWeek.ToString() != Default.Saturday)
                 {
                     _Calendar.IsWorkDay = true;
@@ -280,9 +281,7 @@ namespace Stock
                         _Calendar.IsSettlement = true;
                         IsNextSettlement = false;
                     }
-                }
-                                                
-                int Weeks = getWeekNumInMonth(NowDay); 
+                }          
 
                 if (string.IsNullOrEmpty(WeekString))
                 {
@@ -465,8 +464,8 @@ namespace Stock
                             }
                         }
                         break;
-                }                                
-
+                }  
+                
                 SaveCalendar(_Calendar);
                 NowDay = NowDay.AddDays(1);
             }
