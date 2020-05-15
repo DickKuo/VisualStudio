@@ -2,28 +2,24 @@
 @{
     ViewBag.Title = "CalendarSetting";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var JsonMode = Newtonsoft.Json.JsonConvert.SerializeObject(Model.listCalendar);    
+    var JsonMode = Newtonsoft.Json.JsonConvert.SerializeObject(Model.listCalendar);
     Html.AddJavaScriptVar("JsonMode", JsonMode);
-}
-
-<link href="~/Content/fullcalendar.css" rel="stylesheet" />
-<link href="~/Content/fullcalendar.print.css" rel="stylesheet" />
-<script src="~/Scripts/moment.min.js"></script>
-<script src="~/Scripts/jquery.min.js"></script>
-<script src="~/Scripts/fullcalendar.min.js"></script>
-<script src="~/Scripts/Code/CalendarJs.js"></script>
+    Html.AddStyle("~/Content/fullcalendar.css");
+    Html.AddStyle("~/Content/fullcalendar.print.css");
+    Html.AddJavaScript("~/Scripts/moment.min.js");
+    Html.AddJavaScript("~/Scripts/jquery.min.js");
+    Html.AddJavaScript("~/Scripts/fullcalendar.min.js");
+    Html.AddJavaScript("~/Scripts/Code/CalendarJs.js");
+}   
 
 <h2>行事曆</h2>
-
 <div id='calendar' class="fc fc-unthemed fc-ltr"></div>
-
+<hr>
 <script>
-    var Today = new Date();   
-
+    var Today = new Date();  
+    
     $(document).ready(function () {
-
         var eventlist = [];
-
         for (i = 0, length = jQuery.parseJSON(JsonMode).length; i < length; i++) {
             if (jQuery.parseJSON(JsonMode)[i] != null) {
                 eventlist.push(
